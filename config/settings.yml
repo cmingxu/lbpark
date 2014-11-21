@@ -1,0 +1,18 @@
+defaults: &defaults
+  title: "btcall"
+  description: "bitcoin"
+  site_name: "btcall"
+  spider_interval: 5 * 60
+  spider_usd_rmb_interval: 5 * 60
+  default_email_sender: "notification@btcall.com"
+
+development:
+  <<: *defaults
+  spider_interval: 10
+  neat_setting: 800
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

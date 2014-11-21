@@ -1,0 +1,140 @@
+$body-bg:               #e7e8eb !default
+$font-family-base: "Helvetica Neue","Hiragino Sans GB","Microsoft YaHei","微软雅黑","黑体",Arial,sans-serif
+$border-radius-base:        0px !default
+$second-color:  #fff
+$highlight-color: #2f9833
+
+$text-color: #575757
+$highlight-text-color: #1a1a1a
+$link-color: black
+$link-hover-color: darken($link-color, 30%) !default
+
+.navbar
+  margin-bottom: 0px!important
+
+.color-bar
+  height: 4px
+  background-color: $highlight-color
+
+.container-fluid
+  padding: 0px!important
+
+footer
+  padding-top: 40px
+  padding-bottom: 40px
+
+
+.dashboard-main
+  background-color: $second-color
+
+//market settings
+$market-bg-light-color: white
+$market-bg-dark-color: #535353
+$market-text-light-color: #535353
+$market-text-dark-color: #535353
+$market-link-light-color: white
+$market-link-dark-color: #535353
+
+
+.market
+  .header
+    background-color: $market-bg-dark-color
+    color: $market-bg-light-color
+  .navbar-brand
+    padding: 5px 15px
+    height: 30px
+
+  .navbar-nav  li  a
+    padding: 5px 15px
+    height: 30px
+
+  .content_wraper
+    width: 100%
+    float: left
+  .operation_panel
+    width: 320px
+    float: right
+    height: 500px
+    .operation_panel_inner
+      margin: 20px 20px
+      .input_field
+        text-align: right
+        border: none
+        width: 120px
+        height: 30px
+        float: right
+        font-weight: bold
+        font-family: italic
+        border-bottom: 1px solid gray
+      .strong
+        font-size: 30px
+        float: right
+        font-weight: bold
+        font-weight: italic
+      .progress-bar
+        margin-top: 5px
+        margin-bottom: 5px
+        height: 10px
+        width: 100%
+        .yes-progress
+          width: 40%
+        .no-progress
+          width: 60%
+
+
+  .chart_panel
+    margin-right: 320px
+    #btcchart
+      width: 100%
+    .btn
+      width: 100px
+      margin-top: 15px
+    .axis path,line
+      fill: none
+      stroke: #000
+      shape-rendering: crispEdges
+    .area
+      fill: steelblue
+
+
+  .footer
+    background-color: $market-bg-dark-color
+    .list-group
+      width: 25%
+    .list-group-item
+      border: none
+      background-color: $market-bg-dark-color
+      color: $market-link-light-color
+
+.dashboard
+  .list-group
+  .left_sidebar
+    margin-left: -15px
+    .list-group-item
+      border: none
+      &:hover
+        background-color: darken($body-bg, 10%)
+    .list-group-header
+      font-size: 16px
+      padding: 15px 15px
+      border-bottom: 1px solid black
+
+    .sidebar_item_active
+      border-right: 4px solid $highlight-color
+
+
+.user_actions
+  .panel-heading
+    padding: 5px 15px
+  .panel-footer
+    padding: 1px 15px
+    color: #A0A0A0
+
+  .profile-img
+    width: 96px
+    height: 96px
+    margin: 0 auto 10px
+    display: block
+    -moz-border-radius: 50%
+    -webkit-border-radius: 50%
+    border-radius: 50%
