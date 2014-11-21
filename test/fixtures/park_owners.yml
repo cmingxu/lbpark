@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reference: 
+  wgs_lat: 9.99
+  wgs_lng: 9.99
+  contract: MyString
+  contract_phone: MyString
+  ownership: MyString
+  owner: MyString
+  desc: MyText
+  maitainer: MyString
+
+two:
+  reference: 
+  wgs_lat: 9.99
+  wgs_lng: 9.99
+  contract: MyString
+  contract_phone: MyString
+  ownership: MyString
+  owner: MyString
+  desc: MyText
+  maitainer: MyString

@@ -1,0 +1,69 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  province: MyString
+  city: MyString
+  district: MyString
+  name: MyString
+  address: MyString
+  park_type: MyString
+  total_count: MyString
+  gcj_lat: 9.99
+  gcj_lng: 9.99
+  whole_day: false
+  day_only: MyString
+  day_time_begin: 
+  day_time_end: 
+  day_price: 
+  day_first_hour_price: 9.99
+  day_second_hour_price: 9.99
+  night_time_begin: 
+  night_time_end: 
+  night_price: 9.99
+  times_price: 
+  service_month: false
+  month_price: 
+  service_wash: false
+  service_wc: false
+  service_repair: false
+  service_rent: false
+  service_rent_company: false
+  service_group: false
+  service_times: false
+  is_recommend: false
+  tips: MyString
+
+two:
+  code: MyString
+  province: MyString
+  city: MyString
+  district: MyString
+  name: MyString
+  address: MyString
+  park_type: MyString
+  total_count: MyString
+  gcj_lat: 9.99
+  gcj_lng: 9.99
+  whole_day: false
+  day_only: MyString
+  day_time_begin: 
+  day_time_end: 
+  day_price: 
+  day_first_hour_price: 9.99
+  day_second_hour_price: 9.99
+  night_time_begin: 
+  night_time_end: 
+  night_price: 9.99
+  times_price: 
+  service_month: false
+  month_price: 
+  service_wash: false
+  service_wc: false
+  service_repair: false
+  service_rent: false
+  service_rent_company: false
+  service_group: false
+  service_times: false
+  is_recommend: false
+  tips: MyString

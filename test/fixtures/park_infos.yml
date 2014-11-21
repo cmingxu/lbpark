@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reference: 
+  day_time: MyText
+  night_time: MyText
+  day_price_desc: MyText
+  all_day_price_desc: MyText
+  night_price_desc: MyText
+  times_price_desc: MyText
+  month_price_desc: MyText
+  service_wc_desc: MyText
+  service_wash_desc: MyText
+  total_count_desc: MyText
+
+two:
+  reference: 
+  day_time: MyText
+  night_time: MyText
+  day_price_desc: MyText
+  all_day_price_desc: MyText
+  night_price_desc: MyText
+  times_price_desc: MyText
+  month_price_desc: MyText
+  service_wc_desc: MyText
+  service_wash_desc: MyText
+  total_count_desc: MyText
