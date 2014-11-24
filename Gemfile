@@ -1,4 +1,4 @@
-source 'https://ruby.taobao.org/'
+source 'https://ruby.taobao.org'
 
 
 gem 'rails', '4.1.6'
@@ -29,12 +29,17 @@ gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 gem 'rails_kindeditor'
 
+
+gem 'grape', '~> 0.9.1', :git => "git@github.com:intridea/grape.git"
 gem 'settingslogic', '~> 2.0.9'
 gem 'httparty', '~>0.13.1'
 gem 'redis', '~>3.1.0'
 gem 'faye-websocket', '~>0.7.5'
 gem 'quiet_assets', :group => :development
 gem 'annotate', '~> 2.6.5'
+gem 'hashie', :git => 'git@github.com:intridea/hashie.git'
+gem "hashie_rails", :git => "git@github.com:Maxim-Filimonov/hashie_rails.git"
+
 
 
 
