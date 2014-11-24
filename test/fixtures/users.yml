@@ -12,11 +12,18 @@
 #  updated_at         :datetime
 #
 
-class User < ActiveRecord::Base
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-  def self.authenticate!(env)
-  end
+one:
+  name: MyString
+  email: MyString
+  token: MyString
+  encrypted_password: MyString
+  phone: MyString
 
-  def login
-  end
-end
+two:
+  name: MyString
+  email: MyString
+  token: MyString
+  encrypted_password: MyString
+  phone: MyString

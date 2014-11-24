@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141120143753) do
+ActiveRecord::Schema.define(version: 20141124083436) do
 
   create_table "park_infos", force: true do |t|
     t.integer  "park_id"
@@ -81,6 +81,16 @@ ActiveRecord::Schema.define(version: 20141120143753) do
     t.boolean  "is_only_service"
     t.decimal  "times_price_all_day",   precision: 10, scale: 0
     t.string   "tips"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "token"
+    t.string   "encrypted_password"
+    t.string   "phone"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

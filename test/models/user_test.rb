@@ -12,11 +12,10 @@
 #  updated_at         :datetime
 #
 
-class User < ActiveRecord::Base
+require 'test_helper'
 
-  def self.authenticate!(env)
-  end
-
-  def login
-  end
+class UserTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end
