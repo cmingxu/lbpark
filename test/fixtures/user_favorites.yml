@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  park_id: 1
+  label: MyString
+  lng: 9.99
+  lat: 9.99
+
+two:
+  user_id: 1
+  park_id: 1
+  label: MyString
+  lng: 9.99
+  lat: 9.99
