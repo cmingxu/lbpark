@@ -34,6 +34,7 @@ gem 'grape', '~> 0.9.1', :git => "git@github.com:intridea/grape.git"
 gem 'settingslogic', '~> 2.0.9'
 gem 'httparty', '~>0.13.1'
 gem 'redis', '~>3.1.0'
+gem "resque", "~> 2.0.0.pre.1", github: "resque/resque"
 gem 'faye-websocket', '~>0.7.5'
 gem 'quiet_assets', :group => :development
 gem 'annotate', '~> 2.6.5'
