@@ -13,18 +13,18 @@ class CreateParks < ActiveRecord::Migration
       t.decimal :gcj_lng
       t.boolean :whole_day
       t.string :day_only
-      t.int :day_time_begin
-      t.int :day_time_end
-      t.int :day_price
+      t.integer :day_time_begin
+      t.integer :day_time_end
+      t.integer :day_price
       t.decimal :day_first_hour_price
       t.decimal :day_second_hour_price
-      t.int :night_time_begin
-      t.int :night_time_end
+      t.integer :night_time_begin
+      t.integer :night_time_end
       t.decimal :night_price
-      t.int :night_price_hour
-      t.int :times_price
+      t.integer :night_price_hour
+      t.integer :times_price
       t.boolean :service_month
-      t.int :month_price
+      t.integer :month_price
       t.boolean :service_wash
       t.boolean :service_wc
       t.boolean :service_repair

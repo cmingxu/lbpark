@@ -1,7 +1,7 @@
 class CreateParkInfos < ActiveRecord::Migration
   def change
     create_table :park_infos do |t|
-      t.park :reference
+      t.integer :park_id
       t.text :day_time
       t.text :night_time
       t.text :day_price_desc

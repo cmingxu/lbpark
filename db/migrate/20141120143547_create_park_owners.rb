@@ -1,7 +1,7 @@
 class CreateParkOwners < ActiveRecord::Migration
   def change
     create_table :park_owners do |t|
-      t.park :reference
+      t.integer :park_id
       t.decimal :wgs_lat
       t.decimal :wgs_lng
       t.string :contract
