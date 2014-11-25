@@ -45,4 +45,6 @@
 #
 
 class Park < ActiveRecord::Base
+  has_one :owner, :class_name => "ParkOwner"
+  has_one :info, :class_name => "ParkInfo"
 end

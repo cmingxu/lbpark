@@ -9,7 +9,7 @@ class CreateParkOwners < ActiveRecord::Migration
       t.string :ownership
       t.string :owner
       t.text :desc
-      t.string :maitainer
+      t.string :maintainer
 
       t.timestamps
     end

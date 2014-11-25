@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124083436) do
+ActiveRecord::Schema.define(version: 20141124093743) do
 
   create_table "park_infos", force: true do |t|
     t.integer  "park_id"
@@ -25,6 +25,9 @@ ActiveRecord::Schema.define(version: 20141124083436) do
     t.text     "service_wc_desc"
     t.text     "service_wash_desc"
     t.text     "total_count_desc"
+    t.text     "day_price_desc_temp"
+    t.text     "night_price_desc_temp"
+    t.text     "distance_desc"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -38,7 +41,7 @@ ActiveRecord::Schema.define(version: 20141124083436) do
     t.string   "ownership"
     t.string   "owner"
     t.text     "desc"
-    t.string   "maitainer"
+    t.string   "maintainer"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -77,10 +80,29 @@ ActiveRecord::Schema.define(version: 20141124083436) do
     t.boolean  "service_times"
     t.boolean  "is_recommend"
     t.boolean  "has_service_coupon"
-    t.boolean  "has_service_pointeger"
+    t.boolean  "has_service_point"
     t.boolean  "is_only_service"
     t.decimal  "times_price_all_day",   precision: 10, scale: 0
     t.string   "tips"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sms_codes", force: true do |t|
+    t.string   "phone"
+    t.string   "code"
+    t.datetime "expire_at"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_favorites", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "park_id"
+    t.string   "label"
+    t.decimal  "lng",        precision: 10, scale: 0
+    t.decimal  "lat",        precision: 10, scale: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
