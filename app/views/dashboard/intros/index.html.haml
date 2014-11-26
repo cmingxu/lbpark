@@ -1,0 +1,20 @@
+= link_to "新建", new_dashboard_intro_path, :class => "btn btn-warning pull-right"
+
+%table.table.table-condensed
+  %thead
+    %th 标题
+    %th 概述
+    %th 录入人
+    %th
+
+  %tbody
+    - @intros.each_with_index do |intro, index|
+      %tr
+        %td= link_to index + 1, edit_dashboard_intro_path(intro)
+        %td= link_to intro.title, edit_dashboard_intro_path(intro)
+        %td= intro.desc
+        %td= intro.created_by.try :name
+
+
+
+= paginate @intros

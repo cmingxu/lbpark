@@ -1,5 +1,18 @@
 Rails.application.routes.draw do
-  mount Luobo::API => '/'
+
+
+  root "dashboard/intros#index"
+
+
+  namespace :dashboard do
+    resources :intros  do
+      get 'preview'
+    end
+  end
+  mount Luobo::API => '/api'
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

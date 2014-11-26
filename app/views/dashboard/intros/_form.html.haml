@@ -1,0 +1,11 @@
+= form_for [:dashboard, @intro], :role => "form" do |f|
+  .form-group
+    %label 标题
+    = f.text_field :title, :class => "form-control"
+    %label 描述(逗号分割)
+    = f.text_field :desc, :class => "form-control"
+    %label 内容
+    = f.kindeditor :content, :class => "form-control"
+
+  = f.submit "保存", :class => "btn btn-primary"
+
