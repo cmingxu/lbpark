@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(version: 20141126082139) do
 
   create_table "park_owners", force: true do |t|
     t.integer  "park_id"
-    t.decimal  "wgs_lat",        precision: 10, scale: 0
-    t.decimal  "wgs_lng",        precision: 10, scale: 0
+    t.decimal  "wgs_lat"
+    t.decimal  "wgs_lng"
     t.string   "contract"
     t.string   "contract_phone"
     t.string   "ownership"
@@ -65,18 +65,18 @@ ActiveRecord::Schema.define(version: 20141126082139) do
     t.string   "address"
     t.string   "park_type"
     t.string   "total_count"
-    t.decimal  "gcj_lat",               precision: 10, scale: 0
-    t.decimal  "gcj_lng",               precision: 10, scale: 0
+    t.decimal  "gcj_lat"
+    t.decimal  "gcj_lng"
     t.boolean  "whole_day"
     t.string   "day_only"
     t.integer  "day_time_begin"
     t.integer  "day_time_end"
     t.integer  "day_price"
-    t.decimal  "day_first_hour_price",  precision: 10, scale: 0
-    t.decimal  "day_second_hour_price", precision: 10, scale: 0
+    t.decimal  "day_first_hour_price"
+    t.decimal  "day_second_hour_price"
     t.integer  "night_time_begin"
     t.integer  "night_time_end"
-    t.decimal  "night_price",           precision: 10, scale: 0
+    t.decimal  "night_price"
     t.integer  "night_price_hour"
     t.integer  "times_price"
     t.boolean  "service_month"
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 20141126082139) do
     t.boolean  "has_service_coupon"
     t.boolean  "has_service_point"
     t.boolean  "is_only_service"
-    t.decimal  "times_price_all_day",   precision: 10, scale: 0
+    t.decimal  "times_price_all_day"
     t.string   "tips"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -111,8 +111,8 @@ ActiveRecord::Schema.define(version: 20141126082139) do
     t.integer  "user_id"
     t.integer  "park_id"
     t.string   "label"
-    t.decimal  "lng",        precision: 10, scale: 0
-    t.decimal  "lat",        precision: 10, scale: 0
+    t.decimal  "lng"
+    t.decimal  "lat"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

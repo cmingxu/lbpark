@@ -14,6 +14,7 @@
         %td= link_to intro.title, edit_dashboard_intro_path(intro)
         %td= intro.desc
         %td= intro.created_by.try :name
+        %td= link_to "Delete", dashboard_intro_path(intro), :method => :delete, :confirm => "确信删除？"
 
 
 

@@ -42,7 +42,7 @@ class Dashboard::IntrosController < ApplicationController
     @intro.destroy
 
     respond_to do |format|
-      format.html { redirect_to(intros_url) }
+      format.html { redirect_to(dashboard_intros_url) }
     end
   end
 

@@ -2,8 +2,10 @@
   .form-group
     %label 标题
     = f.text_field :title, :class => "form-control"
+  .form-group
     %label 描述(逗号分割)
     = f.text_field :desc, :class => "form-control"
+  .form-group
     %label 内容
     = f.kindeditor :content, :class => "form-control"
 
