@@ -1,5 +1,15 @@
 <% if Rails.env.production? %>
-    var config = { "websocket_url": "121.40.129.130/socket.io/" };
+    var config = {
+      "amap_key": "",
+      "default_location": { "lng": 116.39, "lat": 39.9},
+      "default_zoom": 15,
+      "tabbar_height": 80
+    };
 <% else  %>
-    var config = { "websocket_url": "localhost:3001" };
+    var config = {
+      "amap_key": "",
+      "default_location": { "lng": 116.39, "lat": 39.9},
+      "default_zoom": 15,
+      "tabbar_height": 80
+    };
 <% end %>
