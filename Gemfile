@@ -41,6 +41,7 @@ gem 'annotate', '~> 2.6.5'
 gem 'hashie', :git => 'git@github.com:intridea/hashie.git'
 gem "hashie_rails", :git => "git@github.com:Maxim-Filimonov/hashie_rails.git"
 gem 'kaminari'
+gem 'rack-weixin'
 
 
 
