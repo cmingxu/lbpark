@@ -46,9 +46,16 @@ function add_new_marker(location) {
     map:mapObj,
     position: new AMap.LngLat(location.lng,
                               location.lat),
-                              offset: new AMap.Pixel(-10,-34),
+                              offset: new AMap.Pixel(-10, -34),
                               icon: "http://webapi.amap.com/images/0.png"
   });
+
+  AMap.event.addListener(marker, 'click', function () {
+    console.log('marker click');
+    console.log(location.name);
+    marker.setContent("<span>" + location.name + "</span>")
+  });
+
 }
 
 function fetch_parkes(location) {
