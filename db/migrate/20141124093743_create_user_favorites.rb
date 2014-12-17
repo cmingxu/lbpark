@@ -4,8 +4,8 @@ class CreateUserFavorites < ActiveRecord::Migration
       t.integer :user_id
       t.integer :park_id
       t.string :label
-      t.decimal :lng
-      t.decimal :lat
+      t.decimal :lng, :precision => 10, :scale => 6
+      t.decimal :lat, :precision => 10, :scale => 6
 
       t.timestamps
     end

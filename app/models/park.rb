@@ -47,4 +47,7 @@
 class Park < ActiveRecord::Base
   has_one :owner, :class_name => "ParkOwner"
   has_one :info, :class_name => "ParkInfo"
+
+  scope :within_range, lambda {|range| where(["gcj_lng > ? AND gcj_lat > ? AND gcj_lng < ? AND gcj_lat <?", range.p1.lng, range.p1.lat, range.p2.lng, range.p2.lat]).limit(200) }
+  #scope :within_range, lambda {|range| where(["gcj_lng > ? ", range.p1.lng]).limit(200) }
 end

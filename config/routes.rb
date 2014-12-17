@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
 
+  namespace :api do
+    get 'parks' => "parks#index"
+  end
+
   get 'mobile/map'
 
   root "dashboard/intros#index"
@@ -11,7 +15,6 @@ Rails.application.routes.draw do
       get 'preview'
     end
   end
-  mount Luobo::API => '/api'
 
 
 

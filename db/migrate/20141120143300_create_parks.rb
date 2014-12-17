@@ -9,8 +9,8 @@ class CreateParks < ActiveRecord::Migration
       t.string :address
       t.string :park_type
       t.string :total_count
-      t.decimal :gcj_lat
-      t.decimal :gcj_lng
+      t.decimal :gcj_lat, :precision => 10, :scale => 6
+      t.decimal :gcj_lng, :precision => 10, :scale => 6
       t.boolean :whole_day
       t.string :day_only
       t.integer :day_time_begin
