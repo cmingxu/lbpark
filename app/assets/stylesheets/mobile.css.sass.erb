@@ -1,0 +1,36 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+//
+
+#map
+  width: 100%
+
+#tabs
+  width: 100%
+  a
+    float: left
+    width: 33.3%
+    height: 50
+    font-size: 11px
+    text-align: center
+    color: #808080
+
+    span
+      line-height: 10px
+      display: inline-block
+      padding-top: 30px
+      width: 100%
+      font-size: 11px
+
+  .home_press span
+    background: url(<%= asset_path('home_press.png')%>) no-repeat center 5px
+    background-size: 25px 25px
+  .order span
+    background: url(<%= asset_path('order.png')%>) no-repeat center 5px
+    background-size: 25px 25px
+  .card span
+    background: url(<%= asset_path('card.png')%>) no-repeat center 5px
+    background-size: 25px 25px
+
+
