@@ -10,6 +10,8 @@ function auto_ajust_size() {
 }
 
 var mapObj;
+var center = config.default_location;
+
 //初始化地图对象，加载地图
 function mapInit() {
   auto_ajust_size();
@@ -19,22 +21,24 @@ function mapInit() {
     zoomEnable:true,
     //二维地图显示视口
     view: new AMap.View2D({
-      center:new AMap.LngLat(config.default_location.lng, config.default_location.lat),//地图中心点
+      center:new AMap.LngLat(center.lng, center.lat),//地图中心点
       zoom: config.default_zoom //地图显示的缩放级别
     })
   });
 
-  add_new_marker({lng: config.default_location.lng, lat: config.default_location.lat});
+  add_plugins();
+  add_event_listeners();
+  fetch_parkes(center);
 
+
+}
+
+function add_plugins() {
   mapObj.plugin(["AMap.Scale"],function(){
     //加载工具条
     var tool = new AMap.Scale();
     mapObj.addControl(tool);
   });
-
-  http_utils.get("/api/parks.json",
-                 {lng: config.default_location.lng, lat: config.default_location.lat},
-                 add_new_marker);
 }
 
 function add_new_marker(location) {
@@ -45,4 +49,18 @@ function add_new_marker(location) {
                               offset: new AMap.Pixel(-10,-34),
                               icon: "http://webapi.amap.com/images/0.png"
   });
+}
+
+function fetch_parkes(location) {
+  http_utils.get("/api/parks.json",
+                 {lng: location.lng, lat: location.lat},
+                 add_new_marker);
+}
+
+function add_event_listeners() {
+  AMap.event.addListener(mapObj,"moveend", function () {
+   center = mapObj.getCenter();
+   fetch_parkes(center);
+  });
+
 }
