@@ -8,6 +8,7 @@ class CreateParks < ActiveRecord::Migration
       t.string :name
       t.string :address
       t.string :park_type
+      t.string :park_type_code
       t.string :total_count
       t.decimal :gcj_lat, :precision => 10, :scale => 6
       t.decimal :gcj_lng, :precision => 10, :scale => 6

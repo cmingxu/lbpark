@@ -35,6 +35,7 @@ task convert: [:environment] do
       p.name = o.name
       p.address = o.address
       p.park_type = o.changed_type
+      p.park_type_code = o.ptype
       p.total_count  = o.total_count
       p.gcj_lat  = o.gcj_lat
       p.gcj_lng = o.gcj_lng

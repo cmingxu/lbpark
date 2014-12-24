@@ -1,8 +1,18 @@
-#map
+#map{"ng-controller" => "mapController"}
+  #park_detail.hidden
+    #park_detail_main
+      #park_main_info
+        %p.park_detail_name {{current_park.name}}
+        %p.park_detail_addr {{current_park.name}} {{current_park.name}}
+      #share_button
+    #park_detail_other
+
 #tabs
-  %a.home_press
+  %a{:class => map_nav_class("home")}
     %span 附近
-  %a.order
-    %span 附近
-  %a.card
-    %span 附近
+  %a{:class => map_nav_class("order")}
+    %span 订单
+  %a{:class => map_nav_class("card")}
+    %span 我的
+
+

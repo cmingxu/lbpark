@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20141126082139) do
     t.string   "name"
     t.string   "address"
     t.string   "park_type"
+    t.string   "park_type_code"
     t.string   "total_count"
     t.decimal  "gcj_lat",               precision: 10, scale: 6
     t.decimal  "gcj_lng",               precision: 10, scale: 6
@@ -111,8 +112,8 @@ ActiveRecord::Schema.define(version: 20141126082139) do
     t.integer  "user_id"
     t.integer  "park_id"
     t.string   "label"
-    t.decimal  "lng",        precision: 10, scale: 0
-    t.decimal  "lat",        precision: 10, scale: 0
+    t.decimal  "lng",        precision: 10, scale: 6
+    t.decimal  "lat",        precision: 10, scale: 6
     t.datetime "created_at"
     t.datetime "updated_at"
   end
