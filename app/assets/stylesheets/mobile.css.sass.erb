@@ -6,47 +6,74 @@
 
 body
   margin: 0px
+  width: 100%
+  height: 100%
 .hidden
   display: none
 .shown
   display: block
 
+.clearfix
+  clear: both
+
 #map
   width: 100%
-  position: relative
-  #park_detail
+  height: 100%
+
+#park_detail
+  width: 100%
+  position: fixed
+  bottom: -300px
+  z-index: 1002
+  border-top: 1px solid gray
+  background-color: white
+  #park_detail_main
     width: 100%
-    position: absolute
-    bottom: 0px
-    opacity: 0.6
-    z-index: 1000
-    border-top: 1px solid black
-    background-color: white
-    #park_detail_main
-      width: 100%
-      padding: 10px 10px
-      #park_main_info
-        display: inline
-        p
-          padding: 2px
-          margin: 0px
-        .park_detail_name
-          font-weight: bold
-          color: black
-        .park_detail_addr
-          font-size: 0.8em
-      #share_button
+    height: 68px
+    border-bottom: 1px solid gray
+    #park_main_info
+      cursor: pointer
+      padding: 10px
+      float: left
+      display: inline
+      p
+        padding: 2px
+        margin: 0px
+      .park_detail_name
+        font-weight: bold
+        color: black
+      .park_detail_addr
+        font-size: 0.8em
+    #share_button
+      padding: 10px
+      color: blue
+      width: 50px
+      border-left: 1px solid gray
+      background-color: white
+      background: url(<%= asset_path('abs__ic_menu_share_holo_light.png')%>) no-repeat center 5px
+      height: 50px
+      float: right
+
+  #park_detail_other
+    height: 200px
+    .park_detail_item
+      .park_detail_ico
         width: 50px
-        border-left: 1px solid black
-        float: right
+        padding-left: 5px
+        background-color: white
+        height: 50px
+      .range
+        background: url(<%= asset_path('abs__ic_menu_share_holo_light.png')%>) no-repeat center
 
 
 #tabs
   width: 100%
+  z-index: 10040
+  position: fixed
   a
     float: left
     width: 33.3%
-    height: 50
+    height: 50px
     font-size: 11px
     text-align: center
     color: #808080

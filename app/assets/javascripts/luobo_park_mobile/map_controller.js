@@ -1,9 +1,27 @@
 var luoboParkMobile = angular.module('luoboParkMobile', []);
 
-luoboParkMobile.controller('mapController',['$scope', function ($scope) {
+luoboParkMobile.controller('mapController',['$scope', '$timeout', function ($scope, $timeout) {
   $scope.mapObj;
   $scope.center = config.default_location;
-  $scope.current_park = {name: "圣诞快乐"};
+
+  $scope.state = {
+    current_state: "hide",
+    current_park: {name: "air force one"},
+    park_detail_dom: $('#park_detail'),
+    park_detail_dom_detail_park: $('#park_detail_other'),
+    enter_brief_show_state:  function () {
+      this.park_detail_dom.css("bottom","-138px");
+      this.park_detail_dom_detail_park.css("opacity","0");
+    },
+    enter_detail_show_state:  function () {
+      this.park_detail_dom_detail_park.css("opacity","1");
+      this.park_detail_dom.css("bottom","0px");
+    },
+    enter_hide_state: function () {
+      this.park_detail_dom.css("bottom","-252px");
+    }
+  }
+
 
   function auto_ajust_size() {
     $("#map").height(window.innerHeight - config.tabbar_height);
@@ -49,8 +67,10 @@ luoboParkMobile.controller('mapController',['$scope', function ($scope) {
     marker.park = location;
 
     AMap.event.addListener(marker, 'click', function () {
-      $scope.current_park = marker.park;
-      $('#park_detail').show();
+      $timeout(function () {
+        $scope.state.current_park = marker.park;
+        $scope.state.enter_brief_show_state();
+      }, 100);
     });
 
   }
@@ -65,6 +85,11 @@ luoboParkMobile.controller('mapController',['$scope', function ($scope) {
     AMap.event.addListener($scope.mapObj,"moveend", function () {
       $scope.center = $scope.mapObj.getCenter();
       fetch_parkes($scope.center);
+    });
+
+    AMap.event.addListener($scope.mapObj,"click", function () {
+      $scope.state.current_park = null;
+      $scope.state.enter_hide_state();
     });
   }
   mapInit();

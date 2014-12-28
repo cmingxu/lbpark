@@ -1,11 +1,4 @@
 #map{"ng-controller" => "mapController"}
-  #park_detail.hidden
-    #park_detail_main
-      #park_main_info
-        %p.park_detail_name {{current_park.name}}
-        %p.park_detail_addr {{current_park.name}} {{current_park.name}}
-      #share_button
-    #park_detail_other
 
 #tabs
   %a{:class => map_nav_class("home")}
@@ -15,4 +8,23 @@
   %a{:class => map_nav_class("card")}
     %span 我的
 
-
+#park_detail
+  #park_detail_main
+    #park_main_info{"ng-click" => "state.enter_detail_show_state()"}
+      .park_detail_name 世贸天阶{{state.current_park.name}}
+      .park_detail_addr 世贸天阶地下三层{{state.current_park.name}} {{state.current_park.name}}
+    #share_button
+    .clearfix
+  #park_detail_other
+    .park_detail_item
+      .park_detail_ico.range
+      .park_detail_desc
+    .park_detail_item
+      .park_detail_ico
+      .park_detail_desc
+    .park_detail_item
+      .park_detail_ico
+      .park_detail_desc
+    .park_detail_item
+      .park_detail_ico
+      .park_detail_desc
