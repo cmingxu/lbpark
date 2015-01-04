@@ -1,0 +1,12 @@
+%table.table.table-bordered
+  %thead
+    - Park.column_names.each do |col|
+      %th= col
+
+  %tbody
+    - @parks.each do |p|
+      %tr
+        - p.attributes.each do |k, v|
+          %td= v
+
+= paginate @parks

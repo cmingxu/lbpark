@@ -1,14 +1,14 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :application, 'btcall.com'
-set :repo_url, 'git@github.com:cmingxu/btcall.git'
+set :application, 'lbpark.com'
+set :repo_url, 'git@github.com:cmingxu/lbpark.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/deploy/btcall'
+set :deploy_to, '/home/deploy/lbpark'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -43,14 +43,14 @@ namespace :deploy do
     desc "#{command} unicorn server"
     task command do
       on roles(:all) do |host|
-        execute "/etc/init.d/unicorn_btcall #{command}"
+        execute "/etc/init.d/unicorn_lbpark #{command}"
       end
     end
   end
 
   task :change_dazahui_permission do
     on roles(:all) do |host|
-      execute "chmod a+x #{current_path}/config/btcall.sh"
+      execute "chmod a+x #{current_path}/config/lbpark.sh"
     end
   end
   after "deploy:published", "deploy:change_dazahui_permission"
@@ -58,8 +58,8 @@ namespace :deploy do
 
   task :setup_config do
     on roles(:all) do |host|
-      sudo "ln -nfs #{current_path}/config/btcall.conf /etc/nginx/sites-enabled/btcall"
-      sudo "ln -nfs #{current_path}/config/btcall.sh /etc/init.d/unicorn_btcall"
+      sudo "ln -nfs #{current_path}/config/lbpark.conf /etc/nginx/sites-enabled/lbpark"
+      sudo "ln -nfs #{current_path}/config/lbpark.sh /etc/init.d/unicorn_lbpark"
     end
   end
   after "deploy:published", "deploy:setup_config"

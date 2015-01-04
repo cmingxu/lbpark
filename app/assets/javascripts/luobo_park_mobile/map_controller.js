@@ -18,7 +18,7 @@ luoboParkMobile.controller('mapController',['$scope', '$timeout', function ($sco
       this.park_detail_dom.css("bottom","0px");
     },
     enter_hide_state: function () {
-      this.park_detail_dom.css("bottom","-252px");
+      this.park_detail_dom.css("bottom","-552px");
     }
   }
 

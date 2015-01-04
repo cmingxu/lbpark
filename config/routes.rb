@@ -1,16 +1,15 @@
 Rails.application.routes.draw do
 
 
-  namespace :api do
-    get 'parks' => "parks#index"
-  end
 
   get 'mobile/map'
 
-  root "dashboard/intros#index"
-
 
   namespace :dashboard do
+    get "/" => "base#index"
+
+    resources :parks
+
     resources :intros  do
       get 'preview'
     end
