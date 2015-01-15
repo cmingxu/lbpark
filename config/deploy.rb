@@ -1,14 +1,14 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :application, 'lbpark.com'
-set :repo_url, 'git@github.com:cmingxu/lbpark.git'
+set :application, 'lbpark'
+set :repo_url, 'git@github.com:arieso/lbpark.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, '/home/deploy/lbpark'
+set :deploy_to, '/home/ubuntu/lbpark'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -48,12 +48,12 @@ namespace :deploy do
     end
   end
 
-  task :change_dazahui_permission do
+  task :change_lbpark_permission do
     on roles(:all) do |host|
       execute "chmod a+x #{current_path}/config/lbpark.sh"
     end
   end
-  after "deploy:published", "deploy:change_dazahui_permission"
+  after "deploy:published", "deploy:change_lbpark_permission"
 
 
   task :setup_config do
