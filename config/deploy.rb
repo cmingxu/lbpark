@@ -35,7 +35,7 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/sys
 # set :keep_releases, 5 
 
 set :rvm_type, :user
-set :rvm_ruby_version, '2.1.4'
+set :rvm_ruby_version, '2.1.5'
 set :default_env, { rvm_bin_path: '~/.rvm/bin' }
 
 namespace :deploy do

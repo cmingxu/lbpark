@@ -17,3 +17,6 @@ test:
 
 production:
   <<: *defaults
+
+demo:
+  <<: *defaults
