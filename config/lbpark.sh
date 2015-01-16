@@ -1,8 +1,8 @@
 #!/bin/sh
 # rvm wrapper ruby-1.9.3-p194 bootup
-UNICORN=/home/ubunut/.rvm/bin/bootup_unicorn
-CONFIG_FILE=/home/ubunut/lbpark/current/config/unicorn.rb
-APP_HOME=/home/ubunut/lbpark/current
+UNICORN=/home/ubuntu/.rvm/bin/bootup_unicorn
+CONFIG_FILE=/home/ubuntu/lbpark/current/config/unicorn.rb
+APP_HOME=/home/ubuntu/lbpark/current
  
 case "$1" in
   start)
