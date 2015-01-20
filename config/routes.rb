@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   get 'mobile/map'
 
+  namespace :api do
+    resources :parks
+  end
 
   namespace :dashboard do
     get "/" => "base#index"
