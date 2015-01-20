@@ -36,7 +36,7 @@ namespace :deploy do
     desc "#{command} unicorn server"
     task command do
       on roles(:all) do |host|
-        execute "/etc/init.d/unicorn_lbpark #{command} demo"
+        execute "/etc/init.d/unicorn_lbpark #{command}"
       end
     end
   end
