@@ -6,7 +6,7 @@ APP_HOME=/home/ubuntu/lbpark/current
  
 case "$1" in
   start)
-  $UNICORN -c $CONFIG_FILE -E production -D
+  $UNICORN -c $CONFIG_FILE -E $2 -D
   ;;
   stop)
   kill -QUIT `cat /tmp/unicorn_btcall.pid`

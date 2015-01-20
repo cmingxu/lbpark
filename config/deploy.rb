@@ -39,15 +39,6 @@ set :rvm_ruby_version, '2.1.5'
 set :default_env, { rvm_bin_path: '/usr/local/rvm/bin' }
 
 namespace :deploy do
-  %w[start stop restart].each do |command|
-    desc "#{command} unicorn server"
-    task command do
-      on roles(:all) do |host|
-        execute "/etc/init.d/unicorn_lbpark #{command}"
-      end
-    end
-  end
-
   task :change_lbpark_permission do
     on roles(:all) do |host|
       execute "chmod a+x #{current_path}/config/lbpark.sh"

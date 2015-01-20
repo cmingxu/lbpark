@@ -30,6 +30,18 @@ set :ssh_options, {
   keys: %w(/Users/cmxu/.ssh/kp-11n2rc6w)
 
 }
+
+namespace :deploy do
+  %w[start stop restart].each do |command|
+    desc "#{command} unicorn server"
+    task command do
+      on roles(:all) do |host|
+        execute "/etc/init.d/unicorn_lbpark #{command} demo"
+      end
+    end
+  end
+
+end
 #
 # And/or per server (overrides global)
 # ------------------------------------
