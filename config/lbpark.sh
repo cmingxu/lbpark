@@ -9,10 +9,10 @@ case "$1" in
   $UNICORN -c $CONFIG_FILE -E $2 -D
   ;;
   stop)
-  kill -QUIT `cat /tmp/unicorn_btcall.pid`
+  kill -QUIT `cat /tmp/unicorn_lbpark.pid`
   ;;
   restart|force-reload)
-    kill -USR2 `cat /tmp/unicorn_btcall.pid`
+    kill -USR2 `cat /tmp/unicorn_lbpark.pid`
   ;;
   *)
    echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2
