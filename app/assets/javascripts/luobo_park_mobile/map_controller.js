@@ -2,24 +2,6 @@ var LB = LB || {};
 LB.mapObj;
 LB.center = config.default_location;
 
-LB.state = {
-  current_state: "hide",
-  current_park: {name: "air force one"},
-  park_detail_dom: $('#park_detail'),
-  park_detail_dom_detail_park: $('#park_detail_other'),
-  enter_brief_show_state:  function () {
-    this.park_detail_dom.css("bottom","-138px");
-    this.park_detail_dom_detail_park.css("opacity","0");
-  },
-  enter_detail_show_state:  function () {
-    this.park_detail_dom_detail_park.css("opacity","1");
-    this.park_detail_dom.css("bottom","0px");
-  },
-  enter_hide_state: function () {
-    this.park_detail_dom.css("bottom","-552px");
-  }
-}
-
 
 function auto_ajust_size() {
   $("#map").height(window.innerHeight - config.tabbar_height);
@@ -65,18 +47,19 @@ function add_new_marker(location) {
   marker.park = location;
 
   AMap.event.addListener(marker, 'click', function () {
-    $timeout(function () {
-      LB.state.current_park = marker.park;
-      LB.state.enter_brief_show_state();
-    }, 100);
   });
 
 }
 
 function fetch_parkes(location) {
-  http_utils.get("/api/parks.json",
-                 {lng: location.lng, lat: location.lat},
-                 add_new_marker);
+  $.get("/api/parks.json",
+        {lng: location.lng, lat: location.lat},
+        function (response) {
+          response.forEach(function (item, index) {
+            add_new_marker(item);
+          });
+        }
+       );
 }
 
 function add_event_listeners() {
@@ -86,11 +69,12 @@ function add_event_listeners() {
   });
 
   AMap.event.addListener(LB.mapObj,"click", function () {
-    LB.state.current_park = null;
-    LB.state.enter_hide_state();
   });
 }
 
+var water_drop =  "<svg><g><path style='fill:blue;' d='M 7.7155688,1.0804817 C 7.7155688,1.0804817 13.336856,10.649294 10.87745,13.856719 C 8.9532335,16.36618 5.1854657,15.837915 4.1843807,13.379492 C 2.6790307,9.6827164 6.4939349,9.712077 7.7155688,1.0804817 z'></path></g></svg>";
+
 $(document).ready(function () {
   mapInit();
+  $('body').append($(water_drop));
 });
