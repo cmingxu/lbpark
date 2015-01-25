@@ -1,20 +1,28 @@
+//= require zepto
+//= require config
+
+var LB = LB || {};
+
+LB.svg_mark_html = "<svg><g><path style='fill:blue;' d='M 7.7155688,1.0804817 C 7.7155688,1.0804817 13.336856,10.649294 10.87745,13.856719 C 8.9532335,16.36618 5.1854657,15.837915 4.1843807,13.379492 C 2.6790307,9.6827164 6.4939349,9.712077 7.7155688,1.0804817 z'></path></g></svg>";
+
+
+LB.svg_mark = function (color, price) {
+  return LB.svg_mark_html;
+}
 var LB = LB || {};
 LB.mapObj;
 LB.center = config.default_location;
 
 
-function auto_ajust_size() {
-  $("#map").height(window.innerHeight - config.tabbar_height);
-  $("#tabs").height(config.tabbar_height);
-}
 
 //初始化地图对象，加载地图
 function mapInit() {
-  auto_ajust_size();
+  $("#map").height(window.innerHeight - config.tabbar_height);
   LB.mapObj = new AMap.Map("map",{
     rotateEnable:true,
     dragEnable:true,
     zoomEnable:true,
+    zooms: [16, 17,18,19],
     //二维地图显示视口
     view: new AMap.View2D({
       center: new AMap.LngLat(LB.center.lng, LB.center.lat),//地图中心点
@@ -41,7 +49,7 @@ function add_new_marker(location) {
     position: new AMap.LngLat(location.lng,
                               location.lat),
                               offset: new AMap.Pixel(-10, -34),
-                              icon: "http://webapi.amap.com/images/0.png"
+                              content: LB.svg_mark()
   });
 
   marker.park = location;
@@ -72,9 +80,7 @@ function add_event_listeners() {
   });
 }
 
-var water_drop =  "<svg><g><path style='fill:blue;' d='M 7.7155688,1.0804817 C 7.7155688,1.0804817 13.336856,10.649294 10.87745,13.856719 C 8.9532335,16.36618 5.1854657,15.837915 4.1843807,13.379492 C 2.6790307,9.6827164 6.4939349,9.712077 7.7155688,1.0804817 z'></path></g></svg>";
 
 $(document).ready(function () {
   mapInit();
-  $('body').append($(water_drop));
 });

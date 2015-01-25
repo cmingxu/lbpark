@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
 
   get 'mobile/map'
+  get 'mobile/hot_place'
 
   namespace :api do
     resources :parks
@@ -11,7 +12,6 @@ Rails.application.routes.draw do
   namespace :dashboard do
     get "/" => "base#index"
 
-    resources :parks
 
     resources :intros  do
       get 'preview'

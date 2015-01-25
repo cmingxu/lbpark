@@ -6,4 +6,7 @@ class MobileController < ApplicationController
   
   def map
   end
+
+  def hot_place
+  end
 end

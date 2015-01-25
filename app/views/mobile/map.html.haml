@@ -1,12 +1,5 @@
-#map{"ng-controller" => "mapController"}
+#map
 
-#tabs
-  %a{:class => map_nav_class("home")}
-    %span 附近
-  %a{:class => map_nav_class("order")}
-    %span 订单
-  %a{:class => map_nav_class("card")}
-    %span 我的
 
 #park_detail
   #park_detail_main
@@ -28,3 +21,5 @@
     .park_detail_item
       .park_detail_ico
       .park_detail_desc
+
+= javascript_include_tag 'map'
