@@ -9,9 +9,9 @@
   %body
     = yield
     #tabs
-      %a{:class => map_nav_class("home")}
+      %a{:class => map_nav_class("home"), :href => "/"}
         %span 附近
-      %a{:class => map_nav_class("order")}
-        %span 订单
-      %a{:class => map_nav_class("card")}
+      %a{:class => map_nav_class("order"), :href => "/mobile/hot_place"}
+        %span 搜索
+      %a{:class => map_nav_class("card"), :href => "/mobile/setting"}
         %span 我的

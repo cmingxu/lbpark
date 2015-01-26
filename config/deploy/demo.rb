@@ -27,7 +27,7 @@ server 'demo.6luobo.com', user: 'ubuntu', roles: %w{web app}, my_property: :my_v
 # --------------
 set :ssh_options, {
   forward_agent: true,
-  keys: %w(/Users/cmxu/.ssh/kp-11n2rc6w)
+  keys: %w(/Users/cmingxu/.ssh/kp-11n2rc6w)
 
 }
 
