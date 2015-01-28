@@ -10,9 +10,10 @@
 #  name                  :string(255)
 #  address               :string(255)
 #  park_type             :string(255)
+#  park_type_code        :string(255)
 #  total_count           :string(255)
-#  gcj_lat               :integer
-#  gcj_lng               :integer
+#  gcj_lat               :decimal(10, 6)
+#  gcj_lng               :decimal(10, 6)
 #  whole_day             :boolean
 #  day_only              :string(255)
 #  day_time_begin        :integer
@@ -36,7 +37,7 @@
 #  service_times         :boolean
 #  is_recommend          :boolean
 #  has_service_coupon    :boolean
-#  has_service_pointeger :boolean
+#  has_service_point     :boolean
 #  is_only_service       :boolean
 #  times_price_all_day   :integer
 #  tips                  :string(255)
@@ -47,6 +48,8 @@
 class Park < ActiveRecord::Base
   has_one :owner, :class_name => "ParkOwner"
   has_one :info, :class_name => "ParkInfo"
+  has_many :park_statuses
+  has_one :latest_park_status, -> { order("created_at DESC").limit(1) }, :class_name => "ParkStatus"
 
   scope :within_range, lambda {|range| where(["gcj_lng > ? AND gcj_lat > ? AND gcj_lng < ? AND gcj_lat <?", range.p1.lng, range.p1.lat, range.p2.lng, range.p2.lat]).limit(200) }
   scope :with_park_type_code, ->(code) { where(park_type_code: code) }

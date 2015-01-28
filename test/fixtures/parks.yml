@@ -10,9 +10,10 @@
 #  name                  :string(255)
 #  address               :string(255)
 #  park_type             :string(255)
+#  park_type_code        :string(255)
 #  total_count           :string(255)
-#  gcj_lat               :integer
-#  gcj_lng               :integer
+#  gcj_lat               :decimal(10, 6)
+#  gcj_lng               :decimal(10, 6)
 #  whole_day             :boolean
 #  day_only              :string(255)
 #  day_time_begin        :integer
@@ -36,7 +37,7 @@
 #  service_times         :boolean
 #  is_recommend          :boolean
 #  has_service_coupon    :boolean
-#  has_service_pointeger :boolean
+#  has_service_point     :boolean
 #  is_only_service       :boolean
 #  times_price_all_day   :integer
 #  tips                  :string(255)

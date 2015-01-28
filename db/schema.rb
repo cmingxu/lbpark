@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126082139) do
+ActiveRecord::Schema.define(version: 20150128044837) do
 
   create_table "intros", force: true do |t|
     t.text     "content"
@@ -52,6 +52,14 @@ ActiveRecord::Schema.define(version: 20141126082139) do
     t.string   "owner"
     t.text     "desc"
     t.string   "maintainer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "park_statuses", force: true do |t|
+    t.string   "status"
+    t.integer  "park_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
