@@ -56,6 +56,8 @@ function add_new_marker(location) {
   marker.park = location;
 
   AMap.event.addListener(marker, 'click', function () {
+    LB.Logger.debug("marker click");
+    $("#park_detail").removeClass("hidden");
   });
 
 }
@@ -75,11 +77,13 @@ function add_event_listeners() {
   AMap.event.addListener(LB.mapObj,"moveend", function () {
     LB.center = LB.mapObj.getCenter();
     fetch_parkes(LB.center);
+    $("#park_detail").addClass("hidden");
   });
 
   AMap.event.addListener(LB.mapObj,"click", function () {
+    $("#park_detail").addClass("hidden");
     LB.Logger.error("this is error");
-    LB.Logger.debug("wooo");
+    LB.Logger.debug("this is  going to be a debug messagthis is  going to be a debug message");
   });
 }
 
