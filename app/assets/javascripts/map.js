@@ -57,6 +57,9 @@ function add_new_marker(location) {
 
   AMap.event.addListener(marker, 'click', function () {
     LB.Logger.debug("marker click");
+
+    $("#park_name").text(marker.park.name);
+    $("#park_short_description").text(marker.park.park_type);
     $("#park_detail").removeClass("hidden");
   });
 

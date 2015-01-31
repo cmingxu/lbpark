@@ -6,7 +6,9 @@ class Api::ParksController < ApplicationController
         :lng => p.gcj_lng,
         :lat => p.gcj_lat,
         :id  => p.id,
-        :name => p.name
+        :name => p.name,
+        :park_type => p.park_type,
+        :tips => p.tips
       }
     end)
 
