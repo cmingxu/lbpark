@@ -1,6 +1,7 @@
 defaults: &defaults
   title: "lbpark"
   description: "萝卜停车"
+  keywords: "萝卜停车"
   host: "萝卜停车"
   site_name: "lbpark"
   spider_interval: 5 * 60

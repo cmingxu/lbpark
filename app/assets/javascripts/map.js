@@ -1,5 +1,6 @@
 //= require zepto
 //= require config
+//= require logger
 
 var LB = LB || {};
 
@@ -9,7 +10,7 @@ LB.svg_mark_html = "<svg><g><path style='fill:blue;' d='M 7.7155688,1.0804817 C 
 LB.svg_mark = function (color, price) {
   return LB.svg_mark_html;
 }
-var LB = LB || {};
+
 LB.mapObj;
 LB.center = config.default_location;
 
@@ -77,6 +78,8 @@ function add_event_listeners() {
   });
 
   AMap.event.addListener(LB.mapObj,"click", function () {
+    LB.Logger.error("this is error");
+    LB.Logger.debug("wooo");
   });
 }
 
