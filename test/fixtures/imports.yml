@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  batch_num: MyString
+  staff_id: MyString
+  note: 
+  status: MyString
+
+two:
+  batch_num: MyString
+  staff_id: MyString
+  note: 
+  status: MyString

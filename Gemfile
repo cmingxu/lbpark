@@ -17,6 +17,7 @@ gem 'spring',        group: :development
 gem 'unicorn'
 
 
+gem 'state_machine'
 
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'

@@ -13,7 +13,6 @@
 #
 
 class User < ActiveRecord::Base
-
   def self.authenticate!(env)
   end
 

@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-
-
   get 'mobile/map'
   get 'mobile/hot_place'
 
@@ -16,6 +14,15 @@ Rails.application.routes.draw do
     resources :intros  do
       get 'preview'
     end
+  end
+
+  # staff only actions
+  namespace :staff do
+    resources :imports do
+      resources :park_imports
+    end
+
+    resources :parks
   end
 
 
