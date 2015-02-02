@@ -43,12 +43,18 @@ body
     border-bottom: 1px solid black
     span.desc
       float: left
+      padding-top: 14px
+      padding-left: 10px
+      #park_name
+        font-size: 18px
+        font-weight: bold
+      #park_short_description
+        font-size: 12px
     span.nav_button
       width: 64px
       border-left: 1px solid black
       float: right
       display: block
-      line-height: 64px
   #park_detail
     width: 100%
     background-color: white
@@ -56,7 +62,61 @@ body
     border-bottom: 1px solid black
     z-index: 10000
     position: fixed
-
+    .row
+      height: 100px
+      border-top: 1px solid black
+      &:first-child
+        border-top: none
+        .park_preview
+          float: left
+          width: 50%
+        .day_and_night_prices
+          float: right
+          width: 50%
+          .day
+            height: 50px
+          .night
+            background-color: #e4e4e4
+            height: 50px
+          img
+            width: 35%
+            height: 50px
+            float: left
+          .price_detail
+            float: right
+            height: 50px
+            width: 65%
+            .price_and_unit
+              padding-top: 10px
+              color: blue
+              .price
+                font-size: 14px
+              .unit
+                font-size: 10px
+            .time_span
+              font-size: 10px
+      &:nth-child(2)
+        padding-top: 10px
+        padding-left: 10px
+        word-wrap: break-word
+        word-break: normal
+        
+      &:nth-child(3)
+        padding-top: 10px
+        padding-left: 10px
+        background-color: #e4e4e4
+      span.feature
+        border: 1px solid gray
+        padding: 5px
+        margin-right: 10px
+        font-size: 12px
+      .lb_notice
+        width: 30%
+        float: left
+        text-align: right
+      #tips
+        float: right
+        width: 70%
 
 #tabs
   bottom: 0px

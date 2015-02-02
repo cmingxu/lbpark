@@ -7,8 +7,42 @@
       #park_name
       #park_short_description
     %span.nav_button
-      导航
+      %img{:src => "/assets/nav_icon.png", :height => "64", :width => "64"}
 
   #park_detail.hidden
+    .row
+      .park_preview
+        %img{:src => " http://placehold.it/100x100 "}
+      .day_and_night_prices
+        .day
+          %img{:src => " http://placehold.it/50x50 "}
+          .price_detail
+            .price_and_unit
+              %span.price 5元
+              %span.unit /时
+            .time_span
+              07:00 - 21:00
+
+
+        .night
+          %img{:src => " http://placehold.it/50x50 "}
+          .price_detail
+            .price_and_unit
+              %span.price 5元
+              %span.unit /时
+            .time_span
+              21:00 - 07:00
+    .row
+      %span.feature 总车位198个
+      %span.feature 包月1800元起
+      %span.feature 卫生间
+      %span.feature 神州租车
+      %span.feature 有洗车
+    .row
+      .lb_notice
+        萝卜按:
+      #tips
+
+
 
 = javascript_include_tag 'map'

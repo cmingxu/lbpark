@@ -8,6 +8,7 @@ LB.park_info_state = {
   park_title_dom: $("#park_title"),
   detail_dom: $("#park_detail"),
   park_name_dom: $("#park_name"),
+  tips_dom: $("#tips"),
   park_short_description_dom: $("#park_short_description"),
 
 
@@ -25,16 +26,20 @@ LB.park_info_state = {
     this.park_title_dom.css("bottom", config.tabbar_height + "px");
     this.park_title_dom.show('fast');
     this.park_dom.show('fast');
+    this.detail_dom.hide('fast');
     this.park_title_dom.click(function () {
       LB.park_info_state.on_enter_detail(park);
     });
   },
 
-  on_enter_detail: function () {
+  on_enter_detail: function (park) {
     LB.Logger.debug("park info state to detail");
     this.detail_dom.css('bottom', config.tabbar_height + "px");
     this.detail_dom.css('height', config.park_detail_height + "px");
     this.park_title_dom.css('bottom', config.tabbar_height + config.park_detail_height +  "px");
+
+    this.tips_dom.text(park.tips);
+    
     this.detail_dom.show('fast');
     this.park_dom.show('fast');
   }
