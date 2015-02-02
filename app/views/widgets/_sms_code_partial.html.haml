@@ -1,0 +1,27 @@
+- if current_user.mobile_is_valid
+  = hidden_field_tag "sms_code", current_user.mobile, :id => "mobile_num"
+.form-group.row
+  %label.control-label.col-md-3 验证码
+  .col-md-9
+    .input-group
+      = text_field_tag "sms_code", "", :class => "form-control"
+      %span.input-group-btn
+        %a#send_sms_btn.btn.btn-primary 获取验证码
+
+:javascript
+  $("#send_sms_btn").click(function(){
+    var mobile = $("#mobile_num").val();
+    if( mobile == ""){ show_error("请填入您的手机号码"); return; }
+    if(!/\d{11}/.test(mobile)){ show_error("您的手机号码格式有误, 请在个人设置标签下修改您的手机号码"); return; }
+
+    var send_reason = $("#sms_send_reason").val() || "verify";
+
+    $(this).text("发送中...");
+    $.getJSON("/dashboard/settings/send_sms", {"mobile": $("#mobile_num").val(), "send_reason": send_reason}, function(res){
+      if(res.res){
+        $("#send_sms_btn").text("已发送，30秒内不要连续点击");
+      }else{
+        show_error(res.msg);
+      }
+      });
+  });

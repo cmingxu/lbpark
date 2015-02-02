@@ -46,6 +46,12 @@
 #
 
 class Park < ActiveRecord::Base
+  BUSY_STATUS = {
+    :green => 0,
+    :orange => 1,
+    :red => 2,
+    :unknown => 3
+  }
   has_one :owner, :class_name => "ParkOwner"
   has_one :info, :class_name => "ParkInfo"
   has_many :park_statuses

@@ -11,9 +11,9 @@
   %body
     = yield
     #tabs
-      %a{:class => map_nav_class("home"), :href => "/"}
-        %span 附近
-      %a{:class => map_nav_class("order"), :href => "/mobile/hot_place"}
-        %span 搜索
-      %a{:class => map_nav_class("card"), :href => "/mobile/setting"}
-        %span 我的
+      %a{:href => "/"}
+        %span{:class => map_nav_class("map")}
+      %a{:href => "/mobile/hot_place"}
+        %span{:class => map_nav_class("search")}
+      %a{:href => "/mobile/setting"}
+        %span{:class => map_nav_class("mine")}

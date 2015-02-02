@@ -19,6 +19,19 @@ body
 #map
   width: 100%
   height: 1000px
+  .lb_marker
+    background-image: url('park_water_drop.png')
+    background-repeat: repeat-x
+    height: 48px
+    width: 32px
+  .marker_orange
+    background-position-x: 0px
+  .marker_red
+    background-position-x: 32px
+  .marker_blue
+    background-position-x: 65px
+  .marker_green
+    background-position-x: 98px
 
 #park
   #park_title
@@ -50,40 +63,36 @@ body
   width: 100%
   z-index: 10040
   position: fixed
+  background-color: #4d88e6
   a
-    float: left
     width: 33.3%
     height: 50px
-    font-size: 11px
-    text-align: center
-    color: #808080
-
+    width: 33.3%
+    display: block
+    float: left
     span
-      line-height: 10px
-      display: inline-block
-      padding-top: 30px
-      width: 100%
-      font-size: 11px
+      width: 48px
+      height: 100%
+      display: block
+      margin: 0px auto
+      background-image: url(<%= asset_path('tab_icons.png')%>)
+      background-repeat: no-repeat
+    span.map
+      background-position-x: 0px
+    span.search
+      background-position-x: -48px
+    span.mine
+      background-position-x: -96px
+    span.map_press
+      background-position-x: 0px
+      opacity: 0.48
+    span.search_press
+      opacity: 0.48
+      background-position-x: -48px
+    span.mine_press
+      background-position-x: -96px
+      opacity: 0.48
 
-  .home span
-    background: url(<%= asset_path('home.png')%>) no-repeat center 5px
-    background-size: 25px 25px
-  .order span
-    background: url(<%= asset_path('order.png')%>) no-repeat center 5px
-    background-size: 25px 25px
-  .card span
-    background: url(<%= asset_path('card.png')%>) no-repeat center 5px
-    background-size: 25px 25px
-
-  .home_press span
-    background: url(<%= asset_path('home_press.png')%>) no-repeat center 5px
-    background-size: 25px 25px
-  .order_press span
-    background: url(<%= asset_path('order_press.png')%>) no-repeat center 5px
-    background-size: 25px 25px
-  .card_press span
-    background: url(<%= asset_path('card_press.png')%>) no-repeat center 5px
-    background-size: 25px 25px
 
 
 #autocomplete

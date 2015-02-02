@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   namespace :dashboard do
     get "/" => "base#index"
 
-
     resources :intros  do
       get 'preview'
     end

@@ -1,0 +1,30 @@
+!!!
+%html{ :lang => "en" }
+  %head
+    %title= Settings.title
+    %meta{ :charset => 'utf-8' }
+    %meta{ "http-equiv" => "X-UA-Compatible", :content => 'IE=edge' }
+    %meta{ :name => 'viewport', :content => 'width=device-width, initial-scale=1' }
+
+    = stylesheet_link_tag "staff", :media => :all
+    = javascript_include_tag "staff"
+    = csrf_meta_tags
+
+  %body{"ng-app" => "staff", "class" => "staff"}
+    .container-fluid
+      .row-fluid
+        = render :partial => "widgets/staff_header"
+
+    .wrapper
+      .sidebar
+        = render :partial => "widgets/staff_sidebar"
+      .page-wraper
+        = render :partial => "widgets/notice_bar"
+        = yield
+      .row-fluid.footer
+        .container
+          = render :partial => "widgets/staff_footer"
+
+
+
+

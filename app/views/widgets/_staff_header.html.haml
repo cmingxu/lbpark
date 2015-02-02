@@ -1,0 +1,19 @@
+.navbar.header
+  .navbar-header
+    %a.navbar-brand{:href => '/'} BTCall
+  %ul.nav.navbar-nav.pull-right
+    %li
+      %a{:href => "/"}
+        = fa_icon(:star)
+        我的胜率
+        %span
+
+    %li
+      %a{:href => "/"}
+        = fa_icon(:btc)
+        我的资产
+        %span
+    %li
+      -#= link_to "退出账号", staff_logout_path, :method => :delete
+
+

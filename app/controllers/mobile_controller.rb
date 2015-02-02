@@ -1,12 +1,11 @@
 class MobileController < ApplicationController
   layout "mobile"
-  before_filter do
-    @current_nav = "home"
-  end
   
   def map
+    @current_nav = "map"
   end
 
   def hot_place
+    @current_nav = "search"
   end
 end

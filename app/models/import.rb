@@ -16,6 +16,8 @@ class Import < ActiveRecord::Base
   has_many :park_imports
   belongs_to :staff
 
+  mount_uploader :imported_csv, ImportedCsvUploader
+
   state_machine :initial => :uploaded do
     event :import do
       transition :uploaded => :imported

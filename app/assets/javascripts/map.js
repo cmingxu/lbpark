@@ -2,17 +2,10 @@
 //= require config
 //= require logger
 //= require park_info_state
+//= require park_info_marker
 //= require geolocation_by_browser
 
 var LB = LB || {};
-
-//LB.svg_mark_html = "<svg><g><path style='fill:blue;' d='M 7.7155688,1.0804817 C 7.7155688,1.0804817 13.336856,10.649294 10.87745,13.856719 C 8.9532335,16.36618 5.1854657,15.837915 4.1843807,13.379492 C 2.6790307,9.6827164 6.4939349,9.712077 7.7155688,1.0804817 z'></path></g></svg>";
-LB.svg_mark_html = "<svg xmlns='http://www.w3.org/2000/svg' version='1.1'> <rect width='150' height='150' fill='rgb(0, 255, 0)' stroke-width='1' stroke='rgb(0, 0, 0)' /> </svg>";
-
-
-LB.svg_mark = function (color, price) {
-  return LB.svg_mark_html;
-}
 
 LB.mapObj;
 LB.center = config.default_location;
@@ -54,9 +47,8 @@ function add_new_marker(location) {
     map: LB.mapObj,
     position: new AMap.LngLat(location.lng,
                               location.lat),
-                              offset: new AMap.Pixel(-10, -34),
-                              //content: LB.svg_mark()
-                  icon:"http://webapi.amap.com/images/marker_sprite.png"
+                              //offset: new AMap.Pixel(-10, -34),
+                              content: LB.park_info_marker(location)
   });
 
   marker.park = location;
@@ -96,4 +88,7 @@ function add_event_listeners() {
 
 $(document).ready(function () {
   mapInit();
+  $(window).resize(function(){
+    $("#map").height(window.innerHeight - config.tabbar_height);
+  });
 });

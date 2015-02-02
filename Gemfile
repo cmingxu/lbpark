@@ -20,6 +20,7 @@ gem 'unicorn'
 gem 'state_machine'
 
 gem 'bootstrap-sass', '~> 3.2.0'
+gem 'font-awesome-rails', '~> 4.2.0'
 gem 'autoprefixer-rails'
 
 gem "haml-rails"
@@ -29,6 +30,8 @@ gem 'awesome_print', group: :development
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 gem 'rails_kindeditor'
+
+gem 'carrierwave', '0.10.0'
 
 
 gem 'grape', '~> 0.9.1', :git => "git@github.com:intridea/grape.git"

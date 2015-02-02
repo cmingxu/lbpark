@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150201144357) do
+ActiveRecord::Schema.define(version: 20150202025209) do
 
   create_table "imports", force: true do |t|
     t.string   "park_type"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20150201144357) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "imported_csv"
   end
 
   create_table "intros", force: true do |t|

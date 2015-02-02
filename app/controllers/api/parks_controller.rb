@@ -8,7 +8,8 @@ class Api::ParksController < ApplicationController
         :id  => p.id,
         :name => p.name,
         :park_type => p.park_type,
-        :tips => p.tips
+        :tips => p.tips,
+        :busy_status => Park::BUSY_STATUS.values.shuffle.first
       }
     end)
 
