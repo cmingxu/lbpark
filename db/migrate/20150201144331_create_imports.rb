@@ -4,7 +4,7 @@ class CreateImports < ActiveRecord::Migration
       t.string :park_type
       t.string :batch_num
       t.string :staff_id
-      t.desc :note
+      t.text :note
       t.string :status
 
       t.timestamps

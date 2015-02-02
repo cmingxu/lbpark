@@ -2,6 +2,7 @@
 //= require config
 //= require logger
 //= require park_info_state
+//= require geolocation_by_browser
 
 var LB = LB || {};
 
@@ -37,6 +38,7 @@ function mapInit() {
   //add_plugins();
   add_event_listeners();
   fetch_parkes(LB.center);
+  LB.where_am_i(LB.mapObj);
 }
 
 function add_plugins() {
