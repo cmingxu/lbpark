@@ -31,7 +31,25 @@ function mapInit() {
   //add_plugins();
   add_event_listeners();
   fetch_parkes(LB.center);
-  LB.where_am_i(LB.mapObj);
+  if(place_name == '')
+    LB.where_am_i(LB.mapObj);
+  else{
+    AMap.service(["AMap.Geocoder"], function() {
+      MGeocoder = new AMap.Geocoder({
+        city:"010", //城市，默认：“全国”
+        radius:1000 //范围，默认：500
+      });
+      //返回地理编码结果  
+      //地理编码
+      MGeocoder.getLocation(place_name, function(status, result){
+        if(status === 'complete' && result.info === 'OK'){
+          console.log(result);
+          LB.mapObj.setCenter(result.geocodes[0].location);
+        }
+      });
+    });
+  }
+
 }
 
 function add_plugins() {
