@@ -59,4 +59,8 @@ class Park < ActiveRecord::Base
 
   scope :within_range, lambda {|range| where(["gcj_lng > ? AND gcj_lat > ? AND gcj_lng < ? AND gcj_lat <?", range.p1.lng, range.p1.lat, range.p2.lng, range.p2.lat]).limit(200) }
   scope :with_park_type_code, ->(code) { where(park_type_code: code) }
+
+  def current_price
+    self.day_price
+  end
 end
