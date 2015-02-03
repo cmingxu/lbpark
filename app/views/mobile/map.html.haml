@@ -7,15 +7,14 @@
       #park_name
       #park_short_description
     %span.nav_button
-      %img{:src => "/assets/nav_icon.png", :height => "64", :width => "64"}
+      .nav_button_icon
+      .nav_button_text 导航
 
   #park_detail.hidden
     .row
-      .park_preview
-        %img{:src => " http://placehold.it/100x100 "}
       .day_and_night_prices
         .day
-          %img{:src => " http://placehold.it/50x50 "}
+          %span.day_icon
           .price_detail
             .price_and_unit
               %span.price 5元
@@ -25,13 +24,15 @@
 
 
         .night
-          %img{:src => " http://placehold.it/50x50 "}
+          %span.night_icon
           .price_detail
             .price_and_unit
               %span.price 5元
               %span.unit /时
             .time_span
               21:00 - 07:00
+      .park_preview
+        %img{:src => "/assets/preview.png"}
     .row
       %span.feature 总车位198个
       %span.feature 包月1800元起

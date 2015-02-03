@@ -70,4 +70,7 @@ class Park < ActiveRecord::Base
   def current_price
     self.day_price
   end
+
+  def tags
+  end
 end

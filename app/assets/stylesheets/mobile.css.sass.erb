@@ -3,6 +3,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 //
 
+$border-color: #666
+$border-highlight-color-1: #f88db9
+$border-highlight-color-2: #72bbe8
+$border-highlight-color-3: #f8b064
+$border-highlight-color-4: #71d398
+$border-highlight-color-5: #ff7a7b
+$border-highlight-width: 3px
+
 
 body
   margin: 0px
@@ -20,7 +28,7 @@ body
   width: 100%
   height: 1000px
   .lb_marker
-    background-image: url('park_water_drop.png')
+    background-image: url('<%= image_path("park_water_drop.png") %>')
     background-repeat: repeat-x
     height: 48px
     width: 32px
@@ -36,12 +44,12 @@ body
       top: 5px
   .marker_orange
     background-position-x: 0px
-  .marker_red
-    background-position-x: 32px
-  .marker_blue
-    background-position-x: 65px
   .marker_green
-    background-position-x: 98px
+    background-position-x: 64px
+  .marker_blue
+    background-position-x: 128px
+  .marker_red
+    background-position-x: 192px
 
 #park
   #park_title
@@ -49,8 +57,9 @@ body
     background-color: white
     position: fixed
     z-index: 10000
-    border-top: 1px solid black
-    border-bottom: 1px solid black
+    border-top: 1px solid $border-color
+    border-bottom: 1px solid $border-color
+    border-left: $border-highlight-width solid $border-highlight-color-1
     span.desc
       float: left
       padding-top: 14px
@@ -62,32 +71,46 @@ body
         font-size: 12px
     span.nav_button
       width: 64px
-      border-left: 1px solid black
+      height: 64px
+      border-left: 1px solid $border-color
       float: right
-      display: block
+      text-align: center
+      .nav_button_icon
+        background-image: url('<%= image_path("nav_icon.png") %>')
+        background-repeat: no-repeat
+        background-position: 0px
+        height: 56px
+      .nav_button_text
+        font-size: 12px
+        color: #2673ff
+        margin-top: -14px
+
   #park_detail
     width: 100%
     background-color: white
-    border-top: 1px solid black
-    border-bottom: 1px solid black
+    border-top: 1px solid $border-color
+    border-bottom: 1px solid $border-color
     z-index: 10000
     position: fixed
     .row
       height: 100px
-      border-top: 1px solid black
+      border-top: 1px solid $border-color
       &:first-child
         border-top: none
         .park_preview
-          float: left
-          width: 50%
+          position: fixed
+          right: 0px
+          bottom: 247px
+
         .day_and_night_prices
-          float: right
-          width: 50%
+          margin-right: 133px
           .day
             height: 50px
+            border-left: $border-highlight-width solid $border-highlight-color-2
           .night
-            background-color: #e4e4e4
+            background-color: #f0f8f1
             height: 50px
+            border-left: $border-highlight-width solid $border-highlight-color-3
           img
             width: 35%
             height: 50px
@@ -105,16 +128,34 @@ body
                 font-size: 10px
             .time_span
               font-size: 10px
+          span.day_icon
+            float: left
+            height: 50px
+            width: 50px
+            background-image: url(<%= image_path("day_and_night.png") %>)
+            background-position-x: -50px
+            background-repeat: no-repeat
+            display: block
+          span.night_icon
+            float: left
+            height: 50px
+            width: 50px
+            background-image: url(<%= image_path("day_and_night.png") %>)
+            background-position-x: -100px
+            background-repeat: no-repeat
+            display: block
       &:nth-child(2)
         padding-top: 10px
         padding-left: 10px
         word-wrap: break-word
         word-break: normal
+        border-left: $border-highlight-width solid $border-highlight-color-4
         
       &:nth-child(3)
         padding-top: 10px
         padding-left: 10px
-        background-color: #e4e4e4
+        background-color: #f0f8f1
+        border-left: $border-highlight-width solid $border-highlight-color-5
       span.feature
         border: 1px solid gray
         padding: 5px
@@ -149,7 +190,7 @@ body
       height: 100%
       display: block
       margin: 0px auto
-      background-image: url(<%= asset_path('tab_icons.png')%>)
+      background-image: url(<%= image_path('tab_icons.png')%>)
       background-repeat: no-repeat
       text-align: center
       padding-top: 16px

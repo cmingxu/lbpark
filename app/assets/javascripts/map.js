@@ -31,9 +31,9 @@ function mapInit() {
   //add_plugins();
   add_event_listeners();
   fetch_parkes(LB.center);
-  if(place_name == '')
+  if(place_name == '') //
     LB.where_am_i(LB.mapObj);
-  else{
+  else{ // jump from search
     AMap.service(["AMap.Geocoder"], function() {
       MGeocoder = new AMap.Geocoder({
         city:"010", //城市，默认：“全国”
