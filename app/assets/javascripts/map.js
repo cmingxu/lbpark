@@ -4,6 +4,7 @@
 //= require park_info_state
 //= require park_info_marker
 //= require geolocation_by_browser
+//= require auto_nav
 
 var LB = LB || {};
 
@@ -74,6 +75,8 @@ function add_new_marker(location) {
   AMap.event.addListener(marker, 'click', function () {
     LB.Logger.debug("marker click");
     LB.park_info_state.on_enter_short(marker.park);
+    LB.current_park = marker.park;
+    LB.clear_auto_nav();
 
   });
 
@@ -106,6 +109,11 @@ function add_event_listeners() {
 
 $(document).ready(function () {
   mapInit();
+  $("#nav_button_click_area").click(function () {
+    LB.auto_nav(LB.current_park);
+    event.stopPropagation();
+  });
+
   $(window).resize(function(){
     $("#map").height(window.innerHeight - config.tabbar_height);
   });

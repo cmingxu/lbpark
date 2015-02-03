@@ -72,12 +72,12 @@ class Park < ActiveRecord::Base
   end
 
   def tags
-    park_tags = [ {:name => "总车位#{self.total_count}个", :link => nil} ]
-    park_tags << {:name => "包月#{self.month_price}起", :link => nil} if self.service_month
-    park_tags << {:name => "卫生间", :link => nil} if self.service_wc
-    park_tags << {:name => self.service_rent_company, :link => nil} if self.service_rent
-    park_tags << {:name => "洗车", :link => nil} if self.service_wash
-    park_tags << {:name => "修车", :link => nil} if self.service_repair
+    park_tags = [ { :name => "总车位#{self.total_count}个", :link => nil } ]
+    park_tags << { :name => "包月#{self.month_price}起", :link => nil } if self.service_month
+    park_tags << { :name => "卫生间", :link => nil } if self.service_wc
+    park_tags << { :name => self.service_rent_company, :link => nil } if self.service_rent
+    park_tags << { :name => "洗车", :link => nil } if self.service_wash
+    park_tags << { :name => "修车", :link => nil } if self.service_repair
     park_tags
   end
 end
