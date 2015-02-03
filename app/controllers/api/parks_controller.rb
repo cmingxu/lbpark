@@ -9,8 +9,9 @@ class Api::ParksController < ApplicationController
         :name => p.name,
         :park_type => p.park_type,
         :tips => p.tips,
-        :busy_status => Park::BUSY_STATUS.values.shuffle.first,
-        :current_price => p.current_price
+        :busy_status => 1,
+        :current_price => p.current_price,
+        :tags => p.tags
       }
     end)
 
