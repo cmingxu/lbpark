@@ -47,7 +47,7 @@ function add_new_marker(location) {
     map: LB.mapObj,
     position: new AMap.LngLat(location.lng,
                               location.lat),
-                              //offset: new AMap.Pixel(-10, -34),
+                              offset: new AMap.Pixel(-10, -34),
                               content: LB.park_info_marker(location)
   });
 
