@@ -51,6 +51,8 @@ function mapInit() {
     });
   }
 
+  add_center_marker();
+
 }
 
 function add_plugins() {
@@ -104,6 +106,19 @@ function add_event_listeners() {
     LB.park_info_state.on_enter_hidden();
     LB.clear_auto_nav();
   });
+}
+
+function add_center_marker(){
+  var marker = new AMap.Marker({ //创建自定义点标注
+    map: LB.mapObj,
+    position: new AMap.LngLat(LB.center.lng,
+                              LB.center.lat),
+                              offset: new AMap.Pixel(-10, -34),
+                              content: "<div id='center_marker'></div>"
+  });
+
+
+  console.log(LB.center);
 }
 
 
