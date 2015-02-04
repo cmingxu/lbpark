@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %title= @title || "萝卜停车"
+    = stylesheet_link_tag    'mobile', media: 'all'
+    = javascript_include_tag "vendor"
+    = csrf_meta_tags
+    %meta{:name => "keywords",    :content => Settings.keywords}
+    %meta{:name => "description", :content => Settings.description}
+    %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1.0", :name => "viewport"}
+  %body
+    = yield
+    #tabs
+      %a{:href => "/vendor/index"}
+        %span{:class => map_nav_class("report")} 上报
+      %a{:href => "/vendor/lottory"}
+        %span{:class => map_nav_class("lottory")} 彩票
+      %a{:href => "/vendor/mine"}
+        %span{:class => map_nav_class("mine")} 我的

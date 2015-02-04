@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202025209) do
+ActiveRecord::Schema.define(version: 20150204083832) do
 
   create_table "imports", force: true do |t|
     t.string   "park_type"
@@ -199,6 +199,15 @@ ActiveRecord::Schema.define(version: 20150202025209) do
     t.string   "token"
     t.string   "encrypted_password"
     t.string   "phone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "role"
+  end
+
+  create_table "users_parks", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "park_id"
+    t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -13,9 +13,22 @@
 #
 
 class User < ActiveRecord::Base
+  has_many :park_statuses
+  has_many :users_parks
+  has_many :parks, :through => :users_parks
+
+  scope :vendors, -> { where(:role => 'vendor') }
+
   def self.authenticate!(env)
   end
 
+  def park
+    self.parks.first
+  end
+
   def login
+  end
+
+  def role
   end
 end

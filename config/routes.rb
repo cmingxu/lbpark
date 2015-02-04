@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
 
+  get 'vendor/index'
+  get 'vendor/login'
+  get 'vendor/mine'
+  get 'vendor/lottory'
+
   get 'mobile/map'
   get 'mobile/hot_place'
 
   namespace :api do
     resources :parks
+    resources :park_statuses, :only => [:create]
   end
 
   namespace :dashboard do
