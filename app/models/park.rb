@@ -101,7 +101,11 @@ class Park < ActiveRecord::Base
     "时"
   end
 
+  def use_day_price?
+    Time.now.hour >= self.day_time_begin && Time.now.hour < self.day_time_end
+  end
+
   def current_price
-    self.day_price
+    self.use_day_price? ? self.day_price : self.night_price
   end
 end

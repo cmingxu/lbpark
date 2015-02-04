@@ -165,25 +165,17 @@ body
         font-size: 12px
         display: inline-block
       .lb_notice
-        width: 30%
         height: 50px
+        width: 50px
         float: left
         text-align: right
-
-        .lb_notice_icon
-          background-image: url('<%= asset_path("day_and_night.png") %>')
-          background-position-x: 150px
-          background-repeat: no-repeat
-          display: inline-block
-          height: 50px
-          width: 50px
-          position: fixed
-          top: 0px
-        .lb_notice_text
-          font-weight: bold
+        background-image: url('<%= asset_path("day_and_night.png") %>')
+        background-position-x: -150px
+        background-repeat: no-repeat
       #tips
+        font-size: 12px
         float: right
-        width: 70%
+        width: 65%
 
 #tabs
   bottom: 0px
