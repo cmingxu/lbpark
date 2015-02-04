@@ -11,6 +11,12 @@ LB.park_info_state = {
   tips_dom: $("#tips"),
   tags_dom: $("#tags"),
   park_short_description_dom: $("#park_short_description"),
+  day_price_dom: $("#day_price"),
+  day_price_unit_dom: $("#day_price_unit"),
+  day_time_range_dom: $("#day_time_range"),
+  night_price_dom: $("#night_price"),
+  night_price_unit_dom: $("#night_price_unit"),
+  night_time_range_dom: $("#night_time_range"),
 
 
   on_enter_hidden: function () {
@@ -45,6 +51,19 @@ LB.park_info_state = {
         return "<span class='feature'>" + tag.name+ "</span>";
       }).join("")
     );
+    this.day_price_dom.text(park.day_price + "元");
+    this.day_price_unit_dom.text("/" + park.day_price_unit);
+    this.day_time_range_dom.text(park.day_time_range);
+    if(park.night_price != ""){
+      this.night_price_dom.text(park.night_price + "元");
+      this.night_price_unit_dom.text("/" + park.night_price_unit);
+      this.night_time_range_dom.text(park.night_time_range);
+    }else{
+      this.night_price_dom.text("");
+      this.night_price_unit_dom.text("");
+      this.night_time_range_dom.text("");
+    }
+
     this.detail_dom.show('fast');
     this.park_dom.show('fast');
   }

@@ -74,7 +74,7 @@ LB.auto_nav = function(park) {
     });
 
     LB.auto_nav_lines = [extra_line1, extra_line2, polyline];
-    LB.mapObj.setFitView();
+    //LB.mapObj.setFitView();
   }
   driving_route();
 };
@@ -82,6 +82,7 @@ LB.auto_nav = function(park) {
 LB.clear_auto_nav = function () {
   LB.auto_nav_lines.forEach(function (l) {
     l.setMap(null);
+    
   });
   LB.auto_nav_lines = [];
   

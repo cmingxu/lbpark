@@ -77,7 +77,6 @@ function add_new_marker(location) {
     LB.park_info_state.on_enter_short(marker.park);
     LB.current_park = marker.park;
     LB.clear_auto_nav();
-
   });
 
 }
@@ -103,6 +102,7 @@ function add_event_listeners() {
   AMap.event.addListener(LB.mapObj,"click", function () {
     LB.Logger.debug("map object clicked");
     LB.park_info_state.on_enter_hidden();
+    LB.clear_auto_nav();
   });
 }
 

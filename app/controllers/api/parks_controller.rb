@@ -10,8 +10,14 @@ class Api::ParksController < ApplicationController
         :park_type => p.park_type,
         :tips => p.tips,
         :busy_status => 1,
+        :tags => p.tags,
         :current_price => p.current_price,
-        :tags => p.tags
+        :day_time_range => p.day_time_range,
+        :day_price => p.day_price,
+        :day_price_unit => p.day_price_unit,
+        :night_time_range => p.night_time_range,
+        :night_price => p.night_price,
+        :night_price_unit => p.day_price_unit
       }
     end)
 

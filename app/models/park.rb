@@ -67,10 +67,6 @@ class Park < ActiveRecord::Base
     self.lng = self.gcj_lng
   end
 
-  def current_price
-    self.day_price
-  end
-
   def tags
     park_tags = [ { :name => "总车位#{self.total_count}个", :link => nil } ]
     park_tags << { :name => "包月#{self.month_price}起", :link => nil } if self.service_month
@@ -79,5 +75,33 @@ class Park < ActiveRecord::Base
     park_tags << { :name => "洗车", :link => nil } if self.service_wash
     park_tags << { :name => "修车", :link => nil } if self.service_repair
     park_tags
+  end
+
+  def calculated_day_price
+    self.day_price
+  end
+
+  def day_time_range
+    "07:00 - 21:00"
+  end
+
+  def calculated_night_price
+    self.night_price
+  end
+
+  def night_time_range
+    "21:00 - 07:00"
+  end
+
+  def day_price_unit
+    "时"
+  end
+
+  def night_price_unit
+    "时"
+  end
+
+  def current_price
+    self.day_price
   end
 end
