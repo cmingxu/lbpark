@@ -109,4 +109,8 @@ class Park < ActiveRecord::Base
   def current_price
     self.use_day_price? ? self.day_price : self.night_price
   end
+
+  def busy_status
+    ($redis.get RedisKey.park_status_key(self) || 3).to_i
+  end
 end

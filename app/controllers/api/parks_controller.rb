@@ -9,7 +9,7 @@ class Api::ParksController < Api::BaseController
         :name => p.name,
         :park_type => p.park_type,
         :tips => p.tips,
-        :busy_status => 1,
+        :busy_status => p.busy_status,
         :tags => p.tags,
         :current_price => p.current_price,
         :day_time_range => p.day_time_range,
