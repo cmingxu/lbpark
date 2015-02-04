@@ -28,3 +28,7 @@ test:
   <<: *default
   database: lbpark_test
 
+production:
+  <<: *default
+  database: lbpark_test
+
