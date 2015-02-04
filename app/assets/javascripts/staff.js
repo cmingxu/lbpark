@@ -31,7 +31,7 @@ $(document).ready(function(){
         })
       },
       afterSelect: function (item) {
-        window.location.href = "/staff/parks/" + item.id + "/edit"; 
+        window.location.href = "/staff/parks/" + item.id + "/edit";
       }
     });
 });

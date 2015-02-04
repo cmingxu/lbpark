@@ -82,8 +82,6 @@ LB.auto_nav = function(park) {
 LB.clear_auto_nav = function () {
   LB.auto_nav_lines.forEach(function (l) {
     l.setMap(null);
-    
   });
   LB.auto_nav_lines = [];
-  
 }
