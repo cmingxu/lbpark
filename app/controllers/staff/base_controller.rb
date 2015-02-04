@@ -10,4 +10,7 @@ class Staff::BaseController < ApplicationController
   def current_user
     current_staff
   end
+
+  def index
+  end
 end

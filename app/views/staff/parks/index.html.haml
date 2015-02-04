@@ -1,0 +1,55 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        .form-group
+          .input-group.col-md-12
+            %input.typeahead.col-md-6{:placeholder => "例如: 远洋光华国际"}
+        .form-group
+          - DISTRICT.each do |name|
+            = link_to name , staff_parks_path(:district => name)
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 编号
+          %th 车位数
+          %th 名称
+          %th 区域
+          %th 类型
+          %th 类型CODE
+          %th 经纬度
+          %th 日间时段
+          %th 日间价格
+          %th 夜间时段
+          %th 夜间价格
+
+        %tbody
+          - @parks.each do |p|
+            %tr
+              %td= link_to p.id, edit_staff_park_path(p)
+              %td= link_to p.code, edit_staff_park_path(p)
+              %td= p.total_count
+              %td= p.name
+              %td= p.district
+              %td= p.park_type
+              %td= p.park_type_code
+              %td
+                = p.gcj_lng
+                /
+                = p.gcj_lat
+              %td
+                = p.day_time_begin
+                -
+                = p.day_time_end
+              %td= p.day_price
+              %td
+                = p.night_time_begin
+                -
+                = p.night_time_end
+              %td= p.night_price
+
+        = paginate @parks
+

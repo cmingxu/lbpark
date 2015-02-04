@@ -1,16 +1,12 @@
 .list-group
-  .list-group-item.chart
-    -#= link_to raw(fa_icon("btc fw")) + "涨跌交易", dashboard_path
-  .list-group-item.bids
-    -#= link_to raw(fa_icon("history fw")) +"历史订单", dashboard_bids_path
-  .list-group-item.recharges
-    -#= link_to raw(fa_icon("plus fw")) +"我要充值", dashboard_recharges_path
-  .list-group-item.withdraws
-    -#= link_to raw(fa_icon("minus fw")) +"我要提现", dashboard_withdraws_path
-  .list-group-item.makers
-    -#= link_to raw(fa_icon("bank fw")) +"成为市商", dashboard_makers_path
+  .list-group-item.staff
+    = link_to raw(fa_icon("fw bank")) + "我的面板", staff_path
+  .list-group-item.parks
+    = link_to raw(fa_icon("fw building-o")) + "车场列表", staff_parks_path
+  .list-group-item.imports
+    = link_to raw(fa_icon("fw database")) + "数据导入", staff_imports_path
   .list-group-item.setting
-    -#= link_to raw(fa_icon("wrench fw")) +"个人设置", dashboard_settings_path
+    = link_to raw(fa_icon("wrench fw")) +"个人设置", staff_path
 
 
 :javascript

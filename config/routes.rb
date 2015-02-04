@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
 
+  namespace :staff do
+  get 'parks/index'
+  end
+
+  namespace :staff do
+  get 'parks/new'
+  end
+
+  namespace :staff do
+  get 'parks/edit'
+  end
+
   get 'vendor/index'
   get 'vendor/login'
   get 'vendor/mine'
@@ -23,6 +35,7 @@ Rails.application.routes.draw do
 
   # staff only actions
   namespace :staff do
+    get "/" => "base#index"
     resources :imports do
       resources :park_imports
     end

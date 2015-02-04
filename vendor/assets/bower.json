@@ -8,6 +8,7 @@
     "angular-touch": "latest",
     "angular-socket-io": "git@github.com:btford/angular-socket-io.git#0.6.1",
     "angular-material": "latest",
-    "zeptojs": "latest"
+    "zeptojs": "latest",
+    "bootstrap3-typeahead": "latest"
   }
 }

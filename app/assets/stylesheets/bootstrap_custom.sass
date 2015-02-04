@@ -9,8 +9,10 @@ $highlight-text-color: #1a1a1a
 $link-color: black
 $link-hover-color: darken($link-color, 30%) !default
 
+
 .navbar
   margin-bottom: 0px!important
+  min-height: 32px!important
 
 .color-bar
   height: 4px
@@ -27,19 +29,47 @@ footer
 .dashboard-main
   background-color: $second-color
 
-//market settings
-$market-bg-light-color: white
-$market-bg-dark-color: #535353
-$market-text-light-color: #535353
-$market-text-dark-color: #535353
-$market-link-light-color: white
-$market-link-dark-color: #535353
+//dashboard settings
+$dashboard-bg-light-color: #EFEFF3
+$dashboard-bg-dark-color: #535353
+$dashboard-text-light-color: #535353
+$dashboard-text-dark-color: #535353
+$dashboard-link-light-color: white
+$dashboard-link-dark-color: #535353
+
+$dashboard-header-bg-color: #1682b7
+$dashboard-header-text-color: white
+
+$dashboard-info-bg-color: #306b95
+$dashboard-info-text-color: white
+
+$dashboard-sidebar-bg-color: #273542
+$dashboard-sidebar-text-color: #979eae
+$dashboard-sidebar-text-hover-color: #535353
+$dashboard-sidebar-text-active-color: white
+$dashboard-sidebar-text-active-bg-color: #36404b
+
+table
+  text-align: center
+  thead
+    background-color: #306b95
+    color: white
+    tr
+      th
+        border: none!important
+  th
+    text-align: center
+
+  td.align_right
+    text-align: right
 
 
-.market
+.lb
+  background-color: $dashboard-bg-light-color
+  min-width: 1200px
   .header
-    background-color: $market-bg-dark-color
-    color: $market-bg-light-color
+    background-color: $dashboard-header-bg-color
+    color: $dashboard-header-text-color
   .navbar-brand
     padding: 5px 15px
     height: 30px
@@ -47,81 +77,105 @@ $market-link-dark-color: #535353
   .navbar-nav  li  a
     padding: 5px 15px
     height: 30px
+    color: $dashboard-header-text-color
+    span
+      color: red
+      font-weight: bold
 
-  .content_wraper
-    width: 100%
-    float: left
-  .operation_panel
-    width: 320px
-    float: right
-    height: 500px
-    .operation_panel_inner
-      margin: 20px 20px
-      .input_field
-        text-align: right
-        border: none
-        width: 120px
-        height: 30px
-        float: right
-        font-weight: bold
-        font-family: italic
-        border-bottom: 1px solid gray
-      .strong
-        font-size: 30px
-        float: right
-        font-weight: bold
-        font-weight: italic
-      .progress-bar
-        margin-top: 5px
-        margin-bottom: 5px
-        height: 10px
-        width: 100%
-        .yes-progress
-          width: 40%
-        .no-progress
-          width: 60%
-
-
-  .chart_panel
-    margin-right: 320px
-    #btcchart
-      width: 100%
-    .btn
-      width: 100px
-      margin-top: 15px
-    .axis path,line
-      fill: none
-      stroke: #000
-      shape-rendering: crispEdges
-    .area
-      fill: steelblue
+  .navbar-brand
+    color: $dashboard-header-text-color
+    font-weight: bold
 
 
   .footer
-    background-color: $market-bg-dark-color
+    background-color: $dashboard-bg-dark-color
     .list-group
       width: 25%
     .list-group-item
       border: none
-      background-color: $market-bg-dark-color
-      color: $market-link-light-color
+      background-color: $dashboard-bg-dark-color
+      color: $dashboard-link-light-color
+
+.page-wraper
+  padding: 10px
+.lb
+  .wrapper
+    width: 100%
+    position: absolute
+    padding-left: 180px
+    .sidebar
+      background-color: $dashboard-sidebar-bg-color
+      color: $dashboard-sidebar-text-color
+      font-weight: bold
+      width: 180px
+      height: 100%
+      min-height: 1000px
+      position: absolute
+      left: 0px
+      padding-top: 10px
+      .list-group-item
+        background-color: $dashboard-sidebar-bg-color
+        border: none
+        padding: 0px
+        i
+          padding-right: 20px
+        a
+          color: $dashboard-sidebar-text-color
+          text-decoration: none
+          height: 100%
+          width: 100%
+          padding: 10px 15px
+          display: block
+        &:hover
+          cursor: pointer
+      .list-group-header
+        font-size: 16px
+        padding: 15px 15px
+        border-bottom: 1px solid black
+
+      .sidebar_item_active
+        border-left: 4px solid #5191c4
+        color: $dashboard-sidebar-text-active-color
+        background-color: $dashboard-sidebar-text-active-bg-color
+
+  form
+    .btn
+      float: right
+.table_wrapper
+  background-color: white
+  margin-top: 20px
+  padding-top: 10px
+
+.lb_form
+  background-color: white
+  .col-md-9
+    max-width: 500px
+  .form_content
+    padding: 35px 50px
+  .form_title
+    border-bottom: 2px solid #306b95
+    margin-left: -15px
+    margin-right: -15px
+    height: 35px
+    line-height: 35px
+    span
+      background-color: #306b95
+      color: white
+      padding: 10px 20px
 
 .dashboard
-  .list-group
-  .left_sidebar
-    margin-left: -15px
-    .list-group-item
-      border: none
-      &:hover
-        background-color: darken($body-bg, 10%)
-    .list-group-header
-      font-size: 16px
-      padding: 15px 15px
-      border-bottom: 1px solid black
-
-    .sidebar_item_active
-      border-right: 4px solid $highlight-color
-
+  .right_side_notice
+    background-color: white
+    text-align: center
+    min-height: 1000px
+    .right_side_head
+      padding: 10px 20px
+      font-weight: bold
+      border-bottom: 2px dashed gray
+    .notice_section
+      padding: 10px 10px
+      height: 300px 
+      overflow-y: scroll
 
 .user_actions
   .panel-heading
@@ -138,3 +192,9 @@ $market-link-dark-color: #535353
     -moz-border-radius: 50%
     -webkit-border-radius: 50%
     border-radius: 50%
+
+  .form-group
+    margin-top: 30px
+    margin-bottom: 30px
+
+

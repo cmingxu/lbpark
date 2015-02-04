@@ -10,7 +10,7 @@
     = javascript_include_tag "staff"
     = csrf_meta_tags
 
-  %body{"ng-app" => "staff", "class" => "staff"}
+  %body.lb
     .container-fluid
       .row-fluid
         = render :partial => "widgets/staff_header"

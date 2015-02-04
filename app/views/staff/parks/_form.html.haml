@@ -1,0 +1,13 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th 
+          %th
+        %tbody
+          - Park.column_names.each do |column|
+            %tr
+              %td= column
+              %td= @park.send column
+

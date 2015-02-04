@@ -14,3 +14,24 @@
 //= require jquery_ujs
 //= require kindeditor
 //= require bootstrap-sprockets
+//= require bootstrap3-typeahead
+
+
+$(document).ready(function(){
+    $('input.typeahead').typeahead({
+      source: function (query, process) {
+        $.ajax({
+          url: "/staff/parks",
+          type: "get",
+          dataType: 'JSON',
+          data: {match: query},
+          success: function (data) {
+            process(data);
+          }
+        })
+      },
+      afterSelect: function (item) {
+        window.location.href = "/staff/parks/" + item.id + "/edit"; 
+      }
+    });
+});
