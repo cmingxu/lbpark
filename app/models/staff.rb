@@ -15,13 +15,26 @@
 
 class Staff < ActiveRecord::Base
   validates :name, presence: true
+  attr_accessor :password
 
-  def password_valid?(pass)
+
+  def password=(pass)
+    self.salt = SecureRandom::hex(10)
+    self.encrypted_password = Staff.password_encryption(pass, self.salt)
   end
 
-  def self.encrypt_password(pass)
+  def password_valid?(pass)
+    self.encrypted_password == Staff.password_encryption(pass, self.salt)
   end
 
   def self.login(login, pass)
+    u = Staff.find_by_email(login)
+    return nil if u.nil?
+
+    u.password_valid?(pass) ? u : nil
+  end
+
+  def self.password_encryption(pass, salt)
+    Digest::SHA1.hexdigest(salt + pass)
   end
 end

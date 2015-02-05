@@ -15,6 +15,9 @@
 //= require kindeditor
 //= require bootstrap-sprockets
 //= require bootstrap3-typeahead
+//= require underscore
+//= require underscore.string
+//= require session
 
 
 $(document).ready(function(){

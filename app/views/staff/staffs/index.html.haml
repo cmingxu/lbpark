@@ -1,0 +1,26 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        .form-group
+          .input-group.col-md-12
+        .form-group
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 名字
+          %th Email
+
+        %tbody
+          - @staffs.each do |s|
+            %tr
+              %td= link_to s.id, edit_staff_staff_path(s)
+              %td= s.name
+              %td= s.email
+
+      = paginate @staffs
+
+

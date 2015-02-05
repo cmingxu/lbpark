@@ -1,6 +1,19 @@
 Rails.application.routes.draw do
 
   namespace :staff do
+  get 'staffs/index'
+  end
+
+  namespace :staff do
+  get 'staffs/new'
+  end
+
+  namespace :staff do
+  get 'staffs/edit'
+  end
+
+  captcha_route
+  namespace :staff do
   get 'parks/index'
   end
 
@@ -36,11 +49,15 @@ Rails.application.routes.draw do
   # staff only actions
   namespace :staff do
     get "/" => "base#index"
+    get "login" => "session#login"
+    post "login" => "session#login"
+    delete "logout" => "session#destroy"
     resources :imports do
       resources :park_imports
     end
 
     resources :parks
+    resources :staffs
   end
 
 

@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+#
+#
+
+staffs = %w( luobotao luobaogao luobogen luobojing luobokuai luobobai luoboyun )
+staffs.each do |s|
+  Staff.create! name: s, email: s+"@qq.com", password: s+"@qq.com"
+end

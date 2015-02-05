@@ -1,5 +1,5 @@
 .navbar.header
-  .navbar-header
+  .navbar-headery
     %a.navbar-brand{:href => '/staffs'} 萝卜停车 - 员工专用
   %ul.nav.navbar-nav.pull-right
 
@@ -9,6 +9,6 @@
         账户
         %span
     %li
-      -#= link_to "退出账号", staff_logout_path, :method => :delete
+      = link_to "退出账号", staff_logout_path, :method => :delete
 
 

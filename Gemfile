@@ -48,6 +48,9 @@ gem 'kaminari'
 gem 'rack-weixin'
 
 
+gem 'easy_captcha'
+gem 'rmagick'
+
 
 gem 'evil_transform'
 

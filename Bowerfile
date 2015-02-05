@@ -4,6 +4,7 @@
 asset 'bootstrap'
 asset 'd3'
 asset 'underscore'
+asset 'underscore.string'
 asset 'angular'
 asset 'angular-touch'
 asset 'angular-socket-io', '0.6.1', git: 'git@github.com:btford/angular-socket-io.git'
