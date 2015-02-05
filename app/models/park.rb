@@ -114,6 +114,6 @@ class Park < ActiveRecord::Base
   end
 
   def busy_status
-    ($redis.get RedisKey.park_status_key(self) || 3).to_i
+    (($redis.get RedisKey.park_status_key(self)) || 3).to_i
   end
 end
