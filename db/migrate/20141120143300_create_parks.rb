@@ -16,29 +16,31 @@ class CreateParks < ActiveRecord::Migration
       t.string :day_only
       t.integer :day_time_begin
       t.integer :day_time_end
-      t.integer :day_price
-      t.decimal :day_first_hour_price
-      t.decimal :day_second_hour_price
+      t.float :day_first_hour_price
+      t.float :day_second_hour_price
+      t.float :day_price_per_time
+      t.float :night_price_per_night
+      t.float :night_price_per_hour
+      t.float :whole_day_price_per_time
+      t.float :whole_day_price_per_hour
+      t.float :night_price_per_hour
       t.integer :night_time_begin
       t.integer :night_time_end
-      t.decimal :night_price
-      t.integer :night_price_hour
-      t.integer :times_price
       t.boolean :service_month
       t.integer :month_price
       t.boolean :service_wash
       t.boolean :service_wc
       t.boolean :service_repair
       t.boolean :service_rent
-      t.boolean :service_rent_company
+      t.string :service_rent_company
       t.boolean :service_group
       t.boolean :service_times
       t.boolean :is_recommend
       t.boolean :has_service_coupon
       t.boolean :has_service_point
       t.boolean :is_only_service
-      t.decimal :times_price_all_day
       t.string :tips
+      t.string :lb_staff
 
       t.timestamps
     end

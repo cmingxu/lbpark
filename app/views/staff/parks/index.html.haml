@@ -30,9 +30,19 @@
           %th 类型CODE
           %th 经纬度
           %th 日间时段
-          %th 日间价格
           %th 夜间时段
-          %th 夜间价格
+          %th 日间按时（第一)
+          %th 日间按时(第二)
+          %th 日间按次
+          %th 夜间按夜
+          %th 夜间按时
+          %th 全天按时
+          %th 全天按次
+          %th 包月价
+          %th wash
+          %th wc
+          %th rent
+          %th company
 
         %tbody
           - @parks.each do |p|
@@ -52,12 +62,22 @@
                 = p.day_time_begin
                 -
                 = p.day_time_end
-              %td= p.day_price
               %td
                 = p.night_time_begin
                 -
                 = p.night_time_end
-              %td= p.night_price
+              %td= p.day_first_hour_price
+              %td= p.day_second_hour_price
+              %td= p.day_price_per_time
+              %td= p.night_price_per_night
+              %td= p.night_price_per_hour
+              %td= p.whole_day_price_per_hour
+              %td= p.whole_day_price_per_time
+              %td= p.month_price
+              %td= p.service_wash
+              %td= p.service_wc
+              %td= p.service_rent
+              %td= p.service_rent_company
 
         = paginate @parks
 

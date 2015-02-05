@@ -14,10 +14,10 @@ class Api::ParksController < Api::BaseController
         :tags => p.tags,
         :current_price => p.current_price,
         :day_time_range => p.day_time_range,
-        :day_price => p.day_price,
+        :day_price => p.day_price_per_time,
         :day_price_unit => p.day_price_unit,
         :night_time_range => p.night_time_range,
-        :night_price => p.night_price,
+        :night_price => p.night_price_per_hour,
         :night_price_unit => p.day_price_unit,
         :park_lb_desc => p.lb_desc
       }

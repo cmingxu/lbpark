@@ -22,9 +22,9 @@ LB.park_info_state = {
 
   on_enter_hidden: function () {
     LB.Logger.debug("park info state to hidden");
-    this.park_title_dom.hide('fast');
-    this.detail_dom.hide('fast');
-    this.park_dom.hide('fast');
+    this.park_title_dom.hide();
+    this.detail_dom.hide();
+    this.park_dom.hide();
   },
 
   on_enter_short: function (park) {
@@ -34,9 +34,9 @@ LB.park_info_state = {
     this.park_status_dom.css("background-color", config.park_status[""+park.busy_status].color);
     this.park_status_dom.text(config.park_status[""+park.busy_status].text);
     this.park_title_dom.css("bottom", config.tabbar_height + "px");
-    this.park_title_dom.show('fast');
-    this.park_dom.show('fast');
-    this.detail_dom.hide('fast');
+    this.park_title_dom.show();
+    this.park_dom.show();
+    this.detail_dom.hide();
 
     if(park.park_type_code == "A"){
       this.park_title_dom.on('click', function () {
@@ -72,8 +72,8 @@ LB.park_info_state = {
       this.night_time_range_dom.text("");
     }
 
-    this.detail_dom.show('fast');
-    this.park_dom.show('fast');
+    this.detail_dom.show();
+    this.park_dom.show();
   }
 
 };

@@ -8,6 +8,6 @@
         %tbody
           - Park.column_names.each do |column|
             %tr
-              %td= column
+              %td= Park::COLUMN_MAP[column.intern] || column
               %td= @park.send column
 

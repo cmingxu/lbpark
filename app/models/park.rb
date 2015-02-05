@@ -46,13 +46,51 @@
 #
 
 class Park < ActiveRecord::Base
+  COLUMN_MAP = {
+    :tips => "备注",
+    :times_price_all_day => "全天按次价",
+    :is_only_service => "",
+    :is_recommend => "推荐",
+    :service_times => "",
+    :service_group => "",
+    :service_rent_company => "租车公司",
+    :service_rent => "租车",
+    :service_repair => "修车",
+    :service_wc => "厕所",
+    :service_wash => "洗车",
+    :day_second_hour_price => "白天第二小时价格",
+    :day_first_hour_price => "白天第一小时价",
+    :day_price_per_time => "白天按次",
+    :night_price_per_hour => "夜间按时",
+    :night_price_per_night => "夜间按夜",
+    :whole_day_price_per_time => "全天按次",
+    :whole_day_price_per_hour => "全天按时",
+    :month_price => "包月价格",
+    :night_time_end => "夜间结束",
+    :night_time_begin => "夜间开始",
+    :day_time_end => "白天结束",
+    :day_time_begin => "白天开始",
+    :day_only => "仅白天",
+    :whole_day => "全天",
+    :gcj_lat => "经度",
+    :gcj_lng => "纬度",
+    :total_count => "车位数",
+    :park_type_code => "类型CODE",
+    :park_type => "类型",
+    :address => "地址",
+    :name => "名称",
+    :district => "区域",
+    :city => "城市",
+    :province => "省",
+    :code => "编号"
+  }
   BUSY_STATUS = {
     :green => 0,
     :orange => 1,
     :red => 2,
     :unknown => 3
   }
-  PARK_TYPE = ["地面停车场", "地下停车场", "桥下停车场", "立体停车场", "院内", "街面", "路边", "辅路"]
+  PARK_TYPE = ["地面", "地下", "桥下", "立体", "院内", "街面", "路边", "辅路"]
   PARK_TYPE_CODE = ["A", "B", "C"]
 
   has_one :owner, :class_name => "ParkOwner"
@@ -110,7 +148,7 @@ class Park < ActiveRecord::Base
   end
 
   def current_price
-    self.use_day_price? ? self.day_price : self.night_price
+    self.use_day_price? ? self.day_price_per_time : self.night_price_per_night
   end
 
   def busy_status
@@ -122,9 +160,9 @@ class Park < ActiveRecord::Base
     when "A"
       self.park_type
     when "B"
-      [self.park_type, self.tips].join("/")
+      [self.park_type, self.tips].select{|a| a.present? }.join("/")
     when "C"
-      [self.park_type, self.tips].join("/")
+      [self.park_type, self.tips].select{|a| a.present? }.join("/")
 
     end
   end

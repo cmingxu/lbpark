@@ -43,14 +43,14 @@ task convert: [:environment] do
       p.day_only = o.is_only_day
       p.day_time_begin = o.day_time_start
       p.day_time_end = o.day_time_end
-      p.day_price = o.day_price
+      p.day_price_per_time = o.day_price
       p.day_first_hour_price = o.day_first_hour_price
       p.day_second_hour_price = o.day_second_hour_price
       p.night_time_begin = o.night_time_start
       p.night_time_end = o.night_time_end
-      p.night_price = o.night_price
-      p.night_price_hour = o.night_price_hour
-      p.times_price = o.times_price
+      p.night_price_per_night = o.night_price
+      p.night_price_per_hour = o.night_price_hour
+      p.whole_day_price_per_hour = o.times_price
       p.service_month = o.service_month
       p.month_price = o.month_price
       p.service_wash = o.service_wash
@@ -64,7 +64,7 @@ task convert: [:environment] do
       p.has_service_coupon = o.service_coupon
       p.has_service_point = o.service_point
       p.is_only_service = o.is_only_service
-      p.times_price_all_day = o.times_price_all_day
+      p.whole_day_price_per_time = o.times_price_all_day
       p.tips = o.tips
     end.save!
   end
