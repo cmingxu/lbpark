@@ -1,13 +1,14 @@
 class Api::ParksController < Api::BaseController
   def index
     @location = Location.new params[:lng], params[:lat]
-    render :json => (Park.with_park_type_code('A').within_range(@location.around(1000)).all.map do |p|
+    render :json => (Park.within_range(@location.around(1000)).all.map do |p|
       {
         :lng => p.lng,
         :lat => p.lat,
         :id  => p.id,
         :name => p.name,
         :park_type => p.park_type,
+        :park_type_code => p.park_type_code,
         :tips => p.tips,
         :busy_status => p.busy_status,
         :tags => p.tags,
