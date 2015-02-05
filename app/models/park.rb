@@ -52,6 +52,8 @@ class Park < ActiveRecord::Base
     :red => 2,
     :unknown => 3
   }
+  PARK_TYPE = ["地面停车场", "地下停车场", "桥下停车场", "立体停车场", "院内", "街面", "路边", "辅路"]
+  PARK_TYPE_CODE = ["A", "B", "C"]
   has_one :owner, :class_name => "ParkOwner"
   has_one :info, :class_name => "ParkInfo"
   has_many :park_statuses

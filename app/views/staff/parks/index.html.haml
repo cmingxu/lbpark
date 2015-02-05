@@ -9,6 +9,14 @@
           - DISTRICT.each do |name|
             = link_to name , staff_parks_path(:district => name)
 
+        .form-group
+          - Park::PARK_TYPE.each do |code|
+            = link_to code , staff_parks_path(:park_type => code)
+
+        .form-group
+          - Park::PARK_TYPE_CODE.each do |code|
+            = link_to code , staff_parks_path(:park_type_code => code)
+
   .row-fluid
     .col-md-10.col-md-offset-1.table_wrapper
       %table.table.table-striped.table-condensed.table-hover.table-bordered
