@@ -116,4 +116,16 @@ class Park < ActiveRecord::Base
   def busy_status
     (($redis.get RedisKey.park_status_key(self)) || 3).to_i
   end
+
+  def lb_desc
+    case self.park_type_code
+    when "A"
+      self.park_type
+    when "B"
+      [self.park_type, self.tips].join("/")
+    when "C"
+      [self.park_type, self.tips].join("/")
+
+    end
+  end
 end

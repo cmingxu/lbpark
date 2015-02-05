@@ -30,16 +30,21 @@ LB.park_info_state = {
   on_enter_short: function (park) {
     LB.Logger.debug("park info state to short");
     this.park_name_dom.text(park.name);
-    this.park_short_description_dom.text(park.park_type);
+    this.park_short_description_dom.text(park.park_lb_desc);
     this.park_status_dom.css("background-color", config.park_status[""+park.busy_status].color);
     this.park_status_dom.text(config.park_status[""+park.busy_status].text);
     this.park_title_dom.css("bottom", config.tabbar_height + "px");
     this.park_title_dom.show('fast');
     this.park_dom.show('fast');
     this.detail_dom.hide('fast');
-    this.park_title_dom.click(function () {
-      LB.park_info_state.on_enter_detail(park);
-    });
+
+    if(park.park_type_code == "A"){
+      this.park_title_dom.on('click', function () {
+        LB.park_info_state.on_enter_detail(park);
+      });
+    }else{
+      this.park_title_dom.off('click');
+    }
   },
 
   on_enter_detail: function (park) {
@@ -51,8 +56,8 @@ LB.park_info_state = {
     this.tips_dom.text(park.tips);
     this.tags_dom.empty().append(
       park.tags.map(function (tag) {
-        return "<span class='feature'>" + tag.name+ "</span>";
-      }).join("")
+      return "<span class='feature'>" + tag.name+ "</span>";
+    }).join("")
     );
     this.day_price_dom.text(park.day_price + "元");
     this.day_price_unit_dom.text("/" + park.day_price_unit);
