@@ -6,6 +6,7 @@ LB.park_info_state = {
   current_park: null,
   park_dom: $("#park"),
   park_title_dom: $("#park_title"),
+  park_status_dom: $("#park_status"),
   detail_dom: $("#park_detail"),
   park_name_dom: $("#park_name"),
   tips_dom: $("#tips"),
@@ -30,6 +31,8 @@ LB.park_info_state = {
     LB.Logger.debug("park info state to short");
     this.park_name_dom.text(park.name);
     this.park_short_description_dom.text(park.park_type);
+    this.park_status_dom.css("background-color", config.park_status[""+park.busy_status].color);
+    this.park_status_dom.text(config.park_status[""+park.busy_status].text);
     this.park_title_dom.css("bottom", config.tabbar_height + "px");
     this.park_title_dom.show('fast');
     this.park_dom.show('fast');

@@ -8,7 +8,12 @@
       "park_detail_height": 300,
       "api_entry_point": "http://localhost:3000",
       "asset_path": "http://localhost:3000",
-      "park_statuses_path": "/api/park_statuses"
+      "park_statuses_path": "/api/park_statuses",
+      "park_status": {"0": {"text": "空闲", "color": "#66b42b"},
+        "1": {"text": "繁忙", "color": "#db701c"},
+        "2": {"text": "紧张", "color": "#dc3131"},
+        "3": {"text": "未知", "color": "#4a74fb"}
+      }
     };
 <% else  %>
     var config = {
@@ -20,6 +25,11 @@
       "park_detail_height": 300,
       "api_entry_point": "http://localhost:3000",
       "asset_path": "http://localhost:3000",
-      "park_statuses_path": "/api/park_statuses"
+      "park_statuses_path": "/api/park_statuses",
+      "park_status": {"0": {"text": "空闲", "color": "#66b42b"},
+        "1": {"text": "繁忙", "color": "#db701c"},
+        "2": {"text": "紧张", "color": "#dc3131"},
+        "3": {"text": "未知", "color": "#4a74fb"}
+      }
     };
 <% end %>
