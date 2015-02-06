@@ -176,6 +176,10 @@ class Park < ActiveRecord::Base
     (($redis.get RedisKey.park_status_key(self)) || 3).to_i
   end
 
+  def thump_pic_url
+    self.park_pics.present? ? self.park_pics.first.park_pic.thumb.url : ""
+  end
+
   def lb_desc
     case self.park_type_code
     when "A"
@@ -186,5 +190,9 @@ class Park < ActiveRecord::Base
       [self.park_type, self.tips].select{|a| a.present? }.join("/")
 
     end
+  end
+
+  def location
+    Location.new(self.gcj_lng, self.gcj_lat)
   end
 end

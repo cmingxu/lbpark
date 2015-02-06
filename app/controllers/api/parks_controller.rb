@@ -19,7 +19,8 @@ class Api::ParksController < Api::BaseController
         :night_time_range => p.night_time_range,
         :night_price => p.night_price_per_hour,
         :night_price_unit => p.day_price_unit,
-        :park_lb_desc => p.lb_desc
+        :park_lb_desc => p.lb_desc,
+        :thumb_pic_url => p.thump_pic_url
       }
     end)
 

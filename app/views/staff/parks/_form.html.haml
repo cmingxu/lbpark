@@ -165,7 +165,7 @@
                   - if ff.object.original_name
                     删除？
                     = ff.check_box :_destroy
-                    = link_to ff.object.original_name, ff.object.park_pic.thumb.url, :target => "_blank"
+                    = link_to image_tag(ff.object.park_pic.thumb.url), ff.object.park_pic.thumb.url, :target => "_blank"
                     %br
                   - else
                     = ff.file_field :park_pic

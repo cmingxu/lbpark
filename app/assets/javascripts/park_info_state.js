@@ -18,6 +18,7 @@ LB.park_info_state = {
   night_price_dom: $("#night_price"),
   night_price_unit_dom: $("#night_price_unit"),
   night_time_range_dom: $("#night_time_range"),
+  park_preview_dom: $("#park_preview"),
 
 
   on_enter_hidden: function () {
@@ -53,6 +54,7 @@ LB.park_info_state = {
     this.detail_dom.css('height', config.park_detail_height + "px");
     this.park_title_dom.css('bottom', config.tabbar_height + config.park_detail_height +  "px");
 
+    this.park_preview_dom.attr('src', park.thumb_pic_url);
     this.tips_dom.text(park.tips);
     this.tags_dom.empty().append(
       park.tags.map(function (tag) {
