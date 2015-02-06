@@ -10,6 +10,7 @@
 #  phone              :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
+#  role               :string(255)
 #
 
 class User < ActiveRecord::Base

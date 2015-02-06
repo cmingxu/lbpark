@@ -27,8 +27,8 @@ module Xls2db
       park.address  = line[5]
       park.originate_from = line[6]
       park.total_count = line[7]
-      park.gcj_lng = line[8]
-      park.gcj_lat = line[9]
+      park.gcj_lat = line[8]
+      park.gcj_lng = line[9]
       park.property_owner = line[10]
       if line[11] && line[11].include?(",")
         park.day_first_hour_price, park.day_second_hour_price = line[11].split(",")
@@ -95,9 +95,15 @@ module Xls2db
       park.pic_num  = code_prefix + line[0]
       park.name     = line[1]
       park.park_type = line[2]
-      park.gcj_lng = line[3]
-      park.gcj_lat = line[4]
+      park.gcj_lat = line[3]
+      park.gcj_lng = line[4]
       park.tips = line[5]
+
+      park.day_time_begin = 7 if park.day_time_begin.blank?
+      park.day_time_end = 21 if park.day_time_end.blank?
+      park.night_time_begin = 21 if park.night_time_begin.blank?
+      park.night_time_end = 7 if park.night_time_end.blank?
+
       park.save
     end
   end
@@ -127,8 +133,8 @@ module Xls2db
 
       park.name     = line[1]
       park.park_type = line[2]
-      park.gcj_lng = line[3]
-      park.gcj_lat = line[4]
+      park.gcj_lat = line[3]
+      park.gcj_lng = line[4]
       park.tips = line[5]
 
       park.day_price_per_time = line[8]

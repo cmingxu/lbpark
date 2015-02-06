@@ -2,51 +2,60 @@
 #
 # Table name: parks
 #
-#  id                    :integer          not null, primary key
-#  code                  :string(255)
-#  province              :string(255)
-#  city                  :string(255)
-#  district              :string(255)
-#  name                  :string(255)
-#  address               :string(255)
-#  park_type             :string(255)
-#  park_type_code        :string(255)
-#  total_count           :string(255)
-#  gcj_lat               :decimal(10, 6)
-#  gcj_lng               :decimal(10, 6)
-#  whole_day             :boolean
-#  day_only              :string(255)
-#  day_time_begin        :integer
-#  day_time_end          :integer
-#  day_price             :integer
-#  day_first_hour_price  :integer
-#  day_second_hour_price :integer
-#  night_time_begin      :integer
-#  night_time_end        :integer
-#  night_price           :integer
-#  night_price_hour      :integer
-#  times_price           :integer
-#  service_month         :boolean
-#  month_price           :integer
-#  service_wash          :boolean
-#  service_wc            :boolean
-#  service_repair        :boolean
-#  service_rent          :boolean
-#  service_rent_company  :boolean
-#  service_group         :boolean
-#  service_times         :boolean
-#  is_recommend          :boolean
-#  has_service_coupon    :boolean
-#  has_service_point     :boolean
-#  is_only_service       :boolean
-#  times_price_all_day   :integer
-#  tips                  :string(255)
-#  created_at            :datetime
-#  updated_at            :datetime
+#  id                       :integer          not null, primary key
+#  code                     :string(255)
+#  province                 :string(255)
+#  city                     :string(255)
+#  district                 :string(255)
+#  name                     :string(255)
+#  address                  :string(255)
+#  park_type                :string(255)
+#  park_type_code           :string(255)
+#  total_count              :string(255)
+#  gcj_lat                  :decimal(10, 6)
+#  gcj_lng                  :decimal(10, 6)
+#  whole_day                :boolean
+#  day_only                 :string(255)
+#  day_time_begin           :integer
+#  day_time_end             :integer
+#  day_first_hour_price     :float(24)
+#  day_second_hour_price    :float(24)
+#  day_price_per_time       :float(24)
+#  night_price_per_night    :float(24)
+#  night_price_per_hour     :float(24)
+#  whole_day_price_per_time :float(24)
+#  whole_day_price_per_hour :float(24)
+#  night_time_begin         :integer
+#  night_time_end           :integer
+#  service_month            :boolean
+#  month_price              :integer
+#  service_wash             :boolean
+#  service_wc               :boolean
+#  service_repair           :boolean
+#  service_rent             :boolean
+#  service_rent_company     :string(255)
+#  service_group            :boolean
+#  service_times            :boolean
+#  is_recommend             :boolean
+#  has_service_coupon       :boolean
+#  has_service_point        :boolean
+#  is_only_service          :boolean
+#  tips                     :string(255)
+#  lb_staff                 :string(255)
+#  created_at               :datetime
+#  updated_at               :datetime
+#  pic_num                  :string(255)
+#  originate_from           :string(255)
+#  property_owner           :string(255)
+#  previews                 :text
 #
 
 class Park < ActiveRecord::Base
   COLUMN_MAP = {
+    :lb_staff => "采集人",
+    :pic_num => "照片编号",
+    :property_owner => "物业联系人/电话",
+    :originate_from => "性质",
     :tips => "备注",
     :times_price_all_day => "全天按次价",
     :is_only_service => "",
@@ -58,6 +67,7 @@ class Park < ActiveRecord::Base
     :service_repair => "修车",
     :service_wc => "厕所",
     :service_wash => "洗车",
+    :service_month => "包月",
     :day_second_hour_price => "白天第二小时价格",
     :day_first_hour_price => "白天第一小时价",
     :day_price_per_time => "白天按次",
@@ -92,6 +102,7 @@ class Park < ActiveRecord::Base
   }
   PARK_TYPE = ["地面", "地下", "桥下", "立体", "院内", "街面", "路边", "辅路"]
   PARK_TYPE_CODE = ["A", "B", "C"]
+  PARK_ORIGINATE_FROM = ["公建", "居住", "单位"]
 
   has_one :owner, :class_name => "ParkOwner"
   has_one :info, :class_name => "ParkInfo"
@@ -102,6 +113,16 @@ class Park < ActiveRecord::Base
   scope :within_range, lambda {|range| where(["gcj_lng > ? AND gcj_lat > ? AND gcj_lng < ? AND gcj_lat <?", range.p1.lng, range.p1.lat, range.p2.lng, range.p2.lat]).limit(200) }
   scope :with_park_type_code, ->(code) { where(park_type_code: code) }
   attr_accessor :lat, :lng
+
+  validates :name, presence: true
+  validates :code, presence: true
+  validates :code, uniqueness: true, on: :create
+  validates :name, uniqueness: true, on: :create
+
+  has_many :park_pics, :dependent => :destroy, :class_name => "Attachments::ParkPic"
+  has_many :park_instructions, :dependent => :destroy, :class_name => "::Attachments::ParkInstruction"
+
+  accepts_nested_attributes_for :park_instructions, :park_pics, :allow_destroy => true
 
   after_initialize do
     #self.lat, self.lng = EvilTransform.to_MGS(lat: self.gcj_lat, lon: self.gcj_lng)

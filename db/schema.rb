@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150205074603) do
+ActiveRecord::Schema.define(version: 20150206025519) do
+
+  create_table "attachments_park_instructions", force: true do |t|
+    t.string   "park_instructions"
+    t.integer  "park_id"
+    t.string   "original_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "attachments_park_pics", force: true do |t|
+    t.string   "park_pic"
+    t.integer  "park_id"
+    t.string   "original_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "imports", force: true do |t|
     t.string   "park_type"
@@ -165,6 +181,7 @@ ActiveRecord::Schema.define(version: 20150205074603) do
     t.string   "pic_num"
     t.string   "originate_from"
     t.string   "property_owner"
+    t.text     "previews"
   end
 
   create_table "sms_codes", force: true do |t|

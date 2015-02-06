@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  park_pic: MyString
+  park_id: 1
+
+two:
+  park_pic: MyString
+  park_id: 1

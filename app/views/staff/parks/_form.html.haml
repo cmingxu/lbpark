@@ -1,13 +1,174 @@
 .container-fluid
   .row-fluid
     .col-md-10.col-md-offset-1.table_wrapper
-      %table.table.table-striped.table-condensed.table-hover.table-bordered
+      %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
         %thead
           %th 
           %th
         %tbody
-          - Park.column_names.each do |column|
+          = form_for [:staff, @park], :role => "form", :class => "form", :multipart => true do |f|
             %tr
-              %td= Park::COLUMN_MAP[column.intern] || column
-              %td= @park.send column
+              %td= Park::COLUMN_MAP[:code]
+              %td
+                = f.text_field :code
+                %span 例如: hda001
 
+            %tr
+              %td= Park::COLUMN_MAP[:pic_num]
+              %td
+                = f.text_field :pic_num
+                %span 例如: hda001, 空表示和编号一致
+            %tr
+              %td= Park::COLUMN_MAP[:name]
+              %td= f.text_field :name
+            %tr
+              %td= Park::COLUMN_MAP[:city]
+              %td
+                = f.text_field :city
+                %span 例如: 北京
+            %tr
+              %td= Park::COLUMN_MAP[:district]
+              %td
+                = f.text_field :district
+                %span 例如: 海淀区 朝阳区
+            %tr
+              %td= Park::COLUMN_MAP[:total_count]
+              %td
+                = f.text_field :total_count
+                %span 例如: 40
+
+            %tr
+              %td= Park::COLUMN_MAP[:park_type]
+              %td= f.select :park_type, Park::PARK_TYPE
+
+            %tr
+              %td= Park::COLUMN_MAP[:park_type_code]
+              %td= f.select :park_type_code, Park::PARK_TYPE_CODE
+
+            %tr
+              %td= Park::COLUMN_MAP[:originate_from]
+              %td= f.select :originate_from, Park::PARK_ORIGINATE_FROM, :include_blank => true
+
+            %tr
+              %td= Park::COLUMN_MAP[:property_owner]
+              %td= f.text_field :property_owner
+            %tr
+              %td= Park::COLUMN_MAP[:gcj_lat]
+              %td= f.text_field :gcj_lat
+
+            %tr
+              %td= Park::COLUMN_MAP[:gcj_lng]
+              %td= f.text_field :gcj_lng
+
+            %tr
+              %td= Park::COLUMN_MAP[:day_time_begin]
+              %td= f.select :day_time_begin, ( 1..24 ).to_a
+
+            %tr
+              %td= Park::COLUMN_MAP[:day_time_end]
+              %td= f.select :day_time_end, ( 1..24 ).to_a
+
+
+            %tr
+              %td= Park::COLUMN_MAP[:day_first_hour_price]
+              %td
+                = f.text_field :day_first_hour_price
+                %span 白天第一小时价格/白天按时价
+
+            %tr
+              %td= Park::COLUMN_MAP[:day_second_hour_price]
+              %td
+                = f.text_field :day_second_hour_price
+                %span 白天第二小时价格（没有设置为空）
+
+            %tr
+              %td= Park::COLUMN_MAP[:night_price_per_night]
+              %td
+                = f.text_field :night_price_per_night
+
+            %tr
+              %td= Park::COLUMN_MAP[:night_price_per_hour]
+              %td
+                = f.text_field :night_price_per_hour
+
+            %tr
+              %td= Park::COLUMN_MAP[:whole_day_price_per_time]
+              %td
+                = f.text_field :whole_day_price_per_time
+
+            %tr
+              %td= Park::COLUMN_MAP[:whole_day_price_per_hour]
+              %td
+                = f.text_field :whole_day_price_per_hour
+
+            %tr
+              %td= Park::COLUMN_MAP[:month_price]
+              %td
+                = f.text_field :month_price
+
+            %tr
+              %td= Park::COLUMN_MAP[:service_month]
+              %td
+                = f.select :service_month, [["是", true],["否", false]]
+
+            %tr
+              %td= Park::COLUMN_MAP[:service_wash]
+              %td
+                = f.select :service_wash, [["是", true],["否", false]]
+
+            %tr
+              %td= Park::COLUMN_MAP[:service_wc]
+              %td
+                = f.select :service_wc, [["是", true],["否", false]]
+
+            %tr
+              %td= Park::COLUMN_MAP[:service_repair]
+              %td
+                = f.select :service_repair, [["是", true],["否", false]]
+
+            %tr
+              %td= Park::COLUMN_MAP[:service_rent]
+              %td
+                = f.select :service_rent, [["是", true],["否", false]]
+
+            %tr
+              %td= Park::COLUMN_MAP[:service_rent_company]
+              %td
+                = f.text_field :service_rent_company
+
+            %tr
+              %td= Park::COLUMN_MAP[:is_recommend]
+              %td
+                = f.select :is_recommend, [["是", true],["否", false]]
+
+            %tr
+              %td 攻略
+              %td
+                - (1- f.object.park_instructions.length).times do
+                  - f.object.park_instructions.build
+
+                = f.fields_for :park_instructions, f.object.park_instructions do |ff|
+                  - if ff.object.original_name
+                    删除？
+                    = ff.check_box :_destroy
+                    = link_to ff.object.original_name, ff.object.park_instructions.url, :target => "_blank"
+                  - else
+                    = ff.file_field :park_instructions
+            %tr
+              %td 图片
+              %td
+
+                - (4 - f.object.park_pics.length).times do
+                  - f.object.park_pics.build
+
+                = f.fields_for :park_pics, f.object.park_pics do |ff|
+                  - if ff.object.original_name
+                    删除？
+                    = ff.check_box :_destroy
+                    = link_to ff.object.original_name, ff.object.park_pic.thumb.url, :target => "_blank"
+                    %br
+                  - else
+                    = ff.file_field :park_pic
+            %tr
+              %td{:colspan => 2}
+                = f.submit "保存", :class => "btn btn-success"

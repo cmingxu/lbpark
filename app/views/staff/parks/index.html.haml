@@ -19,6 +19,7 @@
 
   .row-fluid
     .col-md-10.col-md-offset-1.table_wrapper
+      = link_to fa_icon("fw plus") + "录入停车场", new_staff_park_path, :class => "btn btn-primary pull-right"
       %table.table.table-striped.table-condensed.table-hover.table-bordered
         %thead
           %th ID
@@ -79,5 +80,5 @@
               %td= p.service_rent
               %td= p.service_rent_company
 
-        = paginate @parks
+      = paginate @parks
 
