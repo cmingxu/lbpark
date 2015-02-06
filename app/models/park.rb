@@ -98,7 +98,8 @@ class Park < ActiveRecord::Base
     :green => 0,
     :orange => 1,
     :red => 2,
-    :unknown => 3
+    :unknown => 3,
+    :no_parking => 4
   }
   PARK_TYPE = ["地面", "地下", "桥下", "立体", "院内", "街面", "路边", "辅路"]
   PARK_TYPE_CODE = ["A", "B", "C"]
@@ -112,7 +113,7 @@ class Park < ActiveRecord::Base
 
   scope :within_range, lambda {|range| where(["gcj_lng > ? AND gcj_lat > ? AND gcj_lng < ? AND gcj_lat <?", range.p1.lng, range.p1.lat, range.p2.lng, range.p2.lat]).limit(200) }
   scope :with_park_type_code, ->(code) { where(park_type_code: code) }
-  attr_accessor :lat, :lng
+  attr_accessor :lat, :lng, :price_calculator
 
   validates :name, presence: true
   validates :code, presence: true
@@ -128,7 +129,10 @@ class Park < ActiveRecord::Base
     #self.lat, self.lng = EvilTransform.to_MGS(lat: self.gcj_lat, lon: self.gcj_lng)
     self.lat = self.gcj_lat
     self.lng = self.gcj_lng
+    self.price_calculator = PriceCalculator.new(self)
   end
+
+  delegate :no_parking?, :current_price, :day_price, :day_unit, :night_price, :night_unit, :day_time_range, :night_time_range, :to => "@price_calculator"
 
   def tags
     park_tags = [ { :name => "总车位#{self.total_count}个", :link => nil } ]
@@ -140,40 +144,9 @@ class Park < ActiveRecord::Base
     park_tags
   end
 
-  def calculated_day_price
-    self.day_price
-  end
-
-  def day_time_range
-    "07:00 - 21:00"
-  end
-
-  def calculated_night_price
-    self.night_price
-  end
-
-  def night_time_range
-    "21:00 - 07:00"
-  end
-
-  def day_price_unit
-    "时"
-  end
-
-  def night_price_unit
-    "时"
-  end
-
-  def use_day_price?
-    Time.now.hour >= self.day_time_begin && Time.now.hour < self.day_time_end
-  end
-
-  def current_price
-    self.use_day_price? ? self.day_price_per_time : self.night_price_per_night
-  end
-
   def busy_status
-    (($redis.get RedisKey.park_status_key(self)) || 3).to_i
+    return BUSY_STATUS[:no_parking] if no_parking?
+    (($redis.get RedisKey.park_status_key(self)) || BUSY_STATUS[:unknown]).to_i
   end
 
   def thump_pic_url
