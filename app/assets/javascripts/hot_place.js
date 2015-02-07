@@ -7,7 +7,6 @@ function hotPlaceSearch(keywords) {
       $("#autocomplete_list").hide().empty();
     }
     autocomplete = new AMap.Autocomplete({
-      type: 1000,
       city: "010"
     });
     autocomplete.search(keywords, function(status, result){

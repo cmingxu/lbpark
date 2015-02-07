@@ -59,6 +59,9 @@ body
     background-position-x: -320px
   .marker_c
     background-position-x: -384px
+  .marker_pressed
+    margin-left: 2px
+    margin-top: 2px
     
   #center_marker
     width: 50px
@@ -70,11 +73,11 @@ body
 
 #park
   #park_title
-    transition: height 2s
-    -webkit-transition: all 0.2s
+    transition: height 0.1s
+    -webkit-transition: all 0.1s
   #park_detail
-    transition: height 2s
-    -webkit-transition: all 0.2s
+    transition: height 0.1s
+    -webkit-transition: all 0.1s
 
   #park_title
     width: 100%
@@ -91,6 +94,7 @@ body
       #park_name
         font-size: 18px
         font-weight: bold
+        color: #666
       #park_short_description
         font-size: 12px
       #park_status
@@ -135,7 +139,7 @@ body
           bottom: 247px
 
         .day_and_night_prices
-          margin-right: 133px
+          margin-right: 177px
           .day
             height: 50px
             border-left: $border-highlight-width solid $border-highlight-color-2

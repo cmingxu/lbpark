@@ -64,20 +64,26 @@ function add_plugins() {
 }
 
 function add_new_marker(location) {
+  marker_jq_obj = LB.park_info_marker(location);
   var marker = new AMap.Marker({ //创建自定义点标注
     map: LB.mapObj,
     position: new AMap.LngLat(location.lng,
                               location.lat),
                               offset: new AMap.Pixel(-10, -34),
-                              content: LB.park_info_marker(location)
+                              content: marker_jq_obj.get(0)
   });
 
   marker.park = location;
+  marker.marker_jq_obj = marker_jq_obj;
 
   AMap.event.addListener(marker, 'click', function () {
     LB.Logger.debug("marker click");
     LB.park_info_state.on_enter_short(marker.park);
     LB.current_park = marker.park;
+    marker.marker_jq_obj.addClass("marker_pressed");
+    setTimeout(function () {
+      marker.marker_jq_obj.removeClass("marker_pressed");
+    }, 100)
     LB.clear_auto_nav();
   });
 

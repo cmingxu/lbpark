@@ -33,7 +33,7 @@ class ParkPicUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :thumb do
-    process :resize_to_fit => [133, 100]
+    process :resize_to_fit => [177, 100]
     process :convert => 'png'
     process :watermark
     def full_filename (for_file = model.logo.file)
