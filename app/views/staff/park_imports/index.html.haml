@@ -3,12 +3,16 @@
     .lb_form.col-md-10.col-md-offset-1.form
       .form_content
         .form-group
-          = link_to "确认导入" , staff_import_merge_path(:import_id => @import), :method => :put, :class => "btn btn-primary pull-right"
+          - if @import.imported?
+            = link_to "确认导入" , staff_import_merge_path(:import_id => @import), :method => :put, :class => "btn btn-primary pull-right"
+          - if @import.failed?
+            = @import.failed_reason
 
   .row-fluid
     .col-md-10.col-md-offset-1.table_wrapper
       %table.table.table-striped.table-condensed.table-hover.table-bordered
         %thead
+          %th 
           %th ID
           %th 编号
           %th 车位数
@@ -34,7 +38,9 @@
 
         %tbody
           - @park_imports.each do |p|
+            - has_equivalent, pe = p.equivalent_park
             %tr
+              %td
               %td= p.id
               %td= p.code
               %td= p.total_count
@@ -66,6 +72,40 @@
               %td= p.service_wc
               %td= p.service_rent
               %td= p.service_rent_company
+            - if has_equivalent
+              %tr{:style => "color: red;"}
+                %td= has_equivalent
+                %td= pe.id
+                %td= pe.code
+                %td= pe.total_count
+                %td= pe.name
+                %td= pe.district
+                %td= pe.park_type
+                %td= pe.park_type_code
+                %td
+                  = pe.gcj_lng
+                  /
+                  = pe.gcj_lat
+                %td
+                  = pe.day_time_begin
+                  -
+                  = pe.day_time_end
+                %td
+                  = pe.night_time_begin
+                  -
+                  = pe.night_time_end
+                %td= pe.day_first_hour_price
+                %td= pe.day_second_hour_price
+                %td= pe.day_price_per_time
+                %td= pe.night_price_per_night
+                %td= pe.night_price_per_hour
+                %td= pe.whole_day_price_per_hour
+                %td= pe.whole_day_price_per_time
+                %td= pe.month_price
+                %td= pe.service_wash
+                %td= pe.service_wc
+                %td= pe.service_rent
+                %td= pe.service_rent_company
 
 
 

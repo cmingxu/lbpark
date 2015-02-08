@@ -4,7 +4,7 @@ class Staff::ImportsController < Staff::BaseController
   end
 
   def index
-    @imports = Import.page params[:page]
+    @imports = Import.order("id desc").page params[:page]
   end
 
   def new
@@ -28,7 +28,7 @@ class Staff::ImportsController < Staff::BaseController
 
   def merge
     @import = Import.find params[:import_id]
-    @import.merge
+    @import.start_merge!
     redirect_to staff_imports_path, :notice => "上传成功"
   end
 

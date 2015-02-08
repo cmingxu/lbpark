@@ -1,6 +1,7 @@
 #编号,照片,属性,名称,类型,地址,性质,车位,坐标（北纬）,坐标（东经）,承包，电话,白天按时,白天按次,晚上按夜,晚上按时,全天按时,全天按次,包月价格,早晚时段,洗车,卫生间,租车,提示,推荐,萝卜头,hda,北京市,海淀区,,,,,
 module Xls2db
   def self.import_a(csv_file_name, park_class = Park, import = nil)
+
     index = 0
     city = nil
     district = nil
@@ -11,6 +12,7 @@ module Xls2db
         city = line[26]
         district = line[27]
         code_prefix = line[25]
+        raise ImportException.new("不是A类信息的内容") if code_prefix.blank? || code_prefix[2] != "a"
         staff = line[24]
       end
       index += 1
@@ -83,6 +85,7 @@ module Xls2db
       if index == 0
         staff = line[7]
         code_prefix = line[8]
+        raise ImportException.new("不是B类信息") if code_prefix.blank? || code_prefix[2] != "b"
         city = line[9]
         district = line[10]
       end
@@ -121,6 +124,7 @@ module Xls2db
       if index == 0
         staff = line[9]
         code_prefix = line[10]
+        raise ImportException.new("不是C类信息") if code_prefix.blank? || code_prefix[2] != "c"
         city = line[11]
         district = line[12]
       end

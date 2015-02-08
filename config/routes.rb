@@ -58,7 +58,12 @@ Rails.application.routes.draw do
     end
 
     resources :parks
-    resources :staffs
+    resources :staffs do
+      collection do
+        get :i_want_change_pass
+        patch :change_password
+      end
+    end
   end
 
 
@@ -67,7 +72,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
- root 'mobile#map'
+  root 'mobile#map'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

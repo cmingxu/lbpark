@@ -53,9 +53,20 @@ class ParkImport < ActiveRecord::Base
   def do_the_merge!
     park = Park.find_by_code(self.code)
     if park
-      park.update_attributes!(self.attributes.only(*Park::COLUMN_MAP.keys))
+      park.update_attributes!(self.attributes.slice(*Park::COLUMN_MAP.keys.map(&:to_s)))
     else
-      park.create!(self.attributes.only(*Park::COLUMN_MAP.keys))
+      p = Park.new(self.attributes.slice(*Park::COLUMN_MAP.keys.map(&:to_s)))
+      p.save
+      ap p.errors
     end
+  end
+
+  def equivalent_park
+    park = Park.find_by_code(self.code)
+    return ["+", park] if park.nil?
+    if self.attributes.slice(*Park::COLUMN_MAP.keys.map(&:to_s)) != park.attributes.slice(*Park::COLUMN_MAP.keys.map(&:to_s))
+      return ["M", park]
+    end
+    return [nil,nil]
   end
 end

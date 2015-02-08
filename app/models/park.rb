@@ -115,10 +115,7 @@ class Park < ActiveRecord::Base
   scope :with_park_type_code, ->(code) { where(park_type_code: code) }
   attr_accessor :lat, :lng, :price_calculator
 
-  validates :name, presence: true
   validates :code, presence: true
-  validates :code, uniqueness: true, on: :create
-  validates :name, uniqueness: true, on: :create
 
   has_many :park_pics, :dependent => :destroy, :class_name => "Attachments::ParkPic"
   has_many :park_instructions, :dependent => :destroy, :class_name => "::Attachments::ParkInstruction"
@@ -161,7 +158,6 @@ class Park < ActiveRecord::Base
       [self.park_type, self.tips].select{|a| a.present? }.join("/")
     when "C"
       [self.park_type, self.tips].select{|a| a.present? }.join("/")
-
     end
   end
 

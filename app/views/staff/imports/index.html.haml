@@ -22,7 +22,7 @@
               %td= i.park_type
               %td= i.imported_csv
               %td= i.lb_staff
-              %td= Import::STATUS[i.status]
+              %td= Import::STATUS[i.status.try(:intern)]
               %td= i.city
               %td= i.district
               %td= i.code_prefix

@@ -1,0 +1,11 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      = form_tag  change_password_staff_staffs_path, :role => "form", :method => :patch do
+        .form_content
+          .form-group
+            .input-group.col-md-12
+              = text_field_tag :new_pass, "", :placeholder => "新密码"
+          .form-group
+            = submit_tag "修改", :class => "btn btn-primary"
+

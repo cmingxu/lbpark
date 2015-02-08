@@ -30,8 +30,8 @@ class Import < ActiveRecord::Base
 
   mount_uploader :imported_csv, ImportedCsvUploader
 
-  state_machine :initial => :uploaded do
-    after_transition :on => :merged, :do => :the_merge
+  state_machine :status, :initial => :uploaded do
+    after_transition :on => :start_merge, :do => :the_merge
 
     event :import do
       transition :uploaded => :imported
@@ -41,7 +41,7 @@ class Import < ActiveRecord::Base
       transition :uploaded => :failed
     end
 
-    event :merge do
+    event :start_merge do
       transition :imported => :merged
     end
   end
@@ -55,7 +55,15 @@ class Import < ActiveRecord::Base
   def import_park_imports
     begin
       Xls2db.send("import_#{self.park_type.downcase}", self.imported_csv.file.path, ParkImport, self)
+      self.lb_staff = self.park_imports.first.lb_staff
+      self.city = self.park_imports.first.city
+      self.district = self.park_imports.first.district
+      save
       self.import!
+
+    rescue ImportException => e
+      self.update_column :failed_reason, e.message
+      self.import_failed!
     rescue Exception => e
       self.update_column :failed_reason, e.message
       self.import_failed!
