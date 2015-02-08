@@ -1,5 +1,5 @@
 defaults: &defaults
-  title: "lbpark"
+  title: "萝卜停车"
   description: "萝卜停车"
   keywords: "萝卜停车"
   host: "萝卜停车"

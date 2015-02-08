@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150206025519) do
+ActiveRecord::Schema.define(version: 20150208080143) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -38,6 +38,12 @@ ActiveRecord::Schema.define(version: 20150206025519) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "imported_csv"
+    t.string   "code_prefix"
+    t.string   "city"
+    t.string   "district"
+    t.string   "lb_staff"
+    t.string   "park_type_code"
+    t.string   "failed_reason"
   end
 
   create_table "intros", force: true do |t|
@@ -62,35 +68,39 @@ ActiveRecord::Schema.define(version: 20150206025519) do
     t.string   "park_type"
     t.string   "park_type_code"
     t.string   "total_count"
-    t.decimal  "gcj_lat",               precision: 10, scale: 6
-    t.decimal  "gcj_lng",               precision: 10, scale: 6
+    t.decimal  "gcj_lat",                             precision: 10, scale: 6
+    t.decimal  "gcj_lng",                             precision: 10, scale: 6
     t.boolean  "whole_day"
     t.string   "day_only"
     t.integer  "day_time_begin"
     t.integer  "day_time_end"
-    t.integer  "day_price"
-    t.decimal  "day_first_hour_price",  precision: 10, scale: 0
-    t.decimal  "day_second_hour_price", precision: 10, scale: 0
+    t.float    "day_first_hour_price",     limit: 24
+    t.float    "day_second_hour_price",    limit: 24
+    t.float    "day_price_per_time",       limit: 24
+    t.float    "night_price_per_night",    limit: 24
+    t.float    "night_price_per_hour",     limit: 24
+    t.float    "whole_day_price_per_time", limit: 24
+    t.float    "whole_day_price_per_hour", limit: 24
     t.integer  "night_time_begin"
     t.integer  "night_time_end"
-    t.decimal  "night_price",           precision: 10, scale: 0
-    t.integer  "night_price_hour"
-    t.integer  "times_price"
     t.boolean  "service_month"
     t.integer  "month_price"
     t.boolean  "service_wash"
     t.boolean  "service_wc"
     t.boolean  "service_repair"
     t.boolean  "service_rent"
-    t.boolean  "service_rent_company"
+    t.string   "service_rent_company"
     t.boolean  "service_group"
     t.boolean  "service_times"
     t.boolean  "is_recommend"
     t.boolean  "has_service_coupon"
     t.boolean  "has_service_point"
     t.boolean  "is_only_service"
-    t.decimal  "times_price_all_day",   precision: 10, scale: 0
     t.string   "tips"
+    t.string   "lb_staff"
+    t.string   "pic_num"
+    t.string   "originate_from"
+    t.string   "property_owner"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

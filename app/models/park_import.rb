@@ -50,4 +50,12 @@
 class ParkImport < ActiveRecord::Base
   belongs_to :import
 
+  def do_the_merge!
+    park = Park.find_by_code(self.code)
+    if park
+      park.update_attributes!(self.attributes.only(*Park::COLUMN_MAP.keys))
+    else
+      park.create!(self.attributes.only(*Park::COLUMN_MAP.keys))
+    end
+  end
 end

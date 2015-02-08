@@ -1,6 +1,6 @@
 #编号,照片,属性,名称,类型,地址,性质,车位,坐标（北纬）,坐标（东经）,承包，电话,白天按时,白天按次,晚上按夜,晚上按时,全天按时,全天按次,包月价格,早晚时段,洗车,卫生间,租车,提示,推荐,萝卜头,hda,北京市,海淀区,,,,,
 module Xls2db
-  def self.import_a(csv_file_name)
+  def self.import_a(csv_file_name, park_class = Park, import = nil)
     index = 0
     city = nil
     district = nil
@@ -15,7 +15,7 @@ module Xls2db
       end
       index += 1
       next if index == 1
-      park = Park.find_by_code(code_prefix + line[0]) || Park.new
+      park =  park_class.new
       park.city = city
       park.lb_staff = staff
       park.district = district
@@ -67,11 +67,13 @@ module Xls2db
       park.tips   = line[22]
       park.is_recommend = true if line[23].present?
 
+      park.import = import if import
+
       park.save
     end
   end
 
-  def self.import_b(csv_file_name)
+  def self.import_b(csv_file_name, park_class = Park, import = nil)
     index = 0
     city = nil
     district = nil
@@ -86,7 +88,7 @@ module Xls2db
       end
       index += 1
       next if index == 1
-      park = Park.find_by_code(code_prefix+line[0]) || Park.new
+      park = park_class.new
       park.city = city
       park.lb_staff = staff
       park.district = district
@@ -104,11 +106,12 @@ module Xls2db
       park.night_time_begin = 21 if park.night_time_begin.blank?
       park.night_time_end = 7 if park.night_time_end.blank?
 
+      park.import = import if import
       park.save
     end
   end
 
-  def self.import_c(csv_file_name)
+  def self.import_c(csv_file_name, park_class = Park, import = nil)
     index = 0
     city = nil
     district = nil
@@ -123,7 +126,7 @@ module Xls2db
       end
       index += 1
       next if index == 1
-      park = Park.find_by_code(code_prefix+line[0]) || Park.new
+      park = park_class.new
       park.city = city
       park.lb_staff = staff
       park.district = district
@@ -156,6 +159,8 @@ module Xls2db
       park.whole_day_price_per_time = 0 if line[5].present?
 
       park.tips = line[5]
+
+      park.import = import if import
       park.save
     end
 

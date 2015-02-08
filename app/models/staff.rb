@@ -17,6 +17,8 @@ class Staff < ActiveRecord::Base
   validates :name, presence: true
   attr_accessor :password
 
+  has_many :imports
+
 
   def password=(pass)
     self.salt = SecureRandom::hex(10)

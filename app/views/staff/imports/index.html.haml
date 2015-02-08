@@ -1,0 +1,37 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      = link_to fa_icon("fw plus") + "导入停车场", new_staff_import_path, :class => "btn btn-primary pull-right"
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 车场类型
+          %th 上传文件名
+          %th 联系人
+          %th 状态
+          %th 城市
+          %th 地区
+          %th 前缀
+          %th 备注
+          %th 
+
+        %tbody
+          - @imports.each do |i|
+            %tr
+              %td= link_to i.id, edit_staff_import_path(i)
+              %td= i.park_type
+              %td= i.imported_csv
+              %td= i.lb_staff
+              %td= Import::STATUS[i.status]
+              %td= i.city
+              %td= i.district
+              %td= i.code_prefix
+              %td= i.note
+              %td
+                = link_to fa_icon("fw trash"), staff_import_path(i), :method => :delete, :html => { :confirm => "确认要删除这次上传么?" }
+                = link_to fa_icon("fw search-plus"), staff_import_park_imports_path(i)
+
+
+
+      = paginate @imports
+

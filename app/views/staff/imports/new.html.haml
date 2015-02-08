@@ -1,2 +1,29 @@
-%h1 Staff::Imports#new
-%p Find me in app/views/staff/imports/new.html.haml
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
+        %thead
+          %th 
+          %th
+        %tbody
+          = form_for [:staff, @import], :role => "form", :multipark => true do  |f|
+            %tr
+              %td 车场类型
+              %td
+                - ['A', 'B', 'C'].each do |y|
+                  = f.radio_button :park_type, y
+                  = y
+
+            %tr
+              %td 上传文件(CSV)
+              %td
+                = f.file_field :imported_csv
+
+            %tr
+              %td 备注
+              %td
+                = f.text_area :note
+
+            %tr
+              %td{:colspan => 2}
+                = f.submit "保存", :class => "btn btn-success"

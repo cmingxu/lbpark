@@ -53,6 +53,7 @@ Rails.application.routes.draw do
     post "login" => "session#login"
     delete "logout" => "session#destroy"
     resources :imports do
+      put :merge
       resources :park_imports
     end
 

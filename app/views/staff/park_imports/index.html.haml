@@ -1,2 +1,74 @@
-%h1 Staff::ParkImports#index
-%p Find me in app/views/staff/park_imports/index.html.haml
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        .form-group
+          = link_to "确认导入" , staff_import_merge_path(:import_id => @import), :method => :put, :class => "btn btn-primary pull-right"
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 编号
+          %th 车位数
+          %th 名称
+          %th 区域
+          %th 类型
+          %th 类型CODE
+          %th 经纬度
+          %th 日间时段
+          %th 夜间时段
+          %th 日间按时（第一)
+          %th 日间按时(第二)
+          %th 日间按次
+          %th 夜间按夜
+          %th 夜间按时
+          %th 全天按时
+          %th 全天按次
+          %th 包月价
+          %th wash
+          %th wc
+          %th rent
+          %th company
+
+        %tbody
+          - @park_imports.each do |p|
+            %tr
+              %td= p.id
+              %td= p.code
+              %td= p.total_count
+              %td= p.name
+              %td= p.district
+              %td= p.park_type
+              %td= p.park_type_code
+              %td
+                = p.gcj_lng
+                /
+                = p.gcj_lat
+              %td
+                = p.day_time_begin
+                -
+                = p.day_time_end
+              %td
+                = p.night_time_begin
+                -
+                = p.night_time_end
+              %td= p.day_first_hour_price
+              %td= p.day_second_hour_price
+              %td= p.day_price_per_time
+              %td= p.night_price_per_night
+              %td= p.night_price_per_hour
+              %td= p.whole_day_price_per_hour
+              %td= p.whole_day_price_per_time
+              %td= p.month_price
+              %td= p.service_wash
+              %td= p.service_wc
+              %td= p.service_rent
+              %td= p.service_rent_company
+
+
+
+
+
+
