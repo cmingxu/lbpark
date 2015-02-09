@@ -67,6 +67,6 @@ class ParkImport < ActiveRecord::Base
     if self.attributes.slice(*Park::COLUMN_MAP.keys.map(&:to_s)) != park.attributes.slice(*Park::COLUMN_MAP.keys.map(&:to_s))
       return ["M", park]
     end
-    return [nil,nil]
+    return [nil, nil]
   end
 end

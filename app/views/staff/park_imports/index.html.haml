@@ -72,7 +72,7 @@
               %td= p.service_wc
               %td= p.service_rent
               %td= p.service_rent_company
-            - if has_equivalent
+            - if has_equivalent && pe
               %tr{:style => "color: red;"}
                 %td= has_equivalent
                 %td= pe.id

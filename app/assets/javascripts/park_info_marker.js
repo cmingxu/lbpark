@@ -22,5 +22,5 @@ LB.park_info_marker = function (park) {
     default:
   }
     return $('<div class="' + classes.join(' ') +'">' +
-      text  +'</div>');
+      text +'</div>');
 }

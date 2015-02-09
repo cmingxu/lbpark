@@ -1,3 +1,5 @@
 class Api::BaseController < ApplicationController
-    session :off
+  before_filter do
+    #session :off
+  end
 end
