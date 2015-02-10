@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'vendor' => "vendor#index"
   get 'vendor/index'
   get 'vendor/login'
+  post 'vendor/login'
   get 'vendor/mine'
   get 'vendor/lottery'
   post 'vendor/send_sms_code'

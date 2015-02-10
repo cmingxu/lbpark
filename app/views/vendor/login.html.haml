@@ -1,12 +1,14 @@
 .vendor_login_page
+  #header_bg
   #mobile_num.box
     %span 手机号码:
     %input#mobile_num_field
   #sms_code.box
     %span 验证码:
     %input#sms_code_field
-    %span#send_btn 点击发送
+    %span#send_btn 获取验证码
   %button#login_btn.box 登录
 
+  = hidden_field_tag :sms_code_id
   #error_message_box
 

@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
 
   scope :vendors, -> { where(:role => 'vendor') }
   validates :phone, presence: true
-  validates :phone, format: { with: /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/ }
+  validates :phone, format: { with: /\A(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}\z/ }
 
   def park
     self.parks.first

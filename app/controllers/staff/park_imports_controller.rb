@@ -8,7 +8,6 @@ class Staff::ParkImportsController < Staff::BaseController
     @park_imports = @import.park_imports
   end
 
-
   def new
   end
 

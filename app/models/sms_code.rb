@@ -19,6 +19,8 @@ class SmsCode < ActiveRecord::Base
   belongs_to :user
   after_create :send_sms
 
+  serialize :params
+
   state_machine :status, :initial => :new_created do
     event :sent do
       transition :new_created => :sent_out

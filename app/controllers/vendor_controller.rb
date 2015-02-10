@@ -4,7 +4,9 @@ class VendorController < ApplicationController
   before_filter :current_vendor_required, :only => [:index, :lottory, :mine]
 
   def index
-    @messages = current_vendor.park.messages
+    if current_vendor.park
+      @messages = current_vendor.park.messages
+    end
   end
 
   def lottery
@@ -15,16 +17,21 @@ class VendorController < ApplicationController
   end
 
   def login
-    user = User.login(params[:mobile])
-    if !sms_code_valid?
-      render :json => {:result => flase, :msg => ""}
-      return
-    end
-    if user && user.valid?
-      session[:vendor_id] = user.id
-      redirect_to vendor_index_path
+    if request.post?
+      user = User.login(params[:mobile_num])
+      if !sms_code_valid?
+        render :json => {:result => false, :msg => "验证码不正确"}
+        return
+      end
+      if user && user.valid?
+        user.update_column :role, "vendor"
+        session[:vendor_id] = user.id
+        render :json => {:result => true, :msg => ""}
+      else
+        render :json => {:result => false, :msg => "验证码不正确"}
+      end
     else
-      render :json => {:result => flase, :msg => ""}
+      render :layout => "vendor_login"
     end
   end
 
@@ -32,7 +39,7 @@ class VendorController < ApplicationController
     sms_code = SmsCode.new_sms_code(params[:mobile_num])
     if !sms_code.need_set_threshold?
       sms_code.save
-      render :json => {:result => true, :msg => ""}
+      render :json => {:result => true, :msg => "", :sms_code_id => sms_code.id}
     else
       render :json => {:result => false, :msg => "连续发送次数过多，稍后重试"}
     end
@@ -46,6 +53,10 @@ class VendorController < ApplicationController
   end
 
   def sms_code_valid?
+    sms_code = SmsCode.find_by_id(params[:sms_code_id])
+    return false unless sms_code
+    param = sms_code.try(:params)
+    param[:code] == params[:sms_code]
   end
 
 end
