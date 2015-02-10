@@ -35,6 +35,18 @@ class VendorController < ApplicationController
     end
   end
 
+  def create_park_statuses
+    @park_status = current_vendor.park_statuses.build
+    @park_status.status = params[:status]
+    @park_status.park = current_vendor.park
+
+    if @park_status.save
+      render :json => {:result => true, :msg => ""}
+    else
+      render :json => {:result => false, :msg => ""}
+    end
+  end
+
   def send_sms_code
     sms_code = SmsCode.new_sms_code(params[:mobile_num])
     if !sms_code.need_set_threshold?

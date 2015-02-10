@@ -1,24 +1,53 @@
 .vender_index
-  #park_status_detail
-  #park_status_buttons
-    %span
-      .red
-        = link_to "已满", "#", "data-code" => 2
-    %span
-      .orange
-        = link_to "紧张", "#", "data-code" => 1
-    %span
-      .green
-        = link_to "空闲", "#", "data-code" => 0
-  #park_status_news
-    .park_status_header 今日快报
-  .popup.hidden
-  #confirm_box.hidden
-    #confirm_message
-      %span 车场当前状态为 -
-      %strong 紧张
-    #confirm_buttons
-      #confirm_no_button.btn
-        %span 取消
-      #confirm_yes_button.btn
-        %span 确认
+  - if current_vendor.park.nil?
+    请联系管理员绑定停车场
+  - else
+    #park_status_detail
+      #park_status_detail_name
+        #park_status_detail_name_content
+          = current_vendor.park.name
+      - if current_vendor.park.park_statuses.present?
+        #park_status_detail_info
+          %span
+            .park_status_detail_info_status_icon
+            .park_status_detail_info_status
+              = Park::BUSY_STATUS_IN_ZH[current_vendor.park.latest_park_status.status.to_i]
+          %span
+            .park_status_detail_info_last_input_time_icon
+            .park_status_detail_info_last_input_time
+              = current_vendor.park.latest_park_status.created_at.to_s(:lb_cn_normal)
+          %span
+            .park_status_detail_info_phone_icon
+            .park_status_detail_info_phone
+              = current_vendor.park.latest_park_status.user.phone
+    #park_status_buttons
+      %span
+        .red
+          = link_to "紧张", "#", "data-code" => 2
+      %span
+        .orange
+          = link_to "繁忙", "#", "data-code" => 1
+      %span
+        .green
+          = link_to "空闲", "#", "data-code" => 0
+    #park_status_news
+      .park_status_header 今日快报
+      %ul
+        %li
+          %a{:href => ""} 136****6168因上报状态得到彩票一张
+        %li
+          %a{:href => ""} 136****6168因上报状态得到彩票一张
+        %li
+          %a{:href => ""} 136****6168因上报状态得到彩票一张
+        %li
+          %a{:href => ""} 136****6168因上报状态得到彩票一张
+    .popup.hidden
+    #confirm_box.hidden
+      #confirm_message
+        %span 车场当前状态为 -
+        %strong#park_status_word 紧张
+      #confirm_buttons
+        #confirm_no_button.btn
+          %span 取消
+        #confirm_yes_button.btn
+          %span 确认

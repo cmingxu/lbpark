@@ -101,6 +101,14 @@ class Park < ActiveRecord::Base
     :unknown => 3,
     :no_parking => 4
   }
+
+  BUSY_STATUS_IN_ZH = {
+    0 => "空闲",
+    1 => "繁忙",
+    2 => "紧张",
+    3 => "未知",
+    4 => "禁停",
+  }
   PARK_TYPE = ["地面", "地下", "桥下", "立体", "院内", "街面", "路边", "辅路"]
   PARK_TYPE_CODE = ["A", "B", "C"]
   PARK_ORIGINATE_FROM = ["公建", "居住", "单位"]

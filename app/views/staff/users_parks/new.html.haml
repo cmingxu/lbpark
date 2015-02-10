@@ -1,0 +1,12 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+
+      = form_for [:staff, @users_park], :role => "form" do |f|
+        = hidden_field_tag :user_id, params[:user_id]
+        = f.hidden_field :user_id
+        .form_content
+          .form-group
+            = f.text_field :park_id, :placeholder => "park_id"
+          .form-group
+            = submit_tag "绑定", :class => "btn btn-primary"

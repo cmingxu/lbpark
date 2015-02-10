@@ -1,3 +1,5 @@
+var LB = LB || {};
+
 function valid_mobile_num() {
   var mobile_num = $("#mobile_num_field").val();
   if(mobile_num === undefined){

@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -19,11 +18,11 @@ Rails.application.routes.draw do
   get 'vendor/mine'
   get 'vendor/lottery'
   post 'vendor/send_sms_code'
+  post 'vendor/create_park_statuses'
 
 
   namespace :api do
     resources :parks
-    resources :park_statuses, :only => [:create]
   end
 
   namespace :dashboard do
@@ -47,6 +46,7 @@ Rails.application.routes.draw do
 
     resources :vendors
 
+    resources :users_parks
     resources :parks
     resources :staffs do
       collection do
