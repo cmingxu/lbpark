@@ -1,37 +1,24 @@
 Rails.application.routes.draw do
 
-  namespace :staff do
-  get 'staffs/index'
-  end
+  
+  ResqueWeb::Engine.eager_load!
 
-  namespace :staff do
-  get 'staffs/new'
+  require 'resque_web'
+  resque_web_constraint = lambda { |request| request.remote_ip == '127.0.0.1' }
+  constraints resque_web_constraint do
+    mount ResqueWeb::Engine => "/resque_web"
   end
-
-  namespace :staff do
-  get 'staffs/edit'
-  end
-
   captcha_route
-  namespace :staff do
-  get 'parks/index'
-  end
+  get 'mobile/map'
+  get 'mobile/hot_place'
 
-  namespace :staff do
-  get 'parks/new'
-  end
-
-  namespace :staff do
-  get 'parks/edit'
-  end
-
+  get 'vendor' => "vendor#index"
   get 'vendor/index'
   get 'vendor/login'
   get 'vendor/mine'
-  get 'vendor/lottory'
+  get 'vendor/lottery'
+  post 'vendor/send_sms_code'
 
-  get 'mobile/map'
-  get 'mobile/hot_place'
 
   namespace :api do
     resources :parks

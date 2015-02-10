@@ -8,12 +8,12 @@
     %meta{:name => "keywords",    :content => Settings.keywords}
     %meta{:name => "description", :content => Settings.description}
     %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1.0", :name => "viewport"}
-  %body
+  %body.vendor
     = yield
     #tabs
       %a{:href => "/vendor/index"}
         %span{:class => map_nav_class("report")} 上报
-      %a{:href => "/vendor/lottory"}
-        %span{:class => map_nav_class("lottory")} 彩票
+      %a{:href => "/vendor/lottery"}
+        %span{:class => map_nav_class("lottery")} 彩票
       %a{:href => "/vendor/mine"}
         %span{:class => map_nav_class("mine")} 我的

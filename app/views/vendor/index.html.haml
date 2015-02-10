@@ -1,5 +1,24 @@
-
-
-= link_to "Green", "#", "data-code" => 0
-= link_to "Red", "#", "data-code" => 2
-= link_to "Orange", "#", "data-code" => 1
+.vender_index
+  #park_status_detail
+  #park_status_buttons
+    %span
+      .red
+        = link_to "已满", "#", "data-code" => 2
+    %span
+      .orange
+        = link_to "紧张", "#", "data-code" => 1
+    %span
+      .green
+        = link_to "空闲", "#", "data-code" => 0
+  #park_status_news
+    .park_status_header 今日快报
+  .popup.hidden
+  #confirm_box.hidden
+    #confirm_message
+      %span 车场当前状态为 -
+      %strong 紧张
+    #confirm_buttons
+      #confirm_no_button.btn
+        %span 取消
+      #confirm_yes_button.btn
+        %span 确认

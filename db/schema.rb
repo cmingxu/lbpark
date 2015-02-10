@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150208080143) do
+ActiveRecord::Schema.define(version: 20150209093639) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 20150208080143) do
     t.string   "city"
     t.string   "district"
     t.string   "lb_staff"
-    t.string   "park_type_code"
     t.string   "failed_reason"
   end
 
@@ -196,12 +195,18 @@ ActiveRecord::Schema.define(version: 20150208080143) do
 
   create_table "sms_codes", force: true do |t|
     t.string   "phone"
-    t.string   "code"
+    t.text     "params"
+    t.string   "template"
     t.datetime "expire_at"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
+    t.boolean  "stop"
   end
+
+  add_index "sms_codes", ["phone"], name: "index_sms_codes_on_phone", using: :btree
+  add_index "sms_codes", ["user_id"], name: "index_sms_codes_on_user_id", using: :btree
 
   create_table "staffs", force: true do |t|
     t.string   "name"
