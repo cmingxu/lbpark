@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150209093639) do
+ActiveRecord::Schema.define(version: 20150210004244) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -51,6 +51,30 @@ ActiveRecord::Schema.define(version: 20150209093639) do
     t.string   "title"
     t.string   "status"
     t.integer  "created_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "lotteries", force: true do |t|
+    t.integer  "user_id"
+    t.string   "open_num"
+    t.string   "serial_num"
+    t.integer  "park_status_id"
+    t.integer  "park_id"
+    t.string   "phone"
+    t.datetime "open_at"
+    t.text     "notes"
+    t.boolean  "win"
+    t.integer  "win_amount"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "messages", force: true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

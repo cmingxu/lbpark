@@ -4,15 +4,28 @@ class VendorController < ApplicationController
   before_filter :current_vendor_required, :only => [:index, :lottory, :mine]
 
   def index
+    @messages = current_vendor.park.messages
   end
 
   def lottery
+    @lotteries = current_vendor.lotteries
   end
 
   def mine
   end
 
   def login
+    user = User.login(params[:mobile])
+    if !sms_code_valid?
+      render :json => {:result => flase, :msg => ""}
+      return
+    end
+    if user && user.valid?
+      session[:vendor_id] = user.id
+      redirect_to vendor_index_path
+    else
+      render :json => {:result => flase, :msg => ""}
+    end
   end
 
   def send_sms_code
@@ -30,6 +43,9 @@ class VendorController < ApplicationController
       redirect_to vendor_login_path, :notice => "请先登录"
       return
     end
+  end
+
+  def sms_code_valid?
   end
 
 end

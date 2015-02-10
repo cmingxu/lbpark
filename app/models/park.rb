@@ -110,6 +110,7 @@ class Park < ActiveRecord::Base
   has_many :park_statuses
   has_many :vendors, :class_name => "User"
   has_one :latest_park_status, -> { order("created_at DESC").limit(1) }, :class_name => "ParkStatus"
+  has_many :messages, :as => :owner
 
   scope :within_range, lambda {|range| where(["gcj_lng > ? AND gcj_lat > ? AND gcj_lng < ? AND gcj_lat <?", range.p1.lng, range.p1.lat, range.p2.lng, range.p2.lat]).limit(200) }
   scope :with_park_type_code, ->(code) { where(park_type_code: code) }

@@ -1,0 +1,29 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        .form-group
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 车场
+          %th 电话
+          %th Email
+          %th 注册时间
+          %th 上报次数
+          %th 彩票情况
+
+        %tbody
+          - @vendors.each do |p|
+            %tr
+              %td
+              %td= p.id
+              %td= p.park.name
+              %td= p.phone
+              %td= p.email
+              %td= p.created_at.to_s(:cn_normal)
+              %td= p.park_statuses.count
+              %td= p.lotteries.count

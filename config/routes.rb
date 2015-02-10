@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  
+
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -43,6 +43,8 @@ Rails.application.routes.draw do
       put :merge
       resources :park_imports
     end
+
+    resources :vendors
 
     resources :parks
     resources :staffs do
