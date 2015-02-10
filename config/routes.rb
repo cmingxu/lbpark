@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -7,6 +6,7 @@ Rails.application.routes.draw do
   constraints resque_web_constraint do
     mount ResqueWeb::Engine => "/resque_web"
   end
+
   captcha_route
   get 'mobile/map'
   get 'mobile/hot_place'
@@ -45,6 +45,7 @@ Rails.application.routes.draw do
     end
 
     resources :vendors
+    resources :lotteries
 
     resources :users_parks
     resources :parks

@@ -1,0 +1,2 @@
+module Staff::LotteriesHelper
+end

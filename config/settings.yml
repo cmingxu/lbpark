@@ -9,6 +9,7 @@ defaults: &defaults
   default_email_sender: "notification@lbpark.com"
   amap_key: "32cc52a3dc04fc771382778dc5cc50e9"
   park_status_duration: 1200
+  lottery_ratio: 60
 
 development:
   <<: *defaults

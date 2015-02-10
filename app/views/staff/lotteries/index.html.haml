@@ -1,0 +1,26 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 编号
+          %th 开奖期
+          %th 开奖日期
+          %th 保安电话
+          %th 状态
+
+        %tbody
+          - @lotteries.each do |p|
+            %tr
+              %td= p.id
+              %td= p.serial_num
+              %td= p.open_num
+              %td= p.open_at
+              %td= p.phone
+              %td= p.status
+              
+    = paginate @lotteries
