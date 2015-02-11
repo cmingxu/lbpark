@@ -138,15 +138,22 @@ class Park < ActiveRecord::Base
     self.price_calculator = PriceCalculator.new(self)
   end
 
-  delegate :no_parking?, :current_price, :day_price, :day_unit, :night_price, :night_unit, :day_time_range, :night_time_range, :to => "@price_calculator"
+  delegate :by_month_only?, :day_only?, :desc, :no_parking?, :current_price, :day_price, :day_unit, :night_price, :night_unit, :day_time_range, :night_time_range, :to => "@price_calculator"
 
   def tags
-    park_tags = [ { :name => "总车位#{self.total_count}个", :link => nil } ]
+    if self.total_count && self.total_count.include?("+")
+      park_tags = [ { :name => "总车位#{self.total_count}", :link => nil } ]
+    else
+      park_tags = [ { :name => "总车位#{self.total_count}个", :link => nil } ]
+    end
     park_tags << { :name => "包月#{self.month_price}起", :link => nil } if self.service_month
     park_tags << { :name => "卫生间", :link => nil } if self.service_wc
     park_tags << { :name => self.service_rent_company, :link => nil } if self.service_rent
-    park_tags << { :name => "洗车", :link => nil } if self.service_wash
+    park_tags << { :name => "来洗车", :link => nil } if self.service_wash
     park_tags << { :name => "修车", :link => nil } if self.service_repair
+    park_tags << { :name => "第二小时#{self.day_second_hour_price.to_i}元起", :link => nil } if self.day_second_hour_price
+    park_tags << { :name => "夜间禁停", :link => nil } if self.day_only?
+    park_tags << { :name => "仅包月", :link => nil } if self.by_month_only?
     park_tags
   end
 

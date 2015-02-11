@@ -79,12 +79,19 @@ class PriceCalculator
   end
 
   def no_parking?
+    return false if park.park_type_code == "A"
+    return false if park.park_type_code == "B"
     return false if by_month_only?
     return false if by_whole_day?
     return day_only? && !price_by_day?
   end
 
-  private
+  # 无夜间价格 - 禁停
+  def day_only?
+    return false if (by_month_only? || by_whole_day?)
+    park.night_price_per_hour.blank? && park.night_price_per_night.blank?
+  end
+
   def by_month_only?
     park.month_price.present? &&
       park.whole_day_price_per_time.blank? &&
@@ -103,9 +110,5 @@ class PriceCalculator
     Time.now.hour >= park.day_time_begin && Time.now.hour < park.day_time_end
   end
 
-  # 无夜间价格 - 禁停
-  def day_only?
-    park.night_price_per_hour.blank? && park.night_price_per_night.blank?
-  end
 
 end

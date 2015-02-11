@@ -119,12 +119,10 @@ function add_center_marker(){
     map: LB.mapObj,
     position: new AMap.LngLat(LB.center.lng,
                               LB.center.lat),
-                              offset: new AMap.Pixel(-10, -34),
                               content: "<div id='center_marker'></div>"
   });
 
 
-  console.log(LB.center);
 }
 
 

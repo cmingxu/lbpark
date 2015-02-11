@@ -30,7 +30,7 @@ LB.park_info_state = {
 
   on_enter_short: function (park) {
     LB.Logger.debug("park info state to short");
-    this.park_name_dom.text(park.name);
+    this.park_name_dom.text(park.name + "(" + park.id + ")");
     this.park_short_description_dom.text(park.park_lb_desc);
     this.park_status_dom.css("background-color", config.park_status[""+park.busy_status].color);
     this.park_status_dom.text(config.park_status[""+park.busy_status].text);
@@ -61,17 +61,25 @@ LB.park_info_state = {
       return "<span class='feature'>" + tag.name+ "</span>";
     }).join("")
     );
-    this.day_price_dom.text(park.day_price + "元");
-    this.day_price_unit_dom.text("/" + park.day_price_unit);
-    this.day_time_range_dom.text(park.day_time_range);
+
+    if(park.day_price !== ""){
+      this.day_price_dom.text(park.day_price + "元");
+      this.day_price_unit_dom.text("/" + park.day_price_unit);
+      this.day_time_range_dom.text(park.day_time_range);
+    }else{
+      this.day_price_dom.text("-");
+      this.day_price_unit_dom.text("-");
+      this.day_time_range_dom.text("-");
+    }
+
     if(park.night_price != ""){
       this.night_price_dom.text(park.night_price + "元");
-      this.night_price_unit_dom.text("/" + park.night_price_unit);
+      this.night_price_unit_dom.text(park.night_price_unit);
       this.night_time_range_dom.text(park.night_time_range);
     }else{
-      this.night_price_dom.text("");
-      this.night_price_unit_dom.text("");
-      this.night_time_range_dom.text("");
+      this.night_price_dom.text("-");
+      this.night_price_unit_dom.text("-");
+      this.night_time_range_dom.text("-");
     }
 
     this.detail_dom.show();
