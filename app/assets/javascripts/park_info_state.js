@@ -74,7 +74,7 @@ LB.park_info_state = {
 
     if(park.night_price != ""){
       this.night_price_dom.text(park.night_price + "元");
-      this.night_price_unit_dom.text(park.night_price_unit);
+      this.night_price_unit_dom.text("/" + park.night_price_unit);
       this.night_time_range_dom.text(park.night_time_range);
     }else{
       this.night_price_dom.text("-");
@@ -84,6 +84,10 @@ LB.park_info_state = {
 
     this.detail_dom.show();
     this.park_dom.show();
+
+      this.park_title_dom.on('click', function () {
+        LB.park_info_state.on_enter_short(park);
+      });
   }
 
 };
