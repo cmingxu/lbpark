@@ -13,11 +13,11 @@ LB.park_info_marker = function (park) {
     break;
     case 'B':
       classes.push("marker_" + park.park_type_code.toLowerCase());
-      text = '商';
+      text = '';
     break
     case 'C':
       classes.push("marker_" + park.park_type_code.toLowerCase());
-      text = '路';
+      text = '';
     break;
     default:
   }

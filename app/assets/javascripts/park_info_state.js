@@ -4,6 +4,7 @@ LB.park_info_state = {
   STATES: ["hidden", "short", "detail"],
   current_state: "hidden",
   current_park: null,
+  click_event_locker: false,
   park_dom: $("#park"),
   park_title_dom: $("#park_title"),
   park_status_dom: $("#park_status"),
@@ -20,9 +21,18 @@ LB.park_info_state = {
   night_time_range_dom: $("#night_time_range"),
   park_preview_dom: $("#park_preview"),
 
+  get_current_state: function () {
+     return this.current_state;
+  },
+
+  get_current_park: function () {
+     return this.current_park;
+  },
 
   on_enter_hidden: function () {
     LB.Logger.debug("park info state to hidden");
+    this.current_state = "hidden";
+    this.current_park = null;
     this.park_title_dom.hide();
     this.detail_dom.hide();
     this.park_dom.hide();
@@ -30,6 +40,8 @@ LB.park_info_state = {
 
   on_enter_short: function (park) {
     LB.Logger.debug("park info state to short");
+    this.current_state = "short";
+    this.current_park = park;
     this.park_name_dom.text(park.name + "(" + park.id + ")");
     this.park_short_description_dom.text(park.park_lb_desc);
     this.park_status_dom.css("background-color", config.park_status[""+park.busy_status].color);
@@ -38,18 +50,23 @@ LB.park_info_state = {
     this.park_title_dom.show();
     this.park_dom.show();
     this.detail_dom.hide();
+    self = this;
 
-    if(park.park_type_code == "A"){
+    if(!this.click_event_locker){
+      this.click_event_locker = true;
       this.park_title_dom.on('click', function () {
-        LB.park_info_state.on_enter_detail(park);
+        if(self.get_current_park().park_type_code == 'A' && self.get_current_state() == "short")
+          LB.park_info_state.on_enter_detail(park);
+        else
+          LB.park_info_state.on_enter_short(park);
       });
-    }else{
-      this.park_title_dom.off('click');
     }
   },
 
   on_enter_detail: function (park) {
     LB.Logger.debug("park info state to detail");
+    this.current_state = "detail";
+    this.current_park = park;
     this.detail_dom.css('bottom', config.tabbar_height + "px");
     this.detail_dom.css('height', config.park_detail_height + "px");
     this.park_title_dom.css('bottom', config.tabbar_height + config.park_detail_height +  "px");
@@ -85,9 +102,6 @@ LB.park_info_state = {
     this.detail_dom.show();
     this.park_dom.show();
 
-      this.park_title_dom.on('click', function () {
-        LB.park_info_state.on_enter_short(park);
-      });
   }
 
 };
