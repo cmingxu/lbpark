@@ -55,7 +55,8 @@ LB.park_info_state = {
     if(!this.click_event_locker){
       this.click_event_locker = true;
       this.park_title_dom.on('click', function () {
-        if(self.get_current_park().park_type_code == 'A' && self.get_current_state() == "short")
+        park = self.get_current_park();
+        if(park.park_type_code == 'A' && self.get_current_state() == "short")
           LB.park_info_state.on_enter_detail(park);
         else
           LB.park_info_state.on_enter_short(park);
@@ -84,9 +85,9 @@ LB.park_info_state = {
       this.day_price_unit_dom.text("/" + park.day_price_unit);
       this.day_time_range_dom.text(park.day_time_range);
     }else{
-      this.day_price_dom.text("-");
-      this.day_price_unit_dom.text("-");
-      this.day_time_range_dom.text("-");
+      this.day_price_dom.text("");
+      this.day_price_unit_dom.text("");
+      this.day_time_range_dom.text("");
     }
 
     if(park.night_price != ""){
@@ -94,9 +95,9 @@ LB.park_info_state = {
       this.night_price_unit_dom.text("/" + park.night_price_unit);
       this.night_time_range_dom.text(park.night_time_range);
     }else{
-      this.night_price_dom.text("-");
-      this.night_price_unit_dom.text("-");
-      this.night_time_range_dom.text("-");
+      this.night_price_dom.text("");
+      this.night_price_unit_dom.text("");
+      this.night_time_range_dom.text("");
     }
 
     this.detail_dom.show();

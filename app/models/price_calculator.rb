@@ -79,7 +79,7 @@ class PriceCalculator
   end
 
   def no_parking?
-    return false if park.park_type_code == "A"
+    return false if park.park_type_code == "C"
     return false if park.park_type_code == "B"
     return false if by_month_only?
     return false if by_whole_day?
