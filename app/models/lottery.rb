@@ -45,26 +45,31 @@ class Lottery < ActiveRecord::Base
       l.serial_num = random_serial_num
       l.park_id = park_status.park_id
       l.phone = park_status.user.phone
+      l.user = park_status.user
     end
   end
 
   def self.random_serial_num
-    6.times.map do 
+    6.times.map do
       sprintf("%02d", rand(33) + 1)
     end.tap do |arr|
       arr << rand(16) + 1
     end.join " "
   end
 
+  # 确保有时间买彩票
   def self.next_open_num(offset = Time.now)
-    time_iterator = Time.now.beginning_of_year + 1.hour
+    time_iterator = Time.now.beginning_of_year
+
     open_num = 0
-    until time_iterator > offset do
+    while time_iterator < offset do
       if [2,4,0].include?(time_iterator.wday)
         open_num += 1
       end
       time_iterator = time_iterator += 1.day
     end
+
+    open_num += 1
 
     "#{offset.year}#{sprintf('%03d', open_num)}"
   end

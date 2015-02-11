@@ -33,14 +33,14 @@
     #park_status_news
       .park_status_header 今日快报
       %ul
-        %li
-          %a{:href => ""} 136****6168因上报状态得到彩票一张
-        %li
-          %a{:href => ""} 136****6168因上报状态得到彩票一张
-        %li
-          %a{:href => ""} 136****6168因上报状态得到彩票一张
-        %li
-          %a{:href => ""} 136****6168因上报状态得到彩票一张
+        - @messages.each do |message|
+          %li
+            %a{:href => ""}
+              = message.content
+              (
+              = "#{time_ago_in_words(message.created_at, false)}前"
+              )
+
     .popup.hidden
     #confirm_box.hidden
       #confirm_message

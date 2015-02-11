@@ -1,1 +1,7 @@
-lottery
+.vender_lottery
+  %ul
+    - @lotteries.each do |lottery|
+      %li
+        = lottery.serial_num
+        = lottery.open_num
+

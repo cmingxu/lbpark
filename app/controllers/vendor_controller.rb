@@ -5,7 +5,7 @@ class VendorController < ApplicationController
 
   def index
     if current_vendor.park
-      @messages = current_vendor.park.messages
+      @messages = current_vendor.park.messages.order("id DESC")
     end
   end
 
@@ -31,7 +31,11 @@ class VendorController < ApplicationController
         render :json => {:result => false, :msg => "验证码不正确"}
       end
     else
-      render :layout => "vendor_login"
+      if current_vendor # already logged in
+        redirect_to vendor_index_path
+      else
+        render :layout => "vendor_login"
+      end
     end
   end
 
@@ -41,7 +45,11 @@ class VendorController < ApplicationController
     @park_status.park = current_vendor.park
 
     if @park_status.save
-      render :json => {:result => true, :msg => ""}
+      if @park_status.lottery
+        render :json => {:result => true, :msg => "恭喜您得到了我们的彩票奖励!"}
+      else
+        render :json => {:result => true, :msg => "非常感谢您的参与!"}
+      end
     else
       render :json => {:result => false, :msg => ""}
     end

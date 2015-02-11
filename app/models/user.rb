@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
     create(:phone => phone)
   end
 
+  def replaced_phone
+    "#{self.phone[0..3]}****#{self.phone[7..10]}"
+  end
+
   def vendor?
     self.role == "vendor"
   end
