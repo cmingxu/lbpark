@@ -1,0 +1,16 @@
+default: &default
+  appid: "app_id"
+  secret: "app_secret"
+  token:  "app_token"
+
+production:
+<<: *default
+
+staging:
+  <<: *default
+
+development:
+  <<: *default
+
+test:
+  <<: *default

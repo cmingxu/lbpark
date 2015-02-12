@@ -27,10 +27,13 @@ class ParkStatus < ActiveRecord::Base
   end
 
   after_create do
-    if Lottery.spin!(self)
+    if l = Lottery.spin!(self)
       self.park.messages.create do |m|
         m.content = "#{self.user.replaced_phone}得到彩票一注"
       end
+      SmsCode.new_sms_lottery_get(l)
+    else
+      SmsCode.new_sms_lottery_miss(self.user)
     end
   end
 end

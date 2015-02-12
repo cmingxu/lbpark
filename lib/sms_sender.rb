@@ -5,15 +5,16 @@ module SmsSender
   cattr_accessor :timestamp
 
   MESSAGE_TEMPLATE = {
-    :test => "2247",
-    :withdraw => "2303",
-    :verify => "2302"
+    :test => "3427",
+    :vendor_login => "3440",
+    :vendor_lottery_get => "3441",
+    :vendor_lottery_miss => "3442",
   }.with_indifferent_access
 
   API_POINT   = "https://api.ucpaas.com"
-  ACCOUNT_SID = "aa7babf14bfa412fdb44d650d557f8c3"
-  AUTH_TOKEN  = "16ec16484acae680df94a436e20e623a"
-  APP_ID      = "8de26cc1d7d24fc1818e9471f9f8b637"
+  ACCOUNT_SID = "87722e65dc2ced5623bf0ddde99a0f29"
+  AUTH_TOKEN  = "4e8b245a9acf103126937ce33b4a8c38"
+  APP_ID      = "6e81cbe3d2054ec6b480193acf19bee7"
   SOFT_VERSION = "2014-06-30"
 
   DEFAULT_PARMAS = {
@@ -27,7 +28,7 @@ module SmsSender
       DEFAULT_PARMAS.merge( :to => mobile, :templateId => MESSAGE_TEMPLATE[message_template], :param => params)
     }
 
-    SMS_LOGGER.debug "sending message #{message_template}  #{params} to  #{mobile}"
+    SMS_LOGGER.debug "sending message #{message_template}  #{params} to  #{mobile}, #{p}"
 
     begin
       self.post(request_uri, :body => p.to_json, :headers => request_headers)

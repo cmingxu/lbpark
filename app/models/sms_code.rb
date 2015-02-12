@@ -19,8 +19,6 @@ class SmsCode < ActiveRecord::Base
   belongs_to :user
   after_create :send_sms
 
-  serialize :params
-
   state_machine :status, :initial => :new_created do
     event :sent do
       transition :new_created => :sent_out
@@ -33,7 +31,7 @@ class SmsCode < ActiveRecord::Base
 
   def self.sms_code_valid?(phone, sms_code)
     SmsCode.where(["phone = ? and expire_at > ? ", phone, Time.now]).all.find do |sms|
-      sms.params && sms.params[:code] == sms_code
+      sms.params && sms.params == sms_code
     end.present?
   end
 
@@ -51,8 +49,27 @@ class SmsCode < ActiveRecord::Base
     new do |s|
       s.phone = phone
       s.user = User.find_by_phone(phone)
-      s.params = {:code => sprintf("%06d", rand(100000)) }
+      s.params = sprintf("%06d", rand(100000))
+      s.send_sms = :vendor_login
       s.expire_at = 10.minutes.from_now
+    end
+  end
+
+  def self.new_sms_lottery_get(lottery)
+    new do |s|
+      s.phone = lottery.phone
+      s.user = User.find_by_phone(lottery.phone)
+      s.params = "#{lottery.open_num},#{lottery.serial_num}"
+      s.send_sms = :vendor_lottery_get
+    end
+  end
+
+  def self.new_sms_lottery_miss(user)
+    new do |s|
+      s.phone = user.phone
+      s.user = user
+      s.params = ""
+      s.send_sms = :vendor_lottery_miss
     end
   end
 end
