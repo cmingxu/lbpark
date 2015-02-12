@@ -61,3 +61,5 @@ gem 'evil_transform'
 
 gem "bower-rails", "~> 0.9.1"
 
+gem "wechat-rails", git:"https://github.com/skinnyworm/wechat-rails"
+
