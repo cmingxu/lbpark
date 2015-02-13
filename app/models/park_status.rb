@@ -31,9 +31,9 @@ class ParkStatus < ActiveRecord::Base
       self.park.messages.create do |m|
         m.content = "#{self.user.replaced_phone}得到彩票一注"
       end
-      SmsCode.new_sms_lottery_get(l)
+      #SmsCode.new_sms_lottery_get(l)
     else
-      SmsCode.new_sms_lottery_miss(self.user)
+      #SmsCode.new_sms_lottery_miss(self.user)
     end
   end
 end

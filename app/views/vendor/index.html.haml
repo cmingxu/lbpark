@@ -20,6 +20,10 @@
             .park_status_detail_info_phone_icon
             .park_status_detail_info_phone
               = current_vendor.park.latest_park_status.user.phone
+              = "("
+              = current_vendor.park.latest_park_status.user.lotteries.count
+              = ")"
+
     #park_status_buttons
       %span
         .red

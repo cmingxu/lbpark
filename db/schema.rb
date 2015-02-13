@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210124556) do
+ActiveRecord::Schema.define(version: 20150213005001) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -228,6 +228,7 @@ ActiveRecord::Schema.define(version: 20150210124556) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.boolean  "stop"
+    t.string   "send_reason"
   end
 
   add_index "sms_codes", ["phone"], name: "index_sms_codes_on_phone", using: :btree

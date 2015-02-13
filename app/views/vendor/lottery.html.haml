@@ -1,7 +1,10 @@
-.vender_lottery
-  %ul
-    - @lotteries.each do |lottery|
-      %li
-        = lottery.serial_num
+.vendor_lottery
+  - @lotteries.each do |lottery|
+    .lottery
+      %span.open_num
         = lottery.open_num
+      %span.serial_num
+        = lottery.serial_num
+      %span.lottery_status
+        = Lottery::STATUS_MAP[lottery.status.intern]
 

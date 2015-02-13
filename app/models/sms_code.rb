@@ -50,7 +50,7 @@ class SmsCode < ActiveRecord::Base
       s.phone = phone
       s.user = User.find_by_phone(phone)
       s.params = sprintf("%06d", rand(100000))
-      s.send_sms = :vendor_login
+      s.send_reason = :vendor_login
       s.expire_at = 10.minutes.from_now
     end
   end
@@ -69,7 +69,7 @@ class SmsCode < ActiveRecord::Base
       s.phone = user.phone
       s.user = user
       s.params = ""
-      s.send_sms = :vendor_lottery_miss
+      s.send_reason = :vendor_lottery_miss
     end
   end
 end

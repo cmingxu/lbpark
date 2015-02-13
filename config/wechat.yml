@@ -1,7 +1,8 @@
 default: &default
-  appid: "app_id"
-  secret: "app_secret"
-  token:  "app_token"
+
+  appid: "wx97b3f3548f2c5c76"
+  secret: "d56a540fe90eb8848f440e8ed8b18aa0"
+  token:  "thisistoken"
 
 production:
 <<: *default

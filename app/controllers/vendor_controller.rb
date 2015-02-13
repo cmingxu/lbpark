@@ -10,7 +10,7 @@ class VendorController < ApplicationController
   end
 
   def lottery
-    @lotteries = current_vendor.lotteries
+    @lotteries = current_vendor.lotteries.order("id DESC").page(params[:page])
   end
 
   def mine
@@ -75,8 +75,7 @@ class VendorController < ApplicationController
   def sms_code_valid?
     sms_code = SmsCode.find_by_id(params[:sms_code_id])
     return false unless sms_code
-    param = sms_code.try(:params)
-    param[:code] == params[:sms_code]
+    sms_code.params == params[:sms_code]
   end
 
 end

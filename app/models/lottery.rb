@@ -19,6 +19,14 @@
 #
 
 class Lottery < ActiveRecord::Base
+  STATUS_MAP = {
+    :generated => "未开奖",
+    :bought    => "未开奖",
+    :won       => "开奖/中奖",
+    :lost       => "开奖/未中",
+    :paid       => "萝卜已支付"
+  }
+
   belongs_to :user
   belongs_to :park
   belongs_to :park_status
@@ -34,6 +42,10 @@ class Lottery < ActiveRecord::Base
 
     event :lose do
       transition  :bought => :lost
+    end
+
+    event :pay do
+      transition  :won => :paid
     end
   end
 

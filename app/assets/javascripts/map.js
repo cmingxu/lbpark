@@ -109,7 +109,9 @@ function add_event_listeners() {
 
   AMap.event.addListener(LB.mapObj,"click", function () {
     LB.Logger.debug("map object clicked");
-    //LB.park_info_state.on_enter_hidden();
+    if(LB.park_info_state.get_current_state() == "detail"){
+      LB.park_info_state.on_enter_short(LB.park_info_state.get_current_park());
+    }
     LB.clear_auto_nav();
   });
 }
