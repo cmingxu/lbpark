@@ -5,6 +5,7 @@
 //= require park_info_marker
 //= require geolocation_by_browser
 //= require auto_nav
+//= require fastclick
 
 var LB = LB || {};
 
@@ -65,11 +66,15 @@ function add_plugins() {
 
 function add_new_marker(location) {
   marker_jq_obj = LB.park_info_marker(location);
+  yoffset = -34;
+  if(location.park_type_code == "A"){
+    yoffset  = -64;
+  }
   var marker = new AMap.Marker({ //创建自定义点标注
     map: LB.mapObj,
     position: new AMap.LngLat(location.lng,
                               location.lat),
-                              offset: new AMap.Pixel(-10, -34),
+                              offset: new AMap.Pixel(-10, yoffset),
                               content: marker_jq_obj.get(0)
   });
 
@@ -129,6 +134,7 @@ function add_center_marker(){
 
 
 $(document).ready(function () {
+  FastClick.attach(document.body);
   mapInit();
   $("#nav_button_click_area").click(function () {
     LB.auto_nav(LB.current_park);
