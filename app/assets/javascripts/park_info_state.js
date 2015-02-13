@@ -7,6 +7,7 @@ LB.park_info_state = {
   click_event_locker: false,
   park_dom: $("#park"),
   park_title_dom: $("#park_title"),
+  park_position_dom: $("#park_position"),
   park_status_dom: $("#park_status"),
   detail_dom: $("#park_detail"),
   park_name_dom: $("#park_name"),
@@ -43,9 +44,10 @@ LB.park_info_state = {
     this.current_state = "short";
     this.current_park = park;
     this.park_name_dom.text(park.name + "(" + park.id + ")");
-    this.park_short_description_dom.text(park.park_lb_desc);
     this.park_status_dom.css("background-color", config.park_status[""+park.busy_status].color);
     this.park_status_dom.text(config.park_status[""+park.busy_status].text);
+    this.park_short_description_dom.text(park.park_lb_desc);
+    this.park_position_dom.text(park.park_type);
     this.park_title_dom.css("bottom", config.tabbar_height + "px");
     this.park_title_dom.show();
     this.park_dom.show();

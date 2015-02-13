@@ -4,8 +4,10 @@
   #park_title.hidden
     %span.desc
       #park_name_field
-        %span#park_name
         %span#park_status
+          紧张
+        %span#park_name
+        %span#park_position
           繁忙
       #park_short_description
     %span.nav_button#nav_button_click_area
@@ -36,6 +38,7 @@
       .park_preview
         %img{:src => "#{image_path('preview.png')}", :id => "park_preview"}
     .row#tags
+      #coupon
     .row
       .lb_notice
       #tips

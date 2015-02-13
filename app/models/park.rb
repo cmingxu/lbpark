@@ -151,7 +151,7 @@ class Park < ActiveRecord::Base
     park_tags << { :name => self.service_rent_company, :link => nil } if self.service_rent
     park_tags << { :name => "来洗车", :link => nil } if self.service_wash
     park_tags << { :name => "修车", :link => nil } if self.service_repair
-    park_tags << { :name => "第二小时#{self.day_second_hour_price.to_i}元起", :link => nil } if self.day_second_hour_price
+    park_tags << { :name => "次小时#{self.day_second_hour_price.to_i}元起", :link => nil } if self.day_second_hour_price
     park_tags << { :name => "夜间禁停", :link => nil } if self.day_only?
     park_tags << { :name => "仅包月", :link => nil } if self.by_month_only?
     park_tags
@@ -169,11 +169,11 @@ class Park < ActiveRecord::Base
   def lb_desc
     case self.park_type_code
     when "A"
-      self.park_type
+      self.address
     when "B"
-      [self.park_type, self.tips].select{|a| a.present? }.join("/")
+      [self.address, self.tips].select{|a| a.present? }.join("/")
     when "C"
-      [self.park_type, self.tips].select{|a| a.present? }.join("/")
+      [self.address, self.tips].select{|a| a.present? }.join("/")
     end
   end
 

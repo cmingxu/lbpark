@@ -98,15 +98,25 @@ body
       float: left
       padding-top: 14px
       padding-left: 10px
+      #park_status
+        background-color: green
+        color: white
+        font-size: 12px
+        display: inline-block
+        padding: 12px
+        padding-bottom: 2px
+        padding-top: 2px
+        position: absolute
+        transform: translate(-26px, -14px) rotate(-45deg)
       #park_name
         font-size: 18px
         font-weight: bold
         color: #666
       #park_short_description
         font-size: 12px
-      #park_status
+      #park_position
         font-size: 10px
-        background-color: green
+        background-color: #aaa
         color: white
         padding: 2px
         border-radius: 2px
@@ -127,7 +137,7 @@ body
       .nav_button_text
         font-size: 12px
         color: #3f74d8
-        margin-top: -24px
+        margin-top: -20px
 
   #park_detail
     width: 100%
@@ -137,31 +147,31 @@ body
     z-index: 10000
     position: fixed
     .row
-      height: 100px
       border-top: 1px solid $border-color
       &:first-child
+        height: 150px
         border-top: none
         .park_preview
           position: fixed
           right: 0px
-          bottom: 247px
+          bottom: 211px
 
         .day_and_night_prices
           margin-right: 177px
           .day
-            height: 50px
+            height: 75px
             border-left: $border-highlight-width solid $border-highlight-color-2
           .night
-            height: 50px
+            height: 75px
             border-top: 1px solid $border-color
             border-left: $border-highlight-width solid $border-highlight-color-3
           img
             width: 35%
-            height: 50px
+            height: 75px
             float: left
           .price_detail
             float: right
-            height: 50px
+            height: 75px
             width: 65%
             .price_and_unit
               padding-top: 10px
@@ -175,6 +185,7 @@ body
           span.day_icon
             float: left
             height: 50px
+            margin-top: 12px
             width: 50px
             background-image: url(<%= asset_path("user_index.png") %>)
             background-size: 600px
@@ -184,6 +195,7 @@ body
           span.night_icon
             float: left
             height: 50px
+            margin-top: 12px
             width: 50px
             background-image: url(<%= asset_path("user_index.png") %>)
             background-size: 600px auto
@@ -191,23 +203,24 @@ body
             background-repeat: no-repeat
             display: block
       &:nth-child(2)
-        padding-top: 10px
+        height: 75px
         padding-left: 10px
         word-wrap: break-word
         word-break: normal
         border-left: $border-highlight-width solid $border-highlight-color-4
       &:nth-child(3)
+        height: 75px
         padding-top: 10px
         border-left: $border-highlight-width solid $border-highlight-color-5
       span.feature
-        border: 1px solid gray
+        border: 1px solid #cbcbcb
         padding: 5px
         margin-right: 10px
         margin-top: 10px
         font-size: 12px
         display: inline-block
       .lb_notice
-        height: 50px
+        height: 75px
         width: 50px
         float: left
         text-align: right
@@ -246,6 +259,7 @@ body
       background-repeat: no-repeat
       text-align: center
       padding-top: 24px
+      color: #828282
     span.map
       background-position-x: -350px
     span.search
