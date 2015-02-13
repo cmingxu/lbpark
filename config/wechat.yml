@@ -1,11 +1,14 @@
 default: &default
-
-  appid: "wx97b3f3548f2c5c76"
-  secret: "d56a540fe90eb8848f440e8ed8b18aa0"
+  appid: "wx74e2705cf0a80df8"
+  secret: "7506cf446cb2fa21f7ae0d1b4ae66da4"
   token:  "thisistoken"
 
 production:
 <<: *default
+
+demo:
+<<: *default
+
 
 staging:
   <<: *default
