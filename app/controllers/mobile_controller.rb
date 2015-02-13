@@ -8,4 +8,7 @@ class MobileController < ApplicationController
   def hot_place
     @current_nav = "search"
   end
+
+  def setting
+  end
 end

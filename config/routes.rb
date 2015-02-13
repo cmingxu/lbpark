@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   captcha_route
   get 'mobile/map'
   get 'mobile/hot_place'
+  get 'mobile/setting'
 
   get 'vendor' => "vendor#index"
   get 'vendor/index'
