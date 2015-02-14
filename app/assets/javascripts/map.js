@@ -67,14 +67,18 @@ function add_plugins() {
 function add_new_marker(location) {
   marker_jq_obj = LB.park_info_marker(location);
   yoffset = -34;
+  xoffset = -10;
   if(location.park_type_code == "A"){
     yoffset  = -64;
+  }
+  if(location.park_type_code != "A"){
+    xoffset = -18;
   }
   var marker = new AMap.Marker({ //创建自定义点标注
     map: LB.mapObj,
     position: new AMap.LngLat(location.lng,
                               location.lat),
-                              offset: new AMap.Pixel(-10, yoffset),
+                              offset: new AMap.Pixel(xoffset, yoffset),
                               content: marker_jq_obj.get(0)
   });
 

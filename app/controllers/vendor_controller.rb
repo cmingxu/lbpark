@@ -1,7 +1,7 @@
 class VendorController < ApplicationController
   layout "vendor"
   skip_before_filter :verify_authenticity_token
-  before_filter :current_vendor_required, :only => [:index, :lottory, :mine]
+  before_filter :current_vendor_required, :only => [:index, :lottory, :mine, :logout]
 
   def index
     if current_vendor.park
@@ -40,7 +40,7 @@ class VendorController < ApplicationController
   end
 
   def logout
-    session[:vendor_id] = nil
+    @vendor_user = session[:vendor_id] = nil
     redirect_to vendor_login_path
   end
 

@@ -9,10 +9,7 @@
     .vendor_action_item
 
   .vendor_logout
-    = link_to "Logout", "", :id => "logout_click"
-  :javascript
-    $("#logout_click").click(function(){
-      $.post(config.vendor_logout_path, {"_method": "delete"}, function(){ window.location.href = "/vendor/login"});
-    });
+    = form_tag vendor_logout_path, :method => "delete" do
+      = submit_tag "退出登录"
 
 

@@ -146,7 +146,7 @@ class Park < ActiveRecord::Base
     else
       park_tags = [ { :name => "总车位#{self.total_count}个", :link => nil } ]
     end
-    park_tags << { :name => "包月#{self.month_price}起", :link => nil } if self.service_month
+    park_tags << { :name => "包月#{self.month_price}元起", :link => nil } if self.month_price
     park_tags << { :name => "卫生间", :link => nil } if self.service_wc
     park_tags << { :name => self.service_rent_company, :link => nil } if self.service_rent
     park_tags << { :name => "来洗车", :link => nil } if self.service_wash

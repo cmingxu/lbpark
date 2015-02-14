@@ -40,7 +40,7 @@ body
     height: 48px
     width: 32px
     color: white
-    padding-top: 14px
+    padding-top: 10px
     font-size: 18px
     text-align: center
     position: relative
@@ -502,13 +502,18 @@ body
     height: 100%
     width: 100%
     font-size: 18px
-    .box
-      border-bottom: 1px solid #ccc
-      width: 90%
-      margin: auto
-      margin-top: 20px
-      input
-        border: none
+    input
+      border: none
+      height: 32px
+      line-height: normal
+      font-size: 20px
+      border: 1px solid #ccc
+
+
+    #mobile_num_field
+      width: 100%
+    #sms_code_field
+      width: 150px
 
     #header_bg
       width: 100%
@@ -517,17 +522,18 @@ body
       background-repeat: no-repeat
       background-size: 100% 100%
       border-bottom: 1px solid #b1b3b2
+    .vendor_login_form
+      width: 90%
+      margin: auto
+      margin-top: 20px
+      .box
+        margin-top: 20px
 
-    #mobile_num
-    #sms_code
-      #sms_code_field
-        width: 130px
-      #send_btn
-        display: inline-block
-        border-left: 1px solid #ccc
-        border-top: 1px solid #ccc
-        border-right: 1px solid #ccc
-        padding: 5px 10px
+    #send_btn
+      display: inline-block
+      border: 1px solid #ccc
+      padding: 7px 10px
+      float: right
     #login_btn
       border: none
       background-color: #6084e5
@@ -535,9 +541,10 @@ body
       font-size: 18px
       font-weight: bold
       text-align: center
-      padding-top: 5px
+      padding-top: 7px
       padding-bottom: 5px
-      margin-left: 5%
+      cursor: pointer
+      width: 100%
     #error_message_box
       color: red
       width: 90%
@@ -555,10 +562,13 @@ body
     padding: 5px
     .vendor_logout
       width: 100%
-      padding-top: 10px
-      padding-bottom: 10px
-      text-align: center
-      background-color: red
-      a
+      input[type=submit]
+        padding-top: 10px
+        padding-bottom: 10px
+        background-color: red
+        width: 100%
+        font-size: 14px
+        border: 1px solid #eee
         color: white
-        display: block
+        font-style: bold
+        cursor: pointer

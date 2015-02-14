@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_vendor
 
   def current_vendor
-    @vendor_user = @vendor_user || User.vendors.find_by_id(session[:vendor_id])
+    return nil if session[:vendor_id].nil?
+    User.vendors.find_by_id(session[:vendor_id])
   end
 
   def store_request_path
