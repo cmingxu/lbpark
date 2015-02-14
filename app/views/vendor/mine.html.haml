@@ -1,1 +1,18 @@
-mine
+.vendor_mine
+  .vendor_info
+    .vendor_profile
+    .vendor_info
+      = current_vendor.phone
+  .vendor_action_list
+    .vendor_action_item
+    .vendor_action_item
+    .vendor_action_item
+
+  .vendor_logout
+    = link_to "Logout", "", :id => "logout_click"
+  :javascript
+    $("#logout_click").click(function(){
+      $.post(config.vendor_logout_path, {"_method": "delete"}, function(){ window.location.href = "/vendor/login"});
+    });
+
+

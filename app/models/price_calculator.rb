@@ -15,7 +15,7 @@ class PriceCalculator
   end
 
   def current_price
-    if by_month_only?
+    price = if by_month_only?
       ""
     elsif by_whole_day?
       park.whole_day_price_per_time || park.whole_day_price_per_hour
@@ -23,6 +23,17 @@ class PriceCalculator
       park.day_first_hour_price || park.day_price_per_time
     elsif !price_by_day? # 夜间价格/禁停
       park.night_price_per_hour || park.night_price_per_night
+    end
+
+    case price = price.to_s
+    when  /^0\..*/
+      "<span class='zero_notion'>0.</span>" + price.split(".")[1]
+    when /\d{1}.0/
+      price[0]
+    when /\d{2}.0/
+      price[0] + "<span class='zero_notion'>#{price[1]}</span>"
+    else
+      price
     end
   end
 

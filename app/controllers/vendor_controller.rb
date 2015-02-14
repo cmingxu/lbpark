@@ -39,6 +39,11 @@ class VendorController < ApplicationController
     end
   end
 
+  def logout
+    session[:vendor_id] = nil
+    redirect_to vendor_login_path
+  end
+
   def create_park_statuses
     @park_status = current_vendor.park_statuses.build
     @park_status.status = params[:status]

@@ -29,7 +29,7 @@ function hotPlaceSearch(keywords) {
 
 $(document).ready(function () {
   var latest_value = $("#search_input");
-  ["keyup", "change", "blur"].forEach(function (event, index) {
+  ["keyup", "change", "blur", "input", "paste"].forEach(function (event, index) {
     $("#search_input").on(event, function () {
       if(latest_value != $("#search_input").val()){
         latest_value = $("#search_input").val();

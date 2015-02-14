@@ -45,6 +45,12 @@ LB.park_info_state = {
     this.current_park = park;
     this.park_name_dom.text(park.name + "(" + park.id + ")");
     this.park_status_dom.css("background-color", config.park_status[""+park.busy_status].color);
+    if(park.busy_status == "3"){
+      this.park_status_dom.hide()
+    }
+    else{
+      this.park_status_dom.show()
+    }
     this.park_status_dom.text(config.park_status[""+park.busy_status].text);
     this.park_short_description_dom.text(park.park_lb_desc);
     this.park_position_dom.text(park.park_type);

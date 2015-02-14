@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'vendor/lottery'
   post 'vendor/send_sms_code'
   post 'vendor/create_park_statuses'
+  delete 'vendor_logout' => "vendor#logout"
 
 
   namespace :api do
