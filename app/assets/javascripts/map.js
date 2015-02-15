@@ -69,7 +69,7 @@ function add_new_marker(location) {
   yoffset = -34;
   xoffset = -10;
   if(location.park_type_code == "A"){
-    yoffset  = -64;
+    yoffset  = -44;
   }
   if(location.park_type_code != "A"){
     xoffset = -18;
