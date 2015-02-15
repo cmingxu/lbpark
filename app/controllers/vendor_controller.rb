@@ -4,16 +4,19 @@ class VendorController < ApplicationController
   before_filter :current_vendor_required, :only => [:index, :lottory, :mine, :logout]
 
   def index
+    @current_nav = "report"
     if current_vendor.park
       @messages = current_vendor.park.messages.order("id DESC")
     end
   end
 
   def lottery
+    @current_nav = "lottery"
     @lotteries = current_vendor.lotteries.order("id DESC").page(params[:page])
   end
 
   def mine
+    @current_nav = "mine"
   end
 
   def login

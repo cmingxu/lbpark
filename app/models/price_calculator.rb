@@ -31,7 +31,7 @@ class PriceCalculator
     when /^\d{1}.0/
       price[0]
     when /^\d{2}.0/
-      price[0] + "<span class='zero_notion'>#{price[1]}</span>"
+      "<span class='zero_notion'>#{price[0..1]}</span>"
     else
       price
     end
@@ -91,7 +91,7 @@ class PriceCalculator
   end
 
   def night_time_range
-    "#{park.night_time_begin}:00 - #{park.night_time_end}:00"
+    "#{park.night_time_begin || park.day_time_end}:00 - #{park.night_time_end || park.day_time_begin}:00"
   end
 
   def no_parking?

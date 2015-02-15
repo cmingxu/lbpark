@@ -8,6 +8,7 @@ module Xls2db
     staff = nil
     code_prefix = nil
     CSV.foreach(csv_file_name) do |line|
+      next if line[0].nil?
       if index == 0
         city = line[26]
         district = line[27]
@@ -82,6 +83,7 @@ module Xls2db
     staff = nil
     code_prefix = nil
     CSV.foreach(csv_file_name) do |line|
+      next if line[0].nil?
       if index == 0
         staff = line[7]
         code_prefix = line[8]
@@ -97,6 +99,8 @@ module Xls2db
       park.district = district
       park.park_type_code = 'B'
       park.code = code_prefix + line[0]
+      ap code_prefix
+      ap line[0]
       park.pic_num  = code_prefix + line[0]
       park.name     = line[1]
       park.park_type = line[2]
@@ -121,6 +125,7 @@ module Xls2db
     staff = nil
     code_prefix = nil
     CSV.foreach(csv_file_name) do |line|
+      next if line[0].nil?
       if index == 0
         staff = line[9]
         code_prefix = line[10]

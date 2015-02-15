@@ -66,12 +66,12 @@ class Import < ActiveRecord::Base
       save
       self.import!
 
-    rescue ImportException => e
-      self.update_column :failed_reason, e.message
-      self.import_failed!
-    rescue Exception => e
-      self.update_column :failed_reason, e.message
-      self.import_failed!
+    #rescue ImportException => e
+      #self.update_column :failed_reason, e.message
+      #self.import_failed!
+    #rescue Exception => e
+      #self.update_column :failed_reason, e.message
+      #self.import_failed!
     end
   end
 end

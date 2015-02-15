@@ -1,4 +1,5 @@
 $local_pic_dir = "/Users/cmingxu/Downloads/5-KUAIPAN/快盘/我收到的共享文件/arieso@foxmail.com/萝卜头"
+$local_pic_dir = "/Users/cmingxu/Downloads/2-LB/4-FULL_VERSION_LB_DATA/20150209导入数据"
 
 task :import_attachments => :environment do
   Park.find_each do |park|

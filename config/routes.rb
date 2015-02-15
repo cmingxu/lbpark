@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'mobile/map'
   get 'mobile/hot_place'
   get 'mobile/setting'
+  post 'feedback' => "mobile#feedback"
 
   get 'vendor' => "vendor#index"
   get 'vendor/index'

@@ -1,6 +1,7 @@
 //= require zepto
 //= require config
 //= require logger
+//= require fastclick
 //= require vendor/login
 
 
@@ -12,6 +13,7 @@ function pageInit() {
 
 
 $(document).ready( function () {
+  FastClick.attach(document.body);
   pageInit();
 
   $("#park_status_buttons a").click(function () {

@@ -138,7 +138,7 @@ class Park < ActiveRecord::Base
     self.price_calculator = PriceCalculator.new(self)
   end
 
-  delegate :by_month_only?, :day_only?, :desc, :no_parking?, :current_price, :day_price, :day_unit, :night_price, :night_unit, :day_time_range, :night_time_range, :to => "@price_calculator"
+  delegate :price_by_day?, :by_month_only?, :day_only?, :desc, :no_parking?, :current_price, :day_price, :day_unit, :night_price, :night_unit, :day_time_range, :night_time_range, :to => "@price_calculator"
 
   def tags
     if self.total_count && self.total_count.include?("+")
@@ -169,12 +169,12 @@ class Park < ActiveRecord::Base
   def lb_desc
     case self.park_type_code
     when "A"
-      self.address
+      [self.address]
     when "B"
-      [self.address, self.tips].select{|a| a.present? }.join("/")
+      [self.address, self.tips]
     when "C"
-      [self.address, self.tips].select{|a| a.present? }.join("/")
-    end
+      [self.address, self.tips, self.price_by_day? ? nil : "夜间停车免费，一早记得取车"]
+    end.select{|a| a.present? }.join("/")
   end
 
   def location

@@ -20,7 +20,8 @@ class Api::ParksController < Api::BaseController
         :night_price => p.night_price,
         :night_price_unit => p.night_unit,
         :park_lb_desc => p.lb_desc,
-        :thumb_pic_url => p.thump_pic_url
+        :thumb_pic_url => p.thump_pic_url,
+        :no_parking => p.no_parking?
       }
     end)
 

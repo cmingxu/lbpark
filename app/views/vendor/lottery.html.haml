@@ -1,10 +1,15 @@
 .vendor_lottery
   - @lotteries.each do |lottery|
     .lottery
-      %span.open_num
-        = lottery.open_num
-      %span.serial_num
-        = lottery.serial_num
-      %span.lottery_status
-        = Lottery::STATUS_MAP[lottery.status.intern]
+      .lottery_info
+        .open_num
+          第
+          = lottery.open_num
+          期
+        .serial_num
+          = raw lottery.serial_num_human
+      .lottery_status
+        .lottery_status_bg{:style => "background-color: #{Lottery::STATUS_MAP_COLOR[lottery.status.intern]}"}
+          %span= Lottery::STATUS_MAP[lottery.status.intern]
+      .clearfix
 

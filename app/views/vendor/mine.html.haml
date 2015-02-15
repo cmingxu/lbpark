@@ -1,12 +1,22 @@
 .vendor_mine
   .vendor_info
     .vendor_profile
-    .vendor_info
-      = current_vendor.phone
+      %img{:src => asset_path("vendor_profile.png"), :width => "100", :height => "100"}
+    .vendor_info_detail
+      .vendor_info_park_name
+        = current_vendor.park.name
+      .vendor_info_phone
+        = current_vendor.phone
+    .clearfix
   .vendor_action_list
     .vendor_action_item
+      %span
+      %span
+        %a{:href => "/vendor/index"} 我的主页
     .vendor_action_item
-    .vendor_action_item
+      %span
+      %span
+        %a{:href => "/vendor/index"} 我的彩票
 
   .vendor_logout
     = form_tag vendor_logout_path, :method => "delete" do

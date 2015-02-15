@@ -20,11 +20,19 @@
 
 class Lottery < ActiveRecord::Base
   STATUS_MAP = {
-    :generated => "未开奖",
-    :bought    => "未开奖",
-    :won       => "开奖/中奖",
-    :lost       => "开奖/未中",
+    :generated => "未开",
+    :bought    => "未开",
+    :won       => "中奖",
+    :lost       => "未中",
     :paid       => "萝卜已支付"
+  }
+
+  STATUS_MAP_COLOR = {
+    :generated => "#fbb15c",
+    :bought    => "#fbb15c",
+    :won       => "#6cd597",
+    :lost       => "#528de7",
+    :paid       => "#6cd597"
   }
 
   belongs_to :user
@@ -84,5 +92,13 @@ class Lottery < ActiveRecord::Base
     open_num += 1
 
     "#{offset.year}#{sprintf('%03d', open_num)}"
+  end
+
+  def serial_num_human
+    s = self.serial_num
+    s[s.rindex(" ")] = "/"
+    red, blue = s.split("/")
+    "<span style='color: red;'>#{red}</span>/" +
+    "<span style='color: blue;'>#{blue}</span>"
   end
 end
