@@ -53,6 +53,7 @@ function mapInit() {
   }
 
   add_center_marker();
+  back_to_original_marker();
 
 }
 
@@ -73,6 +74,7 @@ function add_new_marker(location) {
   }
   if(location.park_type_code != "A"){
     xoffset = -18;
+    yoffset  = -24;
   }
   var marker = new AMap.Marker({ //创建自定义点标注
     map: LB.mapObj,
@@ -132,8 +134,13 @@ function add_center_marker(){
                               LB.center.lat),
                               content: "<div id='center_marker'></div>"
   });
+}
 
-
+function back_to_original_marker(){
+  $("#back_to_original_marker").click(function () {
+    LB.mapObj.panTo(new AMap.LngLat(config.default_location.lng, config.default_location.lat));
+    //LB.mapObj.setCenter(new AMap.LngLat(config.default_location.lat, config.default_location.lng));
+  });
 }
 
 

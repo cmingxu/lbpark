@@ -71,14 +71,25 @@ body
   .marker_pressed
     margin-left: 5px
     margin-top: 5px
+  #back_to_original_marker
+    height: 50px
+    width: 50px
+    background-image: url('<%= asset_path("user_index_position.png") %>')
+    background-position-x: 0px
+    background-size: 100px auto
+    position: fixed
+    right: 20px
+    top: 20px
+    z-index: 1000
     
   #center_marker
     width: 50px
     height: 50px
     margin-left: -25px
     margin-top: -25px
-    background-image: url('<%= asset_path("day_and_night.png") %>')
-    background-position-x: -200px
+    background-image: url('<%= asset_path("user_index_position.png") %>')
+    background-position-x: -50px
+    background-size: 100px auto
 
 #park
   #park_title
