@@ -32,15 +32,29 @@ set :ssh_options, {
 }
 
 namespace :deploy do
-  %w[start stop restart].each do |command|
-    desc "#{command} unicorn server"
-    task command do
-      on roles(:all) do |host|
-        execute "/etc/init.d/unicorn_lbpark #{command}"
-      end
+  desc "start unicorn server"
+  task :start do
+    on roles(:all) do |host|
+      execute "/etc/init.d/unicorn_lbpark start"
+      execute "/etc/init.d/lb_resque start"
     end
   end
 
+  desc "stop unicorn server"
+  task :stop do
+    on roles(:all) do |host|
+      execute "/etc/init.d/unicorn_lbpark stop"
+      execute "/etc/init.d/lb_resque stop"
+    end
+  end
+
+  desc "restart unicorn server"
+  task :restart do
+    on roles(:all) do |host|
+      execute "/etc/init.d/unicorn_lbpark restart"
+      execute "/etc/init.d/lb_resque restart"
+    end
+  end
 end
 #
 # And/or per server (overrides global)

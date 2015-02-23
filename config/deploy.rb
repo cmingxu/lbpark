@@ -42,6 +42,7 @@ namespace :deploy do
   task :change_lbpark_permission do
     on roles(:all) do |host|
       execute "chmod a+x #{current_path}/config/lbpark.sh"
+      execute "chmod a+x #{current_path}/config/lb_resque.sh"
     end
   end
   after "deploy:published", "deploy:change_lbpark_permission"
@@ -51,6 +52,7 @@ namespace :deploy do
     on roles(:all) do |host|
       sudo "ln -nfs #{current_path}/config/lbpark.conf /etc/nginx/sites-enabled/lbpark"
       sudo "ln -nfs #{current_path}/config/lbpark.sh /etc/init.d/unicorn_lbpark"
+      sudo "ln -nfs #{current_path}/config/lb_resque.sh /etc/init.d/lb_resque"
     end
   end
   after "deploy:published", "deploy:setup_config"
