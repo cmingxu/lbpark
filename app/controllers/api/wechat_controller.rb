@@ -1,6 +1,26 @@
 class Api::WechatController < Api::BaseController
-  wechat_responder appid: Wechat.config.appid, 
+  wechat_responder appid: Wechat.config.appid,
     secret: Wechat.config.secret, token: Wechat.config.token, access_token: Wechat.config.access_token
+
+  on :event, with: "subscribe" do |request,event|
+    request.reply.text "event: subscribe"
+  end
+
+  on :event, with: "unsubscribe" do |request,event|
+    request.reply.text "event: unsubscribe"
+  end
+
+  on :event, with: "Location" do |request,event|
+    request.reply.text "event: location"
+  end
+
+  on :event, with: "VIEW" do |request,event|
+    request.reply.text "event: view"
+  end
+
+  on :event, with: "click" do |request,event|
+    request.reply.text "event: click"
+  end
 
 
   # 默认的文字信息responder
