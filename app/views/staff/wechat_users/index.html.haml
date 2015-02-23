@@ -13,13 +13,13 @@
           %th 名称
           %th 性别
           %th 地区
-          %th 关注事件
+          %th 关注时间
 
         %tbody
           - @wechat_users.each do |p|
             %tr
               %td
-                %image{:src => p.headimg.url}
+                %image{:src => p.headimg.thumb.url}
               %td= p.id
               %td= p.openid
               %td= p.nickname
