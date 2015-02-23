@@ -52,7 +52,8 @@ namespace :deploy do
   task :restart do
     on roles(:all) do |host|
       execute "/etc/init.d/unicorn_lbpark restart"
-      execute "/etc/init.d/lb_resque restart"
+      execute "/etc/init.d/lb_resque stop"
+      execute "/etc/init.d/lb_resque start"
     end
   end
 end
