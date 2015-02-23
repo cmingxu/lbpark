@@ -14,12 +14,12 @@
 class WechatUserActivity < ActiveRecord::Base
   belongs_to :wechat_user
 
-  def self.log_activity!(openid, activity, sub_activity, params)
+  def self.log_activity!(request, activity, sub_activity)
     create! do |activity|
-      activity.openid = openid
+      activity.openid = request[:FromUserName]
       activity.activity = activity
       activity.sub_activity = sub_activity
-      activity.params = params
+      activity.params = request.message_hash
     end
   end
 end
