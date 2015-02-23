@@ -2,24 +2,30 @@ class Api::WechatController < Api::BaseController
   wechat_responder appid: Wechat.config.appid,
     secret: Wechat.config.secret, token: Wechat.config.token, access_token: Wechat.config.access_token
 
-  on :event, with: "subscribe" do |request,event|
+  on :event, with: "subscribe" do |request, event|
     WechatUser.user_subscribe!(request)
-    request.reply.text "event: subscribe"
+    WechatUserActivity.log_activity!(request[:FromUserName], "event", "subscribe",params[:xml])
+    request.reply.text LbSetting.wechat_subscribe_message
   end
 
-  on :event, with: "unsubscribe" do |request,event|
-    request.reply.text "event: unsubscribe"
+  on :event, with: "unsubscribe" do |request, event|
+    WechatUser.user_unsubscribe!(request)
+    WechatUserActivity.log_activity!(request[:FromUserName], "event", "unsubscribe",params[:xml])
+    request.reply.text LbSetting.wechat_unsubscribe_message
   end
 
-  on :event, with: "Location" do |request,event|
+  on :event, with: "Location" do |request, event|
+    WechatUserActivity.log_activity!(request[:FromUserName], "event", "location",params[:xml])
     request.reply.text "event: location"
   end
 
-  on :event, with: "VIEW" do |request,event|
+  on :event, with: "VIEW" do |request, event|
+    WechatUserActivity.log_activity!(request[:FromUserName], "event", "view",params[:xml])
     request.reply.text "event: view"
   end
 
-  on :event, with: "click" do |request,event|
+  on :event, with: "click" do |request, event|
+    WechatUserActivity.log_activity!(request[:FromUserName], "event", "click",params[:xml])
     request.reply.text "event: click"
   end
 

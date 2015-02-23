@@ -9,7 +9,17 @@
 #  params         :text
 #  created_at     :datetime
 #  updated_at     :datetime
-#
+
 
 class WechatUserActivity < ActiveRecord::Base
+  belongs_to :wechat_user
+
+  def self.log_activity!(openid, activity, sub_activity, params)
+    create! do |activity|
+      activity.openid = openid
+      activity.activity = activity
+      activity.sub_activity = sub_activity
+      activity.params = params
+    end
+  end
 end

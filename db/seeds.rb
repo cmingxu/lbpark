@@ -12,3 +12,13 @@ staffs = %w( luobotao luobaogao luobogen luobojing luobokuai luobobai luoboyun )
 staffs.each do |s|
   Staff.create! name: s, email: s+"@qq.com", password: s+"@qq.com"
 end
+
+lb_settings = {
+  :wechat_subscribe_message => "欢迎您关注萝卜停车微信号, http://demo.6luobo.com",
+  :wechat_unsubscribe_message => "byebye"
+}
+
+LbSetting.delete_all
+lb_settings.each do |k, v|
+  LbSetting.send("#{k}=", v)
+end
