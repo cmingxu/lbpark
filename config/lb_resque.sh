@@ -1,8 +1,9 @@
 #!/bin/sh
 
+
 case "$1" in
   start)
-    cd /home/ubuntu/lbpark/current && COUNT=2 RAILS_ENV=production PIDFILE=/home/ubuntu/lbpark/shared/tmp/pids/resque.pid BACKGROUND=yes QUEUE=* bundle exec rake resque:work
+    su ubuntu -c rvm use 2.1.5 && cd /home/ubuntu/lbpark/current && COUNT=2 RAILS_ENV=production PIDFILE=/home/ubuntu/lbpark/shared/tmp/pids/resque.pid BACKGROUND=yes QUEUE=* bundle exec rake resque:work
     cd /home/ubuntu/lbpark/current && RAILS_ENV=production PIDFILE=/home/ubuntu/lbpark/shared/tmp/pids/resque_scheduler.pid BACKGROUND=yes bundle exec rake resque:scheduler
   ;;
   stop)

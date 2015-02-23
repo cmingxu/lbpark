@@ -36,7 +36,7 @@ namespace :deploy do
   task :start do
     on roles(:all) do |host|
       execute "/etc/init.d/unicorn_lbpark start"
-      execute "/etc/init.d/lb_resque start"
+      #execute "/etc/init.d/lb_resque start"
     end
   end
 
@@ -44,7 +44,7 @@ namespace :deploy do
   task :stop do
     on roles(:all) do |host|
       execute "/etc/init.d/unicorn_lbpark stop"
-      execute "/etc/init.d/lb_resque stop"
+      #execute "/etc/init.d/lb_resque stop"
     end
   end
 
@@ -52,8 +52,8 @@ namespace :deploy do
   task :restart do
     on roles(:all) do |host|
       execute "/etc/init.d/unicorn_lbpark restart"
-      execute "/etc/init.d/lb_resque stop"
-      execute "/etc/init.d/lb_resque start"
+      #execute "/etc/init.d/lb_resque stop"
+      #execute "/etc/init.d/lb_resque start"
     end
   end
 end
