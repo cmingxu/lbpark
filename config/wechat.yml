@@ -2,7 +2,7 @@ default: &default
   appid: "wx74e2705cf0a80df8"
   secret: "7506cf446cb2fa21f7ae0d1b4ae66da4"
   token:  "thisistoken"
-  access_token: "/Users/cmingxu/wechat_access_token"
+  access_token: "/home/ubuntu/wechat_access_token"
 
 production:
   <<: *default
@@ -16,6 +16,7 @@ staging:
 
 development:
   <<: *default
+  access_token: "/Users/cmingxu/wechat_access_token"
 
 test:
   <<: *default

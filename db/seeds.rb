@@ -15,7 +15,8 @@ end
 
 lb_settings = {
   :wechat_subscribe_message => "欢迎您关注萝卜停车微信号, http://demo.6luobo.com",
-  :wechat_unsubscribe_message => "byebye"
+  :wechat_unsubscribe_message => "byebye",
+  :fallback_message => "欢迎您关注萝卜停车微信号, http://demo.6luobo.com"
 }
 
 LbSetting.delete_all
