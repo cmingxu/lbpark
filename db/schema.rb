@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213005001) do
+ActiveRecord::Schema.define(version: 20150223082059) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -51,6 +51,13 @@ ActiveRecord::Schema.define(version: 20150213005001) do
     t.string   "title"
     t.string   "status"
     t.integer  "created_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "lb_settings", force: true do |t|
+    t.string   "var",        null: false
+    t.text     "lb_value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -270,6 +277,33 @@ ActiveRecord::Schema.define(version: 20150213005001) do
     t.integer  "user_id"
     t.integer  "park_id"
     t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "wechat_user_activities", force: true do |t|
+    t.integer  "wechat_user_id"
+    t.string   "activity"
+    t.string   "sub_activity"
+    t.text     "params"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "wechat_users", force: true do |t|
+    t.integer  "user_id"
+    t.string   "status"
+    t.string   "openid"
+    t.string   "nickname"
+    t.integer  "sex"
+    t.string   "language"
+    t.string   "province"
+    t.string   "city"
+    t.string   "country"
+    t.string   "headimg"
+    t.text     "remark"
+    t.datetime "subscribe_time"
+    t.string   "unionid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

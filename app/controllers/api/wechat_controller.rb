@@ -3,6 +3,7 @@ class Api::WechatController < Api::BaseController
     secret: Wechat.config.secret, token: Wechat.config.token, access_token: Wechat.config.access_token
 
   on :event, with: "subscribe" do |request,event|
+    WechatUser.user_subscribe!(request)
     request.reply.text "event: subscribe"
   end
 

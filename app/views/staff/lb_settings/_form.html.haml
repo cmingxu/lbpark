@@ -1,0 +1,24 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
+        %thead
+          %th
+          %th
+        %tbody
+          = form_for [:staff, @lb_setting], :role => "form", :class => "form", :multipart => true do |f|
+            %tr
+              %td 键
+              %td
+                = text_field_tag :var
+                %span 例如: 名字
+
+            %tr
+              %td 值
+              %td
+                = text_area_tag :lb_value
+                %span 例如: hda001, 空表示和编号一致
+            %tr
+              %td{:colspan => 2}
+                = f.submit "保存", :class => "btn btn-success"
+

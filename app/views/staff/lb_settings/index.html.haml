@@ -1,0 +1,25 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      = link_to fa_icon("fw plus") + "新配置", new_staff_lb_setting_path, :class => "btn btn-primary pull-right"
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 键
+          %th 值
+          %th
+
+        %tbody
+          - @lb_settings.each do |p|
+            %tr
+              %td= p.id
+              %td= p.var
+              %td= p.lb_value
+              %td
+                = link_to fa_icon("fw search-plus"), edit_staff_lb_setting_path(p)
+                = link_to fa_icon("fw times-circle"), staff_lb_setting_path(p), :method => :delete, :confirm => "确认要删除这次上传么?"
+
+

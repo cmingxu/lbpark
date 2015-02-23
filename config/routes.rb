@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  namespace :staff do
+  get 'lb_settings/index'
+  end
+
+  namespace :staff do
+  get 'lb_settings/edit'
+  end
+
+  namespace :staff do
+  get 'lb_settings/new'
+  end
+
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -50,6 +62,8 @@ Rails.application.routes.draw do
 
     resources :vendors
     resources :lotteries
+
+    resources :lb_settings
 
     resources :users_parks
     resources :parks
