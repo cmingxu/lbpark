@@ -5,10 +5,10 @@ default: &default
   access_token: "/home/ubuntu/wechat_access_token"
 
 production:
-<<: *default
+  <<: *default
 
 demo:
-<<: *default
+  <<: *default
 
 
 staging:
