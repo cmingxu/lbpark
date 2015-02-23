@@ -1,5 +1,7 @@
 class Api::WechatController < Api::BaseController
-  wechat_responder
+  wechat_responder appid: Wechat.config.appid, 
+    secret: Wechat.config.secret, token: Wechat.config.token, access_token: Wechat.config.access_token
+
 
   # 默认的文字信息responder
   on :text do |request, content|
