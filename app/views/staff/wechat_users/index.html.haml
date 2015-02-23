@@ -1,0 +1,33 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th
+          %th ID
+          %th 编号
+          %th 名称
+          %th 性别
+          %th 地区
+          %th 关注事件
+
+        %tbody
+          - @wechat_users.each do |p|
+            %tr
+              %td
+                %image{:src => p.headimg.url}
+              %td= p.id
+              %td= p.openid
+              %td= p.nickname
+              %td= p.sex
+              %td
+                = p.province
+                = p.city
+              %td= p.subscribe_time
+
+
+    = paginate @wechat_users

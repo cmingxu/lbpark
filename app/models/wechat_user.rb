@@ -59,7 +59,7 @@ class WechatUser < ActiveRecord::Base
 
     self.subscribe_time = Time.at(user_response["subscribe_time"])
     self.headimg = WechatUserHeaderImgUploader.new
-    self.headimg.download!
+    self.headimg.download! user_response["headimgurl"]
     self.save
     self.sync!
   end

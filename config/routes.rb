@@ -1,16 +1,4 @@
 Rails.application.routes.draw do
-  namespace :staff do
-  get 'lb_settings/index'
-  end
-
-  namespace :staff do
-  get 'lb_settings/edit'
-  end
-
-  namespace :staff do
-  get 'lb_settings/new'
-  end
-
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -67,6 +55,9 @@ Rails.application.routes.draw do
 
     resources :users_parks
     resources :parks
+    resources :wechat_users, :only => [:index] do
+      resources :wechat_user_activities, :only => [:index]
+    end
     resources :staffs do
       collection do
         get :i_want_change_pass
