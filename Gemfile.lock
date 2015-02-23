@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: https://github.com/cmingxu/wechat-rails
-  revision: 694018e32c82be51916f06d54de39e68fc297158
+  revision: 420e3079d8cb620c5bbb126ae8b5b3c1e17e896d
   specs:
     wechat-rails (0.1.1)
       nokogiri (>= 1.6.0)
@@ -147,7 +147,7 @@ GEM
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
-    i18n (0.6.11)
+    i18n (0.7.0)
     ice_nine (0.11.0)
     jbuilder (2.2.5)
       activesupport (>= 3.0.0, < 5)
@@ -155,7 +155,7 @@ GEM
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.8.1)
+    json (1.8.2)
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -164,8 +164,8 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
     mini_magick (4.0.0)
-    mini_portile (0.6.1)
-    minitest (5.4.3)
+    mini_portile (0.6.2)
+    minitest (5.5.1)
     mono_logger (1.1.0)
     multi_json (1.10.1)
     multi_xml (0.5.5)
@@ -175,7 +175,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
     netrc (0.10.2)
-    nokogiri (1.6.5)
+    nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     quiet_assets (1.0.3)
       railties (>= 3.1, < 5.0)
@@ -186,7 +186,7 @@ GEM
       rack (>= 1.0.0)
     rack-protection (1.5.3)
       rack
-    rack-test (0.6.2)
+    rack-test (0.6.3)
       rack (>= 1.0)
     rack-weixin (0.0.4.3)
       multi_json (>= 1.7.9)
@@ -213,7 +213,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
-    rake (10.3.2)
+    rake (10.4.2)
     rdoc (4.1.2)
       json (~> 1.4)
     redis (3.1.0)
@@ -286,7 +286,7 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sprockets-rails (2.2.0)
+    sprockets-rails (2.2.4)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
