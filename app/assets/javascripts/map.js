@@ -11,6 +11,7 @@ var LB = LB || {};
 
 LB.mapObj;
 LB.center = config.default_location;
+LB.current_location =  null;
 
 
 
@@ -34,18 +35,17 @@ function mapInit() {
   add_event_listeners();
   fetch_parkes(LB.center);
   if(place_name == '') //
-    LB.where_am_i(LB.mapObj);
+    LB.where_am_i();
   else{ // jump from search
     AMap.service(["AMap.Geocoder"], function() {
       MGeocoder = new AMap.Geocoder({
         city:"010", //城市，默认：“全国”
         radius:1000 //范围，默认：500
       });
-      //返回地理编码结果  
+      //返回地理编码结果
       //地理编码
       MGeocoder.getLocation(place_name, function(status, result){
         if(status === 'complete' && result.info === 'OK'){
-          console.log(result);
           LB.mapObj.setCenter(result.geocodes[0].location);
         }
       });

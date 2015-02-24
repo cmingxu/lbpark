@@ -1,6 +1,6 @@
 .user_mine
   = form_tag feedback_path do
-    = text_area_tag "feedback[content]"
-    = text_field_tag "feedback[contact]"
-    = submit_tag "提交了"
+    = text_area_tag "feedback[content]", "", :id => "feedback_content", :placeholder => "您的宝贵意见"
+    = text_field_tag "feedback[contact]", "",  :id => "feedback_contact", :placeholder => "您的联系方式"
+    = submit_tag "提交了", :id => "feedback_submit_btn"
 

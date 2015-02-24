@@ -10,5 +10,6 @@ class MobileController < ApplicationController
   end
 
   def setting
+    @current_nav = "mine"
   end
 end
