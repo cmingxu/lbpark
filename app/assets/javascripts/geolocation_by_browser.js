@@ -1,16 +1,15 @@
 var LB = LB || {};
 
-LB.where_am_i = function () {
+LB.where_am_i = function (callback) {
 
   function update_lb_center_location(position) {
-    console.log('wwwwwwwww');
-    alert('wew');
-    var lat = position.coords.latitude;
-    var lng = position.coords.longitude;
-    LB.mapObj.setCenter(new AMap.LngLat(lng, lat));
-    alert(lat);
-    alert(lng);
+    var lat = position.lat;// position.coords.latitude;
+    var lng = position.lng;//position.coords.longitude;
+    LB.current_location = {lng: lng, lat: lat};
+    callback();
   }
+
+  //navigator.geolocation.getCurrentPosition(update_lb_center_location);
 
   var geolocation;
   LB.mapObj.plugin(["AMap.Geolocation"],function(){    //添加浏览器定位服务插件
@@ -20,10 +19,13 @@ LB.where_am_i = function () {
       　　maximumAge: 1000  //缓存毫秒数。定位成功后，定位结果的保留时间。默认0。
       　　};
       　　geolocation=new AMap.Geolocation(geoOptions);
-      　　AMap.event.addListener(geolocation , 'complete', update_lb_center_location); //定位成功后的回调函数
+      　　AMap.event.addListener(geolocation , 'complete', function (result) {
+        update_lb_center_location(result.position);
+      }); //定位成功后的回调函数
       　　AMap.event.addListener(geolocation , 'error', function (error) {
       }); //定位成功后的回调函数
   });
 
+  geolocation.watchPosition();
 };
 

@@ -34,8 +34,18 @@ function mapInit() {
   //add_plugins();
   add_event_listeners();
   fetch_parkes(LB.center);
-  if(place_name == '') //
-    LB.where_am_i();
+  if(place_name == '') {
+    LB.where_am_i(function () {
+      LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+      LB.center = LB.current_location;
+      if(LB.current_position_marker){
+        LB.current_position_marker.setPosition(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+      }else{
+        add_current_position_marker();
+      }
+    });
+  }
+
   else{ // jump from search
     AMap.service(["AMap.Geocoder"], function() {
       MGeocoder = new AMap.Geocoder({
@@ -46,13 +56,15 @@ function mapInit() {
       //地理编码
       MGeocoder.getLocation(place_name, function(status, result){
         if(status === 'complete' && result.info === 'OK'){
-          LB.mapObj.setCenter(result.geocodes[0].location);
+          l = result.geocodes[0].location
+          LB.mapObj.setCenter(l);
+          LB.current_location = {lng: l.lng, lat: l.lat };
+          add_current_position_marker();
         }
       });
     });
   }
 
-  add_center_marker();
   back_to_original_marker();
 
 }
@@ -127,18 +139,19 @@ function add_event_listeners() {
   });
 }
 
-function add_center_marker(){
-  var marker = new AMap.Marker({ //创建自定义点标注
+function add_current_position_marker(){
+  LB.current_position_marker = new AMap.Marker({ //创建自定义点标注
     map: LB.mapObj,
-    position: new AMap.LngLat(LB.center.lng,
-                              LB.center.lat),
-                              content: "<div id='center_marker'></div>"
+    position: new AMap.LngLat(LB.current_location.lng,
+                              LB.current_location.lat),
+                              content: "<div id='center_marker'></div>",
+                              offset: new AMap.Pixel(-25, -25)
   });
 }
 
 function back_to_original_marker(){
   $("#back_to_original_marker").click(function () {
-    LB.mapObj.panTo(new AMap.LngLat(config.default_location.lng, config.default_location.lat));
+    LB.mapObj.panTo(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
     //LB.mapObj.setCenter(new AMap.LngLat(config.default_location.lat, config.default_location.lng));
   });
 }
