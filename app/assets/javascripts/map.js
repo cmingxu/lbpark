@@ -132,7 +132,6 @@ function fetch_parkes(location) {
           json = JSON.parse(json_str);
         }catch(e){
           json = [];
-          console.log(response);
         }
       }else{
         json = JSON.parse(response).data;
@@ -142,8 +141,7 @@ function fetch_parkes(location) {
         add_new_marker(item);
       });
     }
-  }
-        );
+  });
 }
 
 function add_event_listeners() {
