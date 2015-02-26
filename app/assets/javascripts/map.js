@@ -122,11 +122,23 @@ function fetch_parkes(location) {
     dataType: 'JSON',
     type: 'GET',
     success: function (response, a, c) {
-      shift = (c.getResponseHeader("X-Lb-Shift"));
-      json_str = response.substring((response.length - shift), response.length + 1) +
-        response.substring(0, response.length - shift);
+      if(config.park_info_encrypted){
+        json_str = JSON.parse(response).data;
+        shift = (c.getResponseHeader("X-Lb-Shift"));
+        json_str = json_str.substring((json_str.length - shift), json_str.length + 1) +
+          json_str.substring(0, json_str.length - shift);
+        json_str = Base64.decode(json_str.reverse());
+        try{
+          json = JSON.parse(json_str);
+        }catch(e){
+          json = [];
+          console.log(response);
+        }
+      }else{
+        json = JSON.parse(response).data;
+      }
 
-      JSON.parse(Base64.decode(json_str.reverse())).forEach(function (item, index) {
+      json.forEach(function (item, index) {
         add_new_marker(item);
       });
     }
