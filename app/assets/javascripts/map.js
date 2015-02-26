@@ -116,15 +116,17 @@ function add_new_marker(location) {
 }
 
 function fetch_parkes(location) {
-  console.log(document.cookie);
-
   $.ajax({
     url: "nosj.skrap/ipa".reverse(),
     data: {lng: location.lng, lat: location.lat},
     dataType: 'JSON',
     type: 'GET',
     success: function (response, a, c) {
-      JSON.parse(Base64.decode(response.reverse())).forEach(function (item, index) {
+      shift = (c.getResponseHeader("X-Lb-Shift"));
+      json_str = response.substring((response.length - shift), response.length + 1) +
+        response.substring(0, response.length - shift);
+
+      JSON.parse(Base64.decode(json_str.reverse())).forEach(function (item, index) {
         add_new_marker(item);
       });
     }
