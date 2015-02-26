@@ -26,15 +26,17 @@ class PriceCalculator
     end
 
     retval = case price = price.to_s
-    when  /^0\..*/
-      "<span class='zero_notion'>0.</span>" + price.split(".")[1]
-    when /^\d{1}.0/
-      price[0]
-    when /^\d{2}.0/
-      "<span class='zero_notion'>#{price[0..1]}</span>"
-    else
-      price
-    end
+             when /^0\.0$/
+               "0"
+             when  /^0\..*/
+               "<span class='zero_notion'>0.</span>" + price.split(".")[1]
+             when /^\d{1}.0/
+               price[0]
+             when /^\d{2}.0/
+               "<span class='zero_notion'>#{price[0..1]}</span>"
+             else
+               price
+             end
 
     if !price_by_day? && self.night_unit == "夜"
       retval = retval + "<span class='zero_notion'>/夜</span>"

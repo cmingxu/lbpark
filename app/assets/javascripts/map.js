@@ -117,7 +117,7 @@ function add_new_marker(location) {
 
 function fetch_parkes(location) {
   $.ajax({
-    url: "nosj.skrap/ipa".reverse(),
+    url: "nosj.skrap/ipa/".reverse(),
     data: {lng: location.lng, lat: location.lat},
     dataType: 'JSON',
     type: 'GET',
