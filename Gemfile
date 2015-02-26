@@ -57,6 +57,7 @@ gem 'rmagick'
 
 
 gem 'evil_transform'
+gem 'base58'
 
 
 

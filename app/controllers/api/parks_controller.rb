@@ -1,7 +1,7 @@
 class Api::ParksController < Api::BaseController
   def index
     @location = Location.new params[:lng], params[:lat]
-    render :json => (Park.within_range(@location.around(1000)).includes(:park_pics).all.map do |p|
+    park_json = (Park.within_range(@location.around(1000)).includes(:park_pics).all.map do |p|
       {
         :lng => p.lng,
         :lat => p.lat,
@@ -23,8 +23,10 @@ class Api::ParksController < Api::BaseController
         :thumb_pic_url => p.thump_pic_url,
         :no_parking => p.no_parking?
       }
-    end)
-
+    end).to_json
+    shift = rand(park_json.length).to_i
+    response.headers["X-LB-SHIFT"] = shift.to_s
+    render :text => String.lb_encode(park_json, shift)
   end
 
 end

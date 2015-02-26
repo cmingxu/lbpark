@@ -3,17 +3,20 @@
 //= require logger
 //= require park_info_state
 //= require park_info_marker
-//= require geolocation_by_browser
+//= require where_am_i
 //= require auto_nav
 //= require fastclick
+//= require base58
+//= require core_ext
 
 var LB = LB || {};
 
+///////////////////////////
 LB.mapObj;
 LB.center = config.default_location;
 LB.current_location =  null;
 
-
+//////////////////////////
 
 //初始化地图对象，加载地图
 function mapInit() {
@@ -113,14 +116,20 @@ function add_new_marker(location) {
 }
 
 function fetch_parkes(location) {
-  $.get("/api/parks.json",
-        {lng: location.lng, lat: location.lat},
-        function (response) {
-          response.forEach(function (item, index) {
-            add_new_marker(item);
-          });
-        }
-       );
+  console.log(document.cookie);
+
+  $.ajax({
+    url: "nosj.skrap/ipa".reverse(),
+    data: {lng: location.lng, lat: location.lat},
+    dataType: 'JSON',
+    type: 'GET',
+    success: function (response, a, c) {
+      JSON.parse(Base64.decode(response.reverse())).forEach(function (item, index) {
+        add_new_marker(item);
+      });
+    }
+  }
+        );
 }
 
 function add_event_listeners() {
