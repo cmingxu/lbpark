@@ -77,7 +77,8 @@ class VendorController < ApplicationController
 
   def current_vendor_required
     if current_vendor.nil?
-      redirect_to vendor_login_path, :notice => "请先登录"
+      #redirect_to vendor_login_path, :notice => "请先登录"
+      redirect_to "/auth/wechat"
       return
     end
   end
