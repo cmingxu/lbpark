@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: https://github.com/cmingxu/wechat-rails
-  revision: 5ac616d88ed7ff876f9819ab3ac6c96530b5153d
+  revision: d7aed48f01858aca6e00536ae56b7e14f77e2a75
   specs:
     wechat-rails (0.1.1)
       nokogiri (>= 1.6.0)
