@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   namespace :vendor_api do
-    resource :wechat, controller: :vendor_wechat, only: [:show, :create]
+    resource :wechat, controller: :wechat, only: [:show, :create]
   end
 
   namespace :dashboard do
