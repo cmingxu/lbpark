@@ -27,6 +27,6 @@
                   = link_to "绑定", new_staff_users_park_path(:user_id => p.id)
               %td= p.phone
               %td= p.email
-              %td= p.created_at.to_s(:cn_normal)
+              %td= p.created_at.to_s(:lb_cn_normal)
               %td= p.park_statuses.count
               %td= p.lotteries.count

@@ -14,7 +14,9 @@ function hotPlaceSearch(keywords) {
       if(status=='complete') {
         $("#autocomplete_list").show().empty();
         result.tips.forEach(function (place) {
-          $("#autocomplete_list").append("<li><a href='/mobile/map?name=" + encodeURIComponent(place.name) + "'>" + place.name + "<span> - " + place.district +"</span>" + "</a></li>");
+          if((typeof place.district === "string") && place.district.match(/北京/)){ // skip places out of beijing
+            $("#autocomplete_list").append("<li><a href='/mobile/map?name=" + encodeURIComponent(place.name) + "'>" + place.name + "<span> - " + place.district +"</span>" + "</a></li>");
+          }
         });
       }
       if(status=='no_data') {
