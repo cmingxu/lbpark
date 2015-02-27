@@ -3,6 +3,10 @@ class VendorController < ApplicationController
   skip_before_filter :verify_authenticity_token
   before_filter :current_vendor_required, :only => [:index, :lottery, :mine, :logout]
 
+  def login_from_wechat
+    Rails.logger.log params
+  end
+
   def index
     @current_nav = "report"
     @messages = current_vendor.park.messages.order("id DESC")

@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   post 'vendor/create_park_statuses'
   delete 'vendor_logout' => "vendor#logout"
 
+  resource :entrypoint, :controller => :entrypoint, :only => [:show]
+
+  get '/auth/:provider/callback', to: 'vendor#login_from_wechat'
 
   namespace :api do
     resource :wechat, controller: :wechat, only: [:show, :create]
