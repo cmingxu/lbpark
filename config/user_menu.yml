@@ -1,0 +1,13 @@
+button:
+  -
+    type: "home"
+    name: "找车位"
+    url: "http://demo.6luobo.com"
+  -
+    type: "hot_place"
+    name: "提前搜"
+    url: "http://demo.6luobo.com/hot_place"
+  -
+    type: "mine"
+    name: "我的"
+    url: "http://demo.6luobo.com/setting"

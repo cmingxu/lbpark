@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  namespace :staff do
-  get 'wechat_user_activities/index'
-  end
-
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -31,6 +27,10 @@ Rails.application.routes.draw do
   namespace :api do
     resource :wechat, controller: :wechat, only: [:show, :create]
     resources :parks
+  end
+
+  namespace :vendor_api do
+    resource :wechat, controller: :vendor_wechat, only: [:show, :create]
   end
 
   namespace :dashboard do

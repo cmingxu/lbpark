@@ -22,4 +22,13 @@ class WechatUserActivity < ActiveRecord::Base
       activity.params = request.message_hash
     end
   end
+
+  def self.vendor_log_activity!(request, activity, sub_activity)
+    create! do |activity|
+      activity.openid = request[:FromUserName]
+      activity.activity = "vendor/" + activity
+      activity.sub_activity = sub_activity
+      activity.params = request.message_hash
+    end
+  end
 end

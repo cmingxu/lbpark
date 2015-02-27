@@ -14,9 +14,12 @@ staffs.each do |s|
 end
 
 lb_settings = {
-  :wechat_subscribe_message => "欢迎您关注萝卜停车微信号, http://demo.6luobo.com",
+  :wechat_subscribe_message => "一个萝卜一个坑，现场用“找车位”，异地用“提前搜”，祝您停车愉快~",
   :wechat_unsubscribe_message => "byebye",
-  :fallback_message => "欢迎您关注萝卜停车微信号, http://demo.6luobo.com"
+  :fallback_message => "欢迎您关注萝卜停车微信号, http://demo.6luobo.com",
+  :vendor_wechat_subscribe_message => "谢谢小哥赏脸，工作之余先“报状态”再“看彩票”，祝你好运~",
+  :vendor_wechat_unsubscribe_message => "byebye",
+  :vendor_fallback_message => "欢迎您关注萝卜停车微信号, http://demo.6luobo.com"
 }
 
 LbSetting.delete_all

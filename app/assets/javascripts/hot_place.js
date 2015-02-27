@@ -20,10 +20,10 @@ function hotPlaceSearch(keywords) {
         });
       }
       if(status=='no_data') {
-        console.log("没找到");
+        LB.Logger.deubg("没找到");
       }
       else {
-        console.log(result);
+        LB.Logger.debug(result);
       }
     });
   });

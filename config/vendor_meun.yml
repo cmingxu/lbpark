@@ -1,0 +1,13 @@
+button:
+  -
+    type: "vendor_home"
+    name: "报状态"
+    url: "http://demo.6luobo.com/vendor/index"
+  -
+    type: "vendor_lottery"
+    name: "彩票"
+    url: "http://demo.6luobo.com/vendor/lottery"
+  -
+    type: "vendor_mine"
+    name: "我的"
+    url: "http://demo.6luobo.com/vendor/mine"
