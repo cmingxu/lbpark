@@ -5,9 +5,7 @@ class VendorController < ApplicationController
 
   def index
     @current_nav = "report"
-    if current_vendor.park
-      @messages = current_vendor.park.messages.order("id DESC")
-    end
+    @messages = current_vendor.park.messages.order("id DESC")
   end
 
   def lottery

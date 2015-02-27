@@ -1,4 +1,4 @@
-class Api::WechatController < Api::BaseController
+class Api::WechatController < VendorApi::BaseController
   wechat_responder appid: Wechat.config.vendor_appid,
     secret: Wechat.config.vendor_secret, token: Wechat.config.vendor_token,
     access_token: Wechat.config.vendor_access_token

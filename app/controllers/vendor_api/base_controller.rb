@@ -1,3 +1,3 @@
-class Vendor::BaseController < ApplicationController
+class VendorApi::BaseController < ApplicationController
 
 end
