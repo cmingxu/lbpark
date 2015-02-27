@@ -283,6 +283,7 @@ ActiveRecord::Schema.define(version: 20150223082059) do
 
   create_table "wechat_user_activities", force: true do |t|
     t.integer  "wechat_user_id"
+    t.string   "openid"
     t.string   "activity"
     t.string   "sub_activity"
     t.text     "params"

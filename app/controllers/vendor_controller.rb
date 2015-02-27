@@ -1,7 +1,7 @@
 class VendorController < ApplicationController
   layout "vendor"
   skip_before_filter :verify_authenticity_token
-  before_filter :current_vendor_required, :only => [:index, :lottory, :mine, :logout]
+  before_filter :current_vendor_required, :only => [:index, :lottery, :mine, :logout]
 
   def index
     @current_nav = "report"
@@ -74,7 +74,7 @@ class VendorController < ApplicationController
   end
 
   def current_vendor_required
-    unless current_vendor
+    if current_vendor.nil?
       redirect_to vendor_login_path, :notice => "请先登录"
       return
     end
