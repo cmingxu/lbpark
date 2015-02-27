@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :staff do
+  get 'wechat_user_activities/index'
+  end
+
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'

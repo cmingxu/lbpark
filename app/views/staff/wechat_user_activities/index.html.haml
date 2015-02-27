@@ -1,2 +1,26 @@
-%h1 Staff::WechatUserActivities#index
-%p Find me in app/views/staff/wechat_user_activities/index.html.haml
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 时间
+          %th 动作
+          %th 次动作
+          %th 参数
+
+        %tbody
+          - @wechat_user_activities.each do |p|
+            %tr
+              %td= p.id
+              %td= p.created_at.to_s(:lb_cn_normal)
+              %td= p.activity
+              %td= p.sub_activity
+              %td= p.params
+
+
+    = paginate @wechat_user_activities
