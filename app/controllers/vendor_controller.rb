@@ -4,7 +4,7 @@ class VendorController < ApplicationController
   before_filter :current_vendor_required, :only => [:index, :lottery, :mine, :logout]
 
   def login_from_wechat
-    Rails.logger.log params
+    Rails.logger.debug params
   end
 
   def index
