@@ -26,6 +26,6 @@ LB.where_am_i = function (callback) {
       }); //定位成功后的回调函数
   });
 
-  geolocation.watchPosition();
+  geolocation.getCurrentPosition();
 };
 
