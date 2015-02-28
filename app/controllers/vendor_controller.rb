@@ -5,6 +5,7 @@ class VendorController < ApplicationController
 
   def login_from_wechat
     Rails.logger.error params
+    Rails.logger.erorr request.env["omniauth.auth"]
   end
 
   def index
