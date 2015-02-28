@@ -36,9 +36,9 @@
           = link_to "空闲", "#", "data-code" => 0
     #park_status_news
       .park_status_header 今日快报
-      %ul
+      .news_list
         - @messages.each do |message|
-          %li
+          .news
             %a{:href => ""}
               = message.content
               (
