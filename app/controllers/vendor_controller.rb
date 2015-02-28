@@ -71,7 +71,6 @@ class VendorController < ApplicationController
   end
 
   def current_vendor_required
-    session[:vendor_id] = User.first.id
     if current_vendor.nil?
       session[:redirect_to] = request.path
       redirect_to "/auth/wechat" and return
