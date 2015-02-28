@@ -23,9 +23,10 @@ function mapInit() {
   $("#map").height(window.innerHeight - config.tabbar_height);
   $("#tabs").height(config.tabbar_height);
   LB.mapObj = new AMap.Map("map",{
-    rotateEnable:true,
-    dragEnable:true,
-    zoomEnable:true,
+    animateEnable: false,
+    rotateEnable: false,
+    dragEnable: true,
+    zoomEnable: false,
     zooms: [16, 17,18,19],
     //二维地图显示视口
     view: new AMap.View2D({

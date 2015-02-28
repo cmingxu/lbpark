@@ -5,7 +5,7 @@ LB.auto_nav = function(park) {
   var route_text, steps;
   var polyline;
   //var start_xy = LB.where_am_i();
-  var start_xy = new AMap.LngLat(config.default_location.lng, config.default_location.lat);
+  var start_xy = new AMap.LngLat(LB.current_location.lng, LB.current_location.lat);
   var end_xy = new AMap.LngLat(park.lng, park.lat);
 
   function driving_route() {
@@ -13,9 +13,9 @@ LB.auto_nav = function(park) {
     AMap.service(["AMap.Driving"], function() {
       var DrivingOption = {
         //驾车策略，包括 LEAST_TIME，LEAST_FEE, LEAST_DISTANCE,REAL_TRAFFIC
-        policy: AMap.DrivingPolicy.LEAST_TIME 
+        policy: AMap.DrivingPolicy.LEAST_TIME
       };
-      MDrive = new AMap.Driving(DrivingOption); //构造驾车导航类 
+      MDrive = new AMap.Driving(DrivingOptio); //构造驾车导航类 
       //根据起终点坐标规划驾车路线
       MDrive.search(start_xy, end_xy, function(status, result){
         if(status === 'complete' && result.info === 'OK'){
@@ -84,4 +84,4 @@ LB.clear_auto_nav = function () {
     l.setMap(null);
   });
   LB.auto_nav_lines = [];
-}
+
