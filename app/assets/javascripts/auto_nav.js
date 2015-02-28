@@ -85,3 +85,4 @@ LB.clear_auto_nav = function () {
   });
   LB.auto_nav_lines = [];
 
+}
