@@ -1,15 +1,1 @@
-.vendor_login_page
-  #header_bg
-  .vendor_login_form
-    .box
-      %input#mobile_num_field{:placeholder => "请输入手机号码", :type => "number"}
-    .box
-      %input#sms_code_field{:placeholder => "请输入验证码", :type => "number"}
-      %span#send_btn 发送验证码
-    .box
-      %button#login_btn 验证
-
-    = hidden_field_tag :sms_code_id
-    #error_message_box
-  .clearfix
 

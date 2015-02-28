@@ -15,13 +15,12 @@ Rails.application.routes.draw do
 
   get 'vendor' => "vendor#index"
   get 'vendor/index'
-  get 'vendor/login'
-  post 'vendor/login'
+  get 'vendor/bind_mobile'
+  post 'vendor/bind_mobile'
   get 'vendor/mine'
   get 'vendor/lottery'
   post 'vendor/send_sms_code'
   post 'vendor/create_park_statuses'
-  delete 'vendor_logout' => "vendor#logout"
 
   resource :entrypoint, :controller => :entrypoint, :only => [:show]
 

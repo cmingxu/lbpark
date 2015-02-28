@@ -1,25 +1,38 @@
-.vendor_mine
-  .vendor_info
-    .vendor_profile
-      %img{:src => asset_path("vendor_profile.png"), :width => "100", :height => "100"}
-    .vendor_info_detail
-      .vendor_info_park_name
-        = current_vendor.park.name
-      .vendor_info_phone
-        = current_vendor.phone
-    .clearfix
-  .vendor_action_list
-    .vendor_action_item
-      %span
-      %span
-        %a{:href => "/vendor/index"} 我的主页
-    .vendor_action_item
-      %span
-      %span
-        %a{:href => "/vendor/index"} 我的彩票
+- if current_vendor.phone.present?
+  - if current_vendor.park
+    .vendor_mine
+      .vendor_info
+        .vendor_profile
+          %img{:src => asset_path("vendor_profile.png"), :width => "100", :height => "100"}
+        .vendor_info_detail
+          .vendor_info_park_name
+            = current_vendor.park.try(:name)
+          .vendor_info_phone
+            = current_vendor.phone
+        .clearfix
+      .vendor_action_list
+        .vendor_action_item
+          %span
+          %span
+            %a{:href => "/vendor/index"} 我的主页
+        .vendor_action_item
+          %span
+          %span
+            %a{:href => "/vendor/index"} 我的彩票
 
-  .vendor_logout
-    = form_tag vendor_logout_path, :method => "delete" do
-      = submit_tag "退出登录"
+  - else
+    %h2 联系管理员为此伙伴绑定停车场
+- else
+  .vendor_login_page
+    .vendor_login_form
+      .box
+        %input#mobile_num_field{:placeholder => "请输入手机号码", :type => "number"}
+      .box
+        %input#sms_code_field{:placeholder => "请输入验证码", :type => "number"}
+        %span#send_btn 发送验证码
+      .box
+        %button#login_btn 验证
 
+      = hidden_field_tag :sms_code_id
+      #error_message_box
 

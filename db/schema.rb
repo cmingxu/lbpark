@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150223082059) do
+ActiveRecord::Schema.define(version: 20150228092323) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -271,6 +271,18 @@ ActiveRecord::Schema.define(version: 20150223082059) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "role"
+    t.string   "status"
+    t.string   "openid"
+    t.string   "nickname"
+    t.boolean  "sex"
+    t.string   "language"
+    t.string   "province"
+    t.string   "city"
+    t.datetime "subscribe_time"
+    t.string   "unionid"
+    t.datetime "last_login_at"
+    t.string   "source"
+    t.string   "headimg"
   end
 
   create_table "users_parks", force: true do |t|
@@ -283,7 +295,6 @@ ActiveRecord::Schema.define(version: 20150223082059) do
 
   create_table "wechat_user_activities", force: true do |t|
     t.integer  "wechat_user_id"
-    t.string   "openid"
     t.string   "activity"
     t.string   "sub_activity"
     t.text     "params"

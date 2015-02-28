@@ -1,16 +1,20 @@
 class VendorController < ApplicationController
   layout "vendor"
   skip_before_filter :verify_authenticity_token
-  before_filter :current_vendor_required, :only => [:index, :lottery, :mine, :logout]
+  before_filter :current_vendor_required, :only => [:index, :lottery, :mine]
+  before_filter :mobile_bind_required, :only => [:index, :lottery]
+  before_filter :vendor_park_required, :only => [:index, :lottery]
 
   def login_from_wechat
-    Rails.logger.error params
-    Rails.logger.error request.env["omniauth.auth"]
+    if user = User.login_from_wechat(request.env["omniauth.auth"])
+      session[:vendor_id] = user.id
+      redirect_to(session[:redirect_to] || vendor_index_path) and return
+    end
   end
 
   def index
     @current_nav = "report"
-    @messages = current_vendor.park.messages.order("id DESC")
+    @messages = current_vendor.park ? current_vendor.park.messages.order("id DESC") : []
   end
 
   def lottery
@@ -22,32 +26,22 @@ class VendorController < ApplicationController
     @current_nav = "mine"
   end
 
-  def login
+  def bind_mobile
     if request.post?
-      user = User.login(params[:mobile_num])
       if !sms_code_valid?
         render :json => {:result => false, :msg => "验证码不正确"}
         return
-      end
-      if user && user.valid?
-        user.update_column :role, "vendor"
-        session[:vendor_id] = user.id
-        render :json => {:result => true, :msg => ""}
       else
-        render :json => {:result => false, :msg => "验证码不正确"}
+        current_vendor.update_column :phone, params[:mobile_num]
+        render :json => {:result => true, :msg => ""}
       end
     else
       if current_vendor # already logged in
-        redirect_to vendor_index_path
+        redirect_to(session[:redirect_to] || vendor_index_path)
       else
         render :layout => "vendor_login"
       end
     end
-  end
-
-  def logout
-    @vendor_user = session[:vendor_id] = nil
-    redirect_to vendor_login_path
   end
 
   def create_park_statuses
@@ -77,10 +71,22 @@ class VendorController < ApplicationController
   end
 
   def current_vendor_required
+    session[:vendor_id] = User.first.id
     if current_vendor.nil?
-      #redirect_to vendor_login_path, :notice => "请先登录"
-      redirect_to "/auth/wechat"
-      return
+      session[:redirect_to] = request.path
+      redirect_to "/auth/wechat" and return
+    end
+  end
+
+  def mobile_bind_required
+    if current_vendor.phone.nil?
+      redirect_to vendor_mine_path
+    end
+  end
+
+  def vendor_park_required
+    if current_vendor.park.nil?
+      redirect_to vendor_mine_path
     end
   end
 

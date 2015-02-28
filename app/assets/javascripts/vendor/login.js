@@ -58,7 +58,7 @@ $(document).ready(function () {
   $(".vendor_login_page #login_btn").click(function () {
     if(valid_mobile_num() && valid_sms_code()){
       sms_code_id = $("#sms_code_id").val();
-      $.post(config.vendor_login_page, {
+      $.post(config.vendor_bind_mobile_num, {
               "mobile_num": $("#mobile_num_field").val(),
              "sms_code_id": sms_code_id,
              "sms_code": $("#sms_code_field").val()}, function (res) {

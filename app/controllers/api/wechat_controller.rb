@@ -3,14 +3,14 @@ class Api::WechatController < Api::BaseController
     secret: Wechat.config.secret, token: Wechat.config.token, access_token: Wechat.config.access_token
 
   on :event, with: "subscribe" do |request, event|
-    WechatUser.user_subscribe!(request)
+    #WechatUser.user_subscribe!(request)
     WechatUserActivity.log_activity!(request, "event", "subscribe")
     WECHAT_LOGGER.debug "event subscribe #{request.message_hash}"
     request.reply.text LbSetting.wechat_subscribe_message
   end
 
   on :event, with: "unsubscribe" do |request, event|
-    WechatUser.user_unsubscribe!(request)
+    #WechatUser.user_unsubscribe!(request)
     WechatUserActivity.log_activity!(request, "event", "unsubscribe")
     WECHAT_LOGGER.debug "event unsubscribe #{request.message_hash}"
     request.reply.text LbSetting.wechat_unsubscribe_message
@@ -75,5 +75,5 @@ class Api::WechatController < Api::BaseController
   end
 
   # 当无任何responder处理用户信息时,使用这个responder处理
-  on :fallback, respond: "fallback message"  
+  on :fallback, respond: "fallback message"
 end
