@@ -3,8 +3,8 @@ default: &default
   secret: "7506cf446cb2fa21f7ae0d1b4ae66da4"
   token:  "thisistoken"
   access_token: "/home/ubuntu/wechat_access_token"
-  vendor_appid: "wx74e2705cf0a80df8"
-  vendor_secret: "7506cf446cb2fa21f7ae0d1b4ae66da4"
+  vendor_appid: "wxa54c754042737ab9"
+  vendor_secret: "20a993eb419d0306c403fc184a391af1"
   vendor_token:  "thisistoken"
   vendor_access_token: "/home/ubuntu/vendor_wechat_access_token"
 
