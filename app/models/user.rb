@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
       user.province = info[:province]
       user.city = info[:city]
       user.sex = info[:sex]
-      user.subscribe_time = Time.at(info[:subscribe_time])
+      #user.subscribe_time = Time.at(info[:subscribe_time])
     end
 
     user.last_login_at = Time.now
