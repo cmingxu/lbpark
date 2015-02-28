@@ -15,7 +15,7 @@ LB.auto_nav = function(park) {
         //驾车策略，包括 LEAST_TIME，LEAST_FEE, LEAST_DISTANCE,REAL_TRAFFIC
         policy: AMap.DrivingPolicy.LEAST_TIME
       };
-      MDrive = new AMap.Driving(DrivingOptio); //构造驾车导航类 
+      MDrive = new AMap.Driving(DrivingOption); //构造驾车导航类 
       //根据起终点坐标规划驾车路线
       MDrive.search(start_xy, end_xy, function(status, result){
         if(status === 'complete' && result.info === 'OK'){
