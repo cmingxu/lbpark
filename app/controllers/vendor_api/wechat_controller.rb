@@ -4,14 +4,14 @@ class VendorApi::WechatController < VendorApi::BaseController
     access_token: Wechat.config.vendor_access_token
 
   on :event, with: "subscribe" do |request, event|
-    #WechatUser.user_subscribe!(request)
+    WechatUser.user_subscribe!(request)
     WechatUserActivity.vendor_log_activity!(request, "event", "subscribe")
     WECHAT_LOGGER.debug "[VENDOR] event subscribe #{request.message_hash}"
     request.reply.text LbSetting.vendor_wechat_subscribe_message
   end
 
   on :event, with: "unsubscribe" do |request, event|
-    #WechatUser.user_unsubscribe!(request)
+    WechatUser.user_unsubscribe!(request)
     WechatUserActivity.vendor_log_activity!(request, "event", "unsubscribe")
     WECHAT_LOGGER.debug "[VENDOR] event unsubscribe #{request.message_hash}"
     request.reply.text LbSetting.vendor_wechat_unsubscribe_message

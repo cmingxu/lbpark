@@ -215,6 +215,7 @@ production:
   <<: *default_settings
   monitor_mode: true
   app_name: "LB - Production"
+  license_key: "158361932ee3dc8493dd31e09f72f1fe6c568473"
 
 # Many applications have a staging environment which behaves
 # identically to production. Support for that environment is provided
@@ -228,3 +229,4 @@ demo:
   <<: *default_settings
   monitor_mode: true
   app_name: "LB - DEMO"
+  license_key: "158361932ee3dc8493dd31e09f72f1fe6c568473"
