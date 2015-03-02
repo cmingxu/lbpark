@@ -20,19 +20,21 @@
             .park_status_detail_info_phone_icon
             .park_status_detail_info_phone
               = current_vendor.park.latest_park_status.try(:user).try(:phone)
-              = "("
-              = current_vendor.park.latest_park_status.try(:user).try(:lotteries).try(:count)
-              = ")"
+              - lottery_count = current_vendor.park.latest_park_status.try(:user).try(:lotteries).try(:count)
+              - if lottery_count > 0
+                = "("
+                = current_vendor.park.latest_park_status.try(:user).try(:lotteries).try(:count)
+                = ")"
 
     #park_status_buttons
       %span
-        .red
+        .red.color_circle
           = link_to "紧张", "#", "data-code" => 2
       %span
-        .orange
+        .orange.color_circle
           = link_to "繁忙", "#", "data-code" => 1
       %span
-        .green
+        .green.color_circle
           = link_to "空闲", "#", "data-code" => 0
     #park_status_news
       .park_status_header 今日快报

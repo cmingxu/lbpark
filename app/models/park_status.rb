@@ -27,7 +27,7 @@ class ParkStatus < ActiveRecord::Base
   end
 
   after_create do
-    if l = Lottery.spin!(self)
+    if self.chosen && l = Lottery.spin!(self)
       self.park.messages.create do |m|
         m.content = "#{self.user.replaced_phone}得到彩票一注"
       end

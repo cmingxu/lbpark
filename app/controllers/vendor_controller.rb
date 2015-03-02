@@ -15,7 +15,7 @@ class VendorController < ApplicationController
 
   def index
     @current_nav = "report"
-    @messages = current_vendor.park ? current_vendor.park.messages.order("id DESC") : []
+    @messages = current_vendor.park ? current_vendor.park.messages.order("id DESC").limit(15) : []
   end
 
   def lottery
@@ -72,9 +72,11 @@ class VendorController < ApplicationController
   end
 
   def current_vendor_required
-    if current_vendor.nil?
+    if Rails.env.production? && current_vendor.nil?
       session[:redirect_to] = request.path
       redirect_to "/auth/wechat" and return
+    else
+      session[:vendor_id] = User.vendors.first.id
     end
   end
 
