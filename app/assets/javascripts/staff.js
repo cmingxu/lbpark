@@ -37,4 +37,22 @@ $(document).ready(function(){
         window.location.href = "/staff/parks/" + item.id + "/edit";
       }
     });
+
+    $('input.typeahead_user_parks').typeahead({
+      source: function (query, process) {
+        $.ajax({
+          url: "/staff/parks",
+          type: "get",
+          dataType: 'JSON',
+          data: {match: query},
+          success: function (data) {
+            process(data);
+          }
+        })
+      },
+      afterSelect: function (item) {
+        //window.location.href = "/staff/parks/" + item.id + "/edit";
+        $(".typeahead_user_parks").val(item.id);
+      }
+    });
 });

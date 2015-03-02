@@ -7,6 +7,6 @@
         = f.hidden_field :user_id
         .form_content
           .form-group
-            = f.text_field :park_id, :placeholder => "park_id"
+            = f.text_field :park_id, :placeholder => "中发广场", :class => "typeahead_user_parks"
           .form-group
             = submit_tag "绑定", :class => "btn btn-primary"
