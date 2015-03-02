@@ -43,7 +43,11 @@ LB.park_info_state = {
     LB.Logger.debug("park info state to short");
     this.current_state = "short";
     this.current_park = park;
-    this.park_name_dom.text(park.name + "(" + park.id + ")");
+    if(config.rails_env == "production"){
+      this.park_name_dom.text(park.name);
+    }else{
+      this.park_name_dom.text(park.name + "(" + park.id + ")");
+    }
     this.park_status_dom.css("background-color", config.park_status[""+park.busy_status].color);
     if(park.busy_status == "3"){
       this.park_status_dom.hide()
