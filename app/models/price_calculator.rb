@@ -125,7 +125,10 @@ class PriceCalculator
   end
 
   def price_by_day?
-    Time.now.hour >= park.day_time_begin && Time.now.hour < park.day_time_end
+    day_begin = park.day_time_begin
+    day_end   = park.day_time_end
+    day_end   = day_end += 24 if day_end < day_begin # 7:00 - 1:00 Park#16
+    Time.now.hour >= day_begin && Time.now.hour < day_end
   end
 
 
