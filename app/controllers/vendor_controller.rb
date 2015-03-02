@@ -96,4 +96,8 @@ class VendorController < ApplicationController
     sms_code.params == params[:sms_code]
   end
 
+  def failure
+    Rails.logger.error params[:message]
+    head 404
+  end
 end
