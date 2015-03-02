@@ -43,3 +43,30 @@ set :ssh_options, {
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
+#
+namespace :deploy do
+  desc "start unicorn server"
+  task :start do
+    on roles(:all) do |host|
+      execute "/etc/init.d/unicorn_lbpark start"
+      #execute "/etc/init.d/lb_resque start"
+    end
+  end
+
+  desc "stop unicorn server"
+  task :stop do
+    on roles(:all) do |host|
+      execute "/etc/init.d/unicorn_lbpark stop"
+      #execute "/etc/init.d/lb_resque stop"
+    end
+  end
+
+  desc "restart unicorn server"
+  task :restart do
+    on roles(:all) do |host|
+      execute "/etc/init.d/unicorn_lbpark restart"
+      #execute "/etc/init.d/lb_resque stop"
+      #execute "/etc/init.d/lb_resque start"
+    end
+  end
+end

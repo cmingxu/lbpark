@@ -6,7 +6,7 @@ LB.where_am_i = function (callback) {
     var lat = position.lat;// position.coords.latitude;
     var lng = position.lng;//position.coords.longitude;
     LB.current_location = {lng: lng, lat: lat};
-    callback();
+    //callback();
   }
 
   //navigator.geolocation.getCurrentPosition(update_lb_center_location);
