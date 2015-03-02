@@ -15,4 +15,17 @@ class ApplicationController < ActionController::Base
   def store_request_path
     session[:redirect_to] = params[:redirect_to] || request.referer
   end
+
+  def wechat_browser_required
+    if Rails.env.production?
+      redirect_to root_path unless user_agent_wechat?
+      false
+    else
+      true
+    end
+  end
+
+  def user_agent_wechat?
+    !!(request.user_agent =~ /MicroMessenger/i)
+  end
 end

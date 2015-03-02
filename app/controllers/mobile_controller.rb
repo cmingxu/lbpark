@@ -1,6 +1,5 @@
 class MobileController < ApplicationController
   layout "mobile"
-  
   def map
     @current_nav = "map"
   end

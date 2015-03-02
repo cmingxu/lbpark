@@ -4,6 +4,7 @@ class VendorController < ApplicationController
   before_filter :current_vendor_required, :only => [:index, :lottery, :mine]
   before_filter :mobile_bind_required, :only => [:index, :lottery]
   before_filter :vendor_park_required, :only => [:index, :lottery]
+  before_filter :wechat_browser_required
 
   def login_from_wechat
     if user = User.login_from_wechat(request.env["omniauth.auth"])
