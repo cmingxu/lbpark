@@ -17,5 +17,5 @@ end
 Rails.application.config.middleware.use OmniAuth::Builder do
   wechat_config = OpenStruct.new(YAML.load(File.read(Rails.root.join("config/wechat.yml")))[Rails.env])
   provider :wechat_vendor, wechat_config.vendor_apiid, wechat_config.vendor_secret
-  provider :wechat_vendor, wechat_config.apiid, wechat_config.secret
+  provider :wechat_user, wechat_config.apiid, wechat_config.secret
 end
