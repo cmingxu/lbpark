@@ -4,7 +4,6 @@ LB.auto_nav_lines = [];
 LB.auto_nav = function(park) {
   var route_text, steps;
   var polyline;
-  //var start_xy = LB.where_am_i();
   var start_xy = new AMap.LngLat(LB.current_location.lng, LB.current_location.lat);
   var end_xy = new AMap.LngLat(park.lng, park.lat);
 

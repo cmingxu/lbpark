@@ -8,6 +8,7 @@
 //= require fastclick
 //= require base58
 //= require core_ext
+//= require wechat
 
 var LB = LB || {};
 
