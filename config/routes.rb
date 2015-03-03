@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resource :entrypoint, :controller => :entrypoint, :only => [:show]
 
   get '/auth/wechat_vendor/callback', to: 'vendor#login_from_wechat'
+  get '/auth/wechat_user/callback', to: 'mobile#login_from_wechat'
   get 'auth/failure', to: 'vendor#failure'
 
   namespace :api do
