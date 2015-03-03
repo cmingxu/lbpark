@@ -1,5 +1,6 @@
 class VendorController < ApplicationController
   layout "vendor"
+
   skip_before_filter :verify_authenticity_token
   before_filter :current_vendor_required, :only => [:index, :lottery, :mine]
   before_filter :mobile_bind_required, :only => [:index, :lottery]

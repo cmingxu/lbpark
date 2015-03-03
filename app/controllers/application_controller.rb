@@ -12,6 +12,11 @@ class ApplicationController < ActionController::Base
     User.vendors.find_by_id(session[:vendor_id])
   end
 
+  def current_user
+    return nil if session[:user_id].nil?
+    User.find_by_id(session[:user_id])
+  end
+
   def store_request_path
     session[:redirect_to] = params[:redirect_to] || request.referer
   end

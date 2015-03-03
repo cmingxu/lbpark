@@ -1,5 +1,7 @@
 class MobileController < ApplicationController
   layout "mobile"
+  #before_filter :login_required_if_wechat_request, :except => [:login_from_wechat]
+
   def map
     @current_nav = "map"
   end
@@ -17,5 +19,8 @@ class MobileController < ApplicationController
       session[:vendor_id] = user.id
       redirect_to(session[:redirect_to] || vendor_index_path) and return
     end
+  end
+
+  def login_required_if_wechat_request
   end
 end
