@@ -395,7 +395,7 @@ a[title="站长统计"]
     #park_status_detail
       height: 33%
       width: 100%
-      background-image: url('<%= asset_path("vendor_index_info_bg.png") %>')
+      background-color: #e2e2e2
       #park_status_detail_name
         height: 50%
         position: relative
@@ -509,6 +509,7 @@ a[title="站长统计"]
             color: #666
 
   .popup
+    transition: all 2s
     position: fixed
     height: 100%
     width: 100%
@@ -518,7 +519,6 @@ a[title="站长统计"]
     opacity: 0.7
     z-index: 100000
   #confirm_box
-    transition: all 2s
     position: fixed
     width: 70%
     margin-left: 15%
@@ -569,13 +569,17 @@ a[title="站长统计"]
       line-height: normal
       font-size: 20px
       border: 1px solid #ccc
-      padding-left: 10px
+      padding-left: 5%
 
+    #sms_code_field, #mobile_num_field, #send_btn, #login_btn
+      border-radius: 4px
 
-    #mobile_num_field
-      width: 100%
     #sms_code_field
-      width: 150px
+      width: 95%
+      height: 42px
+    #mobile_num_field
+      width: 70%
+      height: 42px
 
     .vendor_login_form
       width: 90%
@@ -583,13 +587,22 @@ a[title="站长统计"]
       margin-top: 20px
       .box
         margin-top: 20px
+    .vendor_login_form_notice
+      font-size: 14px
+      width: 100%
+      text-align: center
+      color: #cbcbcb
+
 
     #send_btn
       display: inline-block
+      text-align: center
       border: 1px solid #ccc
-      padding: 7px 10px
       float: right
+      height: 42px
+      line-height: 42px
       cursor: pointer
+      width: 20%
     #login_btn
       border: none
       background-color: #6084e5
@@ -603,9 +616,9 @@ a[title="站长统计"]
       width: 100%
     #error_message_box
       color: red
-      width: 90%
-      margin: auto
-      margin-top: 10px
+      width: 100%
+      text-align: center
+      font-size: 14px
   .vendor_lottery
     margin-top: 20px
     &:first-child

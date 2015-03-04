@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def wechat_browser_required
-    if Rails.env.production?
+    if Settings.production
       redirect_to root_path unless user_agent_wechat?
       false
     else

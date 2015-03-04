@@ -44,7 +44,18 @@ function valid_sms_code() {
 $(document).ready(function () {
   $(".vendor_login_page #send_btn").click(function () {
     if(valid_mobile_num()){
-      $(".vendor_login_page #send_btn").text("耐心等候..");
+      count_down = 60;
+      interval = setInterval(function () {
+        var text = "";
+        count_down -= 1;
+        if(count_down == 0){
+          clearInterval(interval);
+          text = "验证";
+        }else{
+          text = "" + count_down + "s";
+        }
+        $(".vendor_login_page #send_btn").text(text);
+      }, 1000);
       $.post(config.send_sms_code_path, {"mobile_num": $("#mobile_num_field").val()}, function (res) {
         if(!res.result) {
           $("#error_message_box").text(res.msg);

@@ -11,6 +11,7 @@ defaults: &defaults
   park_status_duration: 1200
   lottery_ratio: 60
   park_info_encrypted: true
+  production: false
 
 development:
   <<: *defaults
@@ -22,6 +23,7 @@ test:
 
 production:
   <<: *defaults
+  production: true
 
 demo:
   <<: *defaults
