@@ -38,29 +38,6 @@ function mapInit() {
   add_event_listeners();
   fetch_parkes(LB.center);
   if(place_name == '') {
-    // do nothing
-    wx.getNetworkType({
-      success: function (s) {
-        alert(s);
-      }
-    });
-    wx.getLocation({
-      success: function (res) {
-        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-        var speed = res.speed; // 速度，以米/每秒计
-        var accuracy = res.accuracy; // 位置精度
-        LB.current_location.lng = longitude;
-        LB.current_location.lat = latitude;
-        LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
-        LB.center = LB.current_location;
-        if(LB.current_position_marker){
-          LB.current_position_marker.setPosition(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
-        }else{
-          add_current_position_marker();
-        }
-      }
-    });
   }
 
   else{ // jump from search
@@ -208,6 +185,24 @@ wx.ready(function () {
     wx.getNetworkType({
       success: function (s) {
         alert(s.networkType);
+      }
+    });
+
+    wx.getLocation({
+      success: function (res) {
+        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+        var speed = res.speed; // 速度，以米/每秒计
+        var accuracy = res.accuracy; // 位置精度
+        LB.current_location.lng = longitude;
+        LB.current_location.lat = latitude;
+        LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+        LB.center = LB.current_location;
+        if(LB.current_position_marker){
+          LB.current_position_marker.setPosition(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+        }else{
+          add_current_position_marker();
+        }
       }
     });
 });
