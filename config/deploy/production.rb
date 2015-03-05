@@ -66,3 +66,56 @@ namespace :deploy do
     end
   end
 end
+
+set :resque_pid_file, ''
+namespace :deploy do
+  def remote_process_exist(pidfile_path)
+    if Numeric === pidfile_path
+      test("kill -0 #{pidfile_path}")
+    else
+      test("[ -f #{pidfile_path} ]") && test("kill -0 `cat #{pidfile_path}`")
+    end
+  end
+
+  desc "start both resque and resque_scheduler"
+  task :resque_start do
+    on roles(:all) do |host|
+      within current_path do
+        with :RESQUE_TERM_TIMEOUT =>1, :TERM_CHILD=>1, :count => 2, :rails_env => fetch(:rails_env), :pidfile => "#{shared_path}/tmp/pids/resque.pid", :background => "yes", :queue => "*" do
+          execute :rake, "resque:work  >/dev/null 2>&1 &"
+        end
+
+        with :resque_scheduler_interval => 1, :rails_env => fetch(:rails_env),
+          :pidfile => "#{shared_path}/tmp/pids/resque_scheduler.pid", :background => true,
+          :logfile => "#{shared_path}/log/resque_scheduler.log"  do
+          execute :rake, "resque:scheduler  >/dev/null 2>&1 &"
+        end
+      end
+    end
+  end
+
+  task :resque_stop do
+    on roles(:all) do |host|
+      if remote_process_exist("#{shared_path}/tmp/pids/resque.pid")
+        pid = capture("cat #{shared_path}/tmp/pids/resque.pid")
+        execute :kill, "-TERM  #{pid}"
+      end
+
+      if remote_process_exist("#{shared_path}/tmp/pids/resque_scheduler.pid")
+        pid = capture("cat #{shared_path}/tmp/pids/resque_scheduler.pid")
+        execute :kill, "-9  #{pid}"
+      end
+    end
+  end
+
+  task :resque_restart do
+    Rake::Task["deploy:resque_stop"].invoke
+    Rake::Task["deploy:resque_start"].invoke
+  end
+
+end
+after "deploy:start", "deploy:resque_start"
+after "deploy:stop", "deploy:resque_stop"
+after "deploy:restart", "deploy:resque_restart"
+
+

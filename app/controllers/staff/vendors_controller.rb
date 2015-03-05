@@ -3,7 +3,7 @@ class Staff::VendorsController < Staff::BaseController
     @active_nav_item = "vendors"
   end
   def index
-    @vendors = User.vendors.includes :parks
+    @vendors = User.vendors.order("id DESC").includes :parks
   end
 
   def new

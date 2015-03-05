@@ -1,6 +1,7 @@
 class MobileController < ApplicationController
   layout "mobile"
-  #before_filter :login_required_if_wechat_request, :except => [:login_from_wechat]
+  before_filter :login_required_if_wechat_request, :except => [:login_from_wechat]
+  before_filter :set_wechat_js_config, :only => [:map, :hot_place, :settings]
 
   def map
     @current_nav = "map"
@@ -28,12 +29,25 @@ class MobileController < ApplicationController
   end
 
   def login_required_if_wechat_request
-    if current_user.nil?
+    if Settings.production && current_user.nil?
+      session[:user_redirect_to] = request.path
       redirect_to "/auth/wechat_user" and return
+    else
+      session[:user_id] = User.first.id
     end
   end
 
   def feedback_params
     params[:feedback].permit(:content, :contact)
+  end
+
+  def set_wechat_js_config
+    @config = {
+      :js_api_ticket => $wechat_api.js_ticket,
+      :nonceStr  => SecureRandom.hex(10),
+      :timestamp => Time.now.to_i,
+      :url => "http://6luobo.com/" + request.path
+    }
+      @config[:signature] = Digest::SHA1.hexdigest(@config.keys.sort.map{|k| "#{k}=#{@config[k]}" }.join("&"))
   end
 end
