@@ -1,7 +1,7 @@
 class MobileController < ApplicationController
   layout "mobile"
   before_filter :login_required_if_wechat_request, :except => [:login_from_wechat]
-  before_filter :set_wechat_js_config, :only => [:map, :hot_place, :settings]
+  before_filter :set_wechat_js_config, :only => [:map, :hot_place, :setting]
 
   def map
     @current_nav = "map"
@@ -43,11 +43,12 @@ class MobileController < ApplicationController
 
   def set_wechat_js_config
     @config = {
-      :js_api_ticket => $wechat_api.js_ticket,
-      :nonceStr  => SecureRandom.hex(10),
+      :jsapi_ticket => $wechat_api.js_ticket,
+      :noncestr  => SecureRandom.hex(10),
       :timestamp => Time.now.to_i,
       :url => "http://6luobo.com/" + request.path
     }
       @config[:signature] = Digest::SHA1.hexdigest(@config.keys.sort.map{|k| "#{k}=#{@config[k]}" }.join("&"))
+      Rails.logger.debug @config
   end
 end
