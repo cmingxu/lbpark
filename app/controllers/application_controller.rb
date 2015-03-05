@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
 
   def current_vendor
     return nil if session[:vendor_id].nil?
+    Rails.logger.info "current_vendor #{session[:vendor_id]}"
     User.vendors.find_by_id(session[:vendor_id])
   end
 
