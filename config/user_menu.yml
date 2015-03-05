@@ -6,8 +6,8 @@ button:
   -
     type: "view"
     name: "提前搜"
-    url: "http://6luobo.com/hot_place"
+    url: "http://6luobo.com/mobile/hot_place"
   -
     type: "view"
     name: "我的"
-    url: "http://6luobo.com/setting"
+    url: "http://6luobo.com/mobile/setting"
