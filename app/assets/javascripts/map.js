@@ -13,8 +13,7 @@ var LB = LB || {};
 
 ///////////////////////////
 LB.mapObj;
-LB.center = config.default_location;
-LB.current_location =  null;
+LB.current_location = LB.center = config.default_location;
 
 //////////////////////////
 
@@ -39,12 +38,34 @@ function mapInit() {
   add_event_listeners();
   fetch_parkes(LB.center);
   if(place_name == '') {
-  // do nothing 
+    // do nothing
+    wx.getNetworkType({
+      success: function (s) {
+        alert(s);
+      }
+    });
+    wx.getLocation({
+      success: function (res) {
+        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+        var speed = res.speed; // 速度，以米/每秒计
+        var accuracy = res.accuracy; // 位置精度
+        LB.current_location.lng = longitude;
+        LB.current_location.lat = latitude;
+        LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+        LB.center = LB.current_location;
+        if(LB.current_position_marker){
+          LB.current_position_marker.setPosition(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+        }else{
+          add_current_position_marker();
+        }
+      }
+    });
   }
 
   else{ // jump from search
     AMap.service(["AMap.Geocoder"], function() {
-         MGeocoder = new AMap.Geocoder({
+      MGeocoder = new AMap.Geocoder({
         city:"010", //城市，默认：“全国”
         radius:1000 //范围，默认：500
       });
@@ -54,7 +75,7 @@ function mapInit() {
         if(status === 'complete' && result.info === 'OK'){
           l = result.geocodes[0].location
           LB.mapObj.setCenter(l);
-          LB.current_location = {lng: l.lng, lat: l.lat };
+          LB.center = LB.current_location = {lng: l.lng, lat: l.lat };
           add_current_position_marker();
         }
       });
@@ -184,24 +205,6 @@ $(document).ready(function () {
 });
 
 wx.ready(function () {
-  wx.getLocation({
-    success: function (res) {
-      var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-      var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-      var speed = res.speed; // 速度，以米/每秒计
-      var accuracy = res.accuracy; // 位置精度
-      LB.current_location.lng = longitude;
-      LB.current_location.lat = latitude;
-      LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
-      LB.center = LB.current_location;
-      alert(longitude);
-      alert(LB.center);
-      if(LB.current_position_marker){
-        LB.current_position_marker.setPosition(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
-      }else{
-        add_current_position_marker();
-      }
-    }
-  });
+
 });
 
