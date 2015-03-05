@@ -8,10 +8,18 @@ case "$1" in
     ;;
 
   stop)
-    kill -QUIT `cat /home/ubuntu/lbpark/shared/tmp/pids/resque.pid`
-    kill -QUIT `cat /home/ubuntu/lbpark/shared/tmp/pids/resque_scheduler.pid`
-    sleep 3
-    kill -INT `cat /home/ubuntu/lbpark/shared/tmp/pids/resque.pid`
-    kill -INT `cat /home/ubuntu/lbpark/shared/tmp/pids/resque_scheduler.pid`
+    if [ kill 0 `cat /home/ubuntu/lbpark/shared/tmp/pids/resque.pid` ]
+    then
+      kill -QUIT `cat /home/ubuntu/lbpark/shared/tmp/pids/resque.pid`
+      sleep 3
+      kill -INT `cat /home/ubuntu/lbpark/shared/tmp/pids/resque.pid`
+    fi;
+
+    if [ kill 0 `cat /home/ubuntu/lbpark/shared/tmp/pids/resque_scheduler.pid` ]
+    then
+      kill -QUIT `cat /home/ubuntu/lbpark/shared/tmp/pids/resque_scheduler.pid`
+      sleep 3
+      kill -INT `cat /home/ubuntu/lbpark/shared/tmp/pids/resque_scheduler.pid`
+    fi;
 esac
 
