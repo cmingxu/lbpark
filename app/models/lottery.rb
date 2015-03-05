@@ -79,9 +79,8 @@ class Lottery < ActiveRecord::Base
 
   # 确保有时间买彩票
   def self.next_open_num(offset = Time.now)
-    time_iterator = Time.now.beginning_of_year
-
-    open_num = 0
+    time_iterator = Time.new(2015, 2, 26)
+    open_num = 21
     while time_iterator < offset do
       if [2,4,0].include?(time_iterator.wday)
         open_num += 1
