@@ -205,6 +205,6 @@ $(document).ready(function () {
 });
 
 wx.ready(function () {
-
+  alert('w readt');
 });
 

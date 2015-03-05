@@ -22,27 +22,29 @@ class Api::WechatController < Api::BaseController
     request.reply.text "event: location"
   end
 
-  on :event, with: "VIEW" do |request, event|
+  on :event, with: "view" do |request, event|
     WechatUserActivity.log_activity!(request, "event", "view")
     LB_WECHAT_LOGGER.info "event view #{request[:EventKey]} #{request.message_hash}"
-    request.reply.text "event: view"
+    request.reply.text LbSetting.wechat_subscribe_message
   end
 
   on :event, with: "click" do |request, event|
     WechatUserActivity.log_activity!(request, "event", "click")
     LB_WECHAT_LOGGER.info "event click #{request[:EventKey]} #{request.message_hash}"
-    request.reply.text "event: click"
+    request.reply.text LbSetting.wechat_subscribe_message
   end
 
 
   # 默认的文字信息responder
   on :text do |request, content|
-    request.reply.text "echo: #{content}" #Just echo
+    #request.reply.text "echo: #{content}" #Just echo
+    request.reply.text LbSetting.wechat_subscribe_message
   end
 
   # 当请求的文字信息内容为'help'时, 使用这个responder处理
   on :text, with:"help" do |request, help|
-    request.reply.text "help content" #回复帮助信息
+    #request.reply.text "help content" #回复帮助信息
+    request.reply.text LbSetting.wechat_subscribe_message
   end
 
   # 当请求的文字信息内容为'<n>条新闻'时, 使用这个responder处理, 并将n作为第二个参数
@@ -75,5 +77,5 @@ class Api::WechatController < Api::BaseController
   end
 
   # 当无任何responder处理用户信息时,使用这个responder处理
-  on :fallback, respond: "fallback message"
+  on :fallback, respond: LbSetting.wechat_subscribe_message
 end
