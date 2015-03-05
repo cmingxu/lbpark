@@ -50,5 +50,6 @@ class MobileController < ApplicationController
     }
       @config[:signature] = Digest::SHA1.hexdigest(@config.keys.sort.map{|k| "#{k}=#{@config[k]}" }.join("&"))
       Rails.logger.debug @config
+      Rails.logger.debug "config " * 10
   end
 end
