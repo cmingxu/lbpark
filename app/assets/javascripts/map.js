@@ -170,9 +170,7 @@ function back_to_original_marker(){
   });
 }
 
-
-wx.ready(function () {
-  alert('1');
+$(document).ready(function () {
   FastClick.attach(document.body);
   mapInit();
   $("#nav_button_click_area").click(function () {
@@ -183,7 +181,9 @@ wx.ready(function () {
   $(window).resize(function(){
     $("#map").height(window.innerHeight - config.tabbar_height);
   });
+});
 
+wx.ready(function () {
   wx.getLocation({
     success: function (res) {
       var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
