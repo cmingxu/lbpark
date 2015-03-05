@@ -8,6 +8,7 @@ class VendorController < ApplicationController
   before_filter :wechat_browser_required
 
   def login_from_wechat
+    Rails.logger.info request.env["omniauth.auth"]
     if user = User.login_from_wechat(request.env["omniauth.auth"])
       session[:vendor_id] = user.id
       redirect_to(session[:redirect_to] || vendor_index_path) and return
