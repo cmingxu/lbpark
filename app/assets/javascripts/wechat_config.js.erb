@@ -7,13 +7,7 @@ if(window.wechat !== undefined){
     signature: window.wechat.signature,// 必填，签名，见附录1
     jsApiList: ["getLocation", "getNetworkType"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
   };
-  wx.config(
-    config
-  );
-  alert("apiid" + config.appId);
-  alert("timestamp" + config.timestamp);
-  alert("nonceStr" + config.nonceStr);
-  alert("signature" + config.signature);
+  wx.config( config );
 }else{
   wx = {};
 }

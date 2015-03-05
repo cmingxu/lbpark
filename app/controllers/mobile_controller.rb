@@ -47,7 +47,7 @@ class MobileController < ApplicationController
       :jsapi_ticket => $wechat_api.js_ticket,
       :noncestr  => SecureRandom.hex(10),
       :timestamp => Time.now.to_i,
-      :url => "http://6luobo.com/" + request.path
+      :url => "http://6luobo.com" + request.path
     }
     @config[:signature] = Digest::SHA1.hexdigest(@config.keys.sort.map{|k| "#{k}=#{@config[k]}" }.join("&"))
     Rails.logger.debug @config
