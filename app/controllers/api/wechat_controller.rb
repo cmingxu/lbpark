@@ -5,32 +5,32 @@ class Api::WechatController < Api::BaseController
   on :event, with: "subscribe" do |request, event|
     WechatUser.user_subscribe!(request)
     WechatUserActivity.log_activity!(request, "event", "subscribe")
-    WECHAT_LOGGER.debug "event subscribe #{request.message_hash}"
+    LB_WECHAT_LOGGER.info "event subscribe #{request.message_hash}"
     request.reply.text LbSetting.wechat_subscribe_message
   end
 
   on :event, with: "unsubscribe" do |request, event|
     WechatUser.user_unsubscribe!(request)
     WechatUserActivity.log_activity!(request, "event", "unsubscribe")
-    WECHAT_LOGGER.debug "event unsubscribe #{request.message_hash}"
+    LB_WECHAT_LOGGER.info "event unsubscribe #{request.message_hash}"
     request.reply.text LbSetting.wechat_unsubscribe_message
   end
 
   on :event, with: "Location" do |request, event|
     WechatUserActivity.log_activity!(request, "event", "location")
-    WECHAT_LOGGER.debug "event location #{request.message_hash}"
+    LB_WECHAT_LOGGER.info "event location #{request.message_hash}"
     request.reply.text "event: location"
   end
 
   on :event, with: "VIEW" do |request, event|
     WechatUserActivity.log_activity!(request, "event", "view")
-    WECHAT_LOGGER.debug "event view #{request[:EventKey]} #{request.message_hash}"
+    LB_WECHAT_LOGGER.info "event view #{request[:EventKey]} #{request.message_hash}"
     request.reply.text "event: view"
   end
 
   on :event, with: "click" do |request, event|
     WechatUserActivity.log_activity!(request, "event", "click")
-    WECHAT_LOGGER.debug "event click #{request[:EventKey]} #{request.message_hash}"
+    LB_WECHAT_LOGGER.info "event click #{request[:EventKey]} #{request.message_hash}"
     request.reply.text "event: click"
   end
 

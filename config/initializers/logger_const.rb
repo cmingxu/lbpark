@@ -5,4 +5,4 @@ FB_LOGGER  = Logger.new Rails.root.to_s + "/log/finish_bid.log"
 MAIL_LOGGER  = Logger.new Rails.root.to_s + "/log/mail.log"
 SMS_LOGGER  = Logger.new Rails.root.to_s + "/log/sms.log"
 
-WECHAT_LOGGER = Logger.new Rails.root.to_s + "/log/wechat.log" unless defined?WECHAT_LOGGER
+LB_WECHAT_LOGGER = Logger.new Rails.root.to_s + "/log/lb_wechat.log"
