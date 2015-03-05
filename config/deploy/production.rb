@@ -49,7 +49,9 @@ namespace :deploy do
   task :start do
     on roles(:all) do |host|
       execute "/etc/init.d/unicorn_lbpark start"
-      execute "/home/ubuntu/lbpark/current/bin/res start"
+      execute "cd /home/ubuntu/lbpark/current && COUNT=2 RAILS_ENV=production PIDFILE=/home/ubuntu/lbpark/shared/tmp/pids/resque.pid BACKGROUND=yes QUEUE=* bundle exec rake resque:work"
+      execute "cd /home/ubuntu/lbpark/current && RESQUE_SCHEDULER_INTERVAL=1  LOGFILE=/home/ubuntu/lbpark/shared/log/resque_scheduler.log  RAILS_ENV=production PIDFILE=/home/ubuntu/lbpark/shared/tmp/pids/resque_scheduler.pid BACKGROUND=yes bundle exec rake resque:scheduler"
+      #execute "/home/ubuntu/lbpark/current/bin/res start"
     end
   end
 
@@ -57,7 +59,8 @@ namespace :deploy do
   task :stop do
     on roles(:all) do |host|
       execute "/etc/init.d/unicorn_lbpark stop"
-      execute "/home/ubuntu/lbpark/current/bin/res stop"
+      execute "kill -QUIT `cat /home/ubuntu/lbpark/shared/tmp/pids/resque.pid`"
+      execute "kill -QUIT `cat /home/ubuntu/lbpark/shared/tmp/pids/resque_scheduler.pid`"
     end
   end
 
@@ -65,8 +68,6 @@ namespace :deploy do
   task :restart do
     on roles(:all) do |host|
       execute "/etc/init.d/unicorn_lbpark restart"
-      execute "/home/ubuntu/lbpark/current/bin/res stop"
-      execute "/home/ubuntu/lbpark/current/bin/res start"
     end
   end
 end
