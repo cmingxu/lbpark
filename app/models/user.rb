@@ -38,15 +38,11 @@ class User < ActiveRecord::Base
   end
 
   def self.login_from_wechat(auth_callback, user_type = :vendor)
-    Rails.logger.info auth_callback
-    Rails.logger.info auth_callback[:uid]
     user = User.find_or_initialize_by(:openid => auth_callback[:uid])
-    Rails.logger.info user
     info = auth_callback[:info]
     if !user.persisted?
       user.role = user_type
       user.source = :wechat
-      user.openid = info[:openid]
       user.nickname = info[:nickname]
       user.language = info[:language]
       user.province = info[:province]
