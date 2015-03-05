@@ -53,7 +53,9 @@ class User < ActiveRecord::Base
     end
 
     user.last_login_at = Time.now
-    user.save ? user : nil
+    result = user.save
+    Rails.logger.info result.errors
+    result ? user : nil
   end
 
   def replaced_phone
