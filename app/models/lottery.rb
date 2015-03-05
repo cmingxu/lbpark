@@ -58,7 +58,7 @@ class Lottery < ActiveRecord::Base
   end
 
   def self.spin!(park_status)
-    return if rand(100) < Settings.lottery_ratio
+    return if park_status.park.park_statuses.count < 10 && rand(100) < Settings.lottery_ratio
     create do |l|
       l.park_status_id = park_status.id
       l.open_num = next_open_num
