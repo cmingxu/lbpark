@@ -14,6 +14,12 @@ class MobileController < ApplicationController
     @current_nav = "mine"
   end
 
+  def feedback
+    @fb = Feedback.new(feedback_params)
+    @fb.save
+    redirect_to root_path
+  end
+
   def login_from_wechat
     if user = User.login_from_wechat(request.env["omniauth.auth"], :user)
       session[:vendor_id] = user.id
@@ -22,5 +28,9 @@ class MobileController < ApplicationController
   end
 
   def login_required_if_wechat_request
+  end
+
+  def feedback_params
+    params[:feedback].permit(:content, :contact)
   end
 end

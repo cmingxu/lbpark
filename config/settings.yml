@@ -8,8 +8,8 @@ defaults: &defaults
   spider_usd_rmb_interval: 5 * 60
   default_email_sender: "notification@lbpark.com"
   amap_key: "32cc52a3dc04fc771382778dc5cc50e9"
-  park_status_duration: 5 * 60
-  lottery_ratio: 60
+  park_status_duration: 30 * 60
+  lottery_ratio: 40
   park_info_encrypted: true
   production: false
 

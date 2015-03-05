@@ -15,6 +15,7 @@
 
 class Staff < ActiveRecord::Base
   validates :name, presence: true
+  validates :name, uniqueness: true
   attr_accessor :password
 
   has_many :imports
