@@ -172,6 +172,7 @@ function back_to_original_marker(){
 
 
 wx.ready(function () {
+  alert('1');
   FastClick.attach(document.body);
   mapInit();
   $("#nav_button_click_area").click(function () {
