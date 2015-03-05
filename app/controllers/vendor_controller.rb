@@ -74,11 +74,13 @@ class VendorController < ApplicationController
   end
 
   def current_vendor_required
-    if Settings.production && current_vendor.nil?
+    if !Settings.production
+      session[:vendor_id] = User.vendors.first.id
+      return
+    end
+    if current_vendor.nil?
       session[:redirect_to] = request.path
       redirect_to "/auth/wechat_vendor" and return
-    else
-      session[:vendor_id] = User.vendors.first.id
     end
   end
 
