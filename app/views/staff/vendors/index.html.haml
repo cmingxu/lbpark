@@ -11,7 +11,7 @@
           %th ID
           %th 车场
           %th 电话
-          %th Email
+          %th 微信
           %th 注册时间
           %th 上报次数
           %th 彩票情况
@@ -26,7 +26,11 @@
                 - else
                   = link_to "绑定", new_staff_users_park_path(:user_id => p.id)
               %td= p.phone
-              %td= p.email
+              %td
+                = p.nickname
+                (
+                = p.openid
+                )
               %td= p.created_at.to_s(:lb_cn_normal)
               %td= p.park_statuses.count
               %td= p.lotteries.count
