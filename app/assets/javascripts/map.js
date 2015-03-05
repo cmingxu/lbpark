@@ -205,6 +205,10 @@ $(document).ready(function () {
 });
 
 wx.ready(function () {
-  alert('w readt');
+    wx.getNetworkType({
+      success: function (s) {
+        alert(s.networkType);
+      }
+    });
 });
 
