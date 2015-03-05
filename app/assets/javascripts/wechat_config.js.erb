@@ -10,7 +10,10 @@ if(window.wechat !== undefined){
   wx.config(
     config
   );
-  alert(config);
+  alert("apiid" + config.appId);
+  alert("timestamp" + config.timestamp);
+  alert("nonceStr" + config.nonceStr);
+  alert("signature" + config.signature);
 }else{
   wx = {};
 }
