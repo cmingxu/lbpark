@@ -54,7 +54,7 @@ class VendorController < ApplicationController
 
     if @park_status.save
       if @park_status.lottery
-        render :json => {:result => true, :msg => "恭喜您得到了我们的彩票奖励!"}
+        render :json => {:result => true, :msg => "恭喜您得到了我们的奖票!"}
       else
         render :json => {:result => true, :msg => "非常感谢您的参与!"}
       end

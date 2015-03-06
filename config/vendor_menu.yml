@@ -5,7 +5,7 @@ button:
     url: "http://6luobo.com/vendor/index"
   -
     type: "view"
-    name: "彩票"
+    name: "奖励"
     url: "http://6luobo.com/vendor/lottery"
   -
     type: "view"

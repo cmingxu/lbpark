@@ -20,7 +20,11 @@
               %td= raw p.serial_num_human
               %td= p.open_num
               %td= p.open_at
-              %td= p.phone
+              %td
+                = p.phone
+                (
+                = p.user.try :nickname
+                )
               %td= p.status
               
     = paginate @lotteries
