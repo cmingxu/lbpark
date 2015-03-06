@@ -23,3 +23,17 @@
                 = link_to fa_icon("fw times-circle"), staff_lb_setting_path(p), :method => :delete, :confirm => "确认要删除这次上传么?"
 
 
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th 键
+          %th 值
+
+        %tbody
+          - Settings.each_pair do |k, v|
+            %tr
+              %td= k
+              %td= v
+
+

@@ -1,5 +1,6 @@
 class Staff::WechatUsersController < Staff::BaseController
   before_filter do
+    @active_nav_item = "wechat_users"
   end
 
   def index

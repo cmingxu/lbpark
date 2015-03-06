@@ -26,7 +26,7 @@ gem 'autoprefixer-rails'
 gem "haml-rails"
 
 gem 'capistrano-rails', group: :development
-gem 'awesome_print', group: :development
+gem 'awesome_print'
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 gem 'rails_kindeditor'

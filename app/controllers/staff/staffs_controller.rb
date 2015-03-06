@@ -1,4 +1,8 @@
 class Staff::StaffsController < Staff::BaseController
+  before_filter do
+    @active_nav_item = "staffs" 
+  end
+
   def index
     @staffs = Staff.page params[:page]
   end
@@ -10,6 +14,7 @@ class Staff::StaffsController < Staff::BaseController
   end
 
   def i_want_change_pass
+    @active_nav_item = "setting"
   end
 
   def change_password

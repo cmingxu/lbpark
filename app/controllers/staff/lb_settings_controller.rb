@@ -1,4 +1,8 @@
 class Staff::LbSettingsController < Staff::BaseController
+  before_filter do
+    @active_nav_item = "lb_settings"
+  end
+
   def index
     @lb_settings = LbSetting.all
   end
