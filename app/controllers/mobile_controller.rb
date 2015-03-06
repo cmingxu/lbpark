@@ -42,7 +42,6 @@ class MobileController < ApplicationController
   end
 
   def set_wechat_js_config
-    Rails.logger.error "1" * 100
     @config = {
       :jsapi_ticket => $wechat_api.js_ticket,
       :noncestr  => SecureRandom.hex(10),
@@ -50,7 +49,5 @@ class MobileController < ApplicationController
       :url => "http://6luobo.com" + request.path
     }
     @config[:signature] = Digest::SHA1.hexdigest(@config.keys.sort.map{|k| "#{k}=#{@config[k]}" }.join("&"))
-    Rails.logger.debug @config
-    Rails.logger.debug "config " * 10
   end
 end

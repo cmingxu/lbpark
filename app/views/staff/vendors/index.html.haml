@@ -33,5 +33,8 @@
                 = p.openid
                 )
               %td= p.created_at.to_s(:lb_cn_normal)
-              %td= p.park_statuses.count
+              %td
+                = p.park_statuses.count
+                - if p.park_statuses.present?
+                  = p.park_statuses.last.created_at.to_s(:db)
               %td= p.lotteries.count

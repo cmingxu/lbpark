@@ -77,5 +77,5 @@ class Api::WechatController < Api::BaseController
   end
 
   # 当无任何responder处理用户信息时,使用这个responder处理
-  on :fallback, respond: LbSetting.wechat_subscribe_message
+  on :fallback, respond: ""# LbSetting.wechat_subscribe_message
 end
