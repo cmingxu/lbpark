@@ -19,19 +19,19 @@ class Api::WechatController < Api::BaseController
   on :event, with: "Location" do |request, event|
     WechatUserActivity.log_activity!(request, "event", "location")
     LB_WECHAT_LOGGER.info "event location #{request.message_hash}"
-    request.reply.text "event: location"
+    #request.reply.text "event: location"
   end
 
   on :event, with: "view" do |request, event|
     WechatUserActivity.log_activity!(request, "event", "view")
     LB_WECHAT_LOGGER.info "event view #{request[:EventKey]} #{request.message_hash}"
-    request.reply.text LbSetting.wechat_subscribe_message
+    #request.reply.text LbSetting.wechat_subscribe_message
   end
 
   on :event, with: "click" do |request, event|
     WechatUserActivity.log_activity!(request, "event", "click")
     LB_WECHAT_LOGGER.info "event click #{request[:EventKey]} #{request.message_hash}"
-    request.reply.text LbSetting.wechat_subscribe_message
+    #request.reply.text LbSetting.wechat_subscribe_message
   end
 
 
