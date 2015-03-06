@@ -20,7 +20,7 @@
 
 class WechatUser < ActiveRecord::Base
   validates :openid, uniqueness: true
-  after_commit :sync_wechat_user_event
+  after_commit :sync_wechat_user_event, :on => :create
 
   has_many :wechat_user_activities
 
