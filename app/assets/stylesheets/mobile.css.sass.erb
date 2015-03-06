@@ -89,6 +89,19 @@ a[title="站长统计"]
   .marker_pressed
     margin-left: 5px
     margin-top: 5px
+
+  @keyframes spin
+    0%
+      transform: rotate(0deg)
+    25%
+      transform: rotate(45deg)
+    50%
+      transform: rotate(90deg)
+    75%
+      transform: rotate(135deg)
+    100%
+      transform: rotate(180deg)
+
   #back_to_original_marker
     height: 50px
     width: 50px
@@ -99,6 +112,7 @@ a[title="站长统计"]
     right: 20px
     top: 20px
     z-index: 1000
+    animation: spin 1s infinite
     
   #center_marker
     width: 50px
