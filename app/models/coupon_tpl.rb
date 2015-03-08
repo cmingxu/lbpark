@@ -46,8 +46,9 @@ class CouponTpl < ActiveRecord::Base
   before_save :set_defaults, :on => :update
   after_create :generate_all_new_coupon
 
-  scope :hightlighted, -> { where(:priority => HIHGLIGHT_PRIORITY)}
+  scope :highlighted, -> { where(:priority => HIHGLIGHT_PRIORITY)}
   scope :published, -> { where(:status => "published") }
+  scope :within_range, lambda {|range| where(["gcj_lng > ? AND gcj_lat > ? AND gcj_lng < ? AND gcj_lat <?", range.p1.lng, range.p1.lat, range.p2.lng, range.p2.lat]).limit(200) }
 
   state_machine :status, :initial => :draft do
     after_transition :on => :stopped, :do => :stop_all_related_coupon
@@ -89,13 +90,20 @@ class CouponTpl < ActiveRecord::Base
     end
   end
 
+  def can_be_claimed_by?(user)
+    true
+  end
+
+  def claim
+    coupons.created.first
+  end
 
   def claimed_count
-    0
+    self.coupons.claimed.count
   end
 
   def used_count
-    0
+    self.coupons.used.count
   end
 
   def highlight!

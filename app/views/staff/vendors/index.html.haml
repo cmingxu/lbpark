@@ -23,6 +23,9 @@
               %td
                 - if p.park
                   = p.park.try(:name)
+                  (
+                  = p.park.id
+                  )
                 - else
                   = link_to "绑定", new_staff_users_park_path(:user_id => p.id)
               %td= p.phone

@@ -17,14 +17,16 @@
 
 class Coupon < ActiveRecord::Base
   COUPON_STATUS = {
-    :claimed => "已领取",
     :created => "已创建",
+    :claimed => "已领取",
     :used    => "已试用",
     :expired => "已过期"
   }
 
   belongs_to :coupon_tpl
   belongs_to :park
+
+  COUPON_STATUS.keys.each { |s| scope s, -> { where(:status => s) } }
 
   state_machine :status, :initial => :created do
     event :claim do
