@@ -67,5 +67,6 @@ gem "bower-rails", "~> 0.9.1"
 gem "wechat-rails", git:"https://github.com/cmingxu/wechat-rails"
 gem "omniauth-wechat-oauth2"
 gem 'newrelic_rpm'
+gem 'rqrcode_png'
 
 

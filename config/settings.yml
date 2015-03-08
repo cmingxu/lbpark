@@ -12,6 +12,7 @@ defaults: &defaults
   lottery_ratio: 40
   park_info_encrypted: true
   production: true
+  qr_code_url: 'http://qrcode.6luobo.com'
 
 
 development:

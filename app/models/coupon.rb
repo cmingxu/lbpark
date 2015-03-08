@@ -26,6 +26,10 @@ class Coupon < ActiveRecord::Base
   belongs_to :coupon_tpl
   belongs_to :park
 
+  after_create :generate_qr_code
+
+  mount_uploader :qr_code, CouponQrCodeUploader
+
   COUPON_STATUS.keys.each { |s| scope s, -> { where(:status => s) } }
 
   state_machine :status, :initial => :created do
@@ -40,5 +44,20 @@ class Coupon < ActiveRecord::Base
     event :expire do
       transition :from => [:created, :claimed], :to => :expired
     end
+  end
+
+  class QrCodeIo < StringIO
+    attr_accessor :original_filename
+    attr_accessor :content_type
+  end
+
+  def generate_qr_code
+    qr = ::RQRCode::QRCode.new(self.identifier)
+    png = qr.to_img
+    sio = QrCodeIo.new
+    sio.original_filename = "qr.png"
+    png.resize(256, 256).write(sio)
+    self.qr_code = sio
+    self.save
   end
 end

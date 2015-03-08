@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20150306062832) do
     t.datetime "end_at"
     t.integer  "price"
     t.string   "issued_address"
+    t.string   "qr_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

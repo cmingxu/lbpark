@@ -9,6 +9,7 @@ class CreateCoupons < ActiveRecord::Migration
       t.datetime :end_at
       t.integer :price
       t.string :issued_address
+      t.string :qr_code
 
       t.timestamps
     end

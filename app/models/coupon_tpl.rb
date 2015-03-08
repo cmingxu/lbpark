@@ -85,7 +85,7 @@ class CouponTpl < ActiveRecord::Base
     self.quantity.times do
       self.coupons.create do |c|
         c.park_id = self.park_id
-        c.identifier = self.identifier + "_" + SecureRandom.hex(20)
+        c.identifier = self.identifier + "" + sprintf("%010d", rand(10**9))
       end
     end
   end

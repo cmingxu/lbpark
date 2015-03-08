@@ -4,5 +4,6 @@ class Staff::CouponsController < Staff::BaseController
   end
 
   def index
+    @coupons = Coupon.page params[:page]
   end
 end
