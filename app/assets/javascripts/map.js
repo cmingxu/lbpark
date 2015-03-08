@@ -25,8 +25,8 @@ function mapInit() {
     animateEnable: false,
     rotateEnable: false,
     dragEnable: true,
-    zoomEnable: false,
-    zooms: [13],
+    zoomEnable: true,
+    zooms: [15, 16, 17],
     //二维地图显示视口
     view: new AMap.View2D({
       center: new AMap.LngLat(LB.center.lng, LB.center.lat),//地图中心点
