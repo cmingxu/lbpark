@@ -36,5 +36,7 @@
               %td
                 = p.park_statuses.count
                 - if p.park_statuses.present?
-                  = p.park_statuses.last.created_at.to_s(:db)
+                  (
+                  = p.park_statuses.last.created_at.to_s(:lb_cn_normal)
+                  )
               %td= p.lotteries.count

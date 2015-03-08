@@ -11,4 +11,5 @@ asset 'angular-socket-io', '0.6.1', git: 'git@github.com:btford/angular-socket-i
 asset 'angular-material'
 asset 'zeptojs'
 asset 'bootstrap3-typeahead'
+asset 'bootstrap-datepicker'
 asset 'fastclick'

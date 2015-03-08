@@ -1,0 +1,38 @@
+# == Schema Information
+#
+# Table name: coupons
+#
+#  id             :integer          not null, primary key
+#  park_id        :integer
+#  coupon_tpl_id  :integer
+#  identifier     :string(255)
+#  user_id        :integer
+#  status         :string(255)
+#  end_at         :datetime
+#  price          :integer
+#  issued_address :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  park_id: 1
+  coupon_tpl_id: 1
+  identifier: MyString
+  user_id: 1
+  status: MyString
+  end_at: 2015-03-06 14:26:41
+  price: 1
+  issued_address: MyString
+
+two:
+  park_id: 1
+  coupon_tpl_id: 1
+  identifier: MyString
+  user_id: 1
+  status: MyString
+  end_at: 2015-03-06 14:26:41
+  price: 1
+  issued_address: MyString

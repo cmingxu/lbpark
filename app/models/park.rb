@@ -171,7 +171,7 @@ class Park < ActiveRecord::Base
     when "A"
       [self.address]
     when "B"
-      [self.address, self.tips, self.price_by_day? ? nil : "夜间停车免费，一早记得取车"]
+      [self.address, self.tips]
     when "C"
       tips = [self.address, self.tips, self.price_by_day? ? nil : "夜间停车免费，一早记得取车"]
       if self.day_first_hour_price.present? && self.day_second_hour_price.present? && self.price_by_day?

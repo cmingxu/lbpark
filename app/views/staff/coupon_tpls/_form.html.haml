@@ -1,0 +1,38 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
+        %thead
+          %th 
+          %th
+        %tbody
+          = form_for [:staff, @coupon_tpl], :role => "form", :class => "form", :multipart => true do |f|
+            = hidden_field_tag :type, params[:type]
+            %tr
+              %td 类型
+              %td
+                %strong
+                  = CouponTpl::COUPON_TPL_TYPES[params[:type].intern || :free]
+
+            %tr
+              %td 标识
+              %td
+                = CouponTpl.identifier(params[:type])
+
+            %tr
+              %td 停车场
+              %td
+                %input.typeahead_new_coupon{:value => "#{f.object.try(:park).try(:name)}"}
+                = f.hidden_field :park_id
+
+            %tr
+              %td 数量
+              %td
+                = f.text_field :quantity
+                %span 例如: 500
+
+            = render :partial => "#{params[:type] || 'free'}", :locals => { :f => f }
+
+            %tr
+              %td{:colspan => 2}
+                = f.submit "保存", :class => "btn btn-success"

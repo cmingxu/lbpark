@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: lb_settings
+#
+#  id         :integer          not null, primary key
+#  var        :string(255)      not null
+#  lb_value   :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class LbSetting < ActiveRecord::Base
 
   class << self

@@ -1,5 +1,6 @@
 //= require zepto
 //= require config
+//= require logger
 
 function hotPlaceSearch(keywords) {
   AMap.service(["AMap.Autocomplete"], function() { 

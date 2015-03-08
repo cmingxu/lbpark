@@ -29,7 +29,7 @@ class MobileController < ApplicationController
   end
 
   def login_required_if_wechat_request
-    if Settings.production && current_user.nil?
+    if user_agent_wechat? && current_user.nil?
       session[:user_redirect_to] = request.path
       redirect_to "/auth/wechat_user" and return
     else

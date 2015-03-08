@@ -1,0 +1,64 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        .form-group
+          .input-group.col-md-12
+            %input.typeahead.col-md-6{:placeholder => "例如: 远洋光华国际"}
+        .form-group
+          - DISTRICT.each do |name|
+            = link_to name , staff_parks_path(:district => name)
+
+        .form-group
+          - Park::PARK_TYPE.each do |code|
+            = link_to code , staff_parks_path(:park_type => code)
+
+        .form-group
+          - Park::PARK_TYPE_CODE.each do |code|
+            = link_to code , staff_parks_path(:park_type_code => code)
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      - CouponTpl::COUPON_TPL_TYPES.each_pair do |k,v|
+        = link_to fa_icon("fw plus") + "发布#{v}券", new_staff_coupon_tpl_path(:type => k), :class => "btn btn-primary"
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 编号
+          %th 停车场
+          %th 名称
+          %th 状态
+          %th 数量
+          %th 发布时间
+          %th 截止时间
+          %th 领取数量
+          %th 消耗数量
+          %th
+
+        %tbody
+          - @coupon_tpls.each do |p|
+            %tr
+              %td= link_to p.id, edit_staff_coupon_tpl_path(p)
+              %td= link_to p.identifier, edit_staff_coupon_tpl_path(p)
+              %td= p.park.try(:name)
+              %td= p.name_cn
+              %td= CouponTpl::COUPON_TPL_TYPES[p.status.to_sym]
+              %td= p.quantity
+              %td= p.published_at
+              %td= p.end_at
+              %td= p.claimed_count
+              %td= p.used_count
+              %td
+                - if !p.published?
+                  = link_to "发布", publish_staff_coupon_tpl_path(p), :method => :patch
+                - elsif p.published?
+                  = link_to "停止", stop_staff_coupon_tpl_path(p), :method => :patch
+
+                - if p.highlighted?
+                  = link_to "置顶", highlight_staff_coupon_tpl_path(p), :method => :patch
+                - elsif !p.highlighted?
+                  = link_to "取消置顶", dehighlight_staff_coupon_tpl_path(p), :method => :patch
+
+
+      = paginate @coupon_tpls
+

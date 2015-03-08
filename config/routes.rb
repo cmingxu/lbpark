@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
   end
 
   captcha_route
+  # wechat requests
   get 'mobile/map'
   get 'mobile/hot_place'
   get 'mobile/setting'
@@ -22,11 +24,11 @@ Rails.application.routes.draw do
   post 'vendor/send_sms_code'
   post 'vendor/create_park_statuses'
 
-  resource :entrypoint, :controller => :entrypoint, :only => [:show]
-
   get '/auth/wechat_vendor/callback', to: 'vendor#login_from_wechat'
   get '/auth/wechat_user/callback', to: 'mobile#login_from_wechat'
   get 'auth/failure', to: 'vendor#failure'
+
+
 
   namespace :api do
     resource :wechat, controller: :wechat, only: [:show, :create]
@@ -65,6 +67,18 @@ Rails.application.routes.draw do
     resources :parks
     resources :wechat_users, :only => [:index] do
       resources :wechat_user_activities, :only => [:index]
+    end
+
+    resources :coupon_tpls do 
+      member do
+        patch :publish
+        patch :stop
+        patch :highlight
+        patch :dehighlight
+      end
+    end
+    resources :coupons do
+      resources :coupon_logs
     end
     resources :staffs do
       collection do

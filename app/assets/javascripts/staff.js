@@ -15,6 +15,7 @@
 //= require kindeditor
 //= require bootstrap-sprockets
 //= require bootstrap3-typeahead
+//= require bootstrap-datepicker
 //= require underscore
 //= require underscore.string
 //= require session
@@ -55,4 +56,25 @@ $(document).ready(function(){
         $(".typeahead_user_parks").val(item.id);
       }
     });
+
+    $('input.typeahead_new_coupon').typeahead({
+      source: function (query, process) {
+        $.ajax({
+          url: "/staff/parks",
+          type: "get",
+          dataType: 'JSON',
+          data: {match: query},
+          success: function (data) {
+            process(data);
+          }
+        })
+      },
+      afterSelect: function (item) {
+        //window.location.href = "/staff/parks/" + item.id + "/edit";
+        $("#coupon_tpl_park_id").val(item.id);
+      }
+    });
+
+    $('.date').datepicker();
+    $('.datetime').datetimepicker();
 });

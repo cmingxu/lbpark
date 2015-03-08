@@ -11,6 +11,18 @@
 #  created_at         :datetime
 #  updated_at         :datetime
 #  role               :string(255)
+#  status             :string(255)
+#  openid             :string(255)
+#  nickname           :string(255)
+#  sex                :boolean
+#  language           :string(255)
+#  province           :string(255)
+#  city               :string(255)
+#  subscribe_time     :datetime
+#  unionid            :string(255)
+#  last_login_at      :datetime
+#  source             :string(255)
+#  headimg            :string(255)
 #
 
 class User < ActiveRecord::Base

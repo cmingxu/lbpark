@@ -10,8 +10,10 @@
 #  sex            :integer
 #  language       :string(255)
 #  province       :string(255)
+#  city           :string(255)
 #  country        :string(255)
 #  headimg        :string(255)
+#  remark         :text
 #  subscribe_time :datetime
 #  unionid        :string(255)
 #  created_at     :datetime

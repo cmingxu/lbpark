@@ -43,8 +43,8 @@ function mapInit() {
   else{ // jump from search
     AMap.service(["AMap.Geocoder"], function() {
       MGeocoder = new AMap.Geocoder({
-        city:"010", //城市，默认：“全国”
-        radius:1000 //范围，默认：500
+        //city:"010", //城市，默认：“全国”
+        //radius:1000 //范围，默认：500
       });
       //返回地理编码结果
       //地理编码

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305012849) do
+ActiveRecord::Schema.define(version: 20150306062832) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -25,6 +25,50 @@ ActiveRecord::Schema.define(version: 20150305012849) do
     t.string   "park_pic"
     t.integer  "park_id"
     t.string   "original_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "coupon_scans", force: true do |t|
+    t.integer  "coupon_id"
+    t.integer  "coupon_tpl_id"
+    t.integer  "scan_by_id"
+    t.decimal  "gcj_lat",       precision: 10, scale: 6
+    t.decimal  "gcj_lng",       precision: 10, scale: 6
+    t.integer  "park_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "coupon_tpls", force: true do |t|
+    t.integer  "park_id"
+    t.integer  "priority"
+    t.integer  "staff_id"
+    t.string   "type"
+    t.string   "identifier"
+    t.string   "name_cn"
+    t.date     "fit_for_date"
+    t.datetime "end_at"
+    t.decimal  "gcj_lat",      precision: 10, scale: 6
+    t.decimal  "gcj_lng",      precision: 10, scale: 6
+    t.integer  "quantity"
+    t.integer  "price"
+    t.integer  "copy_from"
+    t.string   "status"
+    t.datetime "published_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "coupons", force: true do |t|
+    t.integer  "park_id"
+    t.integer  "coupon_tpl_id"
+    t.string   "identifier"
+    t.integer  "user_id"
+    t.string   "status"
+    t.datetime "end_at"
+    t.integer  "price"
+    t.string   "issued_address"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
