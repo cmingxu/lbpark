@@ -22,11 +22,11 @@ function mapInit() {
   $("#map").height(window.innerHeight - config.tabbar_height);
   $("#tabs").height(config.tabbar_height);
   LB.mapObj = new AMap.Map("map",{
-    animateEnable: true,
+    animateEnable: false,
     rotateEnable: false,
     dragEnable: true,
-    zoomEnable: true,
-    zooms: [13, 14,, 16, 17],
+    zoomEnable: false,
+    zooms: [17],
     //二维地图显示视口
     view: new AMap.View2D({
       center: new AMap.LngLat(LB.center.lng, LB.center.lat),//地图中心点
@@ -43,8 +43,7 @@ function mapInit() {
   else{ // jump from search
     AMap.service(["AMap.Geocoder"], function() {
       MGeocoder = new AMap.Geocoder({
-        //city:"010", //城市，默认：“全国”
-        //radius:1000 //范围，默认：500
+        city: "北京"
       });
       //返回地理编码结果
       //地理编码
@@ -172,6 +171,7 @@ $(document).ready(function () {
   FastClick.attach(document.body);
   mapInit();
   $("#nav_button_click_area").click(function () {
+    LB.park_info_state.on_enter_short(LB.park_info_state.get_current_park());
     LB.auto_nav(LB.current_park);
     event.stopPropagation();
   });
