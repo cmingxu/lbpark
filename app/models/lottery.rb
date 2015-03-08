@@ -72,11 +72,48 @@ class Lottery < ActiveRecord::Base
   end
 
   def self.random_serial_num
-    6.times.map do
-      sprintf("%02d", rand(33) + 1)
+    (1..33).to_a.shuffle[0..6].map do |i|
+      sprintf("%02d", i)
     end.tap do |arr|
       arr << rand(16) + 1
     end.join " "
+  end
+
+  def self.open(open_num, lucky_nums)
+    raise Exception.new("Lucky num not valid") if lucky_nums.length != 7
+
+    blue_ball = lucky_nums.last
+    red_balls = lucky_nums[0..5]
+
+    where(:open_num => open_num).each do |s|
+      int_lucky_nums = s.serial_num.split(" ").map(&:to_i)
+      s.lucky_num = lucky_nums.join " "
+      s.blue_ball_hit = blue_ball == int_lucky_nums.last
+      s.red_lucky_num_hits = (red_balls & int_lucky_nums[0..5]).length
+      s.money_get = lucky_money_get(s.red_lucky_num_hits, s.blue_ball_hit ? 1 : 0)
+      s.save
+      s.money_get.zero? ? s.lose! : s.win!
+    end
+  end
+
+  def self.lucky_money_get(red, blue)
+    if [0, 1, 2].include?(red) && blue == 1
+      5
+    elsif 4 == red && blue == 0
+      10
+    elsif 3 == red && blue == 1
+      10
+    elsif 4 == red && blue == 1
+      200
+    elsif 5 == red && blue == 0
+      200
+    elsif 6 == red && blue == 0
+      1000000000
+    elsif 6 == red && blue == 1
+      1000000000
+    else
+      0
+    end
   end
 
   # 确保有时间买彩票

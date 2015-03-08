@@ -1,0 +1,22 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
+        %thead
+          %th 
+          %th
+        %tbody
+          = form_for [:staff, @lottery], :role => "form", :class => "form", :multipart => true do |f|
+            %tr
+              %td 数量
+              %td
+                = f.text_field :serial_num
+                %span 例如: 500
+
+            %tr
+              %td
+              %td
+                = f.submit "保存", :class => "btn btn-success"
+                = link_to "Next", edit_staff_lottery_path(:id => @lottery.id + 1)
+                |
+                = link_to "Prev", edit_staff_lottery_path(:id => @lottery.id - 1)

@@ -11,12 +11,15 @@
           %th 开奖期
           %th 开奖日期
           %th 保安电话
+          %th 红球
+          %th 蓝色球
+          %th 中奖金额
           %th 状态
 
         %tbody
           - @lotteries.each do |p|
             %tr
-              %td= p.id
+              %td= link_to p.id, edit_staff_lottery_path(p)
               %td= raw p.serial_num_human
               %td= p.open_num
               %td= p.open_at
@@ -25,6 +28,9 @@
                 (
                 = p.user.try :nickname
                 )
-              %td= p.status
+              %td= p.red_lucky_num_hits
+              %td= p.blue_ball_hit ? 1 : 0
+              %td= p.money_get
+              %td= Lottery::STATUS_MAP[p.status.to_sym]
               
     = paginate @lotteries

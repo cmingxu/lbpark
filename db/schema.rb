@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150306062832) do
+ActiveRecord::Schema.define(version: 20150308090637) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
