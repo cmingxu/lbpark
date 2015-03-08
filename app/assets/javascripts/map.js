@@ -51,8 +51,9 @@ function mapInit() {
         if(status === 'complete' && result.info === 'OK'){
           l = result.geocodes[0].location
           LB.mapObj.setCenter(l);
-          LB.center = LB.current_location = {lng: l.lng, lat: l.lat };
-          add_current_position_marker();
+          LB.center = {lng: l.lng, lat: l.lat };
+          //LB.center = LB.current_location = {lng: l.lng, lat: l.lat };
+          //add_current_position_marker();
         }
       });
     });
@@ -191,12 +192,14 @@ wx.ready(function () {
       var accuracy = res.accuracy; // 位置精度
       LB.current_location.lng = longitude;
       LB.current_location.lat = latitude;
-      LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
-      LB.center = LB.current_location;
-      if(LB.current_position_marker){
-        LB.current_position_marker.setPosition(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
-      }else{
-        add_current_position_marker();
+      if(place_name == ""){ // set center to current location if no searching
+        LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+        LB.center = LB.current_location;
+        if(LB.current_position_marker){
+          LB.current_position_marker.setPosition(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+        }else{
+          add_current_position_marker();
+        }
       }
     }
   });
