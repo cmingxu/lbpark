@@ -50,7 +50,7 @@
                   )
               %td= p.lotteries.count
               %td
-                - if current_staff.scan_coupon?
+                - if p.scan_coupon?
                   = link_to fa_icon("fw minus"), staff_vendor_switch_scan_coupon_status_path(p), :method => :patch
                 - else
                   = link_to fa_icon("fw plus"), staff_vendor_switch_scan_coupon_status_path(p), :method => :patch
