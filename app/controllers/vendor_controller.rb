@@ -7,7 +7,7 @@ class VendorController < ApplicationController
   before_filter :vendor_park_required, :only => [:index, :lottery]
   before_filter :wechat_browser_required
 
-  before_filter  :only => [:mine] do
+  before_filter  :except => [:login_from_wechat, :create_park_statuses, :bind_mobile] do
     set_wechat_js_config $vendor_wechat_api
   end
 
