@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
   end
 
   def replaced_phone
-    "#{self.phone[0..3]}****#{self.phone[7..10]}"
+    "#{self.phone[0..2]}****#{self.phone[7..10]}"
   end
 
   def vendor?

@@ -93,6 +93,9 @@ class Lottery < ActiveRecord::Base
       s.money_get = lucky_money_get(s.red_lucky_num_hits, s.blue_ball_hit ? 1 : 0)
       s.save
       s.money_get.zero? ? s.lose! : s.win!
+      s.park_status.park.messages.create do
+        |c| c.content = "#{s.user.replaced_phone} #{s.open_num} 中#{s.money_get}元"
+      end
     end
   end
 
