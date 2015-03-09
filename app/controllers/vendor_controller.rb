@@ -74,7 +74,7 @@ class VendorController < ApplicationController
   end
 
   def current_vendor_required
-    if !Settings.production
+    if !Rails.env.production?
       session[:vendor_id] = User.vendors.first.id
       return
     end

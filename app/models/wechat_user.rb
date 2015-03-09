@@ -59,6 +59,7 @@ class WechatUser < ActiveRecord::Base
     else
       user_response = $wechat_api.user(self.openid)
     end
+
     %w(nickname sex language province country unionid).each do |col|
       self.send("#{col}=", user_response[col])
     end

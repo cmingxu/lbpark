@@ -7,6 +7,9 @@ LB.park_info_marker = function (park) {
     case 'A':
       classes.push("marker_" + busy_status[park.busy_status]);
       text = park.current_price;
+      if(park.current_price != ""){
+        text = "<span class='rmb_mark'>￥</span>" + park.current_price;
+      }
       if(park.busy_status == 4){ //未知
         text = "";
       }
