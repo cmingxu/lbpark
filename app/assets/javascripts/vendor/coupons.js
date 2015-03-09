@@ -13,3 +13,4 @@ wx.ready(function () {
     });
   })
 });
+
