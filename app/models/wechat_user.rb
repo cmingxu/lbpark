@@ -54,7 +54,11 @@ class WechatUser < ActiveRecord::Base
   end
 
   def sync_wechat_user!
-    user_response = $wechat_api.user(self.openid)
+    if User.find_by_openid(self.openid).role == "vendor"
+      user_response = $vendor_wechat_api.user(self.openid)
+    else
+      user_response = $wechat_api.user(self.openid)
+    end
     %w(nickname sex language province country unionid).each do |col|
       self.send("#{col}=", user_response[col])
     end
