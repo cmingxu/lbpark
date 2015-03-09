@@ -39,4 +39,14 @@ class ApplicationController < ActionController::Base
   def user_agent_wechat?
     !!(request.user_agent =~ /MicroMessenger/i)
   end
+
+  def set_wechat_js_config(wechat_api)
+    @config = {
+      :jsapi_ticket => wechat_api.js_ticket,
+      :noncestr  => SecureRandom.hex(10),
+      :timestamp => Time.now.to_i,
+      :url => "http://6luobo.com" + request.path
+    }
+    @config[:signature] = Digest::SHA1.hexdigest(@config.keys.sort.map{|k| "#{k}=#{@config[k]}" }.join("&"))
+  end
 end

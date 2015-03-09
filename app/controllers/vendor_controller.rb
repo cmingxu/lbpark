@@ -7,6 +7,10 @@ class VendorController < ApplicationController
   before_filter :vendor_park_required, :only => [:index, :lottery]
   before_filter :wechat_browser_required
 
+  before_filter  :only => [:mine] do
+    set_wechat_js_config $vendor_wechat_api
+  end
+
   def login_from_wechat
     Rails.logger.info request.env["omniauth.auth"]
     if user = User.login_from_wechat(request.env["omniauth.auth"])
@@ -96,8 +100,23 @@ class VendorController < ApplicationController
     end
   end
 
+  # coupons
+
   def use_coupon
-    current_park.coupons.find_by_identifier
+    coupon = current_park.coupons.find_by_identifier(params[:id])
+    if coupon.can_use?
+      render :use_coupon_success
+    else
+      @msg = coupon.unuseable_reason
+      render :use_coupon_fail
+    end
+  end
+
+  def coupons
+    respond_to do |format|
+      format.html { @coupons = current_park.coupons.used.page params[:page]}
+      format.json {}
+    end
   end
 
   def sms_code_valid?

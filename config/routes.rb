@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   get 'vendor/lottery'
   post 'vendor/send_sms_code'
   post 'vendor/create_park_statuses'
+  get 'vendor/coupons'
+  get 'vendor/use_coupon'
 
   get '/auth/wechat_vendor/callback', to: 'vendor#login_from_wechat'
   get '/auth/wechat_user/callback', to: 'mobile#login_from_wechat'
@@ -62,7 +64,9 @@ Rails.application.routes.draw do
       resources :park_imports
     end
 
-    resources :vendors
+    resources :vendors do
+      patch :switch_scan_coupon_status
+    end
     resources :lotteries
 
     resources :lb_settings

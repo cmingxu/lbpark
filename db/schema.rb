@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308090637) do
+ActiveRecord::Schema.define(version: 20150309072254) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -129,6 +129,10 @@ ActiveRecord::Schema.define(version: 20150308090637) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "red_lucky_num_hits"
+    t.boolean  "blue_ball_hit"
+    t.integer  "money_get"
+    t.string   "lucky_num"
   end
 
   create_table "messages", force: true do |t|
@@ -336,6 +340,7 @@ ActiveRecord::Schema.define(version: 20150308090637) do
     t.datetime "last_login_at"
     t.string   "source"
     t.string   "headimg"
+    t.boolean  "scan_coupon"
   end
 
   create_table "users_parks", force: true do |t|

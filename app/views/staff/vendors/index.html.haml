@@ -5,6 +5,11 @@
         .form-group
 
   .row-fluid
+    .col-md-10.col-md-offset-1
+      -#= link_to "有电话", staff_vendors_path(:tel => "yes"), :class => "btn btn-primary"
+      -#= link_to "没绑定", staff_vendors_path(:bind => "no"), :class => "btn btn-primary"
+      -#= link_to "有彩票", staff_vendors_path(:lottrey => "yes"), :class => "btn btn-primary"
+      -#= link_to "最近", staff_vendors_path(:latest => "yes"), :class => "btn btn-primary"
     .col-md-10.col-md-offset-1.table_wrapper
       %table.table.table-striped.table-condensed.table-hover.table-bordered
         %thead
@@ -15,6 +20,7 @@
           %th 注册时间
           %th 上报次数
           %th 彩票情况
+          %th 扫券？ 
 
         %tbody
           - @vendors.each do |p|
@@ -43,3 +49,8 @@
                   = p.park_statuses.last.created_at.to_s(:lb_cn_normal)
                   )
               %td= p.lotteries.count
+              %td
+                - if current_vendor.scan_coupon?
+                  = link_to fa_icon("fw minus"), staff_vendor_switch_scan_coupon_status_path(p), :method => :patch
+                - else
+                  = link_to fa_icon("fw plus"), staff_vendor_switch_scan_coupon_status_path(p), :method => :patch

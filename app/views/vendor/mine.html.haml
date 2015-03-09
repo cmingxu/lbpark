@@ -15,8 +15,9 @@
           %a{:href => "/vendor/index"} 我的主页
         .vendor_action_item
           %a{:href => "/vendor/index"} 我的奖票
-        .vendor_action_item
-          %a{:href => "/vendor/index"} 我的奖票
+        - if current_vendor.scan_coupon?
+          .vendor_action_item
+            %a{:href => "/vendor/coupons"} 停车券
 
   - else
     .warning_message
