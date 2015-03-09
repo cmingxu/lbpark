@@ -76,5 +76,5 @@ $(document).ready(function(){
     });
 
     $('.date').datepicker();
-    $('.datetime').datetimepicker();
+    //$('.datetime').datetimepicker();
 });

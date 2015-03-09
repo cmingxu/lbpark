@@ -96,6 +96,10 @@ class VendorController < ApplicationController
     end
   end
 
+  def use_coupon
+    current_park.coupons.find_by_identifier
+  end
+
   def sms_code_valid?
     sms_code = SmsCode.find_by_id(params[:sms_code_id])
     return false unless sms_code
