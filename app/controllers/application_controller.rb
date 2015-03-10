@@ -28,16 +28,17 @@ class ApplicationController < ActionController::Base
   end
 
   def wechat_browser_required
-    if Rails.env.production?
-      redirect_to root_path unless user_agent_wechat?
-      false
-    else
-      true
-    end
+    true
+    #if Rails.env.production?
+      #redirect_to root_path unless user_agent_wechat?
+      #false
+    #else
+      #true
+    #end
   end
 
   def user_agent_wechat?
-    return true
+    return false
     #!!(request.user_agent =~ /MicroMessenger/i)
   end
 

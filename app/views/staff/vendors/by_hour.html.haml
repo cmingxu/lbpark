@@ -1,0 +1,14 @@
+:javascript
+  var data = #{@data.to_json};
+
+
+.container-fluid
+  = render :partial => "staff/vendors/stats"
+
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1
+      - 17.times do |i|
+        = link_to "#{i}天前", by_hour_staff_vendors_path(:date => i.day.ago.strftime("%Y-%m-%d")), :class => "link"
+  .row-fluid
+    .lb_chart.col-md-10.col-md-offset-1
+      #by_hour

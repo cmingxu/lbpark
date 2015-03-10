@@ -66,6 +66,13 @@ Rails.application.routes.draw do
 
     resources :vendors do
       patch :switch_scan_coupon_status
+      collection do
+
+        get :rentention
+        get :by_hour
+        get :by_day
+        get :by_vendor
+      end
     end
     resources :lotteries
 

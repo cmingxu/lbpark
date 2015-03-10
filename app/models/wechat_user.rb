@@ -50,7 +50,7 @@ class WechatUser < ActiveRecord::Base
   end
 
   def sync_wechat_user_event
-    Resque.enqueue_at Time.now, SyncWechatUser, self.id
+    Resque.enqueue_at Time.now + 30, SyncWechatUser, self.id
   end
 
   def sync_wechat_user!

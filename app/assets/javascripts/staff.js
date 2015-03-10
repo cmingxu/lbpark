@@ -19,6 +19,9 @@
 //= require underscore
 //= require underscore.string
 //= require session
+//= require d3
+//= require moment
+//= require staff/vendors
 
 
 $(document).ready(function(){

@@ -12,7 +12,7 @@
     "zeptojs": "latest",
     "bootstrap3-typeahead": "latest",
     "bootstrap-datepicker": "latest",
-    "bootstrap-datetimepicker": "latest",
-    "fastclick": "latest"
+    "fastclick": "latest",
+    "moment": "latest"
   }
 }
