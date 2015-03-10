@@ -25,6 +25,11 @@ class Staff::VendorsController < Staff::BaseController
     ps = ParkStatus.select([:user_id, :created_at]).where(["created_at > ?", 30.day.ago])
     ps = ps.group_by{|p| p.created_at.strftime("%Y-%m-%d") }
     @data = ps.map {|k, v| [k, v.map(&:user_id).uniq]}
+    30.times do |i|
+      d = (Time.now - i.day).strftime("%Y-%m-%d")
+      @data << [d, []] unless @data.find{|a| a[0] == d}
+    end
+    @data = @data.sort_by {|a| Time.parse(a[0]) }
     @registration_data = User.select("id, created_at")
     @registration_data = @registration_data.group_by{|p| p.created_at.strftime("%Y-%m-%d") }
     @registration_data = @registration_data.map {|k, v| [k, v.map(&:id).uniq]}
@@ -46,6 +51,6 @@ class Staff::VendorsController < Staff::BaseController
   def  by_vendor
     ps = ParkStatus.select([:id, :user_id])
     ps = ps.group_by{|p| p.user_id }
-    @data = ps.map {|k, v| [k, v.length]}.map{|k, v| u = User.find_by_id(k); ["#{u.try(:nickname)}(#{u.try(:park).try(:name)})",v]}.sort{|i| i[1]}
+    @data = ps.map {|k, v| [k, v.length]}.map{|k, v| u = User.find_by_id(k); ["#{u.try(:nickname)}(#{u.try(:park).try(:name)})",v]}.sort_by{|i| i[1]}.reverse
   end
 end
