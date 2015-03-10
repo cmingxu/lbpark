@@ -71,14 +71,14 @@ $(document).ready(function () {
       text(function (d) { return retention_rate_for(tr.attr('data-date'), d) });
 
     function retention_rate_for(date, interval) {
-      var install_date = moment(date).add(-interval, 'd');
+      var install_date = moment(date).add(-(interval - 1), 'd');
       install_date_str = install_date.format("YYYY-MM-DD");
-      if(data_for_date(install_date_str).length == 0){ return 0; }
-      return (_.intersection(data_for_date(date), data_for_date(install_date_str)).length / data_for_date(install_date_str).length).toFixed(3)
+      if(data_for_date(install_date_str, registration_data).length == 0)return 0;
+      return (_.intersection(data_for_date(date, data), data_for_date(install_date_str, registration_data)).length / data_for_date(install_date_str, registration_data).length).toFixed(2)
     }
 
-    function data_for_date(date) {
-      return _.uniq((_.find(data,  function (n) { return n[0] == date; }) || [[], []])[1]);
+    function data_for_date(date, data_set) {
+      return _.uniq((_.find(data_set,  function (n) { return n[0] == date; }) || [[], []])[1]);
     }
   };
 });
