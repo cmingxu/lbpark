@@ -72,7 +72,7 @@ class Lottery < ActiveRecord::Base
   end
 
   def self.random_serial_num
-    (1..33).to_a.shuffle[0..6].map do |i|
+    (1..33).to_a.shuffle[0..5].map do |i|
       sprintf("%02d", i)
     end.tap do |arr|
       arr << rand(16) + 1
