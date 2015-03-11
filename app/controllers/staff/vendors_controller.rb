@@ -51,6 +51,6 @@ class Staff::VendorsController < Staff::BaseController
   def  by_vendor
     ps = ParkStatus.select([:id, :user_id])
     ps = ps.group_by{|p| p.user_id }
-    @data = ps.map {|k, v| [k, v.length]}.map{|k, v| u = User.find_by_id(k); ["#{u.try(:nickname)}(#{u.try(:park).try(:name)})",v]}.sort_by{|i| i[1]}.reverse
+    @data = ps.map {|k, v| [k, v.length]}.map{|k, v| u = User.find_by_id(k); ["#{u.try(:nickname)}(#{u.try(:park).try(:name)}) - #{u.try(:phone)}",v]}.sort_by{|i| i[1]}.reverse
   end
 end
