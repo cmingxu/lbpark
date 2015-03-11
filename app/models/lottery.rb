@@ -85,7 +85,7 @@ class Lottery < ActiveRecord::Base
     blue_ball = lucky_nums.last
     red_balls = lucky_nums[0..5]
 
-    where(:open_num => open_num).each do |s|
+    where(:open_num => open_num, :status => :bought).each do |s|
       int_lucky_nums = s.serial_num.split(" ").map(&:to_i)
       s.lucky_num = lucky_nums.join " "
       s.blue_ball_hit = blue_ball == int_lucky_nums.last
