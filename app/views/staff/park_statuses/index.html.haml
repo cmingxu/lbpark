@@ -1,0 +1,30 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 停车场
+          %th 名称
+          %th 状态
+          %th 选中
+          %th 开奖日期
+          %th 序列号
+
+        %tbody
+          - @park_statuses.each do |p|
+            %tr
+              %td= p.id
+              %td= p.park.name
+              %td= p.user.try(:nickname)
+              %td= Park::BUSY_STATUS_IN_ZH[p.status.to_i]
+              %td= p.chosen
+              %td= p.lottery.try(:open_num)
+              %td= p.lottery.try(:serial_num)
+
+      = paginate @park_statuses
+

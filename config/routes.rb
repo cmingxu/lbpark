@@ -78,6 +78,7 @@ Rails.application.routes.draw do
 
     resources :lb_settings
 
+    resources :park_statuses
     resources :users_parks
     resources :parks
     resources :wechat_users, :only => [:index] do
