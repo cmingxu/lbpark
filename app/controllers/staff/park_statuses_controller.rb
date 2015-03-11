@@ -4,7 +4,7 @@ class Staff::ParkStatusesController < Staff::BaseController
   end
 
   def index
-    @park_statuses = ParkStatus.page params[:page]
+    @park_statuses = ParkStatus.order('id desc').page params[:page]
   end
 
 end

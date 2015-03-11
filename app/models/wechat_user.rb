@@ -54,6 +54,8 @@ class WechatUser < ActiveRecord::Base
   end
 
   def sync_wechat_user!
+    u = User.find_by_openid(self.openid)
+    return if u.nil?
     if User.find_by_openid(self.openid).role == "vendor"
       user_response = $vendor_wechat_api.user(self.openid)
     else
@@ -64,9 +66,12 @@ class WechatUser < ActiveRecord::Base
       self.send("#{col}=", user_response[col])
     end
 
-    self.subscribe_time = Time.at(user_response["subscribe_time"])
+    self.subscribe_time = Time.at(user_response["subscribe_time"] || 0)
     self.headimg = WechatUserHeaderImgUploader.new
+    begin
     self.headimg.download! user_response["headimgurl"]
+    rescue
+    end
     self.save
     self.sync!
   end

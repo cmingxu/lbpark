@@ -115,7 +115,7 @@ class Park < ActiveRecord::Base
 
   has_one :owner, :class_name => "ParkOwner"
   has_one :info, :class_name => "ParkInfo"
-  has_many :park_statuses
+  has_many :park_statuses, :dependent => :destroy
   has_many :vendors, :class_name => "User"
   has_one :latest_park_status, -> { where('chosen = 1').order("created_at DESC").limit(1) }, :class_name => "ParkStatus"
   has_many :messages, :as => :owner

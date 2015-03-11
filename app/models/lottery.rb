@@ -58,17 +58,30 @@ class Lottery < ActiveRecord::Base
   end
 
   def self.spin!(park_status)
-    if park_status.park.park_statuses.count >= 10
-      return if rand(100) < Settings.lottery_ratio
+    t, reason = get_lotteries_count(park_status)
+    t.times do
+      create do |l|
+        l.park_status_id = park_status.id
+        l.open_num = next_open_num
+        l.serial_num = random_serial_num
+        l.park_id = park_status.park_id
+        l.phone = park_status.user.phone
+        l.user = park_status.user
+        l.why = reason
+      end
     end
-    create do |l|
-      l.park_status_id = park_status.id
-      l.open_num = next_open_num
-      l.serial_num = random_serial_num
-      l.park_id = park_status.park_id
-      l.phone = park_status.user.phone
-      l.user = park_status.user
-    end
+    park_status.park.messages.create do |m|
+      m.content = "#{park_status.user.replaced_phone}得到奖票#{t}注"
+    end if t > 0
+  end
+
+  def self.get_lotteries_count(park_status)
+    # 登录奖励
+    return [1, "每日第一次上报"] if park_status.user.park_statuses.where(["created_at <= ? AND created_at > ?", Time.now.end_of_day, Time.now.beginning_of_day]).count == 1
+    return [0, ""] unless park_status.chosen
+    return [1, "上报次数少于10次"] if park_status.park.park_statuses.count <= 10
+    return [1, "正常上报"] if rand(100) < Settings.lottery_ratio
+    [0, ""]
   end
 
   def self.random_serial_num
@@ -95,7 +108,7 @@ class Lottery < ActiveRecord::Base
       s.money_get.zero? ? s.lose! : s.win!
       s.park_status.park.messages.create do
         |c| c.content = "#{s.user.replaced_phone} #{s.open_num} 中#{s.money_get}元"
-      end
+      end if !s.money_get.zero?
     end
   end
 
@@ -140,6 +153,6 @@ class Lottery < ActiveRecord::Base
     s[s.rindex(" ")] = "/"
     red, blue = s.split("/")
     "<span style='color: red;'>#{red}</span>/" +
-    "<span style='color: blue;'>#{blue}</span>"
+      "<span style='color: blue;'>#{blue}</span>"
   end
 end

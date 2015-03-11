@@ -44,6 +44,7 @@
           %th wc
           %th rent
           %th company
+          %th 
 
         %tbody
           - @parks.each do |p|
@@ -79,6 +80,7 @@
               %td= p.service_wc
               %td= p.service_rent
               %td= p.service_rent_company
+              %td= image_tag p.park_pics.first.park_pic.thumb.url
 
       = paginate @parks
 

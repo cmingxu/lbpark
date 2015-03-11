@@ -1,7 +1,5 @@
 .container-fluid
-  .row-fluid
-    .lb_form.col-md-10.col-md-offset-1.form
-      .form_content
+  = render :partial => "staff/vendors/stats"
 
   .row-fluid
     .col-md-10.col-md-offset-1.table_wrapper
@@ -14,6 +12,7 @@
           %th 选中
           %th 开奖日期
           %th 序列号
+          %th 上报时间
 
         %tbody
           - @park_statuses.each do |p|
@@ -25,6 +24,7 @@
               %td= p.chosen
               %td= p.lottery.try(:open_num)
               %td= p.lottery.try(:serial_num)
+              %td= p.created_at.to_s(:lb_cn_normal)
 
       = paginate @park_statuses
 

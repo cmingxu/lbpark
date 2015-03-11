@@ -26,14 +26,19 @@ class ParkStatus < ActiveRecord::Base
     end
   end
 
+  def clear_redis_mark
+    $redis.del RedisKey.park_status_key(self.park)
+  end
+
   after_create do
-    if self.chosen && l = Lottery.spin!(self)
-      self.park.messages.create do |m|
-        m.content = "#{self.user.replaced_phone}得到奖票一注"
-      end
-      #SmsCode.new_sms_lottery_get(l)
-    else
-      #SmsCode.new_sms_lottery_miss(self.user)
-    end
+    Lottery.spin!(self)
+    #if l = Lottery.spin!(self)
+      #self.park.messages.create do |m|
+        #m.content = "#{self.user.replaced_phone}得到奖票一注"
+      #end
+      ##SmsCode.new_sms_lottery_get(l)
+    #else
+      ##SmsCode.new_sms_lottery_miss(self.user)
+    #end
   end
 end
