@@ -60,7 +60,7 @@ class Lottery < ActiveRecord::Base
   def self.spin!(park_status)
     t, reason = get_lotteries_count(park_status)
     t.times do
-      create do |l|
+      lottery = create do |l|
         l.park_status_id = park_status.id
         l.open_num = next_open_num
         l.serial_num = random_serial_num
@@ -69,10 +69,15 @@ class Lottery < ActiveRecord::Base
         l.user = park_status.user
         l.why = reason
       end
+      HighScore.update(lottery, t)
+
     end
-    park_status.park.messages.create do |m|
-      m.content = "#{park_status.user.replaced_phone}得到奖票#{t}注"
-    end if t > 0
+
+    if t > 0
+      park_status.park.messages.create do |m|
+        m.content = "#{park_status.user.replaced_phone}得到奖票#{t}注"
+      end
+    end
   end
 
   def self.get_lotteries_count(park_status)
@@ -109,6 +114,7 @@ class Lottery < ActiveRecord::Base
       s.park_status.park.messages.create do
         |c| c.content = "#{s.user.replaced_phone} #{s.open_num} 中#{s.money_get}元"
       end if !s.money_get.zero?
+      HighScore.update(s, s.money_get, true) if s.money_get != 0
     end
   end
 

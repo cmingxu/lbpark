@@ -41,4 +41,9 @@ class ParkStatus < ActiveRecord::Base
       ##SmsCode.new_sms_lottery_miss(self.user)
     #end
   end
+
+  after_commit :update_high_score_list, :on => :create
+  def update_high_score_list
+    HighScore.update self
+  end
 end

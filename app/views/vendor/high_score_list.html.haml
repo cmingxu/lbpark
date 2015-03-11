@@ -1,0 +1,15 @@
+.vendor_high_score_list_page
+  - HighScore::HIHGSCORE_LIST.each do |k, v|
+    .vendor_high_score_list
+      .vendor_high_score_head
+        = v
+      - HighScore.send(k).each do |hs|
+        .vendor_high_score_item
+          %span.vendor_high_score_rank
+            = hs.rank
+          %span.vendor_high_score_name
+            = hs.name
+          %span.vendor_high_score_score
+            = hs.score
+
+

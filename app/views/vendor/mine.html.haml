@@ -15,6 +15,9 @@
           %a{:href => "/vendor/index"} 我的主页
         .vendor_action_item
           %a{:href => "/vendor/index"} 我的奖票
+        - if current_vendor.can_check_high_score?
+          .vendor_action_item
+            %a{:href => "/vendor/high_score_list"} 英雄榜
         - if current_vendor.scan_coupon?
           .vendor_action_item
             %a{:href => "/vendor/coupons"} 停车券

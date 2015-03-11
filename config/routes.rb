@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   get 'vendor/coupons'
   get 'vendor/use_coupon'
 
+  get 'vendor/high_score_list'
+  get 'vendor/high_score'
+
   get '/auth/wechat_vendor/callback', to: 'vendor#login_from_wechat'
   get '/auth/wechat_user/callback', to: 'mobile#login_from_wechat'
   get 'auth/failure', to: 'vendor#failure'

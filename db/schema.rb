@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150311023852) do
+ActiveRecord::Schema.define(version: 20150311085017) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -341,6 +341,7 @@ ActiveRecord::Schema.define(version: 20150311023852) do
     t.string   "source"
     t.string   "headimg"
     t.boolean  "scan_coupon"
+    t.boolean  "can_check_high_score", default: false
   end
 
   create_table "users_parks", force: true do |t|

@@ -77,6 +77,14 @@ class VendorController < ApplicationController
     end
   end
 
+  def high_score_list
+    @current_nav = "mine"
+  end
+
+  def high_score
+    @current_nav = "mine"
+  end
+
   def current_vendor_required
     if !Rails.env.production?
       session[:vendor_id] = User.vendors.first.id
