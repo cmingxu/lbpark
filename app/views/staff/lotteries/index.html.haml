@@ -11,6 +11,7 @@
           %th 开奖期
           %th 开奖日期
           %th 保安电话
+          %th 停车场
           %th 红球
           %th 蓝色球
           %th 中奖金额
@@ -28,6 +29,7 @@
                 (
                 = p.user.try :nickname
                 )
+              %td= p.park.name
               %td= p.red_lucky_num_hits
               %td= p.blue_ball_hit ? 1 : 0
               %td= p.money_get
