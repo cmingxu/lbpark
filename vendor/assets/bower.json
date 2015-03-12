@@ -13,6 +13,7 @@
     "bootstrap3-typeahead": "latest",
     "bootstrap-datepicker": "latest",
     "fastclick": "latest",
-    "moment": "latest"
+    "moment": "latest",
+    "normalize": "latest"
   }
 }

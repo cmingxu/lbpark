@@ -24,37 +24,37 @@ class HighScore
     end
 
     def open_lottery_win
-      HighScoreBucket.new("ps:park_status_count:" + Time.now.strftime("%Y%m%d")).list.map do |item|
+      HighScoreBucket.new("hs:lottery_win:" + Lottery.current_open_num).list.map do |item|
         OpenStruct.new(:score => item[1], :name => User.find_by_id(item[0]).nickname)
       end
     end
 
     def week_lottery_count
-      HighScoreBucket.new("ps:park_status_count:" + Time.now.strftime("%Y%m%d")).list.map do |item|
+      HighScoreBucket.new("hs:lottery_count:" + Time.now.strftime("%Y%W")).list.map do |item|
         OpenStruct.new(:score => item[1], :name => User.find_by_id(item[0]).nickname)
       end
     end
 
     def week_park_status_count
-      HighScoreBucket.new("ps:park_status_count:" + Time.now.strftime("%Y%m%d")).list.map do |item|
+      HighScoreBucket.new("ps:park_status_count:" + Time.now.strftime("%Y%W")).list.map do |item|
         OpenStruct.new(:score => item[1], :name => User.find_by_id(item[0]).nickname)
       end
     end
 
     def lottery_count
-      HighScoreBucket.new("ps:park_status_count:" + Time.now.strftime("%Y%m%d")).list.map do |item|
+      HighScoreBucket.new("hs:lottery_count").list.map do |item|
         OpenStruct.new(:score => item[1], :name => User.find_by_id(item[0]).nickname)
       end
     end
 
     def lottery_win
-      HighScoreBucket.new("ps:park_status_count:" + Time.now.strftime("%Y%m%d")).list.map do |item|
+      HighScoreBucket.new("hs:lottery_win").list.map do |item|
         OpenStruct.new(:score => item[1], :name => User.find_by_id(item[0]).nickname)
       end
     end
 
     def park_status_count
-      HighScoreBucket.new("ps:park_status_count:" + Time.now.strftime("%Y%m%d")).list.map do |item|
+      HighScoreBucket.new("ps:park_status_count" ).list.map do |item|
         OpenStruct.new(:score => item[1], :name => User.find_by_id(item[0]).nickname)
       end
     end

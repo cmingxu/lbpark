@@ -154,6 +154,20 @@ class Lottery < ActiveRecord::Base
     "#{offset.year}#{sprintf('%03d', open_num)}"
   end
 
+  def self.current_open_num(offset = Time.now)
+    time_iterator = Time.new(2015, 2, 26)
+    open_num = 21
+    while time_iterator < offset do
+      if [2,4,0].include?(time_iterator.wday)
+        open_num += 1
+      end
+      time_iterator = time_iterator += 1.day
+    end
+
+    "#{offset.year}#{sprintf('%03d', open_num)}"
+  end
+
+
   def serial_num_human
     s = self.serial_num
     s[s.rindex(" ")] = "/"
