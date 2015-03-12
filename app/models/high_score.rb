@@ -114,7 +114,7 @@ class HighScoreBucket
   end
 
   def list
-    $redis.zrevrange @name, 0, 10, :with_scores => true
+    $redis.zrevrange @name, 0, 9, :with_scores => true
   end
 
   def remove(key)
