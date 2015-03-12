@@ -3,13 +3,13 @@
     .vendor_high_score_list
       .vendor_high_score_head
         = v
-      - HighScore.send(k).each do |hs|
+      - HighScore.send(k).each_with_index do |hs, index|
         .vendor_high_score_item
           %span.vendor_high_score_rank
-            = hs.rank
+            = index + 1
           %span.vendor_high_score_name
             = hs.name
           %span.vendor_high_score_score
-            = hs.score
+            = hs.score.to_i
 
 

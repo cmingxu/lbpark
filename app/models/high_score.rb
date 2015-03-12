@@ -92,8 +92,8 @@ class HighScore
 
   def self.update_park_status(lottery, quantity)
     day_name = "ps:park_status_count:" + Time.now.strftime("%Y%m%d")
-    week_name = "ps:park_status_lottery_count:" + Time.now.strftime("%Y%W")
-    total_name = "ps:park_status_lottery_count"
+    week_name = "ps:park_status_count:" + Time.now.strftime("%Y%W")
+    total_name = "ps:park_status_count"
 
     HighScoreBucket.instance(day_name).update lottery.user_id.to_s, quantity
     HighScoreBucket.instance(week_name).update lottery.user_id.to_s, quantity
@@ -114,7 +114,7 @@ class HighScoreBucket
   end
 
   def list
-    $redis.zrevrange @name, 0, 100, :with_scores => true
+    $redis.zrevrange @name, 0, 10, :with_scores => true
   end
 
   def remove(key)
