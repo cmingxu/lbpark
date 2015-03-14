@@ -19,6 +19,15 @@ $border-highlight-color-3: #fff
 $border-highlight-color-4: #fff
 $border-highlight-color-5: #fff
 
+
+// coupon defines
+$user-background-color: #efefef
+$user_coupon_tab_border_color: #61a7f9
+$user_coupon_free_item_highlight_color: #e48030
+$user_coupon_long_term_item_highlight_color: #a1ce33
+$user_coupon_tpl_show_click_area_bg: #bebebe
+$user_coupon_tpl_show_click_area_bg_active: #e4841f
+
 body
   -webkit-font-smoothing: antialiased
   margin: 0px
@@ -91,8 +100,8 @@ a[title="站长统计"]
   .marker_b
     background-position-x: -288px
   .marker_pressed
-    margin-left: 5px
-    margin-top: 5px
+    margin-left: 1px
+    margin-top: 1px
 
   @keyframes spin
     0%
@@ -406,6 +415,165 @@ a[title="站长统计"]
     margin-top: 20px
   #feedback_content
     height: 200px
+
+.user_coupons_page
+  background-color: $user-background-color
+  min-height: 1000px
+  padding: 10px
+  .user_coupons
+    .user_coupons_tabs
+      &:after
+        clear: both
+      .user_coupon_tab
+        box-sizing: border-box
+        width: 50%
+        display: inline-block
+        float: left
+        text-align: center
+        border-top: 1px solid $user_coupon_tab_border_color
+        border-bottom: 1px solid $user_coupon_tab_border_color
+      .user_coupon_published
+        border-right: 1px solid $user_coupon_tab_border_color
+        border-left: 1px solid $user_coupon_tab_border_color
+        border-top-left-radius: 2px
+        border-bottom-left-radius: 2px
+        display: inline-block
+      .user_coupon_owned
+        border-right: 1px solid $user_coupon_tab_border_color
+        border-top-right-radius: 2px
+        border-bottom-right-radius: 2px
+
+      .user_coupon_tab_actived
+        background-color: $user_coupon_tab_border_color
+        color: white
+    .user_coupons_list
+      .user_coupon_item
+        box-sizing: border-box
+        width: 100%
+        background-color: white
+        margin-top: 15px
+        border-radius: 5px
+        -webkit-border-radius: 5px
+        .user_coupon_item_head
+          width: 100%
+          height: 10px
+          border-bottom: 3px dashed white
+          border-top-left-radius: 5px
+          border-top-right-radius: 5px
+      .free_coupon_item
+        .user_coupon_item_head
+          background-color: $user_coupon_free_item_highlight_color
+        .user_coupon_item_title_duration
+          color: $user_coupon_free_item_highlight_color
+      .long_term_coupon_item
+        .user_coupon_item_head
+          background-color: $user_coupon_long_term_item_highlight_color
+          border-bottom: 3px dashed white
+        .user_coupon_item_title_duration
+          color: $user_coupon_long_term_item_highlight_color
+      .user_coupon_item_content
+        color: #565659
+        padding: 10px
+        .user_coupon_item_title
+          font-size: 1.4em
+          font-weight: 900
+          width: 40%
+          float: left
+          text-align: center
+          .user_coupon_item_title_duration
+            text-decoration: underline
+          .user_coupon_item_title_price_icon
+            font-size: 0.6em
+            font-weight: 400
+
+        .user_coupon_item_detail
+          text-align: right
+          width: 60%
+          float: left
+          .user_coupon_item_detail_distance
+            span
+              font-weight: 900
+              font-style: italic
+              color: black
+
+          .user_coupon_item_detail_type
+            padding: 1px 5px
+            background-color: #565659
+            color: white
+            font-size: 0.7em
+            font-weight: 900
+            border-radius: 3px
+
+.user_coupon_tpl_show_page
+  background-color: $user-background-color
+  min-height: 1000px
+  .user_coupon_tpl_show_banner
+    width: 100%
+    text-align: center
+  .user_coupon_tpl_show_notice
+    padding: 10px
+    p
+      margin: 0.2em
+  .user_coupon_tpl_show_click_area
+    color: white
+    a.user_coupon_tpl_show_click_area_bg_active
+      background-color: $user_coupon_tpl_show_click_area_bg_active
+      display: block
+    a.user_coupon_tpl_show_click_area_bg
+      text-decoration: none
+      color: white
+      display: block
+      margin: 0px auto
+      background-color: $user_coupon_tpl_show_click_area_bg
+      position: relative
+      width: 100px
+      height: 100px
+      border-radius: 50%
+      box-shadow: 2px 4px 5px rgba(0,0,0,.5)
+      text-align: center
+      .user_coupon_tpl_show_click_area_content
+        position: relative
+        top: 25px
+        .user_coupon_tpl_show_click_area_text
+          font-weight: 900
+          font-size: 1.3em
+        .user_coupon_tpl_show_click_area_count
+          font-weight: 400
+          font-size: .8em
+
+.user_nav_bar
+  height: 44px
+  line-height: 44px
+  font-size: 1.2em
+  background-color: #f6f6f6
+  padding-left: 10px
+  a
+    text-decoration: none
+    color: #5a92e1
+    display: block
+    font-weight: 900
+
+.user_coupon_show_page
+  background-color: $user-background-color
+  min-height: 1000px
+  .user_coupon_notice
+    padding: 10px
+  .user_coupon_qr_code
+    padding: 10px
+    .user_coupon_qr_code_bg
+      margin: 0px auto
+      width: 150px
+      background-color: white
+      border-radius: 4px
+      -webkit-border-radius: 4px
+      padding: 20px
+
+  .user_coupon_btns
+    padding: 10px
+
+
+
+
 
 
 .vendor

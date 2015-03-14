@@ -44,7 +44,7 @@
               %td= p.name_cn
               %td= CouponTpl::COUPON_TPL_TYPES[p.status.to_sym]
               %td= p.quantity
-              %td= p.published_at
+              %td= p.fit_for_date
               %td= p.end_at
               %td= p.claimed_count
               %td= p.used_count
@@ -55,9 +55,9 @@
                   = link_to "停止", stop_staff_coupon_tpl_path(p), :method => :patch
 
                 - if p.highlighted?
-                  = link_to "置顶", highlight_staff_coupon_tpl_path(p), :method => :patch
-                - elsif !p.highlighted?
                   = link_to "取消置顶", dehighlight_staff_coupon_tpl_path(p), :method => :patch
+                - elsif !p.highlighted?
+                  = link_to "置顶", highlight_staff_coupon_tpl_path(p), :method => :patch
 
 
       = paginate @coupon_tpls

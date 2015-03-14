@@ -33,8 +33,16 @@ Rails.application.routes.draw do
   get '/auth/wechat_user/callback', to: 'mobile#login_from_wechat'
   get 'auth/failure', to: 'vendor#failure'
 
-  resources :mobile_coupons, :only => [:index] do
+  resources :mobile_coupons, :only => [:index, :show] do
+    collection do
+      get :coupons_nearby
+      get :coupons_owned
+    end
 
+    member do
+      get :claim
+      get :coupon_show
+    end
   end
 
 

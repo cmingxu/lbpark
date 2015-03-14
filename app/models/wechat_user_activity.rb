@@ -9,7 +9,8 @@
 #  params         :text
 #  created_at     :datetime
 #  updated_at     :datetime
-
+#  openid         :string(255)
+#
 
 class WechatUserActivity < ActiveRecord::Base
   belongs_to :wechat_user

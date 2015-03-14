@@ -2,27 +2,29 @@
 #
 # Table name: users
 #
-#  id                 :integer          not null, primary key
-#  name               :string(255)
-#  email              :string(255)
-#  token              :string(255)
-#  encrypted_password :string(255)
-#  phone              :string(255)
-#  created_at         :datetime
-#  updated_at         :datetime
-#  role               :string(255)
-#  status             :string(255)
-#  openid             :string(255)
-#  nickname           :string(255)
-#  sex                :boolean
-#  language           :string(255)
-#  province           :string(255)
-#  city               :string(255)
-#  subscribe_time     :datetime
-#  unionid            :string(255)
-#  last_login_at      :datetime
-#  source             :string(255)
-#  headimg            :string(255)
+#  id                   :integer          not null, primary key
+#  name                 :string(255)
+#  email                :string(255)
+#  token                :string(255)
+#  encrypted_password   :string(255)
+#  phone                :string(255)
+#  created_at           :datetime
+#  updated_at           :datetime
+#  role                 :string(255)
+#  status               :string(255)
+#  openid               :string(255)
+#  nickname             :string(255)
+#  sex                  :boolean
+#  language             :string(255)
+#  province             :string(255)
+#  city                 :string(255)
+#  subscribe_time       :datetime
+#  unionid              :string(255)
+#  last_login_at        :datetime
+#  source               :string(255)
+#  headimg              :string(255)
+#  scan_coupon          :boolean
+#  can_check_high_score :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base
@@ -32,6 +34,7 @@ class User < ActiveRecord::Base
   has_many :users_parks
   has_many :parks, :through => :users_parks
   has_many :wechat_user_activities
+  has_many :coupons
 
   scope :vendors, -> { where(:role => 'vendor') }
   validates :phone, format: { with: /\A(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}\z/ }, :allow_blank => true

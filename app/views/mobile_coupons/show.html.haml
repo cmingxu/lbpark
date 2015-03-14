@@ -1,0 +1,25 @@
+.user_coupon_tpl_show_page
+  .user_nav_bar
+    = link_to "< 返回", mobile_coupons_path
+  .user_coupon_tpl_show_banner
+    %image#user_coupon_tpl_show_banner{:src => "#{asset_path('user_coupon_banner.jpg')}"}
+  .user_coupon_tpl_show_notice
+    %p
+      %strong
+        使用说明:
+    %p 1、会员可抢今日和明日券，出场时刷券使用。
+    %p 2、如停放时间超过一整日，则此券无效。
+    %p
+      3、本券限
+      %span 3月25日
+      当日使用，过期或者提前无效。
+  .user_coupon_tpl_show_click_area
+    %a.user_coupon_tpl_show_click_area_bg{:href => claim_mobile_coupon_path(@coupon_tpl), "data-method" => "post"}
+      .user_coupon_tpl_show_click_area_content
+        .user_coupon_tpl_show_click_area_text
+          抢券
+        .user_coupon_tpl_show_click_area_count
+          12/50
+
+
+= javascript_include_tag "mobile_coupon_tpl_show"

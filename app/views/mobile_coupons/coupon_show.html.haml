@@ -1,0 +1,12 @@
+.user_coupon_show_page
+  .user_nav_bar
+    = link_to "< 返回", mobile_coupons_path
+
+  .user_coupon_notice
+    恭喜您获得萝卜停车券一张， 请在收费岗亭展示该二维码。
+  .user_coupon_qr_code
+    .user_coupon_qr_code_bg
+      = image_tag @coupon.qr_code.thumb.url
+  .user_coupon_btns
+    = link_to "规则", ""
+    = link_to "保存", ""

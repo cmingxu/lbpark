@@ -104,8 +104,8 @@ class Park < ActiveRecord::Base
 
   BUSY_STATUS_IN_ZH = {
     0 => "空闲",
-    1 => "繁忙",
-    2 => "紧张",
+    1 => "紧张",
+    2 => "爆满",
     3 => "未知",
     4 => "禁停",
   }

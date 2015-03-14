@@ -46,6 +46,18 @@ class Coupon < ActiveRecord::Base
     end
   end
 
+  def as_api_json(location)
+    {
+      :id => id,
+      :coupon_type_readable => CouponTpl.coupon_type_to_readable(self.coupon_tpl.type) == "free" ? "free" : "long_term",
+      :duration => self.coupon_tpl.duration,
+      :price => self.price,
+      :distance => LbRange.new(location, self.coupon_tpl.park.location).distance,
+      :park_name => self.coupon_tpl.park.name,
+      :park_type => self.coupon_tpl.park.park_type
+    }
+  end
+
   class QrCodeIo < StringIO
     attr_accessor :original_filename
     attr_accessor :content_type

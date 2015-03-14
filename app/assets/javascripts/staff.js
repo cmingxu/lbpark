@@ -78,6 +78,8 @@ $(document).ready(function(){
       }
     });
 
-    $('.date').datepicker();
-    //$('.datetime').datetimepicker();
+    $('.date').datepicker({
+      format: 'yyyy-mm-dd',
+      startDate: '-1d'
+    });
 });

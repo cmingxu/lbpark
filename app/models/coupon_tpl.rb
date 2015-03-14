@@ -2,20 +2,24 @@
 #
 # Table name: coupon_tpls
 #
-#  id         :integer          not null, primary key
-#  park_id    :integer
-#  staff_id   :integer
-#  type       :string(255)
-#  identifier :string(255)
-#  name_cn    :string(255)
-#  end_at     :datetime
-#  gcj_lat    :decimal(10, 6)
-#  gcj_lng    :decimal(10, 6)
-#  quantity   :integer
-#  copy_from  :integer
-#  status     :string(255)
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer          not null, primary key
+#  park_id      :integer
+#  priority     :integer
+#  staff_id     :integer
+#  type         :string(255)
+#  identifier   :string(255)
+#  name_cn      :string(255)
+#  fit_for_date :date
+#  end_at       :datetime
+#  gcj_lat      :decimal(10, 6)
+#  gcj_lng      :decimal(10, 6)
+#  quantity     :integer
+#  price        :integer
+#  copy_from    :integer
+#  status       :string(255)
+#  published_at :datetime
+#  created_at   :datetime
+#  updated_at   :datetime
 #
 
 class CouponTpl < ActiveRecord::Base
@@ -43,9 +47,10 @@ class CouponTpl < ActiveRecord::Base
   validates :identifier, uniqueness: true, :on => :create
   validates :quantity, numericality: { :gt => 0, :message => "数量大于零" }
 
-  before_save :set_defaults, :on => :update
+  before_save :set_defaults, :on => :create
   after_create :generate_all_new_coupon
 
+  #default_scope lambda { order("priority desc, fit_for_date ASC, type")}
   scope :highlighted, -> { where(:priority => HIHGLIGHT_PRIORITY)}
   scope :published, -> { where(:status => "published") }
   scope :within_range, lambda {|range| where(["gcj_lng > ? AND gcj_lat > ? AND gcj_lng < ? AND gcj_lat <?", range.p1.lng, range.p1.lat, range.p2.lng, range.p2.lat]).limit(200) }
@@ -77,6 +82,24 @@ class CouponTpl < ActiveRecord::Base
   def self.identifier(type)
     type.to_s[0].upcase + sprintf("%04d", coupon_class_name(type).send(:count) + 1)
   end
+ 
+
+  def duration
+    t = self.class.coupon_type_to_readable(self.type)
+    t == "free" ? (self.fit_for_date == Date.today ? "今日" : "明日") : COUPON_TPL_TYPES[t.to_sym]
+  end
+
+  def as_api_json(location)
+    {
+      :id => id,
+      :coupon_type_readable => self.class.coupon_type_to_readable(self.type) == "free" ? "free" : "long_term",
+      :duration => duration,
+      :price => price,
+      :distance => LbRange.new(location, park.location).distance,
+      :park_name => park.name,
+      :park_type => park.park_type
+    }
+  end
 
   def stop_all_related_coupon
   end
@@ -94,8 +117,8 @@ class CouponTpl < ActiveRecord::Base
     true
   end
 
-  def claim
-    coupons.created.first
+  def claim_coupon
+    coupons.where(:status => :created).first
   end
 
   def claimed_count
@@ -112,6 +135,17 @@ class CouponTpl < ActiveRecord::Base
 
   def dehighlight!
     self.update_column :priority, DEFAULT_PRIORITY
+  end
+
+  def sort_criteria(location)
+    weight = 0
+    weight += 100000000 if self.highlighted?
+    weight += 20000000 if self.fit_for_date && self.fit_for_date == Date.today
+    weight += 10000000 if self.fit_for_date && self.fit_for_date != Date.today
+    weight += 2000000 if self.class.coupon_type_to_readable(self.type) == 'free'
+    weight += 1000000 if self.class.coupon_type_to_readable(self.type) != 'free'
+    weight += LbRange.new(self.park.location, location).distance
+    weight
   end
 
   def highlighted?

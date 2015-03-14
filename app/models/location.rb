@@ -15,4 +15,5 @@ class Location
     p2 = self.class.new(@lng + location_radius, @lat + location_radius)
     LbRange.new p1, p2
   end
+
 end

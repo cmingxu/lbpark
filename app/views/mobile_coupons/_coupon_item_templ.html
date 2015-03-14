@@ -1,0 +1,28 @@
+<script type="text/html" id="item_tmpl">
+<div class="user_coupon_item <%=item.coupon_type_readable%>_coupon_item" data-id="<%=item.id%>">
+   <div class="user_coupon_item_head"> </div>
+   <div class="user_coupon_item_content">
+       <div class="user_coupon_item_title">
+           <div class="user_coupon_item_title_duration">
+               <%=item.duration%>
+           </div>
+          <%if(item.price && ("" + item.price).match(/\d+/)){%>
+           <div class="user_coupon_item_title_price"> <span class="user_coupon_item_title_price_icon">￥</span> <%=item.price%> </div>
+           <%} else {%>
+           <div class="user_coupon_item_title_price"> 限免 </div>
+           <%}%>
+       </div>
+
+       <div class="user_coupon_item_detail">
+           <div class="user_coupon_item_detail_distance">
+              距离您<span> <%=item.distance%></span> 米
+           </div>
+
+           <span class="user_coupon_item_detail_name"><%=item.park_name%></span>
+           <span class="user_coupon_item_detail_type"><%=item.park_type%></span>
+       </div>
+       <div class="clearfix">
+       </div>
+   </div>
+</div>
+</script>
