@@ -23,4 +23,8 @@
 #
 
 class CouponTpl::MonthlyCouponTpl < CouponTpl::LongTermCouponTpl
+
+  def monthly?
+    true
+  end
 end

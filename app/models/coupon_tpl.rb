@@ -82,11 +82,14 @@ class CouponTpl < ActiveRecord::Base
   def self.identifier(type)
     type.to_s[0].upcase + sprintf("%04d", coupon_class_name(type).send(:count) + 1)
   end
- 
 
-  def duration
-    t = self.class.coupon_type_to_readable(self.type)
-    t == "free" ? (self.fit_for_date == Date.today ? "今日" : "明日") : COUPON_TPL_TYPES[t.to_sym]
+  %w(free monthly quarterly).each do |t|
+    define_method "#{t}?" do
+      false
+    end
+  end
+  def type_in_readable_format
+    self.class.coupon_type_to_readable(self.type) == "free" ? "free" : "long_term"
   end
 
   def as_api_json(location)
@@ -107,8 +110,11 @@ class CouponTpl < ActiveRecord::Base
   def generate_all_new_coupon
     self.quantity.times do
       self.coupons.create do |c|
-        c.park_id = self.park_id
-        c.identifier = self.identifier + "" + sprintf("%010d", rand(10**9))
+        c.park_id         = self.park_id
+        c.identifier      = self.identifier + "" + sprintf("%010d", rand(10**9))
+        c.coupon_tpl_type = self.type
+        c.fit_for_date    = self.fit_for_date
+        c.price           = self.price
       end
     end
   end

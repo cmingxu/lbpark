@@ -48,7 +48,6 @@ $(document).ready(function() {
     });
   }
 
-  setCouponPublishedActive();
 });
 
 wx.ready(function () {

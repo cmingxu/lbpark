@@ -1,3 +1,5 @@
+= hidden_field_tag "coupon_id", @coupon.id, :id => "coupon_id"
+
 .user_coupon_show_page
   .user_nav_bar
     = link_to "< 返回", mobile_coupons_path
@@ -7,6 +9,11 @@
   .user_coupon_qr_code
     .user_coupon_qr_code_bg
       = image_tag @coupon.qr_code.thumb.url
+      - if @coupon.coupon_tpl.type_in_readable_format == "free"
+        .user_coupon_qr_code_bg_text 限#{@coupon.coupon_tpl.fit_for_date.to_s(:lb_cn_short)}使用
   .user_coupon_btns
-    = link_to "规则", ""
-    = link_to "保存", ""
+    = link_to "规则", rule_mobile_coupons_path, :class => "user_coupon_btn"
+    = link_to "保存", "", :class => "user_coupon_btn"
+
+  = javascript_include_tag "mobile_coupon_show"
+

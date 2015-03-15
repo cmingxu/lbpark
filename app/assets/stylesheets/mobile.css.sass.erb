@@ -46,6 +46,8 @@ body
 .blank50
   display: block
   height: 50px
+.pull-right
+  float: right
 
 .warning_message
   border: 1px solid gray
@@ -54,6 +56,34 @@ body
   width: 70%
   margin-top: 40px
   background-color: #eef4fd
+
+
+@keyframes alertShow
+  from
+    top: -44px
+    display: block
+  20%, 80%
+    top: 0px
+  100%
+    top: -44px
+    display: none
+
+#toast
+  height: 44px
+  line-height: 44px
+  width: 100%
+  position: fixed
+  background-color: #cf831c
+  color: black
+  text-align: center
+  font-weight: 800
+  font-size: 1.2em
+  border-bottom-left-radius: 3px
+  border-bottom-right-radius: 3px
+  animation-name: alertShow
+  animation-duration: 3s
+  animation-direction: alternate
+  animation-timing-function: ease-in
 
 a[title="站长统计"]
   display: none
@@ -558,18 +588,41 @@ a[title="站长统计"]
   min-height: 1000px
   .user_coupon_notice
     padding: 10px
+    font-size: 1.2em
+    padding-top: 20px
+    padding-bottom: 20px
   .user_coupon_qr_code
     padding: 10px
     .user_coupon_qr_code_bg
       margin: 0px auto
-      width: 150px
+      width: 230px
+      height: 230px
       background-color: white
       border-radius: 4px
       -webkit-border-radius: 4px
       padding: 20px
+      text-align: center
+      img
+        margin: 0px auto
+      .user_coupon_qr_code_bg_text
+        font-size: 0.8em
+        font-weight: 700
+        color: red
 
   .user_coupon_btns
     padding: 10px
+    margin-top: 20px
+    text-align: center
+    .user_coupon_btn
+      color: white
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.4)
+      background-color: #e4841f
+      text-decoration: none
+      font-size: 1.4em
+      font-weight: 700
+      padding: 7px 20px
+      border-radius: 5px
+      -webkit-border-radius: 5px
 
 
 

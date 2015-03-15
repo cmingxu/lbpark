@@ -27,12 +27,16 @@ class Coupon < ActiveRecord::Base
   belongs_to :park
 
   after_create :generate_qr_code
+  scope :display_order, lambda { order("coupon_tpl_type, claimed_at desc") }
 
   mount_uploader :qr_code, CouponQrCodeUploader
 
   COUPON_STATUS.keys.each { |s| scope s, -> { where(:status => s) } }
 
+  delegate :free?, :monthly?, :quarterly?, :to => :coupon_tpl
+
   state_machine :status, :initial => :created do
+    after_transition :on => :claim, :do => :after_claim
     event :claim do
       transition :from => :created, :to => :claimed
     end
@@ -40,21 +44,24 @@ class Coupon < ActiveRecord::Base
     event :use do
       transition :from => :claimed, :to => :used
     end
+  end
 
-    event :expire do
-      transition :from => [:created, :claimed], :to => :expired
-    end
+  def after_claim
+    self.update_column :expire_at, self.fit_for_date.end_of_day if self.free?
+    self.update_column :expire_at, Time.now + 1.month if self.monthly?
+    self.update_column :expire_at, Time.now + 3.month if self.quarterly?
   end
 
   def as_api_json(location)
     {
       :id => id,
       :coupon_type_readable => CouponTpl.coupon_type_to_readable(self.coupon_tpl.type) == "free" ? "free" : "long_term",
-      :duration => self.coupon_tpl.duration,
-      :price => self.price,
-      :distance => LbRange.new(location, self.coupon_tpl.park.location).distance,
+      :duration  => self.coupon_tpl.duration,
+      :price     => self.price,
+      :distance  => LbRange.new(location, self.coupon_tpl.park.location).distance,
       :park_name => self.coupon_tpl.park.name,
-      :park_type => self.coupon_tpl.park.park_type
+      :park_type => self.coupon_tpl.park.park_type,
+      :expired   => Time.now > self.expire_at
     }
   end
 

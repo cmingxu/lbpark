@@ -37,11 +37,13 @@ Rails.application.routes.draw do
     collection do
       get :coupons_nearby
       get :coupons_owned
+      get :rule
     end
 
     member do
       get :claim
       get :coupon_show
+      get :check_if_coupon_used
     end
   end
 

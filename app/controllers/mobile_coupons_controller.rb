@@ -1,5 +1,5 @@
 class MobileCouponsController < MobileController
-  before_filter  :only => [:index, :show, :coupon_show] do
+  before_filter  :only => [:index, :show, :coupon_show, :rule] do
     set_wechat_js_config $wechat_api
   end
 
@@ -18,7 +18,7 @@ class MobileCouponsController < MobileController
 
   def coupons_owned
     @location = Location.new params[:lng], params[:lat]
-    render :json => current_user.coupons.map { |ct| ct.as_api_json(@location) }
+    render :json => current_user.coupons.display_order.map { |ct| ct.as_api_json(@location) }
   end
 
   def show
@@ -38,6 +38,11 @@ class MobileCouponsController < MobileController
 
   def coupon_show
     @coupon = current_user.coupons.find_by_id(params[:id])
+  end
+
+  def check_if_coupon_used
+    @coupon = current_user.coupons.find_by_id(params[:id])
+    render :json => { :result => @coupon.used? }
   end
 
 
