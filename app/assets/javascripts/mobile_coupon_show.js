@@ -16,7 +16,7 @@ $(document).ready(function() {
     $.get('/mobile_coupons/' + $("#coupon_id").val() + "/check_if_coupon_used",
           function (res) {
             if(res.result){
-              $toast("消券成功，感谢您使用萝卜停车服务");
+              $toast("已消券，感谢您使用萝卜停车服务");
               setTimeout(function () {
                 window.location.href = "/mobile_coupons";
               }, 3000);

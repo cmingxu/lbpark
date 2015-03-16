@@ -28,6 +28,7 @@ class Coupon < ActiveRecord::Base
 
   after_create :generate_qr_code
   scope :display_order, lambda { order("coupon_tpl_type, claimed_at desc") }
+  scope :claimed, lambda { where(:status => :claimed) }
 
   mount_uploader :qr_code, CouponQrCodeUploader
 

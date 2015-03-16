@@ -26,7 +26,7 @@ class MobileCouponsController < MobileController
 
   def coupons_owned
     @location = Location.new params[:lng], params[:lat]
-    render :json => current_user.coupons.display_order.map { |ct| ct.as_api_json(@location) }
+    render :json => current_user.coupons.claimed.display_order.map { |ct| ct.as_api_json(@location) }
   end
 
   def show
