@@ -26,7 +26,7 @@ class MobileController < ApplicationController
   def login_from_wechat
     if user = User.login_from_wechat(request.env["omniauth.auth"], :user)
       session[:user_id] = user.id
-      redirect_to(session[:redirect_to] || root_path) and return
+      redirect_to(session[:user_redirect_to] || root_path) and return
     end
   end
 
@@ -35,7 +35,7 @@ class MobileController < ApplicationController
       session[:user_redirect_to] = request.path
       redirect_to "/auth/wechat_user" and return
     else
-      session[:user_id] = User.first.id
+      return false
     end
   end
 
