@@ -5,6 +5,10 @@ class MobileCouponsController < MobileController
     set_wechat_js_config $wechat_api
   end
 
+  before_filter do
+    @current_nav = "search"
+  end
+
   def index
   end
 

@@ -17,7 +17,7 @@ $(document).ready(function() {
           function (res) {
             if(res.result){
               $toast("消券成功，感谢您使用萝卜停车服务");
-              setTimout(function () {
+              setTimeout(function () {
                 window.location.href = "/mobile_coupons";
               }, 3000);
             }else{

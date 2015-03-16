@@ -20,14 +20,14 @@
           .user_coupon_tpl_show_click_area_text
             抢券
           .user_coupon_tpl_show_click_area_count
-            #{@coupon_tpl.quantity - @coupon_tpl.claimed_count }/#{@coupon_tpl.quantity}
+            #{ @coupon_tpl.claimable_count }/#{@coupon_tpl.quantity}
     - else
       %a.user_coupon_tpl_show_click_area_bg_active{:href => claim_mobile_coupon_path(@coupon_tpl), "data-method" => "post"}
         .user_coupon_tpl_show_click_area_content
           .user_coupon_tpl_show_click_area_text
             抢券
           .user_coupon_tpl_show_click_area_count
-            #{@coupon_tpl.quantity - @coupon_tpl.claimed_count }/#{@coupon_tpl.quantity}
+            #{ @coupon_tpl.claimable_count }/#{@coupon_tpl.quantity}
 
 
 

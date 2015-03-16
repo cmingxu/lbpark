@@ -133,12 +133,12 @@ class CouponTpl < ActiveRecord::Base
     coupons.where(:status => :created).first
   end
 
-  def claimed_count
-    self.coupons.claimed.count
+  def claimable_count
+    self.coupons.where(:status => :created).count
   end
 
   def has_enough_coupon?
-    claimed_count < quantity
+    claimable_count > 0
   end
 
   def claimed_by_user?(user)
