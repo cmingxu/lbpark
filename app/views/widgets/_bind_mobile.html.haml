@@ -1,0 +1,19 @@
+.login_page
+  .login_form
+    #error_message_box
+    .box
+      .login_form_notice
+        方便使用萝卜停车服务， 请验证手机~
+    .box
+      %input#mobile_num_field{:placeholder => "手机号", :type => "input"}
+      %span#send_btn 验证
+    .box
+      %input#sms_code_field{:placeholder => "验证码", :type => "input"}
+    .box
+      %button#login_btn 登录
+    .box
+      .vendor_login_form_notice
+        点击-登录， 表示同意萝卜接受萝卜停车协议
+
+    = hidden_field_tag :sms_code_id
+

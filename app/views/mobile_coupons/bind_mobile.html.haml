@@ -1,0 +1,6 @@
+= javascript_include_tag "mobile_mine"
+
+:javascript
+  var sms_code_redirect_to = "#{session[:redirect_to] || '/mobile_coupons'}";
+
+= render :partial => "widgets/bind_mobile"

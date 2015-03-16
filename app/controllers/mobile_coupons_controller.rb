@@ -1,5 +1,7 @@
 class MobileCouponsController < MobileController
-  before_filter  :only => [:index, :show, :coupon_show, :rule] do
+  before_filter :mobile_bind_required, :only => [:claim, :coupon_show]
+
+  before_filter  :only => [:index, :show, :coupon_show, :rule, :bind_mobile] do
     set_wechat_js_config $wechat_api
   end
 
@@ -45,6 +47,27 @@ class MobileCouponsController < MobileController
     render :json => { :result => @coupon.used? }
   end
 
+  def bind_mobile
+    if request.post?
+      if !sms_code_valid?
+        render :json => {:result => false, :msg => "验证码不正确"}
+        return
+      else
+        current_user.update_column :phone, params[:mobile_num]
+        render :json => {:result => true, :msg => ""}
+      end
+
+      return
+    end
+  end
+
+  def mobile_bind_required
+    if current_user.phone.blank?
+      session[:redirect_to] = request.path
+      redirect_to bind_mobile_mobile_coupons_path
+      return false
+    end
+  end
 
   def coupon_params
     params[:coupon] ||= HashWithIndifferentAccess.new

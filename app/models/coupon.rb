@@ -70,6 +70,21 @@ class Coupon < ActiveRecord::Base
     }
   end
 
+  def can_use?(park)
+    return false if !self.claimed?
+    return false if self.park_id != park.id
+    return false if expired?
+    return true
+  end
+
+  def fit_for_date_range
+    if self.free?
+      self.fit_for_date.to_time.to_s(:lb_cn_short)
+    else
+      "#{self.expire_at.to_s(:lb_cn_short)}前"
+    end
+  end
+
   class QrCodeIo < StringIO
     attr_accessor :original_filename
     attr_accessor :content_type

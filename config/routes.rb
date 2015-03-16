@@ -21,11 +21,9 @@ Rails.application.routes.draw do
   post 'vendor/bind_mobile'
   get 'vendor/mine'
   get 'vendor/lottery'
-  post 'vendor/send_sms_code'
+  post 'send_sms_code' => "api/base#send_sms_code"
   post 'vendor/create_park_statuses'
   get 'vendor/coupons'
-  get 'vendor/use_coupon'
-
   get 'vendor/high_score_list'
   get 'vendor/high_score'
 
@@ -38,12 +36,20 @@ Rails.application.routes.draw do
       get :coupons_nearby
       get :coupons_owned
       get :rule
+      get :bind_mobile
+      post :bind_mobile
     end
 
     member do
       get :claim
       get :coupon_show
       get :check_if_coupon_used
+    end
+  end
+
+  resources :vendor_coupons, :only => [:index] do
+    member do
+      get :use
     end
   end
 

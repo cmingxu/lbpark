@@ -14,7 +14,6 @@ class Staff::SessionController < Staff::BaseController
       else
         redirect_to staff_login_path, alert: "用户名密码不正确， 或者您尚未激活账号."
       end
-
     end
   end
 
@@ -33,5 +32,5 @@ class Staff::SessionController < Staff::BaseController
 
   def user_params
     params[:user].permit(:email, :password, :password_confirmation, :captcha, :reset_password_token)
-  end 
+  end
 end

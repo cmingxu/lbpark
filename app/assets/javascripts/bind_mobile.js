@@ -20,6 +20,7 @@ function valid_mobile_num() {
   $("#error_message_box").text("");
   return true;
 }
+
 function valid_sms_code() {
   var sms_code = $("#sms_code_field").val();
   if(sms_code === undefined){
@@ -42,7 +43,7 @@ function valid_sms_code() {
 }
 
 $(document).ready(function () {
-  $(".vendor_login_page #send_btn").click(function () {
+  $(".login_page #send_btn").click(function () {
     if(valid_mobile_num()){
       count_down = 60;
       interval = setInterval(function () {
@@ -54,7 +55,7 @@ $(document).ready(function () {
         }else{
           text = "" + count_down + "s";
         }
-        $(".vendor_login_page #send_btn").text(text);
+        $(".login_page #send_btn").text(text);
       }, 1000);
       $.post(config.send_sms_code_path, {"mobile_num": $("#mobile_num_field").val()}, function (res) {
         if(!res.result) {
@@ -66,7 +67,7 @@ $(document).ready(function () {
     }
   });
 
-  $(".vendor_login_page #login_btn").click(function () {
+  $(".login_page #login_btn").click(function () {
     if(valid_mobile_num() && valid_sms_code()){
       sms_code_id = $("#sms_code_id").val();
       $.post(config.vendor_bind_mobile_num, {
@@ -76,7 +77,7 @@ $(document).ready(function () {
         if(!res.result) {
           $("#error_message_box").text(res.msg);
         }else{
-          window.location.href = "/vendor/index"
+          window.location.href = (typeof sms_code_redirect_to == 'undefined') ?  "/vendor/index" : sms_code_redirect_to;
         }
       });
     }

@@ -25,31 +25,18 @@
               英雄榜
               %span >
         - if current_vendor.scan_coupon?
+          = javascript_include_tag "http://res.wx.qq.com/open/js/jweixin-1.0.0.js" 
+          = javascript_include_tag "vendor_wechat_config"
+          = javascript_include_tag "vendor/coupons"
           .vendor_action_item
-            %a{:href => "/vendor/coupons"}
-              停车券
+            %a#scanQRCode
+              消停车券
               %span >
 
   - else
     .warning_message
       联系管理员为此伙伴绑定停车场
 - else
-  .vendor_login_page
-    .vendor_login_form
-      #error_message_box
-      .box
-        .vendor_login_form_notice
-          方便使用萝卜停车服务， 请验证手机~
-      .box
-        %input#mobile_num_field{:placeholder => "手机号", :type => "input"}
-        %span#send_btn 验证
-      .box
-        %input#sms_code_field{:placeholder => "验证码", :type => "input"}
-      .box
-        %button#login_btn 登录
-      .box
-        .vendor_login_form_notice
-          点击-登录， 表示同意萝卜接受萝卜停车协议
-
-      = hidden_field_tag :sms_code_id
-
+  :javascript
+    var sms_code_redirect_to = "/vendor/index";
+  = render :partial => "widgets/bind_mobile"

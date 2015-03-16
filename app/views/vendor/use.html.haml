@@ -1,0 +1,16 @@
+= javascript_include_tag "http://res.wx.qq.com/open/js/jweixin-1.0.0.js" 
+= javascript_include_tag "vendor_wechat_config"
+= javascript_include_tag "vendor/coupons"
+
+.vendor_coupon_use
+  .vendor_coupon_use_icon
+  .vendor_coupon_use_notice
+    .vendor_coupon_use_notice_big
+      - if @scan_result
+        扫码成功!
+      - else
+        扫码失败!
+    .vendor_coupon_use_notice_small
+  .vendor_coupon_use_rescan
+    %a#scanQRCode
+      继续扫一扫

@@ -28,17 +28,16 @@ class ApplicationController < ActionController::Base
   end
 
   def wechat_browser_required
-    true
-    #if Rails.env.production?
-      #redirect_to root_path unless user_agent_wechat?
-      #false
-    #else
-      #true
-    #end
+    if Rails.env.production?
+      redirect_to root_path unless user_agent_wechat?
+      false
+    else
+      true
+    end
   end
 
   def user_agent_wechat?
-    return false
+    return true
     #!!(request.user_agent =~ /MicroMessenger/i)
   end
 
@@ -51,4 +50,11 @@ class ApplicationController < ActionController::Base
     }
     @config[:signature] = Digest::SHA1.hexdigest(@config.keys.sort.map{|k| "#{k}=#{@config[k]}" }.join("&"))
   end
+
+  def sms_code_valid?
+    sms_code = SmsCode.find_by_id(params[:sms_code_id])
+    return false unless sms_code
+    sms_code.params == params[:sms_code]
+  end
+
 end

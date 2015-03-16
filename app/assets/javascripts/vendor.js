@@ -2,7 +2,7 @@
 //= require config
 //= require logger
 //= require fastclick
-//= require vendor/login
+//= require bind_mobile
 
 
 

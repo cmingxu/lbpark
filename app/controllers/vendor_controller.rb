@@ -2,10 +2,10 @@ class VendorController < ApplicationController
   layout "vendor"
 
   skip_before_filter :verify_authenticity_token
+  before_filter :wechat_browser_required
   before_filter :current_vendor_required, :only => [:index, :lottery, :mine]
   before_filter :mobile_bind_required, :only => [:index, :lottery]
   before_filter :vendor_park_required, :only => [:index, :lottery]
-  before_filter :wechat_browser_required
 
   before_filter  :except => [:login_from_wechat, :create_park_statuses, :bind_mobile] do
     set_wechat_js_config $vendor_wechat_api
@@ -67,15 +67,6 @@ class VendorController < ApplicationController
     end
   end
 
-  def send_sms_code
-    sms_code = SmsCode.new_sms_code(params[:mobile_num])
-    if !sms_code.need_set_threshold?
-      sms_code.save
-      render :json => {:result => true, :msg => "", :sms_code_id => sms_code.id}
-    else
-      render :json => {:result => false, :msg => "连续发送次数过多，稍后重试"}
-    end
-  end
 
   def high_score_list
     @current_nav = "mine"
@@ -125,12 +116,6 @@ class VendorController < ApplicationController
       format.html { @coupons = current_park.coupons.used.page params[:page]}
       format.json {}
     end
-  end
-
-  def sms_code_valid?
-    sms_code = SmsCode.find_by_id(params[:sms_code_id])
-    return false unless sms_code
-    sms_code.params == params[:sms_code]
   end
 
   def failure
