@@ -2,5 +2,6 @@
 
 :javascript
   var sms_code_redirect_to = "#{session[:redirect_to] || '/mobile_coupons'}";
+  var bind_mobile_path     = "/mobile_coupons/bind_mobile";
 
 = render :partial => "widgets/bind_mobile"
