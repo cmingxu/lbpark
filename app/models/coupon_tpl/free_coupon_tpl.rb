@@ -29,7 +29,7 @@ class CouponTpl::FreeCouponTpl < CouponTpl
     true
   end
 
-  def can_be_claimed_by?(user)
-    !user.coupons.exists?(["coupon_tpl_id = ?", self.id])
-  end
+  #def can_be_claimed_by?(user)
+    #!user.coupons.exists?(["coupon_tpl_id = ?", self.id])
+  #end
 end

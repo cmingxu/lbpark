@@ -1,5 +1,9 @@
 <script type="text/html" id="item_tmpl">
+<%if(item.expired){%>
+<div class="user_coupon_item expired_coupon_item" data-id="<%=item.id%>">
+<%}else{%>
 <div class="user_coupon_item <%=item.coupon_type_readable%>_coupon_item" data-id="<%=item.id%>">
+<%}%>
    <div class="user_coupon_item_head"> </div>
    <div class="user_coupon_item_content">
        <div class="user_coupon_item_title">

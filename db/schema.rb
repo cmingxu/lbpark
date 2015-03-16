@@ -71,7 +71,6 @@ ActiveRecord::Schema.define(version: 20150315010326) do
     t.string   "issued_address"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "qr_code"
     t.datetime "claimed_at"
     t.date     "fit_for_date"
     t.string   "coupon_tpl_type"

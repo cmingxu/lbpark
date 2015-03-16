@@ -83,11 +83,17 @@ class CouponTpl < ActiveRecord::Base
     type.to_s[0].upcase + sprintf("%04d", coupon_class_name(type).send(:count) + 1)
   end
 
+  def duration
+    t = self.class.coupon_type_to_readable(self.type)
+    t == "free" ? (self.fit_for_date == Date.today ? "今日" : "明日") : COUPON_TPL_TYPES[t.to_sym]
+  end
+
   %w(free monthly quarterly).each do |t|
     define_method "#{t}?" do
       false
     end
   end
+
   def type_in_readable_format
     self.class.coupon_type_to_readable(self.type) == "free" ? "free" : "long_term"
   end
@@ -120,7 +126,7 @@ class CouponTpl < ActiveRecord::Base
   end
 
   def can_be_claimed_by?(user)
-    true
+    has_enough_coupon? && !claimed_by_user?(user)
   end
 
   def claim_coupon
@@ -129,6 +135,14 @@ class CouponTpl < ActiveRecord::Base
 
   def claimed_count
     self.coupons.claimed.count
+  end
+
+  def has_enough_coupon?
+    claimed_count < quantity
+  end
+
+  def claimed_by_user?(user)
+    self.coupons.exists?(:user_id => user.id)
   end
 
   def used_count

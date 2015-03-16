@@ -7,20 +7,20 @@
 
 
 
-$(document).ready(function() {
+function init() {
+  var jump = window.location.hash.substring(1, window.location.hash.length) || "published";
+
   $(".user_coupon_tab").click(function () {
     if($(this).hasClass("user_coupon_published")){
-      $(".user_coupon_published").addClass("user_coupon_tab_actived");
-      $(".user_coupon_owned").removeClass("user_coupon_tab_actived");
       setCouponPublishedActive();
     } else{
-      $(".user_coupon_published").removeClass("user_coupon_tab_actived");
-      $(".user_coupon_owned").addClass("user_coupon_tab_actived");
       setCouponOwnedActive();
     }
   });
 
   function setCouponPublishedActive() {
+    $(".user_coupon_published").addClass("user_coupon_tab_actived");
+    $(".user_coupon_owned").removeClass("user_coupon_tab_actived");
     $.getJSON('mobile_coupons/coupons_nearby', {lng: config.default_location.lng, lat: config.default_location.lat}, function (res) {
       $(".user_coupons_list").empty();
       res.forEach(function (item) {
@@ -35,6 +35,8 @@ $(document).ready(function() {
   }
 
   function setCouponOwnedActive() {
+    $(".user_coupon_published").removeClass("user_coupon_tab_actived");
+    $(".user_coupon_owned").addClass("user_coupon_tab_actived");
     $.getJSON('mobile_coupons/coupons_owned', {lng: config.default_location.lng, lat: config.default_location.lat}, function (res) {
       $(".user_coupons_list").empty();
       res.forEach(function (item) {
@@ -43,11 +45,17 @@ $(document).ready(function() {
       });
 
       $(".user_coupons_list .user_coupon_item").click(function () {
+        if($(this).hasClass("expired_coupon_item")){ return };
         window.location.href = "/mobile_coupons/" + $(this).data('id') + "/coupon_show";
       });
     });
   }
 
+  jump == "published" ?  setCouponPublishedActive() : setCouponOwnedActive();
+}
+
+$(document).ready(function() {
+  init();
 });
 
 wx.ready(function () {
@@ -59,16 +67,7 @@ wx.ready(function () {
       var speed = res.speed; // 速度，以米/每秒计
       var accuracy = res.accuracy; // 位置精度
 
-      $.getJSON('mobile_coupons/coupons_nearby', {lng: longitude, lat: lat}, function (res) {
-        res.forEach(function (item) {
-          html = tmpl("item_tmpl", {item: item});
-          $(".user_coupons_list").append(html);
-        });
-
-        $(".user_coupons_list .user_coupon_item").click(function () {
-          window.location.href = "/mobile_coupons/" + $(this).data('id');
-        });
-      });
+      init();
     }
   });
 });

@@ -11,15 +11,24 @@
     %p 2、如停放时间超过一整日，则此券无效。
     %p
       3、本券限
-      %span 3月25日
+      %span #{@coupon_tpl.fit_for_date.to_time.to_s(:lb_cn_short)}
       当日使用，过期或者提前无效。
   .user_coupon_tpl_show_click_area
-    %a.user_coupon_tpl_show_click_area_bg{:href => claim_mobile_coupon_path(@coupon_tpl), "data-method" => "post"}
-      .user_coupon_tpl_show_click_area_content
-        .user_coupon_tpl_show_click_area_text
-          抢券
-        .user_coupon_tpl_show_click_area_count
-          12/50
+    - if !@coupon_tpl.can_be_claimed_by?(current_user)
+      %a.user_coupon_tpl_show_click_area_bg
+        .user_coupon_tpl_show_click_area_content
+          .user_coupon_tpl_show_click_area_text
+            抢券
+          .user_coupon_tpl_show_click_area_count
+            #{@coupon_tpl.quantity - @coupon_tpl.claimed_count }/#{@coupon_tpl.quantity}
+    - else
+      %a.user_coupon_tpl_show_click_area_bg_active{:href => claim_mobile_coupon_path(@coupon_tpl), "data-method" => "post"}
+        .user_coupon_tpl_show_click_area_content
+          .user_coupon_tpl_show_click_area_text
+            抢券
+          .user_coupon_tpl_show_click_area_count
+            #{@coupon_tpl.quantity - @coupon_tpl.claimed_count }/#{@coupon_tpl.quantity}
+
 
 
 = javascript_include_tag "mobile_coupon_tpl_show"

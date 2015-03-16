@@ -25,6 +25,7 @@ $user-background-color: #efefef
 $user_coupon_tab_border_color: #61a7f9
 $user_coupon_free_item_highlight_color: #e48030
 $user_coupon_long_term_item_highlight_color: #a1ce33
+$user_coupon_expired_item_highlight_color: #c2c2c2
 $user_coupon_tpl_show_click_area_bg: #bebebe
 $user_coupon_tpl_show_click_area_bg_active: #e4841f
 
@@ -501,6 +502,23 @@ a[title="站长统计"]
           border-bottom: 3px dashed white
         .user_coupon_item_title_duration
           color: $user_coupon_long_term_item_highlight_color
+      .expired_coupon_item
+        color: $user_coupon_expired_item_highlight_color
+        .user_coupon_item_head
+          background-color: $user_coupon_expired_item_highlight_color
+          border-bottom: 3px dashed white
+        .user_coupon_item_title_duration
+          color: $user_coupon_expired_item_highlight_color
+        .user_coupon_item_title_price
+          color: $user_coupon_expired_item_highlight_color
+        .user_coupon_item_detail
+          color: $user_coupon_expired_item_highlight_color
+          .user_coupon_item_detail_distance
+            span
+              color: $user_coupon_expired_item_highlight_color!important
+
+          .user_coupon_item_detail_type
+            color: $user_coupon_expired_item_highlight_color!important
       .user_coupon_item_content
         color: #565659
         padding: 10px
@@ -546,10 +564,7 @@ a[title="站长统计"]
       margin: 0.2em
   .user_coupon_tpl_show_click_area
     color: white
-    a.user_coupon_tpl_show_click_area_bg_active
-      background-color: $user_coupon_tpl_show_click_area_bg_active
-      display: block
-    a.user_coupon_tpl_show_click_area_bg
+    a.user_coupon_tpl_show_click_area_bg, a.user_coupon_tpl_show_click_area_bg_active
       text-decoration: none
       color: white
       display: block
@@ -570,6 +585,9 @@ a[title="站长统计"]
         .user_coupon_tpl_show_click_area_count
           font-weight: 400
           font-size: .8em
+    a.user_coupon_tpl_show_click_area_bg_active
+      background-color: $user_coupon_tpl_show_click_area_bg_active
+      display: block
 
 .user_nav_bar
   height: 44px

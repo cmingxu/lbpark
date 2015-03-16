@@ -47,21 +47,26 @@ class Coupon < ActiveRecord::Base
   end
 
   def after_claim
+    self.update_column :claimed_at, Time.now
     self.update_column :expire_at, self.fit_for_date.end_of_day if self.free?
     self.update_column :expire_at, Time.now + 1.month if self.monthly?
     self.update_column :expire_at, Time.now + 3.month if self.quarterly?
+  end
+
+  def expired?
+    Time.now > expire_at
   end
 
   def as_api_json(location)
     {
       :id => id,
       :coupon_type_readable => CouponTpl.coupon_type_to_readable(self.coupon_tpl.type) == "free" ? "free" : "long_term",
-      :duration  => self.coupon_tpl.duration,
+      :duration  => expired? ? "过期" : self.coupon_tpl.duration,
       :price     => self.price,
       :distance  => LbRange.new(location, self.coupon_tpl.park.location).distance,
       :park_name => self.coupon_tpl.park.name,
       :park_type => self.coupon_tpl.park.park_type,
-      :expired   => Time.now > self.expire_at
+      :expired   => expired?
     }
   end
 
