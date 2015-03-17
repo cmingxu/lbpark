@@ -55,7 +55,7 @@ function init() {
 }
 
 $(document).ready(function() {
-  init();
+  //init();
 });
 
 wx.ready(function () {
