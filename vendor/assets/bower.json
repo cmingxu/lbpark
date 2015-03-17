@@ -14,6 +14,7 @@
     "bootstrap-datepicker": "latest",
     "fastclick": "latest",
     "moment": "latest",
-    "normalize": "latest"
+    "normalize": "latest",
+    "mobiscroll": "latest"
   }
 }

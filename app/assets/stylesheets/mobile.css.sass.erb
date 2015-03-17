@@ -28,6 +28,7 @@ $user_coupon_long_term_item_highlight_color: #a1ce33
 $user_coupon_expired_item_highlight_color: #c2c2c2
 $user_coupon_tpl_show_click_area_bg: #bebebe
 $user_coupon_tpl_show_click_area_bg_active: #e4841f
+$user_coupon_tpl_show_click_area_bg_active_long_term: #a1ce33
 
 body
   -webkit-font-smoothing: antialiased
@@ -562,9 +563,22 @@ a[title="站长统计"]
     padding: 10px
     p
       margin: 0.2em
+    span
+      color: red
+    .user_coupon_tpl_input
+      width: 80%
+      margin: 0px auto
+      padding: 10px
+      input 
+        width: 100%
+        height: 30px
+        line-height: 30px
+        font-size: 1.2em
+        font-weight: 500
+
   .user_coupon_tpl_show_click_area
     color: white
-    a.user_coupon_tpl_show_click_area_bg, a.user_coupon_tpl_show_click_area_bg_active
+    a.user_coupon_tpl_show_click_area_bg, a.user_coupon_tpl_show_click_area_bg_active, a.user_coupon_tpl_show_click_area_bg_active_long_term
       text-decoration: none
       color: white
       display: block
@@ -587,6 +601,9 @@ a[title="站长统计"]
           font-size: .8em
     a.user_coupon_tpl_show_click_area_bg_active
       background-color: $user_coupon_tpl_show_click_area_bg_active
+      display: block
+    a.user_coupon_tpl_show_click_area_bg_active_long_term
+      background-color: $user_coupon_tpl_show_click_area_bg_active_long_term
       display: block
 
 .user_nav_bar

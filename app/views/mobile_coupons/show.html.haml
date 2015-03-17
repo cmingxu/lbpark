@@ -4,15 +4,36 @@
   .user_coupon_tpl_show_banner
     %image#user_coupon_tpl_show_banner{:src => "#{asset_path('user_coupon_banner.jpg')}"}
   .user_coupon_tpl_show_notice
-    %p
-      %strong
-        使用说明:
-    %p 1、会员可抢今日和明日券，出场时刷券使用。
-    %p 2、如停放时间超过一整日，则此券无效。
-    %p
-      3、本券限
-      %span #{@coupon_tpl.fit_for_date.to_time.to_s(:lb_cn_short)}
-      当日使用，过期或者提前无效。
+    - if @coupon_tpl.free?
+      %p
+        %strong
+          使用说明:
+      %p 1、会员可抢今日和明日券，出场时刷券使用。
+      %p 2、如停放时间超过一整日，则此券无效。
+      %p
+        3、本券限
+        %span #{@coupon_tpl.fit_for_date.to_time.to_s(:lb_cn_short)}
+        当日使用，过期或者提前无效。
+
+    - if @coupon_tpl.quarterly?
+      .user_coupon_tpl_input
+        包两个月送一个月，特价
+        %span= @coupon_tpl.price
+        元
+      .user_coupon_tpl_input
+        = text_field_tag "", "", :placeholder => "请选择包季起点", :id => "date"
+      .user_coupon_tpl_input
+        = text_field_tag "", "", :placeholder => "请输入配送地址"
+
+    - if @coupon_tpl.monthly?
+      .user_coupon_tpl_input
+        数量有限， 特价包月
+        %span= @coupon_tpl.price
+      .user_coupon_tpl_input
+        = text_field_tag "", "", :placeholder => "请选择包月起点", :id => "date"
+      .user_coupon_tpl_input
+        = text_field_tag "", "", :placeholder => "请输入配送地址"
+
   .user_coupon_tpl_show_click_area
     - if !@coupon_tpl.can_be_claimed_by?(current_user)
       %a.user_coupon_tpl_show_click_area_bg
@@ -22,7 +43,7 @@
           .user_coupon_tpl_show_click_area_count
             #{ @coupon_tpl.claimable_count }/#{@coupon_tpl.quantity}
     - else
-      %a.user_coupon_tpl_show_click_area_bg_active{:href => claim_mobile_coupon_path(@coupon_tpl), "data-method" => "post"}
+      %a{:href => claim_mobile_coupon_path(@coupon_tpl), "data-method" => "post", :class => @coupon_tpl.free? ? "user_coupon_tpl_show_click_area_bg_active" : "user_coupon_tpl_show_click_area_bg_active_long_term"}
         .user_coupon_tpl_show_click_area_content
           .user_coupon_tpl_show_click_area_text
             抢券
@@ -32,3 +53,23 @@
 
 
 = javascript_include_tag "mobile_coupon_tpl_show"
+- if @coupon_tpl.monthly? || @coupon_tpl.quarterly?
+  = javascript_include_tag "custom_mobiscroll"
+  = stylesheet_link_tag "custom_mobiscroll"
+  :javascript
+    var currYear = (new Date()).getFullYear();
+    var optDate = {
+      preset: 'date', //日期
+      theme: $.mobiscroll.defaults.theme, //皮肤样式
+      display: 'modal', //显示方式
+      mode: 'scroller', //日期选择模式
+      lang:'zh',
+      showNow: true,
+      nowText: "今",
+      startYear:currYear, //开始年份
+      endYear:currYear + 10 //结束年份
+     };
+
+    $(document).ready(function(){
+     $("#date").mobiscroll(optDate);
+    });
