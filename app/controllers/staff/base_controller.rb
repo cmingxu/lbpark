@@ -3,7 +3,6 @@ class Staff::BaseController < ApplicationController
   before_filter :staff_login_required
   after_filter :reset_last_captcha_code!
 
-
   helper_method :current_staff, :current_user
 
   def current_staff
