@@ -46,6 +46,7 @@ class MobileCouponsController < MobileController
 
   def coupon_show
     @coupon = current_user.coupons.find_by_id(params[:id])
+    redirect_to root_path and return if @coupon.nil?
   end
 
   def check_if_coupon_used

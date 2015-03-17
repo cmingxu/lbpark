@@ -4,6 +4,10 @@
 
 .vendor_coupon_use
   .vendor_coupon_use_icon
+    - if @scan_result
+      %image{:src => asset_path("coupon_use_success.jpg"), :height => 200, :width => 200 }
+    - else
+      %image{:src => asset_path("coupon_use_fail.jpg"), :height => 200, :width => 200  }
   .vendor_coupon_use_notice
     .vendor_coupon_use_notice_big
       - if @scan_result

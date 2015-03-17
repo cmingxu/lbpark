@@ -3,7 +3,6 @@
 .user_coupon_show_page
   .user_nav_bar
     = link_to "< 返回", mobile_coupons_path
-   
   - if @coupon.free?
     .user_coupon_notice
       恭喜您获得萝卜停车券一张， 请在收费岗亭展示该二维码。
