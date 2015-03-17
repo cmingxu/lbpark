@@ -3,14 +3,25 @@
 .user_coupon_show_page
   .user_nav_bar
     = link_to "< 返回", mobile_coupons_path
-
-  .user_coupon_notice
-    恭喜您获得萝卜停车券一张， 请在收费岗亭展示该二维码。
-  .user_coupon_qr_code
-    .user_coupon_qr_code_bg
-      = image_tag @coupon.qr_code.thumb.url
-      - if @coupon.coupon_tpl.type_in_readable_format == "free"
-        .user_coupon_qr_code_bg_text 限#{@coupon.coupon_tpl.fit_for_date.to_s(:lb_cn_short)}使用
+   
+  - if @coupon.free?
+    .user_coupon_notice
+      恭喜您获得萝卜停车券一张， 请在收费岗亭展示该二维码。
+    .user_coupon_qr_code
+      .user_coupon_qr_code_bg
+        = image_tag @coupon.qr_code.thumb.url
+        - if @coupon.coupon_tpl.type_in_readable_format == "free"
+          .user_coupon_qr_code_bg_text 限#{@coupon.coupon_tpl.fit_for_date.to_s(:lb_cn_short)}使用
+  - else
+    .user_coupon_notice
+      恭喜！您申请的从
+      %span
+        = @coupon.claimed_at.to_s(:lb_cn_short)
+      开始的券已经提交。
+    .user_coupon_qr_code
+      .user_coupon_qr_code_bg
+        办卡无需到现场，萝卜为您上门服务。若12小时内未响应请拨打
+        = Settings.four_zero_zero
   .user_coupon_btns
     = link_to "规则", rule_mobile_coupons_path, :class => "user_coupon_btn"
     = link_to "保存", "", :class => "user_coupon_btn"

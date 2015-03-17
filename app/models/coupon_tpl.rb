@@ -52,6 +52,7 @@ class CouponTpl < ActiveRecord::Base
 
   #default_scope lambda { order("priority desc, fit_for_date ASC, type")}
   scope :highlighted, -> { where(:priority => HIHGLIGHT_PRIORITY)}
+  scope :time_range_right, -> { where(["fit_for_date is NULL OR fit_for_date = ? OR fit_for_date = ?", Time.now.strftime("%Y-%m-%d"), Time.now.tomorrow.strftime("%Y-%m-%d")]) }
   scope :published, -> { where(:status => "published") }
   scope :within_range, lambda {|range| where(["gcj_lng > ? AND gcj_lat > ? AND gcj_lng < ? AND gcj_lat <?", range.p1.lng, range.p1.lat, range.p2.lng, range.p2.lat]).limit(200) }
 

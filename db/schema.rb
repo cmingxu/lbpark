@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315010326) do
+ActiveRecord::Schema.define(version: 20150317064900) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 20150315010326) do
     t.date     "fit_for_date"
     t.string   "coupon_tpl_type"
     t.datetime "expire_at"
+    t.string   "qr_code"
+    t.date     "issued_begin_date"
   end
 
   create_table "feedbacks", force: true do |t|

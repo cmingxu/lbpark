@@ -16,8 +16,8 @@ class MobileCouponsController < MobileController
 
   def coupons_nearby
     @location = Location.new params[:lng], params[:lat]
-    @highlighted_coupon_tpls = CouponTpl.highlighted
-    @free_coupon_tpls        = CouponTpl::FreeCouponTpl.published.within_range(@location.around(1000))
+    @highlighted_coupon_tpls = CouponTpl.highlighted.time_range_right
+    @free_coupon_tpls        = CouponTpl::FreeCouponTpl.published.within_range(@location.around(1000)).time_range_right
     @long_term_coupon_tpls   = CouponTpl::LongTermCouponTpl.published.within_range(@location.around(1000))
     render :json => [
       @highlighted_coupon_tpls, @free_coupon_tpls, @long_term_coupon_tpls
@@ -78,7 +78,7 @@ class MobileCouponsController < MobileController
   def coupon_params
     params[:coupon] ||= HashWithIndifferentAccess.new
     params[:coupon][:user_id] = current_user.id
-    params.require(:coupon).permit(:user_id)
+    params.require(:coupon).permit(:user_id, :issued_address, :issued_begin_date)
   end
 
 end

@@ -13,6 +13,7 @@ defaults: &defaults
   park_info_encrypted: true
   production: true
   qr_code_url: 'http://qrcode.6luobo.com'
+  four_zero_zero: "400-810-2345"
 
 
 development:
