@@ -37,7 +37,8 @@ class ApplicationController < ActionController::Base
   end
 
   def user_agent_wechat?
-    !!(request.user_agent =~ /MicroMessenger/i)
+    return true
+    #!!(request.user_agent =~ /MicroMessenger/i)
   end
 
   def set_wechat_js_config(wechat_api)
