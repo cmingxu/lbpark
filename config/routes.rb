@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   captcha_route
   # wechat requests
   get 'mobile/map'
+  get 'map' => "mobile/map"
   get 'mobile/hot_place'
   get 'mobile/setting'
   post 'feedback' => "mobile#feedback"
@@ -52,8 +53,6 @@ Rails.application.routes.draw do
       get :use
     end
   end
-
-
 
   namespace :api do
     resource :wechat, controller: :wechat, only: [:show, :create]

@@ -1,6 +1,6 @@
 class MobileController < ApplicationController
   layout "mobile"
-  before_filter :login_required_if_wechat_request, :except => [:login_from_wechat]
+  before_filter :login_required, :except => [:login_from_wechat]
   before_filter  :only => [:map, :hot_place, :setting] do
     set_wechat_js_config $wechat_api
   end
@@ -20,25 +20,26 @@ class MobileController < ApplicationController
   def feedback
     @fb = Feedback.new(feedback_params)
     @fb.save
-    redirect_to root_path
+    redirect_to map_path
   end
 
   def login_from_wechat
     if user = User.login_from_wechat(request.env["omniauth.auth"], :user)
       session[:user_id] = user.id
-      redirect_to(session[:user_redirect_to] || root_path) and return
+      redirect_to(session[:user_redirect_to] || map_path) and return
     end
   end
 
-  def login_required_if_wechat_request
-    if user_agent_wechat?
-      if current_user.nil?
-        session[:user_redirect_to] = request.path
-        redirect_to "/auth/wechat_user" and return
-        return false
-      end
-    else
+  def login_required
+    if !Rails.env.production?
       session[:user_id] = User.first.id
+      return true
+    end
+
+    if current_user.nil?
+      session[:user_redirect_to] = request.path if !request.post?
+      redirect_to "/auth/wechat_user" and return
+      return false
     end
   end
 

@@ -82,7 +82,7 @@ class VendorController < ApplicationController
       return
     end
     if current_vendor.nil?
-      session[:redirect_to] = request.path
+      session[:redirect_to] = request.path if request.post?
       redirect_to "/auth/wechat_vendor" and return
     end
   end
