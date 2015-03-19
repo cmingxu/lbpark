@@ -131,7 +131,11 @@ class CouponTpl < ActiveRecord::Base
   end
 
   def generate_all_new_coupon_job
-    Resque.enqueue_at Time.now, CouponGenerationJob, self.id
+    if Rails.env.production?
+      Resque.enqueue_at Time.now, CouponGenerationJob, self.id
+    else
+      generate_all_new_coupon
+    end
   end
 
   def can_be_claimed_by?(user)
