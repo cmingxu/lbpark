@@ -34,6 +34,7 @@ gem 'rails_kindeditor'
 #gem 'rack-tidy'
 
 gem 'carrierwave', '0.10.0'
+gem 'rack-throttle'
 
 
 gem 'grape', '~> 0.9.1', :git => "git@github.com:intridea/grape.git"

@@ -41,5 +41,10 @@ module Lbpark
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :'zh-cn'
 
+
+    require 'rack/throttle'
+    config.middleware.use Rack::Throttle::Interval
+    use Rack::Throttle::Daily,    :max => 1000
+    use Rack::Throttle::Interval, :cache => $redis, :key_prefix => :throttle
   end
 end
