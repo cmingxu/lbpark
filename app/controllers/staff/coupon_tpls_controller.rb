@@ -41,7 +41,6 @@ class Staff::CouponTplsController < Staff::BaseController
   def create
     @coupon_tpl = CouponTpl.coupon_class_name(params[:type]).new coupon_tpl_params
     @coupon_tpl.staff = current_staff
-    ap @coupon_tpl
     if @coupon_tpl.save
       redirect_to staff_coupon_tpls_path, :notice => "优惠券创建成功"
     else
