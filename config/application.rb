@@ -42,9 +42,8 @@ module Lbpark
     config.i18n.default_locale = :'zh-cn'
 
 
-    require 'rack/throttle'
-    config.middleware.use Rack::Throttle::Interval
-    config.middleware.use Rack::Throttle::Daily,    :max => 1000 * 4
-    config.middleware.use Rack::Throttle::Interval, :cache => $redis, :key_prefix => :throttle
+    #require 'rack/throttle'
+    #config.middleware.use Rack::Throttle::Daily,    :max => 1000 * 4
+    #config.middleware.use Rack::Throttle::Interval, :cache => $redis, :key_prefix => :throttle
   end
 end
