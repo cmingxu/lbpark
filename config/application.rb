@@ -44,7 +44,7 @@ module Lbpark
 
     require 'rack/throttle'
     config.middleware.use Rack::Throttle::Interval
-    use Rack::Throttle::Daily,    :max => 1000
-    use Rack::Throttle::Interval, :cache => $redis, :key_prefix => :throttle
+    config.middleware.use Rack::Throttle::Daily,    :max => 1000
+    config.middleware.use Rack::Throttle::Interval, :cache => $redis, :key_prefix => :throttle
   end
 end
