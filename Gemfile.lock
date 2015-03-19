@@ -212,9 +212,6 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    rack-tidy (0.2.0)
-      rack (>= 1.0.0)
-      tidy (>= 1.1.2)
     rack-weixin (0.0.4.3)
       multi_json (>= 1.7.9)
       multi_xml (>= 0.5.2)
@@ -329,7 +326,6 @@ GEM
     state_machine (1.2.0)
     thor (0.19.1)
     thread_safe (0.3.4)
-    tidy (1.1.2)
     tilt (1.4.1)
     twitter-bootstrap-rails (3.2.0)
       actionpack (~> 4.1)
@@ -387,7 +383,6 @@ DEPENDENCIES
   omniauth-wechat-oauth2
   quiet_assets
   rack-attack!
-  rack-tidy
   rack-weixin
   rails (= 4.1.6)
   rails_kindeditor

@@ -31,7 +31,7 @@ gem 'capistrano-bundler'
 gem 'capistrano-rvm'
 gem 'rails_kindeditor'
 
-gem 'rack-tidy'
+#gem 'rack-tidy'
 
 gem 'carrierwave', '0.10.0'
 

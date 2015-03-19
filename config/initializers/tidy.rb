@@ -1,3 +1,3 @@
-require 'rack/tidy'
+#require 'rack/tidy'
 
-Rails.application.config.middleware.use Rack::Tidy
+#Rails.application.config.middleware.use Rack::Tidy
