@@ -212,6 +212,8 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    rack-throttle (0.4.0)
+      rack (>= 1.0.0)
     rack-weixin (0.0.4.3)
       multi_json (>= 1.7.9)
       multi_xml (>= 0.5.2)
@@ -383,6 +385,7 @@ DEPENDENCIES
   omniauth-wechat-oauth2
   quiet_assets
   rack-attack!
+  rack-throttle
   rack-weixin
   rails (= 4.1.6)
   rails_kindeditor
