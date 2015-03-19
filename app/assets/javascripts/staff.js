@@ -66,7 +66,7 @@ $(document).ready(function(){
           url: "/staff/parks",
           type: "get",
           dataType: 'JSON',
-          data: {match: query},
+          data: {match: query, type_a_only: true},
           success: function (data) {
             process(data);
           }
@@ -80,6 +80,6 @@ $(document).ready(function(){
 
     $('.date').datepicker({
       format: 'yyyy-mm-dd',
-      startDate: '-1d'
+      startDate: '-0d'
     });
 });

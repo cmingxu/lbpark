@@ -3,3 +3,9 @@
   %td
     = f.text_field :fit_for_date, :class => "date"
     %span 例如:
+
+%tr
+  %td 推广图片
+  %td
+    = f.file_field :banner
+    = image_tag f.object.banner.try(:thumb).try(:url)

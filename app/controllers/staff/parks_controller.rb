@@ -19,6 +19,9 @@ class Staff::ParksController < Staff::BaseController
 
       format.json do
         @parks = Park.where(["name like ?", "%#{params[:match]}%"])
+        if params[:type_a_only]
+          @parks = @parks.with_park_type_code('A')
+        end
         render :json => @parks
       end
     end

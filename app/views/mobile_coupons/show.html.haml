@@ -23,7 +23,7 @@
           %span= @coupon_tpl.price
           元
         .user_coupon_tpl_input
-          = text_field_tag "coupon[issued_begin_date]", Time.now.strftime("%Y-%m-%d"), :placeholder => "请选择包季起点", :id => "date"
+          = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包季起点", :id => "date"
         .user_coupon_tpl_input
           = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址"
 
@@ -32,7 +32,7 @@
           数量有限， 特价包月
           %span= @coupon_tpl.price
         .user_coupon_tpl_input
-          = text_field_tag "coupon[issued_begin_date]", Time.now.strftime("%Y-%m-%d"), :placeholder => "请选择包月起点", :id => "date"
+          = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包月起点", :id => "date"
         .user_coupon_tpl_input
           = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址"
 

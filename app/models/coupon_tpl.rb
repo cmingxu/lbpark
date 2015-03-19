@@ -49,6 +49,10 @@ class CouponTpl < ActiveRecord::Base
 
   before_save :set_defaults, :on => :create
   after_create :generate_all_new_coupon
+  validate :fit_for_date_gt_then_today
+  validates :fit_for_date, presence: { :if => lambda { self.type_in_readable_format == "free" }, :message => "限免券需要提供日期"}
+
+  mount_uploader :banner, CouponTplBannerUploader
 
   #default_scope lambda { order("priority desc, fit_for_date ASC, type")}
   scope :highlighted, -> { where(:priority => HIHGLIGHT_PRIORITY)}
@@ -171,6 +175,10 @@ class CouponTpl < ActiveRecord::Base
 
   def highlighted?
     self.priority == HIHGLIGHT_PRIORITY
+  end
+
+  def fit_for_date_gt_then_today
+    self.errors.add(:fit_for_date, "使用日期不正确") if self.fit_for_date  && self.fit_for_date < Date.today
   end
 
   def set_defaults
