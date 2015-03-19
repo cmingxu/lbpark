@@ -31,6 +31,7 @@ class MobileCouponsController < MobileController
 
   def show
     @coupon_tpl = CouponTpl.find params[:id]
+    render :layout => "mobile_no_tab"
   end
 
   def claim

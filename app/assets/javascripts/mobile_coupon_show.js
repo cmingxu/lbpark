@@ -2,17 +2,14 @@
 //= require config
 //= require logger
 //= require fastclick
-//= require wechat_config
 //= require toast
-//= require template_engine
 
 
 
 $(document).ready(function() {
   var tries = 1;
   function check_if_coupon_used() {
-    tries = tries * 2;
-    if(tries > 8){ tries = 1; }
+    tries = tries + 1;
     $.get('/mobile_coupons/' + $("#coupon_id").val() + "/check_if_coupon_used",
           function (res) {
             if(res.result){
@@ -21,7 +18,8 @@ $(document).ready(function() {
                 window.location.href = "/mobile_coupons";
               }, 3000);
             }else{
-                setTimeout(check_if_coupon_used, tries * 1000);
+              if(tries > 30){ return }
+              setTimeout(check_if_coupon_used, (tries % 3 + 1) * 1000);
             }
           }
          );

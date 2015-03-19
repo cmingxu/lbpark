@@ -2,9 +2,6 @@
 //= require config
 //= require logger
 //= require fastclick
-//= require wechat_config
-//= require template_engine
-//
 
 $(document).ready(function () {
   $("#user_coupon_tpl_show_banner").css("width", document.body.clientWidth - 20);

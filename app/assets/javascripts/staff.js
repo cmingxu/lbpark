@@ -22,6 +22,7 @@
 //= require d3
 //= require moment
 //= require staff/vendors
+//= require epiceditor
 
 
 $(document).ready(function(){

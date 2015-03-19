@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319052154) do
+ActiveRecord::Schema.define(version: 20150319123824) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -70,13 +70,13 @@ ActiveRecord::Schema.define(version: 20150319052154) do
     t.datetime "end_at"
     t.integer  "price"
     t.string   "issued_address"
-    t.string   "qr_code"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "claimed_at"
     t.date     "fit_for_date"
     t.string   "coupon_tpl_type"
     t.datetime "expire_at"
+    t.string   "qr_code"
     t.date     "issued_begin_date"
   end
 
@@ -146,6 +146,16 @@ ActiveRecord::Schema.define(version: 20150319052154) do
     t.integer  "owner_id"
     t.string   "owner_type"
     t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pages", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.string   "content_type"
+    t.integer  "edit_by"
+    t.string   "permalink"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -293,13 +303,13 @@ ActiveRecord::Schema.define(version: 20150319052154) do
     t.string   "phone"
     t.text     "params"
     t.string   "template"
-    t.string   "send_reason"
     t.datetime "expire_at"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
     t.boolean  "stop"
+    t.string   "send_reason"
   end
 
   add_index "sms_codes", ["phone"], name: "index_sms_codes_on_phone", using: :btree
@@ -361,12 +371,12 @@ ActiveRecord::Schema.define(version: 20150319052154) do
 
   create_table "wechat_user_activities", force: true do |t|
     t.integer  "wechat_user_id"
-    t.string   "openid"
     t.string   "activity"
     t.string   "sub_activity"
     t.text     "params"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "openid"
   end
 
   create_table "wechat_users", force: true do |t|

@@ -1,26 +1,26 @@
 - if current_vendor.phone.present?
   - if current_vendor.park
-    .vendor_mine
-      .vendor_info
-        .vendor_profile
+    .user_mine
+      .user_info
+        .user_profile
           %img{:src => asset_path("vendor_profile.png"), :width => "100", :height => "100"}
-        .vendor_info_detail
-          .vendor_info_park_name
+        .user_info_detail
+          .user_info_park_name
             = current_vendor.park.try(:name)
-          .vendor_info_phone
+          .user_info_phone
             = current_vendor.phone
         .clearfix
-      .vendor_action_list
-        .vendor_action_item
+      .user_mine_action_list
+        .user_mine_action_item
           %a{:href => "/vendor/index"}
             我的主页
             %span >
-        .vendor_action_item
+        .user_mine_action_item
           %a{:href => "/vendor/index"}
             我的奖票
             %span >
         - if current_vendor.can_check_high_score?
-          .vendor_action_item
+          .user_mine_action_item
             %a{:href => "/vendor/high_score_list"}
               英雄榜
               %span >
@@ -28,7 +28,7 @@
           = javascript_include_tag "http://res.wx.qq.com/open/js/jweixin-1.0.0.js" 
           = javascript_include_tag "vendor_wechat_config"
           = javascript_include_tag "vendor/coupons"
-          .vendor_action_item
+          .user_mine_action_item
             %a#scanQRCode
               消停车券
               %span >

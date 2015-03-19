@@ -1,0 +1,25 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        .form-group
+          .input-group.col-md-12
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th Title
+          %th Permalink
+          %th Content
+          %th
+
+        %tbody
+          - @pages.each do |p|
+            %tr
+              %td= link_to p.id, edit_staff_page_path(p)
+              %td= p.permalink
+              %td= p.title
+              %td= p.content
+              %td

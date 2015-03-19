@@ -18,9 +18,13 @@ class MobileController < ApplicationController
   end
 
   def feedback
-    @fb = Feedback.new(feedback_params)
-    @fb.save
-    redirect_to map_path
+    if request.post?
+      @fb = Feedback.new(feedback_params)
+      @fb.save
+      redirect_to map_path and return
+
+    end
+    render :feedback, :layout => "mobile_no_tab"
   end
 
   def login_from_wechat

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'map' => "mobile/map"
   get 'mobile/hot_place'
   get 'mobile/setting'
+  get 'mobile/feedback'
   post 'feedback' => "mobile#feedback"
 
   get 'vendor' => "vendor#index"
@@ -81,6 +82,8 @@ Rails.application.routes.draw do
       put :merge
       resources :park_imports
     end
+
+    resources :pages
 
     resources :vendors do
       patch :switch_scan_coupon_status
