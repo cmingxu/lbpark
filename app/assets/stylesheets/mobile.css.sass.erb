@@ -110,7 +110,7 @@ a[title="站长统计"]
     .zero_notion
       font-size: 12px
     .rmb_mark
-      position: fixed
+      position: absolute
       font-size: 10px
       left: 4px
       top: 5px
@@ -225,9 +225,9 @@ a[title="站长统计"]
         width: 50px
         margin-left: 8px
       .nav_button_text
-        font-size: 12px
+        font-size: 0.8em
         color: #3f74d8
-        margin-top: -20px
+        margin-top: -15px
 
   #park_detail
     width: 100%
@@ -237,6 +237,7 @@ a[title="站长统计"]
     z-index: 100000
     position: fixed
     .row
+      box-sizing: border-box
       border-top: 1px solid $border-color
       &:first-child
         height: 114px
@@ -306,25 +307,27 @@ a[title="站长统计"]
         margin-top: 10px
         font-size: 12px
         display: inline-block
-      #coupon_tags
-        padding-top: 5px
-      .coupon_tag
-        display: inline-block
-        padding: 2px 3px
-        border: 1px solid gray
-        font-size: .8em
         box-shadow: 1px 1px 1px rgba(black, 0.5)
-      .coupon_tag_active
-        position: relative
-        &:after
-          position: absolute
-          content: ''
-          width: 5px
-          height: 5px
-          border-radius: 50%
-          background-color: red
-          top: -3px
+      &#coupon_tags
+        padding-top: 5px
+        padding-left: 5px
+        .coupon_tag
+          display: inline-block
+          padding: 2px 3px
+          border: 1px solid $border-color
+          font-size: .8em
           box-shadow: 1px 1px 1px rgba(black, 0.5)
+        .coupon_tag_active
+          position: relative
+          &:after
+            position: absolute
+            content: ''
+            width: 5px
+            height: 5px
+            border-radius: 50%
+            background-color: red
+            top: -3px
+            box-shadow: 1px 1px 1px rgba(black, 0.5)
       .lb_notice
         height: 55px
         width: 50px

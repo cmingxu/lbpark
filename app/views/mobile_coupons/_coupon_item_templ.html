@@ -19,7 +19,7 @@
 
        <div class="user_coupon_item_detail">
            <div class="user_coupon_item_detail_distance">
-              距离您<span> <%=item.distance%></span> 米
+              距离您<span> <%=item.distance%></span> <%if((""+item.distance).match(/\d/)){%>米<%}%>
            </div>
 
            <span class="user_coupon_item_detail_name"><%=item.park_name%></span>

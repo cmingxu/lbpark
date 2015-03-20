@@ -16,7 +16,7 @@ class PriceCalculator
 
   def current_price
     price = if by_month_only?
-      ""
+      "月"
     elsif by_whole_day?
       park.whole_day_price_per_time || park.whole_day_price_per_hour
     elsif price_by_day?
