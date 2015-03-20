@@ -114,6 +114,20 @@ a[title="站长统计"]
       font-size: 10px
       left: 4px
       top: 5px
+    .coupon_mark
+      font-weight: 500
+      font-size: .6em
+      display: inline-block
+      background-color: white
+      border: 1px solid gray
+      border-radius: 50%
+      color: black
+      box-sizing: border-box
+      position: absolute
+      padding: 2px
+      top: -6px
+      width: 20px
+      height: 20px
   .lb_marker_a
   .lb_marker_b
   .lb_marker_c
@@ -328,6 +342,19 @@ a[title="站长统计"]
             background-color: red
             top: -3px
             box-shadow: 1px 1px 1px rgba(black, 0.5)
+        .coupon_tag_active_today
+          color: $user_coupon_free_item_highlight_color
+          border-color: $user_coupon_free_item_highlight_color
+        .coupon_tag_active_tomorrow
+          color: $user_coupon_free_item_highlight_color
+          border-color: $user_coupon_free_item_highlight_color
+        .coupon_tag_active_monthly
+          color: $user_coupon_long_term_item_highlight_color
+          border-color: $user_coupon_long_term_item_highlight_color
+        .coupon_tag_active_quarterly
+          color: $user_coupon_long_term_item_highlight_color
+          border-color: $user_coupon_long_term_item_highlight_color
+
       .lb_notice
         height: 55px
         width: 50px
@@ -514,6 +541,7 @@ a[title="站长统计"]
         width: 50%
         display: inline-block
         float: left
+        color: $user_coupon_tab_border_color
         text-align: center
         border-top: 1px solid $user_coupon_tab_border_color
         border-bottom: 1px solid $user_coupon_tab_border_color

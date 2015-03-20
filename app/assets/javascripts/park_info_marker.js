@@ -18,6 +18,11 @@ LB.park_info_marker = function (park) {
       if(park.busy_status == 4){ //未知
         text = "";
       }
+
+      if(park.free_today_coupon || park.free_tomorrow_coupon || 
+         park.monthly_coupon || park.quarterly_coupon){
+        text += "<span class='coupon_mark'>券</span>"
+      }
     break;
     case 'B':
       classes.push("marker_" + park.park_type_code.toLowerCase());

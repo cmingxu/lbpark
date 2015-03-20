@@ -21,6 +21,11 @@ LB.park_info_state = {
   night_price_unit_dom: $("#night_price_unit"),
   night_time_range_dom: $("#night_time_range"),
   park_preview_dom: $("#park_preview"),
+  free_today_dom: $("#free_today"),
+  free_tomorrow_dom: $("#free_tomorrow"),
+  monthly_dom: $("#monthly"),
+  quarterly_dom: $("#quarterly"),
+
 
   get_current_state: function () {
      return this.current_state;
@@ -117,6 +122,26 @@ LB.park_info_state = {
 
     this.detail_dom.show();
     this.park_dom.show();
+
+    if(park.free_today_coupon){
+      this.free_today_dom.addClass('coupon_tag_active');
+      this.free_today_dom.addClass('coupon_tag_active_today');
+    }
+
+    if(park.free_tomorrow_coupon){
+      this.free_tomorrow_dom.addClass('coupon_tag_active');
+      this.free_tomorrow_dom.addClass('coupon_tag_active_tomorrow');
+    }
+
+    if(park.monthly_coupon){
+      this.monthly_dom.addClass('coupon_tag_active');
+      this.monthly_dom.addClass('coupon_tag_active_monthly');
+    }
+
+    if(park.quarterly_coupon){
+      this.quarterly_dom.addClass('coupon_tag_active');
+      this.quarterly_dom.addClass('coupon_tag_active_quarterly');
+    }
 
   }
 

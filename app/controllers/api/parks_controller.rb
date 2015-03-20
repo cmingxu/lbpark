@@ -1,6 +1,7 @@
 class Api::ParksController < Api::BaseController
   def index
     @location = Location.new params[:lng], params[:lat]
+    @coupon_tpls = CouponTpl.all_visible_around(@location)
     park_json = Park.within_range(@location.around(Settings.parks_visible_range)).includes(:park_pics).all.map do |p|
       {
         :lng => p.lng,
@@ -21,7 +22,11 @@ class Api::ParksController < Api::BaseController
         :night_price_unit => p.night_unit,
         :park_lb_desc => p.lb_desc,
         :thumb_pic_url => p.thump_pic_url,
-        :no_parking => p.no_parking?
+        :no_parking => p.no_parking?,
+        :free_today_coupon => @coupon_tpls.any?{|ct| ct.park_id == p.id && ct.free? && ct.fit_for_date == Date.today },
+        :free_tomorrow_coupon => @coupon_tpls.any?{|ct| ct.park_id == p.id && ct.free? && ct.fit_for_date != Date.today },
+        :monthly_coupon => @coupon_tpls.any?{|ct| ct.park_id == p.id &&  ct.monthly? },
+        :quarterly_coupon => @coupon_tpls.any?{|ct| ct.park_id == p.id &&  ct.quarterly? }
       }
     end
 
