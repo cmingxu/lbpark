@@ -126,21 +126,25 @@ LB.park_info_state = {
     if(park.free_today_coupon){
       this.free_today_dom.addClass('coupon_tag_active');
       this.free_today_dom.addClass('coupon_tag_active_today');
+      this.free_today_dom.attr('href', config.mobile_coupons_path);
     }
 
     if(park.free_tomorrow_coupon){
       this.free_tomorrow_dom.addClass('coupon_tag_active');
       this.free_tomorrow_dom.addClass('coupon_tag_active_tomorrow');
+      this.free_tomorrow_dom.attr('href', config.mobile_coupons_path);
     }
 
     if(park.monthly_coupon){
       this.monthly_dom.addClass('coupon_tag_active');
       this.monthly_dom.addClass('coupon_tag_active_monthly');
+      this.monthly_dom.attr('href', config.mobile_coupons_path);
     }
 
     if(park.quarterly_coupon){
       this.quarterly_dom.addClass('coupon_tag_active');
       this.quarterly_dom.addClass('coupon_tag_active_quarterly');
+      this.quarterly_dom.attr('href', config.mobile_coupons_path);
     }
 
   }
