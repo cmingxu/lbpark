@@ -28,8 +28,8 @@ class CouponTpl < ActiveRecord::Base
 
   COUPON_TPL_TYPES = {
     :free => "限免",
-    :monthly => "按月",
-    :quarterly => "按季"
+    :monthly => "包月",
+    :quarterly => "包季"
   }
 
   COUPON_TPL_STATUS = {
@@ -105,12 +105,14 @@ class CouponTpl < ActiveRecord::Base
   end
 
   def as_api_json(location)
+    distance = LbRange.new(location, park.location).distance
+    distance = "很远" if distance > Settings.coupons_visible_range
     {
       :id => id,
       :coupon_type_readable => self.class.coupon_type_to_readable(self.type) == "free" ? "free" : "long_term",
       :duration => duration,
       :price => price,
-      :distance => LbRange.new(location, park.location).distance,
+      :distance => distance,
       :park_name => park.name,
       :park_type => park.park_type
     }

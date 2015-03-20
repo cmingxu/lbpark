@@ -1,7 +1,7 @@
 class Api::ParksController < Api::BaseController
   def index
     @location = Location.new params[:lng], params[:lat]
-    park_json = Park.within_range(@location.around(1000)).includes(:park_pics).all.map do |p|
+    park_json = Park.within_range(@location.around(Settings.parks_visible_range)).includes(:park_pics).all.map do |p|
       {
         :lng => p.lng,
         :lat => p.lat,

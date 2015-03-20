@@ -17,8 +17,8 @@ class MobileCouponsController < MobileController
   def coupons_nearby
     @location = Location.new params[:lng], params[:lat]
     @highlighted_coupon_tpls = CouponTpl.highlighted.time_range_right
-    @free_coupon_tpls        = CouponTpl::FreeCouponTpl.published.within_range(@location.around(1000)).time_range_right
-    @long_term_coupon_tpls   = CouponTpl::LongTermCouponTpl.published.within_range(@location.around(1000))
+    @free_coupon_tpls        = CouponTpl::FreeCouponTpl.published.within_range(@location.around(Settings.coupons_visible_range)).time_range_right
+    @long_term_coupon_tpls   = CouponTpl::LongTermCouponTpl.published.within_range(@location.around(Settings.coupons_visible_range))
     render :json => [
       @highlighted_coupon_tpls, @free_coupon_tpls, @long_term_coupon_tpls
     ].flatten.sort_by{|a| a.sort_criteria(@location)}.reverse.map { |ct| ct.as_api_json(@location) }
