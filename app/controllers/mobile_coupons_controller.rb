@@ -15,9 +15,10 @@ class MobileCouponsController < MobileController
   end
 
   def coupons_nearby
+    sleep 10
     @location = Location.new params[:lng], params[:lat]
     @coupon_tpls =  CouponTpl.all_visible_around(@location)
-    @coupon_tpls = @coupon_tpls.select {|ct| ct.park_id.to_s == params[:park_id]} if params[:park_id].to_i != 0
+    @coupon_tpls = @coupon_tpls.select {|ct| ct.park_id.to_s == params[:park_id].to_s} if params[:park_id].to_i != 0
     render :json => @coupon_tpls.map{|ct| ct.as_api_json(@location) }
   end
 
