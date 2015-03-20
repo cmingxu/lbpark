@@ -1,0 +1,38 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
+        %thead
+          %th
+          %th
+        %tbody
+          = form_for [:staff, @page], :role => "form", :class => "form", :multipart => true do |f|
+            %tr
+              %td Title
+              %td
+                = f.text_field :title
+
+            %tr
+              %td Slug
+              %td
+                = f.text_field :permalink
+
+            %tr
+              %td 内容
+              %td
+
+                = f.text_field :content, :id => "content"
+                -#= f.kindeditor :content, :afterBlur => 'function(){this.sync();}'
+            %tr
+              %td
+              %td
+                = f.submit "保存", :class => "btn btn-success"
+
+
+:javascript
+  KindEditor.ready(function(K) {
+    K.create('#content', {
+      allowFileManager : true,
+      afterBlur: function(){this.sync();}
+    });
+   })

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'pages/show'
+
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -7,6 +9,8 @@ Rails.application.routes.draw do
   constraints resque_web_constraint do
     mount ResqueWeb::Engine => "/resque_web"
   end
+
+  resources :pages,  :only => [:show] do end
 
   captcha_route
   # wechat requests

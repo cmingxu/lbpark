@@ -128,8 +128,6 @@ GEM
       rspec-rails (>= 2.8.1)
       simplecov (>= 0.3.8)
       yard (>= 0.7.0)
-    epic-editor-rails (0.2.3)
-      railties (>= 3.2, < 5.0)
     equalizer (0.0.9)
     erubis (2.7.0)
     eventmachine (1.0.3)
@@ -371,7 +369,6 @@ DEPENDENCIES
   carrierwave (= 0.10.0)
   coffee-rails (~> 4.0.0)
   easy_captcha
-  epic-editor-rails
   evil_transform
   faye-websocket (~> 0.7.5)
   font-awesome-rails (~> 4.2.0)
