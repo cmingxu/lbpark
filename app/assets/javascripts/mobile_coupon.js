@@ -21,7 +21,7 @@ function init() {
   function setCouponPublishedActive() {
     $(".user_coupon_published").addClass("user_coupon_tab_actived");
     $(".user_coupon_owned").removeClass("user_coupon_tab_actived");
-    $.getJSON('mobile_coupons/coupons_nearby', {lng: config.default_location.lng, lat: config.default_location.lat}, function (res) {
+    $.getJSON('mobile_coupons/coupons_nearby', {lng: config.default_location.lng, lat: config.default_location.lat, park_id: park_id}, function (res) {
       $(".user_coupons_list").empty();
       res.forEach(function (item) {
         html = tmpl("item_tmpl", {item: item});
@@ -37,7 +37,7 @@ function init() {
   function setCouponOwnedActive() {
     $(".user_coupon_published").removeClass("user_coupon_tab_actived");
     $(".user_coupon_owned").addClass("user_coupon_tab_actived");
-    $.getJSON('mobile_coupons/coupons_owned', {lng: config.default_location.lng, lat: config.default_location.lat}, function (res) {
+    $.getJSON('mobile_coupons/coupons_owned', {lng: config.default_location.lng, lat: config.default_location.lat, park_id: park_id}, function (res) {
       $(".user_coupons_list").empty();
       res.forEach(function (item) {
         html = tmpl("item_tmpl", {item: item});
