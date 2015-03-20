@@ -39,7 +39,11 @@
       .park_preview
         %img{:src => "#{image_path('preview.png')}", :id => "park_preview"}
     .row#tags
-      #coupon
+    .row#coupon_tags
+      %a.coupon_tag 今日限免
+      %a.coupon_tag.coupon_tag_active 明日限免
+      %a.coupon_tag 包月
+      %a.coupon_tag.coupon_tag_active 包季
     .row
       .lb_notice
       #tips

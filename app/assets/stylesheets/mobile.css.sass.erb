@@ -306,6 +306,25 @@ a[title="站长统计"]
         margin-top: 10px
         font-size: 12px
         display: inline-block
+      #coupon_tags
+        padding-top: 5px
+      .coupon_tag
+        display: inline-block
+        padding: 2px 3px
+        border: 1px solid gray
+        font-size: .8em
+        box-shadow: 1px 1px 1px rgba(black, 0.5)
+      .coupon_tag_active
+        position: relative
+        &:after
+          position: absolute
+          content: ''
+          width: 5px
+          height: 5px
+          border-radius: 50%
+          background-color: red
+          top: -3px
+          box-shadow: 1px 1px 1px rgba(black, 0.5)
       .lb_notice
         height: 55px
         width: 50px
