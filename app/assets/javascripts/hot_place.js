@@ -16,8 +16,13 @@ function hotPlaceSearch(keywords) {
         $("#autocomplete_list").show().empty();
         result.tips.forEach(function (place) {
           if((typeof place.district === "string") && place.district.match(/北京/)){ // skip places out of beijing
-            $("#autocomplete_list").append("<li><a href='/mobile/map?name=" + encodeURIComponent(place.name) + "'>" + place.name + "<span> - " + place.district +"</span>" + "</a></li>");
+            $("#autocomplete_list").append("<li data-name='" + place.name +"'><a>" + place.name + "<span> - " + place.district +"</span>" + "</a></li>");
           }
+        });
+
+        $("#autocomplete_list li").click(function() {
+          $("#autocomplete_list").hide().empty();
+          $("#search_input").val($(this).data('name'));
         });
       }
       if(status=='no_data') {
@@ -40,4 +45,13 @@ $(document).ready(function () {
       }
     });
   });
+
+ $("#autocomplete_confirm_btn").click(function () {
+   if($("#search_input").
+      val().
+        replace(/^\s+|\s+$/, '') == ""){
+     return;
+   }
+   window.location.href = "/mobile/map?name=" + $("#search_input").val();
+ });
 });

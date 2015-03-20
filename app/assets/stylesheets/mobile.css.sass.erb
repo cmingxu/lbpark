@@ -385,9 +385,28 @@ a[title="站长统计"]
 
 
 
+#search_history
+  margin: 10px
+  border: 1px solid gray
+  .search_history_item
+    border-top: 1px solid gray
+    padding: 10px
+    box-sizing: border-box
+    width: 100%
+    font-weight: 700
+    &:nth-child(1)
+      border-top: none
+  .search_history_empty
+    border-top: 1px solid gray
+    padding: 10px
+    box-sizing: border-box
+    width: 100%
+    font-weight: 700
 
 #autocomplete
-  padding: 10px 10px 0px 10px
+  margin: 10px
+  padding: 10px 10px 10px 10px
+  border: 1px solid gray
   #search_place
     padding: 5px 10px 5px 10px
     border: 1px solid gray
@@ -398,19 +417,31 @@ a[title="站长统计"]
       width: 90%
       border: none
       outline: none
+  #autocomplete_confirm_btn
+    background-color: #67abf8
+    width: 100%
+    color: white
+    font-weight: 700
+    border: none
+    padding: 8px
+    margin-top: 20px
+    font-size: 1.1em
+    border-radius: 2px
   #autocomplete_list
     padding: 5px 10px 5px 10px
     list-style: none
     padding: 0px
-    width: 100%
+    width: 80%
     margin: 0px
     border-bottom: 1px solid gray
+    position: absolute
     li
       font-size: 1.1em
       border-left: 1px solid gray
       border-right: 1px solid gray
       border-top: 1px solid gray
       padding: 5px 10px 5px 10px
+      background-color: rgba(255,255,255, 0.8)
       &:hover
         background-color: #e3e3e3
       &.autocomplete_item_last

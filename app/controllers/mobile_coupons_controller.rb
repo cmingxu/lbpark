@@ -71,7 +71,7 @@ class MobileCouponsController < MobileController
 
   def mobile_bind_required
     if current_user.phone.blank?
-      session[:redirect_to] = request.path
+      session[:redirect_to] = request.path if request.get?
       redirect_to bind_mobile_mobile_coupons_path
       return false
     end

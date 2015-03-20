@@ -11,6 +11,7 @@ class MobileController < ApplicationController
 
   def hot_place
     @current_nav = "search"
+    render :layout => "mobile_no_tab_with_amap"
   end
 
   def setting

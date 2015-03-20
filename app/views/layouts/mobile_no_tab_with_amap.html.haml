@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %title= @title || "萝卜停车"
+    = stylesheet_link_tag    'mobile', media: 'all'
+    = javascript_include_tag "http://webapi.amap.com/maps?v=1.3&key=#{Settings.amap_key}" 
+    = csrf_meta_tags
+    %meta{:name => "keywords",    :content => Settings.keywords}
+    %meta{:name => "description", :content => Settings.description}
+    %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1.0,maximum-scale=1.0, user-scalable=no, minimal-ui", :name => "viewport"}
+
+  %body
+    = yield
+    = render :partial => "widgets/statistics" if Rails.env.production?
+
