@@ -6,6 +6,7 @@
 @importa "normalize"
 
 $border-color: #ccc
+$font-color: #3c3c40
 $border-highlight-color-1: #f88db9
 $border-highlight-color-2: #72bbe8
 $border-highlight-color-3: #f8b064
@@ -30,11 +31,16 @@ $user_coupon_tpl_show_click_area_bg: #bebebe
 $user_coupon_tpl_show_click_area_bg_active: #e4841f
 $user_coupon_tpl_show_click_area_bg_active_long_term: #a1ce33
 
+// global
+$user-mine-heading-background-color: #66acf6
+
 body
   -webkit-font-smoothing: antialiased
   margin: 0px
   width: 100%
   height: 100%
+  background-color: $user-background-color
+  color: $font-color
 
 // helpers
 .hidden
@@ -537,6 +543,7 @@ a[title="站长统计"]
         border-top: none
 .user_mine
   padding-top: 5px
+  background-color: $user-background-color
   #feedback_content, #feedback_contact, #feedback_submit_btn
     width: 80%
     margin-left: 5%
@@ -1115,8 +1122,8 @@ a[title="站长统计"]
     font-size: 14px
 
 .user_mine
-  padding: 5px
   .user_info
+    background-color: $user-mine-heading-background-color
     .user_profile
       float: left
     .user_info_detail
@@ -1133,18 +1140,40 @@ a[title="站长统计"]
     border-top: 1px solid #9d9d9d
 
     .user_mine_action_item
-      padding-left: 10px
-      border-bottom: 1px solid #9d9d9d
-      padding-top: 10px
-      padding-bottom: 10px
+      border-bottom: 1px solid $border-color
       cursor: pointer
       a
+        padding: 10px
+        box-sizing: border-box
         text-decoration: none
         display: inline-block
         height: 100%
         width: 100%
         color: inherit
+        .user_mine_action_item_icon
+          height: 30px
+          width: 30px
+          background-image: url('<%= asset_path("mobile_mine_icons.png")%>')
+          background-size: 390px auto
+          margin-top: -3px
+          float: left
+        .user_mine_action_item_icon_help
+          background-position: -240px
+
+        .user_mine_action_item_icon_feedback
+          background-position: -180px
+
+        .user_mine_action_item_icon_about_us
+          background-position: -210px
+        .user_mine_action_item_icon_hot_line
+          background-position: -150px
         span
-          float: right
-          padding-right: 10px
           font-weight: 900
+          float: right
+          display: inline-block
+          height: 30px
+          width: 30px
+          background-image: url('<%= asset_path("mobile_mine_icons.png")%>')
+          background-size: 390px auto
+          background-position: -90px
+

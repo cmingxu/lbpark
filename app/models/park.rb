@@ -176,11 +176,14 @@ class Park < ActiveRecord::Base
     when "B"
       [self.address, self.tips]
     when "C"
-      tips = [self.address, self.tips, self.price_by_day? ? nil : "夜间停车免费，一早记得取车"]
+      tips = [self.address]
+      tips << (self.price_by_day? ? self.tips : "夜间停车免费")
       if self.day_first_hour_price.present? && self.day_second_hour_price.present? && self.price_by_day?
-        tips << "首小时#{self.day_first_hour_price.to_i}元后#{self.day_second_hour_price.to_i}元，长时间记得侃价"
+        tips << "首小时#{self.day_first_hour_price.to_i}元后#{self.day_second_hour_price.to_i}元"
       elsif self.day_first_hour_price.present? && self.price_by_day?
         tips << "每小时#{self.day_first_hour_price.to_i}元"
+      elsif self.day_price_per_time.present? && self.price_by_day?
+        tips << "每次#{self.day_price_per_time.to_i}元"
       end
       tips
     end.select{|a| a.present? }.join("/")

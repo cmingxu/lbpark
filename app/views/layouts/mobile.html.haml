@@ -5,6 +5,7 @@
     = stylesheet_link_tag    'mobile', media: 'all'
     = javascript_include_tag "http://webapi.amap.com/maps?v=1.3&key=#{Settings.amap_key}" 
     = javascript_include_tag "http://res.wx.qq.com/open/js/jweixin-1.0.0.js" 
+    = favicon_link_tag
     = csrf_meta_tags
     %meta{:name => "keywords",    :content => Settings.keywords}
     %meta{:name => "description", :content => Settings.description}

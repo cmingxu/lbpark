@@ -3,6 +3,7 @@
   %head
     %title= @title || "萝卜停车"
     = stylesheet_link_tag    'mobile', media: 'all'
+    = favicon_link_tag
     = csrf_meta_tags
     %meta{:name => "keywords",    :content => Settings.keywords}
     %meta{:name => "description", :content => Settings.description}
