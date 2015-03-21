@@ -62,7 +62,10 @@ function init() {
 }
 
 $(document).ready(function() {
-  init();
+  if(navigator.userAgent.match(/android/i) || navigator.userAgent.match(/iphone|ipad/)){ }
+  else{
+    init();
+  }
 });
 
 wx.ready(function () {
