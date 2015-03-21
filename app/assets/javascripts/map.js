@@ -196,7 +196,7 @@ wx.ready(function () {
       if(navigator.userAgent.match(/iphone|ipad/i)){
         gps = GPS.gcj_encrypt(latitude, longitude);
         latitude = gps.lat;
-        longitude = gps.lng;
+        longitude = gps.lon;
       }
       LB.current_location.lng = longitude;
       LB.current_location.lat = latitude;
