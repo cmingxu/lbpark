@@ -186,7 +186,7 @@ wx.ready(function () {
   type = navigator.userAgent.match(/android/i) ? 'gcj02' : 'wgs84';
   alert(type);
   wx.getLocation({
-    //type: type,
+    type: 'gcj02',
     success: function (res) {
       var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
       var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
@@ -194,6 +194,8 @@ wx.ready(function () {
       var accuracy = res.accuracy; // 位置精度
       LB.current_location.lng = longitude;
       LB.current_location.lat = latitude;
+      alert(latitude);
+      alert(longitude);
       if(place_name == ""){ // set center to current location if no searching
         LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
         LB.center = LB.current_location;
