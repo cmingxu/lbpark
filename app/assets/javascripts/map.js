@@ -183,6 +183,10 @@ $(document).ready(function () {
 });
 
 wx.ready(function () {
+
+  alert(navigator.userAgent);
+  alert(wx.isAndroid);
+  alert(wx.isIOS);
   wx.getLocation({
     type: wx.isAndroid ? 'gcj02' : 'wgs84',
     success: function (res) {
