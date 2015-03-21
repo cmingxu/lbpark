@@ -7,6 +7,9 @@
 
 $border-color: #ccc
 $font-color: #3c3c40
+$weight-normal: 400
+$weight-bold: 700
+$weight-extra-bold: 900
 $border-highlight-color-1: #f88db9
 $border-highlight-color-2: #72bbe8
 $border-highlight-color-3: #f8b064
@@ -33,6 +36,11 @@ $user_coupon_tpl_show_click_area_bg_active_long_term: #a1ce33
 
 // global
 $user-mine-heading-background-color: #66acf6
+
+// tabs
+$tab-font-color: $font-color
+$tab-font-color-highlight: #568cda
+
 
 body
   -webkit-font-smoothing: antialiased
@@ -419,9 +427,10 @@ a[title="站长统计"]
     display: block
     float: left
     font-size: 12px
-    font-weight: 700
+    font-weight: $weight-normal
     text-decoration: none
-    color: white
+    text-align: center
+    position: relative
     span
       width: 32px
       height: 100%
@@ -430,9 +439,15 @@ a[title="站长统计"]
       background-image: url(<%= asset_path('user_index.png')%>)
       background-size: 400px auto
       background-repeat: no-repeat
-      text-align: center
       padding-top: 14px
-      color: #828282
+    .tab_name
+      position: absolute
+      top: 14px
+      width: 100%
+      text-align: center
+      z-index: 10040
+      color: $tab-font-color
+
     span.map
       background-position-x: -234px
     span.search
@@ -441,13 +456,16 @@ a[title="站长统计"]
       background-position-x: -367px
     span.map_press
       background-position-x: -200px
-      color: #598dd7
+    span.map_press + .tab_name
+      color: $tab-font-color-highlight
     span.search_press
       background-position-x: -267px
-      color: #598dd7
+    span.search_press + .tab_name
+      color: $tab-font-color-highlight
     span.mine_press
       background-position-x: -334px
-      color: #598dd7
+    span.mine_press + .tab_name
+      color: $tab-font-color-highlight
     span.report
       background-image: url(<%= asset_path('vendor_tab_icon.png')%>)
       background-size: 200px auto
@@ -682,14 +700,11 @@ a[title="站长统计"]
 
 .user_coupon_tpl_show_page
   background-color: $user-background-color
-  min-height: 1000px
   .user_coupon_tpl_show_banner
     width: 100%
     text-align: center
   .user_coupon_tpl_show_notice
     padding: 10px
-    p
-      margin: 0.2em
     span
       color: red
     .user_coupon_tpl_input
@@ -741,9 +756,20 @@ a[title="站长统计"]
   padding-left: 10px
   a
     text-decoration: none
-    color: #5a92e1
     display: block
-    font-weight: 900
+    font-weight: 700
+    padding-left: 20px
+    span
+      height: 44px
+      display: inline-block
+      position: absolute
+      width: 44px
+      background-image: url('<%= asset_path("mobile_mine_icons.png")%>')
+      background-size: 570px auto
+      background-position: -176px
+      float: left
+      left: 0px
+      top: -2px
 
 .user_coupon_show_page
   background-color: $user-background-color
