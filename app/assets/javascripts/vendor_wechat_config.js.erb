@@ -8,8 +8,12 @@ if(window.wechat !== undefined){
     jsApiList: ["getLocation", "getNetworkType", "scanQRCode"] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
   };
   wx.config( wconfig );
+  alert(navigator.userAgent);
+
   wx.isAndroid = (function () { return navigator.userAgent.match(/android/i); })();
   wx.isIOS = (function () { return navigator.userAgent.match(/iphone|ipad/i); })();
+  alert(wx.isAndroid);
+  alert(wx.isIOS);
 }else{
   wx = {};
 }
