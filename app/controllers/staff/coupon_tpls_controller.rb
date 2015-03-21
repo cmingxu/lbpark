@@ -44,7 +44,8 @@ class Staff::CouponTplsController < Staff::BaseController
     if @coupon_tpl.save
       redirect_to staff_coupon_tpls_path, :notice => "优惠券创建成功"
     else
-      render :new, :alert => @coupon_tpl.errors.full_messages.first
+      flash.now[:alert] = @coupon_tpl.errors.full_messages.first
+      render :new
     end
   end
 
