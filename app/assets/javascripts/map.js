@@ -183,12 +183,8 @@ $(document).ready(function () {
 });
 
 wx.ready(function () {
-
-  alert(navigator.userAgent);
-  alert(wx.isAndroid);
-  alert(wx.isIOS);
   wx.getLocation({
-    type: wx.isAndroid ? 'gcj02' : 'wgs84',
+    type: navigator.userAgent.match(/android/i) ? 'gcj02' : 'wgs84',
     success: function (res) {
       var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
       var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
