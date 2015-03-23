@@ -44,7 +44,7 @@ $user_coupon_tpl_show_click_area_bg_active: #e4841f
 $user_coupon_tpl_show_click_area_bg_active_long_term: #a1ce33
 
 // global
-$user-mine-heading-background-color: #66acf6
+$user-mine-heading-background-color: #65acf6
 
 // tabs
 $tab-font-color: $font-color
@@ -1205,17 +1205,26 @@ a[title="站长统计"]
 
 .user_mine
   .user_info
+    position: relative
+    height: 100px
+    .user_info_bg
+      float: right
     background-color: $user-mine-heading-background-color
     .user_profile
+      margin-left: 20px
+      margin-top: 20px
+      img
+        border-radius: 50%
       float: left
-    .user_info_detail
-      padding-left: 110px
-      .user_info_park_name
-        font-size: 18px
-        font-weight: bold
-        padding-bottom: 10px
-      .user_info_phone
-        font-style: italic
+    .user_info_phone
+      float: left
+      left: 100px
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+
+
+
 
 
   .user_mine_action_list
