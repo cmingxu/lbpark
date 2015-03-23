@@ -6,7 +6,10 @@
 //= require template_engine
 
 
-var list_place_holder = $("<div id='list_place_holder'></div>")
+var list_place_holder = $("<div id='list_place_holder'></div>");
+var published_list_empty  = $("<div id='owned_list_empty'><div class='owned_list_empty_icon'></div><div class='owned_list_empty_text'>呜~还没有车场发布萝卜替你催！</div></div>");
+var owned_list_empty  = $("<div id='owned_list_empty'><div class='owned_list_empty_icon'></div><div class='owned_list_empty_text'>呜~还没有抢到券萝卜等着你！</div></div>");
+
 function showUserCouponListEmptyPage() {
   $(".user_coupons_list").empty();
   $(".user_coupons_list").append(list_place_holder);
@@ -29,14 +32,18 @@ function init() {
     showUserCouponListEmptyPage();
     $.getJSON('mobile_coupons/coupons_nearby', {lng: config.default_location.lng, lat: config.default_location.lat, park_id: park_id}, function (res) {
       $(".user_coupons_list").empty();
-      res.forEach(function (item) {
-        html = tmpl("item_tmpl", {item: item});
-        $(".user_coupons_list").append(html);
-      });
+      if(res.length != 0){
+        res.forEach(function (item) {
+          html = tmpl("item_tmpl", {item: item});
+          $(".user_coupons_list").append(html);
+        });
 
-      $(".user_coupons_list .user_coupon_item").click(function () {
-        window.location.href = "/mobile_coupons/" + $(this).data('id');
-      });
+        $(".user_coupons_list .user_coupon_item").click(function () {
+          window.location.href = "/mobile_coupons/" + $(this).data('id');
+        });
+      }else{
+        $(".user_coupons_list").append(published_list_empty);
+      }
     });
   }
 
@@ -46,15 +53,19 @@ function init() {
     showUserCouponListEmptyPage();
     $.getJSON('mobile_coupons/coupons_owned', {lng: config.default_location.lng, lat: config.default_location.lat, park_id: park_id}, function (res) {
       $(".user_coupons_list").empty();
-      res.forEach(function (item) {
-        html = tmpl("item_tmpl", {item: item});
-        $(".user_coupons_list").append(html);
-      });
+      if(res.length != 0){
+        res.forEach(function (item) {
+          html = tmpl("item_tmpl", {item: item});
+          $(".user_coupons_list").append(html);
+        });
 
-      $(".user_coupons_list .user_coupon_item").click(function () {
-        if($(this).hasClass("expired_coupon_item")){ return };
-        window.location.href = "/mobile_coupons/" + $(this).data('id') + "/coupon_show";
-      });
+        $(".user_coupons_list .user_coupon_item").click(function () {
+          if($(this).hasClass("expired_coupon_item")){ return };
+          window.location.href = "/mobile_coupons/" + $(this).data('id') + "/coupon_show";
+        });
+      }else{
+        $(".user_coupons_list").append(owned_list_empty);
+      }
     });
   }
 
@@ -80,4 +91,5 @@ wx.ready(function () {
     }
   });
 });
+
 
