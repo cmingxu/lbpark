@@ -8,13 +8,23 @@
 $border-color: #ccc
 $font-color: #3c3c40
 $font-color-blue: #3c3c40
-$light-gray: #ccc
-$dark-gray: #ccc
+$light-gray: #c0c0c0
+$dark-gray: #454545
+$blue: #1aa8fc
+$orange: #ff9b26
+$red: #f82c2d
+$green: #8bcf0a
+
+$tab-bg-color: #f6f6f6
+$park-detail-bg-color: #fcfcfc
+
 $weight-normal: 400
 $weight-bold: 700
 $weight-extra-bold: 900
+
 $font-size-normal: 1em
 $font-size-small: .8em
+$font-size-extra-small: .6em
 $font-size-big: 1.2em
 $font-size-bigger: 1.4em
 $font-size-extra-big: 1.4em
@@ -31,6 +41,7 @@ $border-highlight-color-2: #fff
 $border-highlight-color-3: #fff
 $border-highlight-color-4: #fff
 $border-highlight-color-5: #fff
+
 
 
 // coupon defines
@@ -257,7 +268,7 @@ a[title="站长统计"]
 
   #park_title
     width: 100%
-    background-color: white
+    background-color: $park_detail_bg_color
     position: fixed
     z-index: 100000
     border-top: 1px solid $border-color
@@ -278,14 +289,12 @@ a[title="站长统计"]
         position: absolute
         transform: translate(-26px, -14px) rotate(-45deg)
       #park_name
-        font-size: 18px
-        font-weight: bold
-        color: #666
+        font-size: $font-size-normal
       #park_short_description
-        font-size: 12px
+        font-size: $font-size-small
       #park_position
         font-size: 10px
-        background-color: #aaa
+        background-color: $light-gray
         color: white
         padding: 2px
         border-radius: 2px
@@ -304,8 +313,8 @@ a[title="站长统计"]
         width: 50px
         margin-left: 8px
       .nav_button_text
-        font-size: 0.8em
-        color: #3f74d8
+        font-size: $font-size-small
+        color: $blue
         margin-top: -15px
 
   #park_detail
@@ -319,7 +328,7 @@ a[title="站长统计"]
       box-sizing: border-box
       border-top: 1px solid $border-color
       &:first-child
-        height: 114px
+        height: 112px
         border-top: none
         .park_preview
           position: fixed
@@ -329,10 +338,10 @@ a[title="站长统计"]
         .day_and_night_prices
           margin-right: 177px
           .day
-            height: 57px
+            height: 54px
             border-left: $border-highlight-width solid $border-highlight-color-2
           .night
-            height: 57px
+            height: 54px
             border-top: 1px solid $border-color
             border-left: $border-highlight-width solid $border-highlight-color-3
           img
@@ -345,13 +354,13 @@ a[title="站长统计"]
             width: 65%
             .price_and_unit
               padding-top: 10px
-              color: blue
+              color: $blue
               .price
-                font-size: 14px
+                font-size: $font-size-small
               .unit
-                font-size: 10px
+                font-size: $font-size-small
             .time_span
-              font-size: 10px
+              font-size: $font-size-extra-small
           span.day_icon
             float: left
             height: 50px
@@ -379,6 +388,9 @@ a[title="站长统计"]
       &:nth-child(3)
         height: 55px
         border-left: $border-highlight-width solid $border-highlight-color-5
+      &:nth-child(4)
+        height: 50px
+        line-height: 50px
       span.feature
         border: 1px solid $border-color
         padding: 2px 3px
@@ -429,17 +441,15 @@ a[title="站长统计"]
         background-position-x: -200px
         background-repeat: no-repeat
       #tips
-        padding-top: 5px
-        font-size: 14px
+        font-size: $font-size-small
         float: left
-        padding-left: 20px
 
 #tabs
   bottom: 0px
   width: 100%
   z-index: 10040
   position: fixed
-  background-color: #f9f9f9
+  background-color: $tab-bg-color
   a
     width: 33.3%
     height: 48px
@@ -1246,7 +1256,7 @@ a[title="站长统计"]
           width: 30px
           background-image: url('<%= asset_path("mobile_mine_icons.png")%>')
           background-size: 390px auto
-          margin-top: -3px
+          margin-top: -5px
           float: left
         .user_mine_action_item_icon_help
           background-position: -240px
