@@ -3,7 +3,10 @@
     .user_profile
       %img{:src => asset_path("vendor_profile.png"), :width => "60", :height => "60"}
     .user_info_phone
-      = current_user.phone
+      - if current_user.phone
+        = current_user.phone
+      - else
+        = link_to "请点击绑定会员", bind_mobile_mobile_coupons_path, :class => "user_info_bind_hint"
     .user_info_bg
       %img{:src => asset_path("user_info_bg.png"), :width => "145", :height => "100"}
     .clearfix

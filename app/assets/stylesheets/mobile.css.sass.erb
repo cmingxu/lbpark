@@ -119,8 +119,9 @@ body
   margin-top: 100px
   background-image: url('<%= asset_path("list_place_holder.png") %>')
   animation-name: rotatingAnim
-  animation-duration: 3s
+  animation-duration: 2s
   animation-iteration-count: infinite
+  animation-timing-function: linear
 
 .rotating
   animation-name: rotatingAnim
@@ -384,6 +385,14 @@ a[title="站长统计"]
             background-position-x: -100px
             background-repeat: no-repeat
             display: block
+          @media all and (max-width: 320px)
+            span.night_icon, span.day_icon
+              display: none
+            .price_detail
+              float: none
+              padding-left: 10px
+
+
       &:nth-child(2)
         height: 55px
         padding-left: 10px
@@ -1239,6 +1248,10 @@ a[title="站长统计"]
       position: absolute
       top: 50%
       transform: translateY(-50%)
+    .user_info_bind_hint
+      color: white
+      text-decoration: none
+      font-size: $font-size-normal
 
 
 
