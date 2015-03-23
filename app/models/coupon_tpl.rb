@@ -46,7 +46,7 @@ class CouponTpl < ActiveRecord::Base
   validates :quantity, presence: { :message => "数量不能空" }
   validates :identifier, uniqueness: true, :on => :create
   validates :quantity, numericality: { :gt => 0, :message => "数量大于零" }
-  validates :fit_for_date, uniqueness: { :scope => [:park_id, :status], :message => "免费券日期重复了" }
+  validates :fit_for_date, uniqueness: { :scope => [:park_id, :status], :message => "免费券日期重复了", :if => lambda { type =~ /free/i} }
 
   before_create :set_defaults
   after_commit :generate_all_new_coupon_job, :on => :create

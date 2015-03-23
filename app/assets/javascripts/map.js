@@ -50,6 +50,7 @@ function mapInit() {
       //地理编码
       MGeocoder.getLocation(place_name, function(status, result){
         if(status === 'complete' && result.info === 'OK'){
+          console.log(result);
           l = result.geocodes[0].location
           LB.mapObj.setCenter(l);
           LB.center = {lng: l.lng, lat: l.lat };

@@ -1,7 +1,7 @@
 .user_coupon_tpl_show_page
   .user_nav_bar
     = link_to raw("<span> </span> 返回"), mobile_coupons_path(:anchor => "owned")
-  = form_tag claim_mobile_coupon_path(@coupon_tpl)  do
+  = form_tag claim_mobile_coupon_path(@coupon_tpl), :id => "coupon_form"  do
     .user_coupon_tpl_show_banner
       %image#user_coupon_tpl_show_banner{:src => @coupon_tpl.banner.thumb.url || "#{asset_path('user_coupon_banner.jpg')}"}
     .user_coupon_tpl_show_notice
@@ -18,22 +18,26 @@
           当日使用，过期或者提前无效。
 
       - if @coupon_tpl.quarterly?
+        :javascript
+          var has_form = true;
         .user_coupon_tpl_input
           = @coupon_tpl.notice
 
         .user_coupon_tpl_input
-          = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包季起点", :id => "date"
+          = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包季起点", :id => "date", :class => "coupon_issued_begin_date_input"
         .user_coupon_tpl_input
-          = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址"
+          = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址", :class => "coupon_issued_address_input"
 
       - if @coupon_tpl.monthly?
+        :javascript
+          var has_form = true;
         .user_coupon_tpl_input
           = @coupon_tpl.notice
 
         .user_coupon_tpl_input
-          = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包月起点", :id => "date"
+          = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包月起点", :id => "date", :class => "coupon_issued_begin_date_input"
         .user_coupon_tpl_input
-          = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址"
+          = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址", :class => "coupon_issued_address_input"
 
     .user_coupon_tpl_show_click_area
       - if !@coupon_tpl.can_be_claimed_by?(current_user)
