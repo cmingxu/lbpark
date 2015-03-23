@@ -3,7 +3,7 @@
     = link_to raw("<span> </span> 返回"), mobile_coupons_path(:anchor => "owned")
   = form_tag claim_mobile_coupon_path(@coupon_tpl)  do
     .user_coupon_tpl_show_banner
-      %image#user_coupon_tpl_show_banner{:src => "#{asset_path('user_coupon_banner.jpg')}"}
+      %image#user_coupon_tpl_show_banner{:src => @coupon_tpl.banner.thumb.url || "#{asset_path('user_coupon_banner.jpg')}"}
     .user_coupon_tpl_show_notice
       - if @coupon_tpl.free?
         %p
@@ -19,9 +19,8 @@
 
       - if @coupon_tpl.quarterly?
         .user_coupon_tpl_input
-          包两个月送一个月，特价
-          %span= @coupon_tpl.price
-          元
+          = @coupon_tpl.notice
+
         .user_coupon_tpl_input
           = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包季起点", :id => "date"
         .user_coupon_tpl_input
@@ -29,8 +28,8 @@
 
       - if @coupon_tpl.monthly?
         .user_coupon_tpl_input
-          数量有限， 特价包月
-          %span= @coupon_tpl.price
+          = @coupon_tpl.notice
+
         .user_coupon_tpl_input
           = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包月起点", :id => "date"
         .user_coupon_tpl_input
@@ -50,7 +49,10 @@
             .user_coupon_tpl_show_click_area_text
               抢券
             .user_coupon_tpl_show_click_area_count
-              #{ @coupon_tpl.claimable_count }/#{@coupon_tpl.quantity}
+              %span
+                #{ @coupon_tpl.claimable_count }
+              \/
+              #{@coupon_tpl.quantity}
 
 
 

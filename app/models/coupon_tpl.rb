@@ -48,7 +48,7 @@ class CouponTpl < ActiveRecord::Base
   validates :quantity, numericality: { :gt => 0, :message => "数量大于零" }
   validates :fit_for_date, uniqueness: { :scope => [:park_id, :status], :message => "免费券日期重复了" }
 
-  before_save :set_defaults, :on => :create
+  before_create :set_defaults
   after_commit :generate_all_new_coupon_job, :on => :create
   validate :fit_for_date_gt_then_today
   validates :fit_for_date, presence: { :if => lambda { self.type_in_readable_format == "free" }, :message => "限免券需要提供日期"}
@@ -93,7 +93,7 @@ class CouponTpl < ActiveRecord::Base
   end
 
   def self.identifier(type)
-    type.to_s[0].upcase + sprintf("%04d", coupon_class_name(type).send(:count) + 1)
+    type.to_s[0].upcase + sprintf("%04d", coupon_class_name(type).send(:count))
   end
 
   def duration
@@ -204,5 +204,6 @@ class CouponTpl < ActiveRecord::Base
     self.gcj_lng = self.park.gcj_lng
     self.gcj_lat = self.park.gcj_lat
     self.identifier = CouponTpl.identifier(self.class.coupon_type_to_readable(self.type))
+    
   end
 end

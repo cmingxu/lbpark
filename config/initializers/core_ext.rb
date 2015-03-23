@@ -15,3 +15,9 @@ class String
     end
   end
 end
+
+class Time
+  def to_zh_m_d
+    "#{strftime('%m').to_i}月#{strftime('%d').to_i}日"
+  end
+end
