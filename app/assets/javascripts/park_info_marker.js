@@ -12,11 +12,11 @@ LB.park_info_marker = function (park) {
       }
 
       if(park.current_price == "月"){
-        text = "<div style='position: absolute; left: 8px; top: 5px; font-size: .8em'>" + park.current_price + "</div>";
+        text = "<div style='position: absolute; left: 10px; top: 8px; font-size: .8em'>" + park.current_price + "</div>";
       }
 
       if(park.busy_status == 4){ //未知
-        text = "";
+        text = "<div style='position: absolute; left: 10px; top: 8px; font-size: .8em'>禁</div>";
       }
 
       if(park.free_today_coupon || park.free_tomorrow_coupon || 

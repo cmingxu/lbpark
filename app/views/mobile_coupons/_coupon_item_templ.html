@@ -8,18 +8,18 @@
    <div class="user_coupon_item_content">
        <div class="user_coupon_item_title">
            <div class="user_coupon_item_title_duration">
-               <%=item.duration%>
+               <span><%=item.duration%></span>
            </div>
           <%if(item.price && ("" + item.price).match(/\d+/)){%>
-           <div class="user_coupon_item_title_price"> <span class="user_coupon_item_title_price_icon">￥</span> <%=item.price%> </div>
+           <div class="user_coupon_item_title_price"> <%=item.price%>起 </div>
            <%} else {%>
-           <div class="user_coupon_item_title_price"> 限免 </div>
+           <div class="user_coupon_item_title_price"> 免费 </div>
            <%}%>
        </div>
 
        <div class="user_coupon_item_detail">
            <div class="user_coupon_item_detail_distance">
-              距离您<span> <%=item.distance%></span> <%if((""+item.distance).match(/\d/)){%>米<%}%>
+              距离您<span><%=item.distance%></span><%if((""+item.distance).match(/\d/)){%>米<%}%>
            </div>
 
            <span class="user_coupon_item_detail_name"><%=item.park_name%></span>

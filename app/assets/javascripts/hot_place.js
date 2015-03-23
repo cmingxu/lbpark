@@ -35,7 +35,51 @@ function hotPlaceSearch(keywords) {
   });
 }
 
+function storeSearchPlace(place) {
+  if(!localStorage)
+    return;
+
+  if(!localStorage.hot_places)
+    localStorage.hot_places = "";
+
+  hot_places = localStorage.hot_places.split(",")
+  if(hot_places.indexOf(place) != -1){
+    return;
+  }
+
+  hot_places.push(place);
+  localStorage.hot_places = hot_places.join(',');
+}
+
+function removeSearchPlace(place) {
+  hot_places = localStorage.hot_places.split(',');
+  var index = hot_places.indexOf(place);
+  if(index == -1){
+    return
+  }
+  hot_places.splice(index, 1);
+  localStorage.hot_places = hot_places.join(',');
+}
+
+function emptySearchPlaces() {
+  localStorage.hot_places = "";
+}
+
 $(document).ready(function () {
+  if( typeof localStorage.hot_places === 'undefined') localStorage.hot_places = "";
+  for(i=0; i<localStorage.hot_places.split(',').length; i++){
+    if(localStorage.hot_places.split(",")[i] == ""){ continue };
+    $("#search_history").prepend($("<div class='search_history_item'><div class='search_history_item_icon'></div><div class='search_history_item_name'>" + localStorage.hot_places.split(',')[i]+ "</div><div class='search_history_item_remove_icon'></div></div>"));
+  }
+  $("#search_history .search_history_item").click(function () {
+    window.location.href = "/mobile/map?name=" + $(this).text();
+  });
+
+  $("#search_history .search_history_item .search_history_item_remove_icon").click(function (event) {
+    removeSearchPlace($(this).parent().text());
+    event.stopPropagation();
+    window.location.reload();
+  });
   var latest_value = $("#search_input");
   ["keyup", "change", "blur", "input", "paste"].forEach(function (event, index) {
     $("#search_input").on(event, function () {
@@ -46,12 +90,18 @@ $(document).ready(function () {
     });
   });
 
- $("#autocomplete_confirm_btn").click(function () {
-   if($("#search_input").
-      val().
-        replace(/^\s+|\s+$/, '') == ""){
-     return;
-   }
-   window.location.href = "/mobile/map?name=" + $("#search_input").val();
- });
+  $(".search_history_empty").click(function () {
+    emptySearchPlaces();
+    window.location.reload();
+  });
+
+  $("#autocomplete_confirm_btn").click(function () {
+    if($("#search_input").
+       val().
+         replace(/^\s+|\s+$/, '') == ""){
+      return;
+    }
+    storeSearchPlace($("#search_input").val().replace(/^\s+|\s+$/, ''));
+    window.location.href = "/mobile/map?name=" + $("#search_input").val();
+  });
 });

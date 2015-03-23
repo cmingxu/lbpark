@@ -7,9 +7,18 @@
 
 $border-color: #ccc
 $font-color: #3c3c40
+$font-color-blue: #3c3c40
+$light-gray: #ccc
+$dark-gray: #ccc
 $weight-normal: 400
 $weight-bold: 700
 $weight-extra-bold: 900
+$font-size-normal: 1em
+$font-size-small: .8em
+$font-size-big: 1.2em
+$font-size-bigger: 1.4em
+$font-size-extra-big: 1.4em
+
 $border-highlight-color-1: #f88db9
 $border-highlight-color-2: #72bbe8
 $border-highlight-color-3: #f8b064
@@ -39,7 +48,18 @@ $user-mine-heading-background-color: #66acf6
 
 // tabs
 $tab-font-color: $font-color
-$tab-font-color-highlight: #568cda
+$tab-font-color-highlight: $font-color-blue
+
+// park short & park detail
+$park_padding_left: 10px
+
+@mixin block_vertical_align()
+  position: relative
+  top: 50%
+  -webkit-transform: translateY(-50%)
+  -ms-transform: translateY(-50%)
+  transform: translateY(-50%)
+
 
 
 body
@@ -152,19 +172,20 @@ a[title="站长统计"]
       left: 4px
       top: 5px
     .coupon_mark
-      font-weight: 500
+      font-weight: $weight-normal
       font-size: .6em
       display: inline-block
       background-color: white
-      border: 1px solid gray
-      border-radius: 50%
+      border: 1px solid $border-color
+      text-shadow: none
       color: black
+      border-radius: 50%
       box-sizing: border-box
       position: absolute
-      padding: 2px
-      top: -6px
-      width: 20px
-      height: 20px
+      padding: 1px
+      top: -2px
+      width: 18px
+      height: 18px
   .lb_marker_a
   .lb_marker_b
   .lb_marker_c
@@ -243,7 +264,7 @@ a[title="站长统计"]
     span.desc
       float: left
       padding-top: 14px
-      padding-left: 10px
+      padding-left: $park_padding_left
       #park_status
         background-color: green
         color: white
@@ -359,20 +380,18 @@ a[title="站长统计"]
       span.feature
         border: 1px solid $border-color
         padding: 2px 3px
-        margin-right: 10px
-        margin-top: 10px
         font-size: .8em
         display: inline-block
+        @include block_vertical_align
       &#coupon_tags
-        padding-top: 5px
-        padding-left: 5px
+        padding-left: $park_padding_left
         .coupon_tag
           border: 1px solid $border-color
+          color: $border-color
           padding: 2px 3px
-          margin-right: 10px
-          margin-top: 10px
           font-size: .8em
           display: inline-block
+          @include block_vertical_align
         .coupon_tag_active
           position: relative
           text-decoration: none
@@ -489,35 +508,64 @@ a[title="站长统计"]
 
 #search_history
   margin: 10px
-  border: 1px solid gray
+  margin-top: 30px
+  border: 1px solid $border-color
   .search_history_item
-    border-top: 1px solid gray
-    padding: 10px
+    height: 30px
+    line-height: 30px
+    .search_history_item_icon
+      width: 30px
+      height: 30px
+      background-image: url('<%= asset_path("mobile_mine_icons.png")%>')
+      background-size: 390px auto
+      background-position: 0px
+      float: left
+      display: inline-block
+    .search_history_item_name
+      float: left
+    .search_history_item_remove_icon
+      width: 30px
+      height: 30px
+      background-image: url('<%= asset_path("mobile_mine_icons.png")%>')
+      background-size: 390px auto
+      background-position: -60px
+      float: right
+      display: inline-block
+    border-top: 1px solid $border-color
     box-sizing: border-box
-    width: 100%
-    font-weight: 700
+    font-weight: $weight-normal
     &:nth-child(1)
       border-top: none
   .search_history_empty
-    border-top: 1px solid gray
+    border-top: 1px solid $border-color
     padding: 10px
     box-sizing: border-box
     width: 100%
-    font-weight: 700
-
+    text-align: center
+    font-weight: $weight-bold
+    .search_history_item_icon
+      width: 30px
+      height: 30px
+      background-image: url('<%= asset_path("mobile_mine_icons.png")%>')
+      background-size: 390px auto
+      background-position: -30px
+      float: left
 #autocomplete
   margin: 10px
   padding: 10px 10px 10px 10px
-  border: 1px solid gray
+  border: 1px solid $border-color
   #search_place
-    padding: 5px 10px 5px 10px
-    border: 1px solid gray
+    border: 1px solid $border-color
     border-radius: 2px
     position: relative
+    height: 30px
+    line-height: 30px
+    padding-left: 10px
+    background-color: white
     #search_input
-      font-size: 1.2em
-      width: 90%
+      font-size: $font-size-normal
       border: none
+      width: 90%
       outline: none
   #autocomplete_confirm_btn
     background-color: #67abf8
@@ -530,24 +578,25 @@ a[title="站长统计"]
     font-size: 1.1em
     border-radius: 2px
   #autocomplete_list
-    padding: 5px 10px 5px 10px
+    padding: 5px 10px 0px 10px
     list-style: none
     padding: 0px
-    width: 80%
+    width: 100%
     margin: 0px
-    border-bottom: 1px solid gray
+    margin-left: -11px
+    border-bottom: 1px solid $border-color
     position: absolute
     li
-      font-size: 1.1em
-      border-left: 1px solid gray
-      border-right: 1px solid gray
-      border-top: 1px solid gray
+      font-size: $font-size-normal
+      border-left: 1px solid $border-color
+      border-right: 1px solid $border-color
+      border-top: 1px solid $border-color
       padding: 5px 10px 5px 10px
       background-color: rgba(255,255,255, 0.8)
       &:hover
         background-color: #e3e3e3
       &.autocomplete_item_last
-        border-bottom: 1px solid gray
+        border-bottom: 1px solid $border-color
       a
         text-decoration: none
         color: black
@@ -591,6 +640,8 @@ a[title="站长统计"]
       &:after
         clear: both
       .user_coupon_tab
+        padding-top: 8px
+        padding-bottom: 8px
         box-sizing: border-box
         width: 50%
         display: inline-block
@@ -642,12 +693,16 @@ a[title="站长统计"]
           background-color: $user_coupon_free_item_highlight_color
         .user_coupon_item_title_duration
           color: $user_coupon_free_item_highlight_color
+          span
+            border-bottom: 2px solid $user_coupon_free_item_highlight_color
       .long_term_coupon_item
         .user_coupon_item_head
           background-color: $user_coupon_long_term_item_highlight_color
           border-bottom: 3px dashed white
         .user_coupon_item_title_duration
           color: $user_coupon_long_term_item_highlight_color
+          span
+            border-bottom: 2px solid $user_coupon_long_term_item_highlight_color
       .expired_coupon_item
         color: $user_coupon_expired_item_highlight_color
         .user_coupon_item_head
@@ -655,6 +710,8 @@ a[title="站长统计"]
           border-bottom: 3px dashed white
         .user_coupon_item_title_duration
           color: $user_coupon_expired_item_highlight_color
+          span
+            border-bottom: 2px solid $user_coupon_expired_item_highlight_color
         .user_coupon_item_title_price
           color: $user_coupon_expired_item_highlight_color
         .user_coupon_item_detail
@@ -669,16 +726,12 @@ a[title="站长统计"]
         color: #565659
         padding: 25px 10px
         .user_coupon_item_title
-          font-size: 1.4em
-          font-weight: 900
+          font-size: $font-size-big
+          font-weight: $weight-normal
           width: 40%
           float: left
           text-align: center
           .user_coupon_item_title_duration
-            text-decoration: underline
-          .user_coupon_item_title_price_icon
-            font-size: 0.6em
-            font-weight: 400
 
         .user_coupon_item_detail
           text-align: right
@@ -686,13 +739,11 @@ a[title="站长统计"]
           float: left
           .user_coupon_item_detail_distance
             span
-              font-weight: 900
-              font-style: italic
-              color: black
+              font-weight: $weight-normal
 
           .user_coupon_item_detail_type
             padding: 1px 5px
-            background-color: #565659
+            background-color: $light-gray
             color: white
             font-size: 0.7em
             font-weight: 900
