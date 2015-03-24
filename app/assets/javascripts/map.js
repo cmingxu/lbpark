@@ -14,7 +14,7 @@ var LB = LB || {};
 
 ///////////////////////////
 LB.mapObj;
-LB.current_location = LB.center = config.default_location;
+LB.fetch_center =  LB.current_location = LB.center = config.default_location;
 
 //////////////////////////
 
@@ -111,6 +111,7 @@ function add_new_marker(location) {
 }
 
 function fetch_parkes(location) {
+  LB.fetch_center = location;
   $.ajax({
     url: "nosj.skrap/ipa/".reverse(),
     data: {lng: location.lng, lat: location.lat},
@@ -143,7 +144,10 @@ function add_event_listeners() {
   AMap.event.addListener(LB.mapObj,"moveend", function () {
     LB.Logger.debug("map object moveend");
     LB.center = LB.mapObj.getCenter();
-    fetch_parkes(LB.center);
+    if(GPS.distance(LB.center.lat, LB.center.lng, LB.fetch_center.lat, LB.fetch_center.lng) > 750){
+      fetch_parkes(LB.center);
+      LB.fetch_center = LB.center;
+    }
   });
 
   AMap.event.addListener(LB.mapObj,"click", function () {
