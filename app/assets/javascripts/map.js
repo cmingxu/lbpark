@@ -210,6 +210,8 @@ wx.ready(function () {
       if(place_name == ""){ // set center to current location if no searching
         LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
         LB.center = LB.current_location;
+
+        fetch_parkes(LB.center);
         if(LB.current_position_marker){
           LB.current_position_marker.setPosition(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
         }else{
