@@ -27,9 +27,10 @@
       .user_coupon_qr_code_bg
         办卡无需到现场，萝卜为您上门服务。若12小时内未响应请拨打
         = Settings.four_zero_zero
-  .user_coupon_btns
+  .user_coupon_btns{ :class => @coupon.free? ? "user_coupon_btn_free" : "user_coupon_btn_long_term" }
     = link_to "规则", rule_mobile_coupons_path, :class => "user_coupon_btn pull-left"
     = link_to "分享", "", :class => "user_coupon_btn pull-right"
+    .clearfix
 
   = javascript_include_tag "mobile_coupon_show"
 
