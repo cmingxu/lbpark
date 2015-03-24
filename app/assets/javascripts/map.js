@@ -44,7 +44,8 @@ function mapInit() {
   else{ // jump from search
     AMap.service(["AMap.Geocoder"], function() {
       MGeocoder = new AMap.Geocoder({
-        city: "010"
+        city: "010",
+        radius: 2000
       });
       //返回地理编码结果
       //地理编码
