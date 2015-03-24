@@ -52,10 +52,10 @@ function mapInit() {
       //地理编码
       MGeocoder.getLocation(place_name, function(status, result){
         if(status === 'complete' && result.info === 'OK'){
-          console.log(result);
           l = result.geocodes[0].location
           LB.mapObj.setCenter(l);
           LB.center = {lng: l.lng, lat: l.lat };
+          add_search_position_marker(l.lng, l.lat);
           //LB.center = LB.current_location = {lng: l.lng, lat: l.lat };
           //add_current_position_marker();
         }
@@ -156,6 +156,16 @@ function add_event_listeners() {
       LB.park_info_state.on_enter_short(LB.park_info_state.get_current_park());
     }
     LB.clear_auto_nav();
+  });
+}
+
+function add_search_position_marker(lng, lat){
+  LB.search_position_marker = new AMap.Marker({ //创建自定义点标注
+    map: LB.mapObj,
+    position: new AMap.LngLat(lng,
+                              lat),
+                              content: "<div id='center_marker'></div>",
+                              offset: new AMap.Pixel(-25, -25)
   });
 }
 
