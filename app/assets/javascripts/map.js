@@ -39,6 +39,7 @@ function mapInit() {
   add_event_listeners();
   fetch_parkes(LB.center);
   if(place_name == '') {
+    $("#back_to_original_marker").addClass("rotating");
   }
 
   else{ // jump from search
@@ -179,6 +180,7 @@ $(document).ready(function () {
     LB.auto_nav(LB.current_park);
     event.stopPropagation();
   });
+
 
   $(window).resize(function(){
     $("#map").height(window.innerHeight - config.tabbar_height);
