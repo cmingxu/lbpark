@@ -35,9 +35,9 @@ function mapInit() {
     })
   });
 
+  fetch_parkes(LB.center);
   //add_plugins();
   add_event_listeners();
-  fetch_parkes(LB.center);
   if(place_name == '') {
     $("#back_to_original_marker").addClass("rotating");
   }
