@@ -78,7 +78,6 @@ class Coupon < ActiveRecord::Base
       :park_name => self.coupon_tpl.park.name,
       :park_type => self.coupon_tpl.park.park_type,
       :expired   => expired?,
-      :expired   => true,
       :used      => used?
     }
   end

@@ -773,10 +773,20 @@ a[title="站长统计"]
           .user_coupon_item_detail_type
             color: white!important
       .user_coupon_item_content
-        color: #565659
+        position: relative
+        color: $light-gray
         padding: 25px 10px
         .user_coupon_corner_notion
           position: absolute
+          height: 50px
+          width: 50px
+          background-size: 50px 50px
+          left: 0px
+          bottom: 0px
+        .user_coupon_corner_notion_expired
+          background-image: url('<%= asset_path("user_coupon_expired_corner.png") %>')
+        .user_coupon_corner_notion_used
+          background-image: url('<%= asset_path("user_coupon_used_corner.png") %>')
         .user_coupon_item_title
           font-size: $font-size-big
           font-weight: $weight-normal

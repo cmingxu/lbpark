@@ -3,7 +3,7 @@
 //= require logger
 
 function hotPlaceSearch(keywords) {
-  AMap.service(["AMap.Autocomplete"], function() { 
+  AMap.service(["AMap.Autocomplete"], function() {
     if("" == keywords){
       $("#autocomplete_list").hide().empty();
     }
