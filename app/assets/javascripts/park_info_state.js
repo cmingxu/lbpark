@@ -115,9 +115,10 @@ LB.park_info_state = {
       this.night_price_dom.text("");
       this.night_price_unit_dom.text("");
       this.night_time_range_dom.text("");
-      if(park.no_parking)
+      if(park.no_parking){
         this.night_price_dom.text("禁停")
         this.night_time_range_dom.text(park.night_time_range);
+      }
     }
 
     this.detail_dom.show();
