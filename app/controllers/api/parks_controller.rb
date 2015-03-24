@@ -23,6 +23,7 @@ class Api::ParksController < Api::BaseController
         :park_lb_desc => p.lb_desc,
         :thumb_pic_url => p.thump_pic_url,
         :no_parking => p.no_parking?,
+        :day_only => p.day_only?,
         :free_today_coupon => @coupon_tpls.any?{|ct| ct.park_id == p.id && ct.free? && ct.fit_for_date == Date.today },
         :free_tomorrow_coupon => @coupon_tpls.any?{|ct| ct.park_id == p.id && ct.free? && ct.fit_for_date != Date.today },
         :monthly_coupon => @coupon_tpls.any?{|ct| ct.park_id == p.id &&  ct.monthly? },
