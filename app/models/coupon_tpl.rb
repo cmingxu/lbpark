@@ -168,6 +168,10 @@ class CouponTpl < ActiveRecord::Base
     self.coupons.exists?(:user_id => user.id)
   end
 
+  def user_claimed(user)
+    self.coupons.where(:user_id => user.id).first
+  end
+
   def used_count
     self.coupons.used.count
   end
