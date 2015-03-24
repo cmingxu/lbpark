@@ -77,8 +77,8 @@ $(document).ready(function () {
     $("#search_history").prepend($("<div class='search_history_item'><div class='search_history_item_icon'></div><div class='search_history_item_name'>" + localStorage.hot_places.split(',')[i]+ "</div><div class='search_history_item_remove_icon'></div></div>"));
   }
 
-  if(localStorage.hot_places.split(',').length == 0){
-    $(".search_history").removeClass("hidden");
+  if(localStorage.hot_places.split(',').length != 0){
+    $("#search_history").removeClass("hidden");
   }
   $("#search_history .search_history_item").click(function () {
     window.location.href = "/mobile/map?name=" + $(this).text();
