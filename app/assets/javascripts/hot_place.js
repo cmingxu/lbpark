@@ -14,7 +14,7 @@ function hotPlaceSearch(keywords) {
       //根据服务请求状态处理返回结果
       if(status=='complete') {
         $("#autocomplete_list").show().empty();
-        result.tips.forEach(function (place) {
+        result.tips.slice(0, 6).forEach(function (place) {
           if((typeof place.district === "string") && place.district.match(/北京/)){ // skip places out of beijing
             $("#autocomplete_list").append("<li data-name='" + place.name +"'><a>" + place.name + "<span> - " + place.district +"</span>" + "</a></li>");
           }

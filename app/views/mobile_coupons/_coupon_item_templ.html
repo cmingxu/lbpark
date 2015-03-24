@@ -1,11 +1,19 @@
 <script type="text/html" id="item_tmpl">
 <%if(item.expired){%>
 <div class="user_coupon_item expired_coupon_item" data-id="<%=item.id%>">
+<%}else if(item.used){%>
+<div class="user_coupon_item used_coupon_item" data-id="<%=item.id%>">
 <%}else{%>
 <div class="user_coupon_item <%=item.coupon_type_readable%>_coupon_item" data-id="<%=item.id%>">
 <%}%>
    <div class="user_coupon_item_head"> </div>
    <div class="user_coupon_item_content">
+        <%if(item.expired){%>
+        <div class="user_coupon_corner_notion user_coupon_corner_notion_expired">已过期</div>
+        <%}else if(item.used){%>
+        <div class="user_coupon_corner_notion user_coupon_corner_notion_used">已使用</div>
+        <%}else{%>
+        <%}%>
        <div class="user_coupon_item_title">
            <div class="user_coupon_item_title_duration">
                <span><%=item.duration%></span>

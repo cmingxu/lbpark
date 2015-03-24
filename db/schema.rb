@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150323020646) do
+ActiveRecord::Schema.define(version: 20150324004116) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20150323020646) do
     t.datetime "expire_at"
     t.string   "qr_code"
     t.date     "issued_begin_date"
+    t.datetime "used_at"
   end
 
   create_table "feedbacks", force: true do |t|

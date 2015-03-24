@@ -29,7 +29,10 @@ class Coupon < ActiveRecord::Base
   after_create :generate_qr_code
   scope :display_order, lambda { order("coupon_tpl_type, claimed_at desc") }
   scope :claimed, lambda { where(:status => :claimed) }
+  scope :used, lambda { where(:status => :used) }
   scope :fit_for_today, lambda { where(["fit_for_date = ? ", Time.now.strftime("%Y-%m-%d") ]) }
+  scope :fit_for_today_or_tomorrow, lambda { where(["fit_for_date = ? OR fit_for_date = ?", Time.now.strftime("%Y-%m-%d"), Time.now.tomorrow.strftime("%Y-%m-%d") ]) }
+  scope :expired, lambda { where(["fit_for_date < ?", Time.now.strftime("%Y-%m-%d")]) }
 
   mount_uploader :qr_code, CouponQrCodeUploader
 
@@ -39,6 +42,8 @@ class Coupon < ActiveRecord::Base
 
   state_machine :status, :initial => :created do
     after_transition :on => :claim, :do => :after_claim
+    after_transition :on => :use, :do => :after_use
+
     event :claim do
       transition :from => :created, :to => :claimed
     end
@@ -55,6 +60,10 @@ class Coupon < ActiveRecord::Base
     self.update_column :expire_at, Time.now + 3.month if self.quarterly?
   end
 
+  def after_use
+    self.update_column :used_at, Time.now
+  end
+
   def expired?
     Time.now > expire_at
   end
@@ -68,7 +77,9 @@ class Coupon < ActiveRecord::Base
       :distance  => LbRange.new(location, self.coupon_tpl.park.location).distance,
       :park_name => self.coupon_tpl.park.name,
       :park_type => self.coupon_tpl.park.park_type,
-      :expired   => expired?
+      :expired   => expired?,
+      :expired   => true,
+      :used      => used?
     }
   end
 

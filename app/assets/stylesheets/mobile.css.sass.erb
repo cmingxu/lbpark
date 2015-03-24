@@ -719,6 +719,9 @@ a[title="站长统计"]
         margin-top: 15px
         border-radius: 5px
         -webkit-border-radius: 5px
+        .user_coupon_item_detail_name
+          font-size: $font-size-big
+          font-weight: $weight-normal
         .user_coupon_item_head
           box-sizing: content-box
           width: 100%
@@ -750,7 +753,7 @@ a[title="站长统计"]
           color: $user_coupon_long_term_item_highlight_color
           span
             border-bottom: 2px solid $user_coupon_long_term_item_highlight_color
-      .expired_coupon_item
+      .expired_coupon_item, .used_coupon_item
         color: $user_coupon_expired_item_highlight_color
         .user_coupon_item_head
           background-color: $user_coupon_expired_item_highlight_color
@@ -768,10 +771,12 @@ a[title="站长统计"]
               color: $user_coupon_expired_item_highlight_color!important
 
           .user_coupon_item_detail_type
-            color: $user_coupon_expired_item_highlight_color!important
+            color: white!important
       .user_coupon_item_content
         color: #565659
         padding: 25px 10px
+        .user_coupon_corner_notion
+          position: absolute
         .user_coupon_item_title
           font-size: $font-size-big
           font-weight: $weight-normal
