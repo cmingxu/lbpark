@@ -31,6 +31,11 @@ class MobileCouponsController < MobileController
     render :layout => "mobile_no_tab"
   end
 
+  def rule
+    render :layout => "mobile_no_tab"
+  end
+
+
   def claim
     @coupon_tpl = CouponTpl.find params[:id]
     if @coupon_tpl.can_be_claimed_by?(current_user)
