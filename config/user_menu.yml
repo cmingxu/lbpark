@@ -2,12 +2,12 @@ button:
   -
     type: "view"
     name: "找车位"
-    url: "http://6luobo.com"
+    url: "http://m.6luobo.com"
   -
     type: "view"
     name: "提前搜"
-    url: "http://6luobo.com/mobile/hot_place"
+    url: "http://m.6luobo.com/mobile/hot_place"
   -
     type: "view"
     name: "我的"
-    url: "http://6luobo.com/mobile/setting"
+    url: "http://m.6luobo.com/mobile/setting"

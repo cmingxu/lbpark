@@ -50,7 +50,7 @@ namespace :deploy do
 
   task :setup_config do
     on roles(:all) do |host|
-      sudo "ln -nfs #{current_path}/config/lbpark.conf /etc/nginx/sites-enabled/lbpark"
+      sudo "ln -nfs #{current_path}/config/mlbpark.conf /etc/nginx/sites-enabled/mlbpark"
       sudo "ln -nfs #{current_path}/config/lbpark.sh /etc/init.d/unicorn_lbpark"
       #sudo "ln -nfs #{current_path}/config/lb_resque.sh /etc/init.d/lb_resque"
     end
