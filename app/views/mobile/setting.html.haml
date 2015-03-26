@@ -1,7 +1,7 @@
 .user_mine
   .user_info
     .user_profile
-      %img{:src => asset_path("vendor_profile.png"), :width => "60", :height => "60"}
+      %img{:src => current_user.wechat_user.try(:headimg).try(:thumb).try(:url) || asset_path("vendor_profile.png"), :width => "60", :height => "60"}
     .user_info_phone
       - if current_user.phone
         = current_user.phone
