@@ -188,6 +188,8 @@ function back_to_original_marker(){
   });
 }
 
+window.alert = $toast;
+
 $(document).ready(function () {
     alert(111110);
   FastClick.attach(document.body);
