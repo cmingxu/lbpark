@@ -27,13 +27,15 @@ function mapInit() {
     rotateEnable: false,
     dragEnable: true,
     zoomEnable: true,
-    zooms: [12, 13, 14, 15, 16, 17, 18, 19],
+    zooms: [12,19],
     //二维地图显示视口
     view: new AMap.View2D({
       center: new AMap.LngLat(LB.center.lng, LB.center.lat),//地图中心点
       zoom: config.default_zoom //地图显示的缩放级别
     })
   });
+
+  LB.mapObj.setZoom(config.default_zoom);
 
   fetch_parkes(LB.center);
   //add_plugins();
