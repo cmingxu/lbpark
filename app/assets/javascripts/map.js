@@ -184,6 +184,7 @@ function add_current_position_marker(){
 function back_to_original_marker(){
   $("#back_to_original_marker").click(function () {
     LB.mapObj.panTo(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+    //LB.mapObj.setCenter(new AMap.LngLat(config.default_location.lat, config.default_location.lng));
   });
 }
 
