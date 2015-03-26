@@ -8,6 +8,7 @@
 //= require base58
 //= require core_ext
 //= require gps_transform
+//= require toast
 //= require wechat_config
 
 var LB = LB || {};
