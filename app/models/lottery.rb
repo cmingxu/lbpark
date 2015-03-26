@@ -36,7 +36,7 @@ class Lottery < ActiveRecord::Base
     :generated => "#fbb15c",
     :bought    => "#fbb15c",
     :won       => "#6cd597",
-    :lost       => "#528de7",
+    :lost       => "#1aa8fc",
     :paid       => "#6cd597"
   }
 

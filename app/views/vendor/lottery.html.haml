@@ -2,17 +2,20 @@
   .warning_message
     小哥, 你要加油哟! 多报几次奖票就来了。
 .vendor_lottery
-  - @lotteries.each do |lottery|
-    .lottery
-      .lottery_info
-        .open_num
-          第
-          = lottery.open_num
-          期
-        .serial_num
-          = raw lottery.serial_num_human
-      .lottery_status
-        .lottery_status_bg{:style => "background-color: #{Lottery::STATUS_MAP_COLOR[lottery.status.intern]}"}
-          %span= Lottery::STATUS_MAP[lottery.status.intern]
-      .clearfix
+  .vendor_title_bar
+    我的奖券
+  .vendor_lotteries
+    - @lotteries.each do |lottery|
+      .lottery
+        .lottery_info
+          .open_num
+            第
+            = lottery.open_num
+            期
+          .serial_num
+            = raw lottery.serial_num_human
+        .lottery_status
+          .lottery_status_bg{:style => "background-color: #{Lottery::STATUS_MAP_COLOR[lottery.status.intern]}"}
+            %span= Lottery::STATUS_MAP[lottery.status.intern]
+        .clearfix
 

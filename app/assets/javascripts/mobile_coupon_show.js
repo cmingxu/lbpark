@@ -18,8 +18,8 @@ $(document).ready(function() {
                 window.location.href = "/mobile_coupons";
               }, 3000);
             }else{
-              if(tries > 30){ return }
-              setTimeout(check_if_coupon_used, (tries % 3 + 1) * 1000);
+              if(tries > 30){ clearTimeout(t); return }
+              t = setTimeout(check_if_coupon_used, (tries % 3 + 1) * 1000);
             }
           }
          );

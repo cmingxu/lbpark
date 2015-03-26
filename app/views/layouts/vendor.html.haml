@@ -19,8 +19,11 @@
     = yield
     #tabs
       %a{:href => "/vendor/index"}
-        %span{:class => map_nav_class("report")} 上报
+        %span{:class => map_nav_class("report")}
+        .tab_name 上报
       %a{:href => "/vendor/lottery"}
-        %span{:class => map_nav_class("lottery")} 奖票
+        %span{:class => map_nav_class("lottery")}
+        .tab_name 奖票
       %a{:href => "/vendor/mine"}
-        %span{:class => map_nav_class("mine")} 我的
+        %span{:class => map_nav_class("mine")}
+        .tab_name 我的
