@@ -48,7 +48,6 @@ function storeSearchPlace(place) {
   }
 
   hot_places.push(place);
-  $(".search_history").addClass("hidden");
   localStorage.hot_places = hot_places.join(',');
 }
 
@@ -60,14 +59,14 @@ function removeSearchPlace(place) {
   }
   hot_places.splice(index, 1);
   if(hot_places.length == 0){
-    $(".search_history").removeClass("hidden");
+    $("#search_history").hide();
   }
   localStorage.hot_places = hot_places.join(',');
 }
 
 function emptySearchPlaces() {
   localStorage.hot_places = "";
-  $(".search_history").addClass("hidden");
+  $("#search_history").hide();
 }
 
 $(document).ready(function () {
@@ -77,8 +76,10 @@ $(document).ready(function () {
     $("#search_history").prepend($("<div class='search_history_item'><div class='search_history_item_icon'></div><div class='search_history_item_name'>" + localStorage.hot_places.split(',')[i]+ "</div><div class='search_history_item_remove_icon'></div></div>"));
   }
 
-  if(localStorage.hot_places.split(',').length != 0){
-    $("#search_history").removeClass("hidden");
+  if(localStorage.hot_places != ""){
+    $("#search_history").show();
+  }else{
+    $("#search_history").hide();
   }
   $("#search_history .search_history_item").click(function () {
     window.location.href = "/mobile/map?name=" + $(this).text();
