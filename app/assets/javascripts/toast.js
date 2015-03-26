@@ -16,8 +16,6 @@
       toast.innerHTML = msg;
       toast.setAttribute("id", "toast");
       d.body.insertBefore(toast, d.body.firstChild);
-      console.log('11222');
-      console.log(toast);
       setTimeout(function () {
         d.body.removeChild(toast);
       }, 3000)};

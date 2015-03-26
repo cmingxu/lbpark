@@ -189,17 +189,13 @@ function back_to_original_marker(){
   });
 }
 
-window.alert = $toast;
 
 $(document).ready(function () {
-    alert(111110);
   FastClick.attach(document.body);
   mapInit();
   $("#nav_button_click_area").click(function () {
-    alert(111111);
     LB.park_info_state.on_enter_short(LB.park_info_state.get_current_park());
     LB.auto_nav(LB.current_park);
-    alert(111112);
     event.stopPropagation();
   });
 
