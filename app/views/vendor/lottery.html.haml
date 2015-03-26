@@ -1,9 +1,9 @@
 .vendor_lottery
   .vendor_title_bar
     我的奖券
-   - if @lotteries.blank?
-    .warning_message
-      小哥, 你要加油哟! 多报几次奖票就来了。
+    - if @lotteries.blank?
+      .warning_message
+        小哥, 你要加油哟! 多报几次奖票就来了。
   .vendor_lotteries
     - @lotteries.each do |lottery|
       .lottery
