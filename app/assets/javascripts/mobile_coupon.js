@@ -77,6 +77,11 @@ $(document).ready(function() {
   else{
     init();
   }
+
+  if(park_id != 0){
+    init();
+  }
+
 });
 
 wx.ready(function () {
@@ -87,7 +92,9 @@ wx.ready(function () {
       var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
       var speed = res.speed; // 速度，以米/每秒计
       var accuracy = res.accuracy; // 位置精度
-      init();
+      if(park_id == 0){
+        init();
+      }
     }
   });
 });
