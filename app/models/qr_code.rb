@@ -26,7 +26,7 @@ class QrCode < ActiveRecord::Base
 
   state_machine :status, :initial => :created do
     event :generate do
-      transition  :from => :generated, :to => :downloaded
+      transition  :from => :created, :to => :generated
     end
   end
 
@@ -42,7 +42,7 @@ class QrCode < ActiveRecord::Base
       self.qr_code.download! res["url"]
     rescue
     end
-    self.download!
+    self.generate
   end
 
   def vendor?
