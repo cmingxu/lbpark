@@ -2,6 +2,7 @@
 //= require config
 //= require logger
 //= require fastclick
+//= require toast
 //= require bind_mobile
 
 
@@ -39,7 +40,7 @@ $(document).ready( function () {
     $("#confirm_box").hide('slow');
     $.post(config.park_statuses_path, {"status": LB.selected_status}, function (res) {
       if(res.result){
-        window.location.href = "/vendor/index";
+        $toast(res.msg);
       }
     });
   });
