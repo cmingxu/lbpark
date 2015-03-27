@@ -19,6 +19,14 @@ class Staff < ActiveRecord::Base
   attr_accessor :password
 
   has_many :imports
+  serialize :role, Array
+
+  def admin?
+    self.role.include? "admin"
+  end
+
+  def user?
+  end
 
 
   def password=(pass)

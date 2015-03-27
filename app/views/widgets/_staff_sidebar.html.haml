@@ -3,8 +3,6 @@
     = link_to raw(fa_icon("fw bank")) + "我的面板", staff_path
   .list-group-item.parks
     = link_to raw(fa_icon("fw building-o")) + "车场列表", staff_parks_path
-  .list-group-item.imports
-    = link_to raw(fa_icon("fw database")) + "数据导入", staff_imports_path
   .list-group-item.vendors
     = link_to raw(fa_icon("fw users")) + "保安管理", staff_vendors_path
   .list-group-item.lotteries
@@ -13,17 +11,19 @@
     = link_to raw(fa_icon("fw users")) + "发布卡券", staff_coupon_tpls_path
   .list-group-item.coupons
     = link_to raw(fa_icon("fw users")) + "卡券管理", staff_coupons_path
-  .list-group-item.staffs
-    = link_to raw(fa_icon("fw users")) + "人员管理", staff_staffs_path
-  .list-group-item.lb_settings
-    = link_to raw(fa_icon("fw users")) + "应用设置", staff_lb_settings_path
   .list-group-item.wechat_users
     = link_to raw(fa_icon("fw users")) + "微信关注", staff_wechat_users_path
   .list-group-item.setting
     = link_to raw(fa_icon("wrench fw")) +"个人设置", i_want_change_pass_staff_staffs_path
-  .list-group-item.pages
-    = link_to raw(fa_icon("wrench fw")) +"页面设置", staff_pages_path
-
+  - if current_staff.admin?
+    .list-group-item.pages
+      = link_to raw(fa_icon("wrench fw")) +"页面设置", staff_pages_path
+    .list-group-item.imports
+      = link_to raw(fa_icon("fw database")) + "数据导入", staff_imports_path
+    .list-group-item.staffs
+      = link_to raw(fa_icon("fw users")) + "人员管理", staff_staffs_path
+    .list-group-item.lb_settings
+      = link_to raw(fa_icon("fw users")) + "应用设置", staff_lb_settings_path
 
 :javascript
   $(".#{@active_nav_item}").addClass("sidebar_item_active")
