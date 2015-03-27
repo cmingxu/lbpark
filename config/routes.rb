@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  namespace :parks do
+  get 'base/index'
+  end
+
   get 'pages/show'
 
   ResqueWeb::Engine.eager_load!

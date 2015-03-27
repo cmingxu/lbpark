@@ -31,11 +31,11 @@ class Staff < ActiveRecord::Base
 
   def password=(pass)
     self.salt = SecureRandom::hex(10)
-    self.encrypted_password = Staff.password_encryption(pass, self.salt)
+    self.encrypted_password = self.class.password_encryption(pass, self.salt)
   end
 
   def password_valid?(pass)
-    self.encrypted_password == Staff.password_encryption(pass, self.salt)
+    self.encrypted_password == self.class.password_encryption(pass, self.salt)
   end
 
   def self.login(login, pass)

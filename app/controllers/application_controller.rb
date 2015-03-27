@@ -12,6 +12,11 @@ class ApplicationController < ActionController::Base
     User.vendors.find_by_id(session[:vendor_id])
   end
 
+  def current_client
+    return nil if session[:client_id].nil?
+    @client ||= Client.find session[:client_id]
+  end
+
 
   def current_park
     current_vendor.park

@@ -1,0 +1,2 @@
+module Parks::SessionHelper
+end
