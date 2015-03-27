@@ -56,7 +56,7 @@ LB.auto_nav = function(park) {
       strokeDasharray: [10, 5]
     });
 
-    var drawpath = new Array(); 
+    var drawpath = new Array();
     for(var s=0; s<steps.length; s++) {
       var plength = steps[s].path.length;
       for (var p=0; p<plength; p++) {
