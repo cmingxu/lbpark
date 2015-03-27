@@ -5,9 +5,19 @@ button:
     url: "http://m.6luobo.com"
   -
     type: "view"
-    name: "提前搜"
+    name: "定点搜"
     url: "http://m.6luobo.com/mobile/hot_place"
   -
     type: "view"
     name: "我的"
     url: "http://m.6luobo.com/mobile/setting"
+    sub_button:
+      -
+        type: "view"
+        name: "停车券"
+        url: "http://m.6luobo.com/mobile_coupons"
+      -
+        type: "view"
+        name: "我的"
+        url: "http://m.6luobo.com/mobile/setting"
+
