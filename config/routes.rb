@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :parks do
-  get 'base/index'
-  end
-
-  get 'pages/show'
 
   ResqueWeb::Engine.eager_load!
 
@@ -91,6 +86,7 @@ Rails.application.routes.draw do
       resources :park_imports
     end
 
+    resources :qr_codes
     resources :pages
 
     resources :vendors do

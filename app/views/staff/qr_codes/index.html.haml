@@ -1,0 +1,24 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      = link_to fa_icon("fw plus") + "新二维码", new_staff_qr_code_path(), :class => "btn btn-primary"
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th Scene
+          %th 备注
+          %th 二维码
+
+        %tbody
+          - @qr_codes.each do |p|
+            %tr
+              %td= link_to p.id, edit_staff_qr_code_path(p)
+              %td= p.scene_str
+              %td= p.mark
+              %td= image_tag p.qr_code.thumb.url
+              %td
+
+
+      = paginate @qr_codes
+
+

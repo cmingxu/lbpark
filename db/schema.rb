@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324004116) do
+ActiveRecord::Schema.define(version: 20150327094239) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -25,6 +25,20 @@ ActiveRecord::Schema.define(version: 20150324004116) do
     t.string   "park_pic"
     t.integer  "park_id"
     t.string   "original_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clients", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "encrypted_password"
+    t.string   "salt"
+    t.datetime "last_login_at"
+    t.string   "last_login_ip"
+    t.integer  "park_id"
+    t.text     "plugins"
+    t.integer  "balance"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -299,6 +313,18 @@ ActiveRecord::Schema.define(version: 20150324004116) do
     t.string   "originate_from"
     t.string   "property_owner"
     t.text     "previews"
+  end
+
+  create_table "qr_codes", force: true do |t|
+    t.string   "appid"
+    t.string   "which_wechat_account"
+    t.string   "status"
+    t.string   "qr_code"
+    t.string   "ticket"
+    t.string   "scene_str"
+    t.string   "mark"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sms_codes", force: true do |t|

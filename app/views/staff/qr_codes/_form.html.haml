@@ -1,0 +1,26 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
+        %thead
+          %th
+          %th
+        %tbody
+          = form_for [:staff, @qr_code], :role => "form", :class => "form", :multipart => true do |f|
+            %tr
+              %td 微信号码
+              %td
+                = f.select :which_wechat_account, options_for_select(["vendor", "user"])
+
+            %tr
+              %td Scene
+              %td
+                = f.text_field :scene_str
+            %tr
+              %td 备注
+              %td
+                = f.text_field :mark
+
+            %tr
+              %td{:colspan => 2}
+                = f.submit "保存", :class => "btn btn-success"

@@ -20,6 +20,8 @@
 #  published_at :datetime
 #  created_at   :datetime
 #  updated_at   :datetime
+#  banner       :string(255)
+#  notice       :string(255)
 #
 
 class CouponTpl::FreeCouponTpl < CouponTpl
