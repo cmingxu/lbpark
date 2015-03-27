@@ -223,11 +223,14 @@ wx.ready(function () {
       LB.current_location.lng = longitude;
       LB.current_location.lat = latitude;
       if(place_name == ""){ // set center to current location if no searching
+        alert(place_name);
         LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
         LB.center = LB.current_location;
+        alert(LB.center);
 
         fetch_parkes(LB.center);
         if(LB.current_position_marker){
+          alert('123');
           LB.current_position_marker.setPosition(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
         }else{
           add_current_position_marker();
