@@ -192,15 +192,10 @@ function back_to_original_marker(){
 $(document).ready(function () {
   FastClick.attach(document.body);
   mapInit();
-  $("#nav_button_click_area").click(function (event) {
-    alert('click');
-    alert(LB.current_park);
-    alert(LB.current_location);
-    alert('123');
-    event.stopPropagation();
-    alert('dff');
-    //LB.park_info_state.on_enter_short(LB.park_info_state.get_current_park());
+  $("#nav_button_click_area").click(function () {
+    LB.park_info_state.on_enter_short(LB.park_info_state.get_current_park());
     LB.auto_nav(LB.current_park);
+    event.stopPropagation();
   });
 
 
