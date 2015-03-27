@@ -194,12 +194,13 @@ $(document).ready(function () {
   mapInit();
   $("#nav_button_click_area").click(function (event) {
     alert('click');
-    event.stopPropagation();
-    LB.park_info_state.on_enter_short(LB.park_info_state.get_current_park());
-    LB.auto_nav(LB.current_park);
     alert(LB.current_park);
+    alert(LB.current_location);
     alert('123');
-    return;
+    event.stopPropagation();
+    alert('dff');
+    //LB.park_info_state.on_enter_short(LB.park_info_state.get_current_park());
+    LB.auto_nav(LB.current_park);
   });
 
 

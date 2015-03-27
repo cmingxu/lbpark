@@ -73,7 +73,6 @@ LB.park_info_state = {
       this.click_event_locker = true;
       this.park_title_dom.on('click', function () {
         park = self.get_current_park();
-        alert('abc;');
         if(park.park_type_code == 'A' && self.get_current_state() == "short")
           LB.park_info_state.on_enter_detail(park);
         else
