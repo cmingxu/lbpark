@@ -959,13 +959,16 @@ a[title="站长统计"]
     transition: 0.2s
   .vender_index
     height: 100%
+    padding: 10px
     #park_status_detail
       height: 33%
       width: 100%
-      background-color: #e2e2e2
+      border: 1px solid $border-color
+      margin-bottom: 10px
       #park_status_detail_name
         height: 50%
         position: relative
+        border-bottom: 1px solid $border-color
         #park_status_detail_name_content
           position: absolute
           padding-left: 30px
@@ -981,7 +984,6 @@ a[title="站长统计"]
             background-position: 0 0
             content: ''
       #park_status_detail_info
-        border-top: 1px solid white
         height: 50%
         line-height: 18px
         padding-top: 20px
@@ -1024,33 +1026,33 @@ a[title="站长统计"]
       height: 33%
       width: 100%
       background-color: white
+      border: 1px solid $border-color
       span
         width: 32%
         display: inline-block
         height: 100%
         text-align: center
         font-weight: bold
-        text-shadow: 0px 0px 1px white
         .color_circle
           height: 80px
           width: 80px
           border-radius: 80px
           margin: 0px auto
-          margin-top: 40px
+          @include block_vertical_align
 
           a
-            color: white
             height: 80px
             line-height: 80px
             text-decoration: none
             display: block
             font-size: 18px
+            color: white
         .green
-          background-color: #71d398
+          background-color: $green
         .orange
-          background-color: #f8b064
+          background-color: $orange
         .red
-          background-color: #d75a5a
+          background-color: $red
 
 
           &:active
@@ -1058,22 +1060,24 @@ a[title="站长统计"]
 
     #park_status_news
       height: 33%
-      background-color: white
       width: 100%
+      margin-top: 10px
       .park_status_header
-        background-color: #e2e2e2
-        padding-top: 5px
-        padding-left: 10px
-        padding-bottom: 5px
+        background-color: $blue
+        padding: 10px
+        color: white
       .news_list
-        padding-left: 10px
         .news
           a
             display: inline-block
-            padding-top: 3px
+            box-sizing: border-box
+            padding: 10px
+            width: 100%
             text-decoration: none
-            border-bottom: 1px solid #ccc
-            color: #666
+            color: $font-color
+            border-bottom: 1px solid $border-color
+            border-left: 1px solid $border-color
+            border-right: 1px solid $border-color
 
   .popup
     transition: all 2s
