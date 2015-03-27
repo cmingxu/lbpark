@@ -2,16 +2,10 @@ var LB = LB || {};
 
 LB.auto_nav_lines = [];
 LB.auto_nav = function(park) {
-  alert(park.lng);
-  alert(park.lat);
-  alert(LB.current_location.lng);
-  alert(LB.current_location.lat);
   var route_text, steps;
   var polyline;
   var start_xy = new AMap.LngLat(LB.current_location.lng, LB.current_location.lat);
   var end_xy = new AMap.LngLat(park.lng, park.lat);
-
-  alert(1);
 
   function driving_route() {
     var MDrive;
