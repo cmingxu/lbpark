@@ -151,9 +151,9 @@ class Park < ActiveRecord::Base
     end
     park_tags << { :name => "包月#{self.month_price}元起", :link => nil } if self.month_price
     park_tags << { :name => "卫生间", :link => nil } if self.service_wc
-    park_tags << { :name => self.service_rent_company, :link => nil } if self.service_rent
+    park_tags << { :name => self.service_rent_company, :link => nil } if self.service_rent && self.service_rent_company.present?
     park_tags << { :name => "来洗车", :link => nil } if self.service_wash
-    park_tags << { :name => "修车", :link => nil } if self.service_repair
+    #park_tags << { :name => "修车", :link => nil } if self.service_repair
     park_tags << { :name => "次小时#{self.day_second_hour_price.to_i}元起", :link => nil } if self.day_second_hour_price
     park_tags << { :name => "夜间禁停", :link => nil } if self.day_only?
     park_tags << { :name => "仅包月", :link => nil } if self.by_month_only?

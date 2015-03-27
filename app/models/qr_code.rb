@@ -38,10 +38,7 @@ class QrCode < ActiveRecord::Base
     res = api.qr_permnent_create(self.scene_str)
     self.update_column :ticket, res["ticket"]
     self.qr_code = WechatQrCodeUploader.new
-    begin
-      self.qr_code.download! res["url"]
-    rescue
-    end
+    self.qr_code.download! "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + res["ticket"]
     self.generate
   end
 
