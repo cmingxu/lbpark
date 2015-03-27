@@ -8,7 +8,6 @@
 //= require base58
 //= require core_ext
 //= require gps_transform
-//= require toast
 //= require wechat_config
 
 var LB = LB || {};
@@ -193,10 +192,12 @@ function back_to_original_marker(){
 $(document).ready(function () {
   FastClick.attach(document.body);
   mapInit();
-  $("#nav_button_click_area").click(function () {
+  $("#nav_button_click_area").click(function (event) {
     LB.park_info_state.on_enter_short(LB.park_info_state.get_current_park());
     LB.auto_nav(LB.current_park);
     event.stopPropagation();
+    event.preventDefault();
+    return;
   });
 
 
