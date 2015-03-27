@@ -8,8 +8,10 @@ LB.auto_nav = function(park) {
   alert(LB.current_location.lat);
   var route_text, steps;
   var polyline;
-  var start_xy = new AMap.LngLat(LB.current_location.lng - 0.00010, LB.current_location.lat + 0.00005);
+  var start_xy = new AMap.LngLat(LB.current_location.lng, LB.current_location.lat);
   var end_xy = new AMap.LngLat(park.lng, park.lat);
+
+  alert(1);
 
   function driving_route() {
     var MDrive;
