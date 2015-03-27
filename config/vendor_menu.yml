@@ -2,12 +2,12 @@ button:
   -
     type: "view"
     name: "报状态"
-    url: "http://6luobo.com/vendor/index"
+    url: "http://m.6luobo.com/vendor/index"
   -
     type: "view"
     name: "奖励"
-    url: "http://6luobo.com/vendor/lottery"
+    url: "http://m.6luobo.com/vendor/lottery"
   -
     type: "view"
     name: "我的"
-    url: "http://6luobo.com/vendor/mine"
+    url: "http://m.6luobo.com/vendor/mine"
