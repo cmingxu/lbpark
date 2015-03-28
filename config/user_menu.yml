@@ -18,6 +18,6 @@ button:
         url: "http://m.6luobo.com/mobile_coupons"
       -
         type: "view"
-        name: "我的"
+        name: "个人中心"
         url: "http://m.6luobo.com/mobile/setting"
 
