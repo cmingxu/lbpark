@@ -109,27 +109,27 @@
             %tr
               %td= Park::COLUMN_MAP[:service_month]
               %td
-                = f.select :service_month, [["是", true],["否", false]]
+                = f.select :service_month, [["是", true],["否", false]], :include_blank => true
 
             %tr
               %td= Park::COLUMN_MAP[:service_wash]
               %td
-                = f.select :service_wash, [["是", true],["否", false]]
+                = f.select :service_wash, [["是", true],["否", false]], :include_blank => true
 
             %tr
               %td= Park::COLUMN_MAP[:service_wc]
               %td
-                = f.select :service_wc, [["是", true],["否", false]]
+                = f.select :service_wc, [["是", true],["否", false]], :include_blank => true
 
             %tr
               %td= Park::COLUMN_MAP[:service_repair]
               %td
-                = f.select :service_repair, [["是", true],["否", false]]
+                = f.select :service_repair, [["是", true],["否", false]], :include_blank => true
 
             %tr
               %td= Park::COLUMN_MAP[:service_rent]
               %td
-                = f.select :service_rent, [["是", true],["否", false]]
+                = f.select :service_rent, [["是", true],["否", false]], :include_blank => true
 
             %tr
               %td= Park::COLUMN_MAP[:service_rent_company]
@@ -139,7 +139,7 @@
             %tr
               %td= Park::COLUMN_MAP[:is_recommend]
               %td
-                = f.select :is_recommend, [["是", true],["否", false]]
+                = f.select :is_recommend, [["是", true],["否", false]], :include_blank => true
 
             %tr
               %td 攻略

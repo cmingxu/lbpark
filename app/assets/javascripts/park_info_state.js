@@ -107,7 +107,7 @@ LB.park_info_state = {
       this.day_time_range_dom.text("");
     }
 
-    if(park.night_price != ""){
+    if(park.night_price !== ""){
       this.night_price_dom.text(park.night_price + "元");
       this.night_price_unit_dom.text("/" + park.night_price_unit);
       this.night_time_range_dom.text(park.night_time_range);

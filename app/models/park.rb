@@ -140,6 +140,11 @@ class Park < ActiveRecord::Base
     self.price_calculator = PriceCalculator.new(self)
   end
 
+  before_save do
+    self.night_time_begin = self.day_time_end
+    self.night_time_end   = self.day_time_begin
+  end
+
 
   delegate :price_by_day?, :by_month_only?, :day_only?, :desc, :no_parking?, :current_price, :day_price, :day_unit, :night_price, :night_unit, :day_time_range, :night_time_range, :to => "@price_calculator"
 
