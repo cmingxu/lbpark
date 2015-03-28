@@ -104,10 +104,10 @@ class VendorController < ApplicationController
   def use_coupon
     coupon = current_park.coupons.find_by_identifier(params[:id])
     if coupon.can_use?
-      render :use_coupon_success
+      render :use_coupon_success, :layout => "vendor_no_tab"
     else
       @msg = coupon.unuseable_reason
-      render :use_coupon_fail
+      render :use_coupon_fail, :layout => "vendor_no_tab"
     end
   end
 
