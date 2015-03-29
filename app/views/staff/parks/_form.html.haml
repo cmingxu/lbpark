@@ -171,4 +171,5 @@
                     = ff.file_field :park_pic
             %tr
               %td{:colspan => 2}
+                = link_to "删除", staff_park_path(@park), :method => :delete, :data => { :confirm => "确定要删除？" }, :class => "btn btn-warning" if @park.persisted?
                 = f.submit "保存", :class => "btn btn-success"

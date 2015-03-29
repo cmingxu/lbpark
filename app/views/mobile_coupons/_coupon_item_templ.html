@@ -19,7 +19,9 @@
                <span><%=item.duration%></span>
            </div>
           <%if(item.price && ("" + item.price).match(/\d+/)){%>
-           <div class="user_coupon_item_title_price"> <%=item.price%>起 </div>
+           <div class="user_coupon_item_title_price">
+          <span class="rmb_icon">￥</span>
+           <%=item.price%></div>
            <%} else {%>
            <div class="user_coupon_item_title_price"> 免费 </div>
            <%}%>

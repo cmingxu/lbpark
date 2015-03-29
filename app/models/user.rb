@@ -81,6 +81,10 @@ class User < ActiveRecord::Base
     "#{self.phone[0..2]}****#{self.phone[7..10]}"
   end
 
+  def normalized_phone
+    "#{self.phone[0..2]}  #{self.phone[3..6]}  #{self.phone[7..10]}"
+  end
+
   def vendor?
     self.role == "vendor"
   end

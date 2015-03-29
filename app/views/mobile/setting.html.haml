@@ -4,7 +4,7 @@
       %img{:src => current_user.wechat_user.try(:headimg).try(:thumb).try(:url) || asset_path("vendor_profile.png"), :width => "60", :height => "60"}
     .user_info_phone
       - if current_user.phone
-        = current_user.phone
+        = current_user.normalized_phone
       - else
         = link_to "请点击绑定会员", bind_mobile_mobile_coupons_path, :class => "user_info_bind_hint"
     .user_info_bg
