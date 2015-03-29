@@ -11,6 +11,12 @@ class Staff::LbSettingsController < Staff::BaseController
     @lb_setting = LbSetting.find params[:id]
   end
 
+  def update
+    @lb_setting = LbSetting.find params[:id]
+    LbSetting.send("#{params[:var]}=", params[:lb_value])
+    redirect_to staff_lb_settings_path
+  end
+
   def new
     @lb_setting = LbSetting.new
   end
