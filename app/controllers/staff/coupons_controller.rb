@@ -4,6 +4,6 @@ class Staff::CouponsController < Staff::BaseController
   end
 
   def index
-    @coupons = Coupon.page params[:page]
+    @coupons = Coupon.order("id DESC").page params[:page]
   end
 end

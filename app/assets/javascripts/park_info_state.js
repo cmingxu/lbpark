@@ -124,6 +124,11 @@ LB.park_info_state = {
     this.detail_dom.show();
     this.park_dom.show();
 
+    this.free_today_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_today").removeAttr("href");
+    this.free_tomorrow_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_tomorrow").removeAttr("href");
+    this.monthly_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_monthly").removeAttr("href");
+    this.quarterly_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_quarterly").removeAttr("href");
+
     if(park.free_today_coupon){
       this.free_today_dom.addClass('coupon_tag_active');
       this.free_today_dom.addClass('coupon_tag_active_today');
