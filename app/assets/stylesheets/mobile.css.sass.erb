@@ -166,8 +166,8 @@ body
   line-height: 44px
   width: 100%
   position: fixed
-  background-color: #cf831c
-  color: black
+  background-color: $blue
+  color: white
   text-align: center
   font-weight: 800
   font-size: 1.2em
@@ -769,11 +769,13 @@ a[title="站长统计"]
           span
             border-bottom: 2px solid $user_coupon_expired_item_highlight_color
         .user_coupon_item_title_price
+          padding-top: 3px
           color: $user_coupon_expired_item_highlight_color
         .user_coupon_item_detail
           color: $user_coupon_expired_item_highlight_color
           .user_coupon_item_detail_distance
             padding: 2px
+            padding-bottom: 5px
             span
               color: $user_coupon_expired_item_highlight_color!important
 
@@ -854,7 +856,6 @@ a[title="站长统计"]
       height: 100px
       border-radius: 50%
       border: none
-      box-shadow: 0px 4px 5px rgba(0,0,0,.5)
       text-align: center
       .user_coupon_tpl_show_click_area_content
         position: relative
@@ -1376,4 +1377,8 @@ a[title="站长统计"]
           background-image: url('<%= asset_path("mobile_mine_icons.png")%>')
           background-size: 390px auto
           background-position: -90px
+        .four_zero_zero
+          display: inline-block
+          float: right
+          color: $blue
 

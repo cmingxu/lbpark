@@ -4,7 +4,7 @@ class Staff::CouponTplsController < Staff::BaseController
   end
 
   def index
-    @coupon_tpls = CouponTpl.page params[:page]
+    @coupon_tpls = CouponTpl.order("id desc").page params[:page]
   end
 
   def new

@@ -76,12 +76,14 @@ class Coupon < ActiveRecord::Base
   end
 
   def as_api_json(location)
+    distance = LbRange.new(location, self.coupon_tpl.park.location).distance
+    distance = "很远" if distance > Settings.coupons_visible_range
     {
       :id => id,
       :coupon_type_readable => CouponTpl.coupon_type_to_readable(self.coupon_tpl.type) == "free" ? "free" : "long_term",
       :duration  => expired? ? "过期" : self.coupon_tpl.duration,
       :price     => self.price,
-      :distance  => LbRange.new(location, self.coupon_tpl.park.location).distance,
+      :distance  => distance,
       :park_name => self.coupon_tpl.park.name,
       :park_type => self.coupon_tpl.park.park_type,
       :expired   => expired?,

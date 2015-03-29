@@ -9,7 +9,7 @@ button:
     url: "http://m.6luobo.com/mobile/hot_place"
   -
     type: "view"
-    name: "我的"
+    name: "停车券"
     url: "http://m.6luobo.com/mobile/setting"
     sub_button:
       -
