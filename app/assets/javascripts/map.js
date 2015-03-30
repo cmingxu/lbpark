@@ -45,24 +45,55 @@ function mapInit() {
   }
 
   else{ // jump from search
-    AMap.service(["AMap.Geocoder"], function() {
-      MGeocoder = new AMap.Geocoder({
-        city: "010",
-        radius: 2000
-      });
-      //返回地理编码结果
-      //地理编码
-      MGeocoder.getLocation(place_name, function(status, result){
-        if(status === 'complete' && result.info === 'OK'){
-          l = result.geocodes[0].location
-          LB.mapObj.setCenter(l);
-          LB.center = {lng: l.lng, lat: l.lat };
-          LB.center = LB.current_location = {lng: l.lng, lat: l.lat };
-          add_search_position_marker(l.lng, l.lat);
-          //add_current_position_marker();
-        }
-      });
+
+
+
+
+    LB.mapObj.plugin(["AMap.PlaceSearch"], function() {
+      var msearch = new AMap.PlaceSearch();  //构造地点查询类
+      AMap.event.addListener(msearch, "complete", placeSearch_CallBack); //查询成功时的回调函数
+      msearch.setCity("010");
+      msearch.search(place_name);  //关键字查询查询
     });
+
+    function placeSearch_CallBack(obj) {
+      if(obj.type === "complete" && obj.info === "OK"){
+        l = obj.poiList.pois[0].location;
+
+        LB.mapObj.setCenter(l);
+        LB.center = {lng: l.lng, lat: l.lat };
+        LB.center = LB.current_location = {lng: l.lng, lat: l.lat };
+        add_search_position_marker(l.lng, l.lat);
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+    //AMap.service(["AMap.Geocoder"], function() {
+    //MGeocoder = new AMap.Geocoder({
+    //city: "010",
+    //radius: 2000
+    //});
+    ////返回地理编码结果
+    ////地理编码
+    //MGeocoder.getLocation(place_name, function(status, result){
+    //if(status === 'complete' && result.info === 'OK'){
+    //l = result.geocodes[0].location
+    //LB.mapObj.setCenter(l);
+    //LB.center = {lng: l.lng, lat: l.lat };
+    //LB.center = LB.current_location = {lng: l.lng, lat: l.lat };
+    //add_search_position_marker(l.lng, l.lat);
+    ////add_current_position_marker();
+    //}
+    //});
+    //});
   }
 
   back_to_original_marker();

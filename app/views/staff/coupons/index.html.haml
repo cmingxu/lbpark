@@ -22,16 +22,20 @@
       %table.table.table-striped.table-condensed.table-hover.table-bordered
         %thead
           %th ID
+          %th 卡券
           %th 编号
+          %th 状态
           %th 二维码
 
         %tbody
           - @coupons.each do |p|
             %tr
               %td= link_to p.id, edit_staff_coupon_path(p)
+              %td= link_to p.coupon_tpl.identifier, edit_staff_coupon_tpl_path(p.coupon_tpl)
               %td= p.identifier
+              %td= p.status
               %td
-                = image_tag p.qr_code.thumb.url
+                = image_tag p.qr_code.thumb.url, :height => 30, :width => 30
 
       = paginate @coupons
 
