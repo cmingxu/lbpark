@@ -51,9 +51,9 @@ class ApplicationController < ActionController::Base
       :jsapi_ticket => wechat_api.js_ticket,
       :noncestr  => SecureRandom.hex(10),
       :timestamp => Time.now.to_i,
-      :url => "http://m.6luobo.com" + request.path
+      :url => request.url
     }
-    Rails.logger.error request.path
+    Rails.logger.error request.url
     @config[:signature] = Digest::SHA1.hexdigest(@config.keys.sort.map{|k| "#{k}=#{@config[k]}" }.join("&"))
   end
 
