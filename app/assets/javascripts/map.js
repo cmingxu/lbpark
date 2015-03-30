@@ -248,23 +248,24 @@ function getLocationAndPanTo() {
       }
       LB.current_location.lng = longitude;
       LB.current_location.lat = latitude;
-      if(place_name == ""){ // set center to current location if no searching
-        LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
-        storeCurrentLocation(longitude, latitude);
-        LB.center = LB.current_location;
 
-        fetch_parkes(LB.center);
-        if(LB.current_position_marker){
-          LB.current_position_marker.setPosition(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
-        }else{
-          add_current_position_marker();
-        }
+      LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+      storeCurrentLocation(longitude, latitude);
+      LB.center = LB.current_location;
+
+      fetch_parkes(LB.center);
+      if(LB.current_position_marker){
+        LB.current_position_marker.setPosition(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+      }else{
+        add_current_position_marker();
       }
     }
   });
 }
 
 wx.ready(function () {
-  getLocationAndPanTo();
+  if(place_name == ""){ // set center to current location if no searching
+    getLocationAndPanTo();
+  }
 });
 
