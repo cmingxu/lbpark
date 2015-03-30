@@ -596,27 +596,23 @@ a[title="站长统计"]
     border-top: 1px solid $border-color
     box-sizing: border-box
     width: 100%
-    height: 60px
-    line-height: 60px
     font-weight: $weight-normal
-    .container-left
-      width: 50%
-      float: left
+    text-align:  center
+    .search_history_empty_name
+      display: inline-block
+      height: 60px
+      line-height: 60px
+      position: relative
       span
+        position: absolute
+        left: -60px
+        top: -3px
         width: 60px
         height: 60px
         display: inline-block
         background-image: url('<%= asset_path("mobile_mine_icons.png")%>')
         background-size: 780px auto
         background-position: -60px
-        float: right
-    .container-right
-      width: 50%
-      float: left
-      .search_history_item_name
-        line-height: 60px
-        float: left
-        display: inline-block
 
 #autocomplete
   margin: 10px
