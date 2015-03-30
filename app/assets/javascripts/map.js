@@ -232,7 +232,7 @@ $(document).ready(function () {
   });
 });
 
-wx.ready(function () {
+function getLocationAndPanTo() {
   wx.getLocation({
     type: 'gcj02',
     success: function (res) {
@@ -262,5 +262,9 @@ wx.ready(function () {
       }
     }
   });
+}
+
+wx.ready(function () {
+  getLocationAndPanTo();
 });
 
