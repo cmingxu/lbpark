@@ -3,9 +3,9 @@
 .user_coupons_page
   .user_coupons
     .user_coupons_tabs
-      %span.user_coupon_tab.user_coupon_published
+      %span.user_coupon_tab.user_coupon_published{:class => params[:owned].present? ? "" : "user_coupon_tab_actived"}
         发布中
-      %span.user_coupon_tab.user_coupon_owned
+      %span.user_coupon_tab.user_coupon_owned{:class => params[:owned].present? ? "user_coupon_tab_actived" : ""}
         待使用
     .clearfix
     .user_coupons_list
