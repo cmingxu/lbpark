@@ -6,7 +6,7 @@
 
 $(document).ready(function () {
   $("#user_coupon_tpl_show_banner").css("width", document.body.clientWidth);
-  $("#user_coupon_tpl_show_banner").css("height", (document.body.clientWidth) / 2);
+  $("#user_coupon_tpl_show_banner").css("height", (document.body.clientWidth) / 10 * 4);
 
   if(!(typeof has_form === 'undefined')){
     $("#coupon_form").submit(function (event) {

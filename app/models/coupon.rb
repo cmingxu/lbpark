@@ -34,7 +34,7 @@ class Coupon < ActiveRecord::Base
   belongs_to :park
 
   after_create :generate_qr_code
-  scope :display_order, lambda { order("coupon_tpl_type, claimed_at desc") }
+  scope :display_order, lambda { order("coupon_tpl_type, price ASC, claimed_at DESC") }
   scope :claimed, lambda { where(:status => :claimed) }
   scope :used, lambda { where(:status => :used) }
   scope :fit_for_today, lambda { where(["fit_for_date = ? ", Time.now.strftime("%Y-%m-%d") ]) }
@@ -81,7 +81,7 @@ class Coupon < ActiveRecord::Base
     {
       :id => id,
       :coupon_type_readable => CouponTpl.coupon_type_to_readable(self.coupon_tpl.type) == "free" ? "free" : "long_term",
-      :duration  => expired? ? "过期" : self.coupon_tpl.duration,
+      :duration  => expired? ? self.fit_for_date.to_time.to_s(:lb_cn_short_dot) : self.coupon_tpl.duration,
       :price     => self.price,
       :distance  => distance,
       :park_name => self.coupon_tpl.park.name,

@@ -14,30 +14,32 @@
         %p
           3、本券限
           %span
-            #{@coupon_tpl.fit_for_date.to_time.to_s(:lb_cn_short)}
+            #{@coupon_tpl.fit_for_date.to_time.to_zh_m_d}
           当日使用，过期或者提前无效。
+      - if @coupon_tpl.monthly? || @coupon_tpl.quarterly?
+        %p= @coupon_tpl.notice
 
-      - if @coupon_tpl.quarterly? && !@coupon_tpl.claimed_by_user?(current_user)
-        :javascript
-          var has_form = true;
-        .user_coupon_tpl_input
-          = @coupon_tpl.notice
+    - if @coupon_tpl.quarterly? && !@coupon_tpl.claimed_by_user?(current_user)
+      :javascript
+        var has_form = true;
+      .user_coupon_tpl_input
+        = @coupon_tpl.notice
 
-        .user_coupon_tpl_input
-          = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包季起点", :id => "date", :class => "coupon_issued_begin_date_input"
-        .user_coupon_tpl_input
-          = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址", :class => "coupon_issued_address_input"
+      .user_coupon_tpl_input
+        = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包季起点", :id => "date", :class => "coupon_issued_begin_date_input"
+      .user_coupon_tpl_input
+        = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址", :class => "coupon_issued_address_input"
 
-      - if @coupon_tpl.monthly? && !@coupon_tpl.claimed_by_user?(current_user)
-        :javascript
-          var has_form = true;
-        .user_coupon_tpl_input
-          = @coupon_tpl.notice
+    - if @coupon_tpl.monthly? && !@coupon_tpl.claimed_by_user?(current_user)
+      :javascript
+        var has_form = true;
+      .user_coupon_tpl_input
+        = @coupon_tpl.notice
 
-        .user_coupon_tpl_input
-          = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包月起点", :id => "date", :class => "coupon_issued_begin_date_input"
-        .user_coupon_tpl_input
-          = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址", :class => "coupon_issued_address_input"
+      .user_coupon_tpl_input
+        = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包月起点", :id => "date", :class => "coupon_issued_begin_date_input"
+      .user_coupon_tpl_input
+        = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址", :class => "coupon_issued_address_input"
 
     .user_coupon_tpl_show_click_area
       - if @coupon_tpl.claimed_by_user?(current_user)
