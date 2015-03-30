@@ -233,7 +233,6 @@ $(document).ready(function () {
 });
 
 function getLocationAndPanTo() {
-  console.log('1111111000');
   wx.getLocation({
     type: 'gcj02',
     success: function (res) {
@@ -250,8 +249,6 @@ function getLocationAndPanTo() {
       }
       LB.current_location.lng = longitude;
       LB.current_location.lat = latitude;
-      alert(LB.current_location.lng);
-      alert('111111');
 
       LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
       storeCurrentLocation(longitude, latitude);
