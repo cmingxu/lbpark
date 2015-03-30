@@ -46,6 +46,9 @@ LB.park_info_state = {
 
   on_enter_short: function (park) {
     LB.Logger.debug("park info state to short");
+    this.park_title_dom.css("opacity", "0");
+    this.park_title_dom.animate({"opacity": "1"}, 500);
+    //this.park_title_dom.css("opacity", "1");
     this.current_state = "short";
     this.current_park = park;
     if(config.rails_env == "production"){

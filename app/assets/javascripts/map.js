@@ -1,4 +1,5 @@
 //= require zepto
+//= require zepto.fx
 //= require config
 //= require logger
 //= require park_info_state
@@ -66,12 +67,6 @@ function mapInit() {
         add_search_position_marker(l.lng, l.lat);
       }
     }
-
-
-
-
-
-
 
 
 
