@@ -10,6 +10,14 @@ var list_place_holder = $("<div id='list_place_holder'></div>");
 var published_list_empty  = $("<div id='owned_list_empty'><div class='owned_list_empty_icon'></div><div class='owned_list_empty_text'>呜~还没有车场发布萝卜替你催！</div></div>");
 var owned_list_empty  = $("<div id='owned_list_empty'><div class='owned_list_empty_icon'></div><div class='owned_list_empty_text'>呜~还没有抢到券萝卜等着你！</div></div>");
 
+window.lastActiveLocation = null;
+if(typeof localStorage.lastActivePostion !== 'undefined'){
+  window.lastActiveLocation = {};
+  window.lastActiveLocation.lng = localStorage.lastActivePostion.split(",")[0];
+  window.lastActiveLocation.lat = localStorage.lastActivePostion.split(",")[1];
+}
+
+
 function showUserCouponListEmptyPage() {
   $(".user_coupons_list").empty();
   $(".user_coupons_list").append(list_place_holder);
@@ -30,7 +38,7 @@ function init() {
     $(".user_coupon_published").addClass("user_coupon_tab_actived");
     $(".user_coupon_owned").removeClass("user_coupon_tab_actived");
     showUserCouponListEmptyPage();
-    $.getJSON('mobile_coupons/coupons_nearby', {lng: config.default_location.lng, lat: config.default_location.lat, park_id: park_id}, function (res) {
+    $.getJSON('mobile_coupons/coupons_nearby', {lng: window.lastActiveLocation.lng, lat: window.lastActiveLocation.lat, park_id: park_id}, function (res) {
       $(".user_coupons_list").empty();
       if(res.length != 0){
         res.forEach(function (item) {
@@ -44,6 +52,8 @@ function init() {
       }else{
         $(".user_coupons_list").append(published_list_empty);
       }
+
+      return true;
     });
   }
 
@@ -51,7 +61,7 @@ function init() {
     $(".user_coupon_published").removeClass("user_coupon_tab_actived");
     $(".user_coupon_owned").addClass("user_coupon_tab_actived");
     showUserCouponListEmptyPage();
-    $.getJSON('mobile_coupons/coupons_owned', {lng: config.default_location.lng, lat: config.default_location.lat, park_id: park_id}, function (res) {
+    $.getJSON('mobile_coupons/coupons_owned', {lng: window.lastActiveLocation.lng, lat: window.lastActiveLocation.lat, park_id: park_id}, function (res) {
       $(".user_coupons_list").empty();
       if(res.length != 0){
         res.forEach(function (item) {
@@ -66,6 +76,8 @@ function init() {
       }else{
         $(".user_coupons_list").append(owned_list_empty);
       }
+
+      return true;
     });
   }
 
@@ -73,30 +85,25 @@ function init() {
 }
 
 $(document).ready(function() {
-  if(navigator.userAgent.match(/android/i) || navigator.userAgent.match(/iphone|ipad/)){ }
-  else{
-    init();
-  }
-
-  if(park_id != 0){
-    init();
-  }
-
+  window.lastActiveLocation = window.lastActiveLocation || {};
+  window.lastActiveLocation.lng = window.lastActiveLocation.lng || config.default_location.lng;
+  window.lastActiveLocation.lat = window.lastActiveLocation.lat || config.default_location.lat;
+  init();
 });
 
-wx.ready(function () {
-  wx.getLocation({
-    type: wx.isAndroid ? 'gcj02' : 'wgs84',
-    success: function (res) {
-      var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-      var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-      var speed = res.speed; // 速度，以米/每秒计
-      var accuracy = res.accuracy; // 位置精度
-      if(park_id == 0){
-        init();
-      }
-    }
-  });
-});
+//wx.ready(function () {
+//wx.getLocation({
+//type: wx.isAndroid ? 'gcj02' : 'wgs84',
+//success: function (res) {
+//var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+//var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+//var speed = res.speed; // 速度，以米/每秒计
+//var accuracy = res.accuracy; // 位置精度
+//window.lastActiveLocation = {};
+//window.lastActiveLocation.lng = longitude;
+//window.lastActiveLocation.lat = latitude;
+//}
+//});
+//});
 
 

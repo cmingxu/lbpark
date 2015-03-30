@@ -46,10 +46,6 @@ function mapInit() {
   }
 
   else{ // jump from search
-
-
-
-
     LB.mapObj.plugin(["AMap.PlaceSearch"], function() {
       var msearch = new AMap.PlaceSearch();  //构造地点查询类
       AMap.event.addListener(msearch, "complete", placeSearch_CallBack); //查询成功时的回调函数
@@ -64,6 +60,7 @@ function mapInit() {
         LB.mapObj.setCenter(l);
         LB.center = {lng: l.lng, lat: l.lat };
         LB.center = LB.current_location = {lng: l.lng, lat: l.lat };
+        storeCurrentLocation(l.lng, l.lat);
         add_search_position_marker(l.lng, l.lat);
       }
     }
@@ -214,6 +211,11 @@ function back_to_original_marker(){
   });
 }
 
+// store current location into localstorage, either searched place lnglat or positioned
+function storeCurrentLocation(lng, lat) {
+  localStorage.lastActivePostion = "" + lng+","+lat;
+}
+
 
 $(document).ready(function () {
   FastClick.attach(document.body);
@@ -248,6 +250,7 @@ wx.ready(function () {
       LB.current_location.lat = latitude;
       if(place_name == ""){ // set center to current location if no searching
         LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
+        storeCurrentLocation(longitude, latitude);
         LB.center = LB.current_location;
 
         fetch_parkes(LB.center);

@@ -20,8 +20,7 @@
            </div>
           <%if(item.price && ("" + item.price).match(/\d+/)){%>
            <div class="user_coupon_item_title_price">
-          <span class="rmb_icon">￥</span>
-           <%=item.price%></div>
+          <span class="rmb_icon">￥</span><%=item.price%></div>
            <%} else {%>
            <div class="user_coupon_item_title_price"> 限免 </div>
            <%}%>
