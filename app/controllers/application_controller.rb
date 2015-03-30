@@ -53,6 +53,7 @@ class ApplicationController < ActionController::Base
       :timestamp => Time.now.to_i,
       :url => "http://m.6luobo.com" + request.path
     }
+    Rails.logger.error request.path
     @config[:signature] = Digest::SHA1.hexdigest(@config.keys.sort.map{|k| "#{k}=#{@config[k]}" }.join("&"))
   end
 
