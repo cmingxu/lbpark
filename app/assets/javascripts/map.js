@@ -206,7 +206,7 @@ function add_current_position_marker(){
 
 function back_to_original_marker(){
   $("#back_to_original_marker").click(function () {
-    $(this).addClass(".rotating");
+    $(this).addClass("rotating");
     getLocationAndPanTo();
   });
 }
