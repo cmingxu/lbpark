@@ -20,4 +20,8 @@ class Time
   def to_zh_m_d
     "#{strftime('%m').to_i}月#{strftime('%d').to_i}日"
   end
+
+  def to_zh_m_d_dot
+    "#{strftime('%m').to_i}.#{strftime('%d').to_i}"
+  end
 end

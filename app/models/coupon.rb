@@ -81,7 +81,7 @@ class Coupon < ActiveRecord::Base
     {
       :id => id,
       :coupon_type_readable => CouponTpl.coupon_type_to_readable(self.coupon_tpl.type) == "free" ? "free" : "long_term",
-      :duration  => expired? ? self.fit_for_date.to_time.to_s(:lb_cn_short_dot) : self.coupon_tpl.duration,
+      :duration  => expired? ? self.fit_for_date.to_time.to_zh_m_d_dot : self.coupon_tpl.duration,
       :price     => self.price,
       :distance  => distance,
       :park_name => self.coupon_tpl.park.name,
