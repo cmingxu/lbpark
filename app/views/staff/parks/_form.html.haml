@@ -140,6 +140,11 @@
               %td= Park::COLUMN_MAP[:is_recommend]
               %td
                 = f.select :is_recommend, [["是", true],["否", false]], :include_blank => true
+            %tr
+              %td 备注
+              %td
+                = f.text_area :tips, :style => "width: 100%"
+                %span 例如: hda001
 
             %tr
               %td 攻略
