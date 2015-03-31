@@ -40,7 +40,21 @@ $(document).ready(function(){
       },
       afterSelect: function (item) {
         window.location.href = "/staff/parks/" + item.id + "/edit";
-      }
+      },
+      matcher: function (item) {
+        if(item.name.match(new RegExp(this.query))){
+          return true;
+        }
+
+        if(item.code.match(new RegExp(this.query))){
+          return true;
+        }
+
+        if(item.pinyin.match(new RegExp(this.query.replace(/(\w)/g, '$1.*')))){
+          return true;
+        }
+      },
+      items: 20
     });
 
     $('input.typeahead_user_parks').typeahead({
