@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150330093556) do
+ActiveRecord::Schema.define(version: 20150331042655) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -314,6 +314,7 @@ ActiveRecord::Schema.define(version: 20150330093556) do
     t.string   "originate_from"
     t.string   "property_owner"
     t.text     "previews"
+    t.string   "pinyin"
   end
 
   create_table "qr_codes", force: true do |t|

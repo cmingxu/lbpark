@@ -143,6 +143,7 @@ class Park < ActiveRecord::Base
   before_save do
     self.night_time_begin = self.day_time_end
     self.night_time_end   = self.day_time_begin
+    self.pinyin           = Pinyin.t(self.name)
   end
 
 

@@ -26,6 +26,7 @@
 
 $(document).ready(function(){
     $('input.typeahead').typeahead({
+      displayKey: 'code',
       source: function (query, process) {
         $.ajax({
           url: "/staff/parks",

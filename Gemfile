@@ -16,6 +16,7 @@ gem 'spring',        group: :development
 
 gem 'unicorn'
 
+gem 'chinese_pinyin', :git => "git@github.com:flyerhzm/chinese_pinyin.git"
 
 gem 'state_machine'
 

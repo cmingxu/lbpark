@@ -7,6 +7,12 @@ GIT
       rails (~> 4.0)
 
 GIT
+  remote: git@github.com:flyerhzm/chinese_pinyin.git
+  revision: 03de64b62d4f8f099bf64fd3dbb3e80a7b4d51a5
+  specs:
+    chinese_pinyin (0.7.0)
+
+GIT
   remote: git@github.com:intridea/grape.git
   revision: aef97621075ecda071ae39e950bc938759626381
   specs:
@@ -375,6 +381,7 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   carrierwave (= 0.10.0)
+  chinese_pinyin!
   coffee-rails (~> 4.0.0)
   easy_captcha
   evil_transform
