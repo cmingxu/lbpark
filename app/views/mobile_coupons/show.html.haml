@@ -16,8 +16,6 @@
           %span
             #{@coupon_tpl.fit_for_date.to_time.to_zh_m_d}
           使用，过期或提前无效。
-      - if @coupon_tpl.monthly? || @coupon_tpl.quarterly?
-        %p= @coupon_tpl.notice
 
     - if @coupon_tpl.quarterly? && !@coupon_tpl.claimed_by_user?(current_user)
       :javascript
