@@ -42,9 +42,11 @@ class MobileCouponsController < MobileController
       if @coupon = @coupon_tpl.claim_coupon
         @coupon.update_attributes coupon_params
         @coupon.claim!
-        redirect_to coupon_show_mobile_coupon_path(@coupon)
+        redirect_to coupon_show_mobile_coupon_path(@coupon) and return
       end
     end
+
+    redirect_to mobile_coupons_path
   end
 
   def coupon_show
