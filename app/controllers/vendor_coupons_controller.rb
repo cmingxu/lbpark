@@ -1,4 +1,9 @@
 class VendorCouponsController < VendorController
+
+  before_filter :current_vendor_required, :only => [:index, :use]
+  before_filter :mobile_bind_required, :only => [:index, :use]
+  before_filter :vendor_park_required, :only => [:index, :use]
+
   def index
   end
 
