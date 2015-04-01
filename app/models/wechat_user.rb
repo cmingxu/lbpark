@@ -41,6 +41,7 @@ class WechatUser < ActiveRecord::Base
   class << self
     def user_subscribe!(request)
       self.find_or_create_by(:openid => request[:FromUserName])
+      self.ticket = request[:Ticket]
     end
 
     def user_unsubscribe!(request)
@@ -61,6 +62,8 @@ class WechatUser < ActiveRecord::Base
     else
       user_response = $wechat_api.user(self.openid)
     end
+
+    u.update_column :ticket, self.ticket
 
     %w(nickname sex language province country unionid).each do |col|
       self.send("#{col}=", user_response[col])
