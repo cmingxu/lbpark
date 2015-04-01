@@ -71,6 +71,8 @@ function init() {
 
         $(".user_coupons_list .user_coupon_item").click(function () {
           if($(this).hasClass("expired_coupon_item")){ return };
+          if($(this).hasClass("used_coupon_item")){ return };
+
           window.location.href = "/mobile_coupons/" + $(this).data('id') + "/coupon_show";
         });
       }else{
