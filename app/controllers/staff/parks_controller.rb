@@ -19,7 +19,7 @@ class Staff::ParksController < Staff::BaseController
 
       format.json do
         @parks = Park.where(["name like ? OR code like ? OR pinyin like ?", "%#{params[:match]}%",
-                             "#{params[:match]}%", "#{params[:match].scan(/\w/).join('%') + '%'}" ]).limit(10)
+                             "#{params[:match]}%", "#{params[:match].scan(/\w/).map{|w| w + "%"}.join('')}" ]).limit(10)
         if params[:type_a_only]
           @parks = @parks.with_park_type_code('A')
         end
