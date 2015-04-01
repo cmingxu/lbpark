@@ -6,7 +6,7 @@ wx.ready(function () {
         var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
         setTimeout(function () {
           window.location.href = "/vendor_coupons/" + result + "/use";
-        }, 1000);
+        }, 500);
       }
     });
   })
