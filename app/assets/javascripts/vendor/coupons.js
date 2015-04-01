@@ -13,7 +13,6 @@ wx.ready(function () {
         return true;
       }
     });
-    event.preventDefault();
   })
 });
 
