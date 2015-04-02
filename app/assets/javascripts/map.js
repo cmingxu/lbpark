@@ -196,6 +196,9 @@ function add_event_listeners() {
   AMap.event.addListener(LB.mapObj,"moveend", function () {
     LB.Logger.debug("map object moveend");
     LB.center = LB.mapObj.getCenter();
+    if(LB.mapObj.getZoom() >= config.zoom_level_middle){
+      clear_markers({clear_all: true});
+    }
     if(GPS.distance(LB.center.lat, LB.center.lng, LB.fetch_center.lat, LB.fetch_center.lng) > 750){
       fetch_parkes(LB.center);
       LB.fetch_center = LB.center;
@@ -213,6 +216,9 @@ function add_event_listeners() {
   AMap.event.addListener(LB.mapObj,"zoomend", function () {
     newZoom = LB.mapObj.getZoom();
     LB.Logger.debug("zoom end  " + LB.mapObj.getZoom());
+    if(newZoom <= config.zoom_level_middle){
+      LB.park_info_state.on_enter_hidden();
+    }
     clear_markers({clear_all: true});
     fetch_parkes(LB.center);
     LB.latestZoom = newZoom;
