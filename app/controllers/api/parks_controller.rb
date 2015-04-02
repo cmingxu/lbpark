@@ -33,7 +33,9 @@ class Api::ParksController < Api::BaseController
       end
     else
       @location = Location.new params[:lng], params[:lat]
-      park_json = Park.within_range(@location.around(Settings.parks_visible_range * 4)).all.map do |p|
+      range = 2 ** (16 - params[:zoom].to_i)
+      random = range
+      park_json = Park.within_range(@location.around(Settings.parks_visible_range * range)).all.select{|a| rand(random) == 1}.map do |p|
         {
           :lng => p.lng,
           :lat => p.lat,
