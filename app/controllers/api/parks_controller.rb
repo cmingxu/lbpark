@@ -33,9 +33,9 @@ class Api::ParksController < Api::BaseController
       end
     else
       @location = Location.new params[:lng], params[:lat]
-      range = 2 ** (17 - params[:zoom].to_i)
-      random = range
-      park_json = Park.within_range(@location.around(Settings.parks_visible_range * range)).all.select{|a| rand(random) == 1}.map do |p|
+      range = 2 ** (16 - params[:zoom].to_i)
+      random = 2 ** (16 - params[:zoom].to_i)
+      park_json = Park.within_range(@location.around(Settings.parks_visible_range * range)).rand_visible(random).map do |p|
         {
           :lng => p.lng,
           :lat => p.lat,
@@ -43,10 +43,9 @@ class Api::ParksController < Api::BaseController
           :small_place_holder => true
         }
 
-        Rails.logger.debug "1" * 100
+      end
         Rails.logger.error range
         Rails.logger.error park_json.size
-      end
     end
 
     if Settings.park_info_encrypted
