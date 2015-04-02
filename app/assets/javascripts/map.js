@@ -200,8 +200,10 @@ function add_event_listeners() {
     LB.Logger.debug("map object moveend");
     LB.center = LB.mapObj.getCenter();
     if(LB.mapObj.getZoom() <= config.zoom_level_middle){
-      clear_markers({clear_all: true});
+      return;
+      //clear_markers({clear_all: true});
     }
+
     if(GPS.distance(LB.center.lat, LB.center.lng, LB.fetch_center.lat, LB.fetch_center.lng) > 750){
       fetch_parkes(LB.center);
       LB.fetch_center = LB.center;
