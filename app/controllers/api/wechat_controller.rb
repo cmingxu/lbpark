@@ -50,7 +50,7 @@ class Api::WechatController < Api::BaseController
   # 当请求的文字信息内容为'help'时, 使用这个responder处理
   on :text, with:"abc" do |request, help|
     #request.reply.text "help content" #回复帮助信息
-    request.reply.text "<a href='http://m.6luobo.com/mobile_map?name=#{help}'>#{help}</a>"
+    request.reply.text "<a href='http://m.6luobo.com/mobile/map?name=#{help}'>#{help}</a>"
   end
 
   # 当请求的文字信息内容为'<n>条新闻'时, 使用这个responder处理, 并将n作为第二个参数
@@ -58,6 +58,19 @@ class Api::WechatController < Api::BaseController
     articles_range = (0... [count.to_i, 10].min)
     request.reply.news(articles_range) do |article, i| #回复"articles"
       article.item title: "标题#{i}", description:"内容描述#{i}", pic_url: "http://www.baidu.com/img/bdlogo.gif", url:"http://www.baidu.com/"
+    end
+  end
+
+  on :text, with: /^(\w+)$/ do |request, r|
+    parks = Park.where(["name like ? OR code like ? OR pinyin like ?", "%#{r}%",
+                "#{r}%", "#{r.scan(/\w/).map{|w| w + "%"}.join('')}" ]).limit(6)
+
+    if parks.present?
+      request.reply.text(parks.each do |help|
+         "<a href='http://m.6luobo.com/mobile/map?name=#{help}'>#{help}</a><br>"
+      end.join)
+    else
+      request.reply.text "萝卜没能找到您需要的停车场， 试着如“海淀剧院”，“haidianjuyuan”或者“hdjy”。"
     end
   end
 
