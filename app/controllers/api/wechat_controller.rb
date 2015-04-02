@@ -67,8 +67,8 @@ class Api::WechatController < Api::BaseController
 
     if parks.present?
       request.reply.text(parks.map do |help|
-        "<a href='http://m.6luobo.com/mobile/map?name=#{help.name}'>#{help.name}</a><br />"
-      end.join)
+        "<a href='http://m.6luobo.com/mobile/map?name=#{help.name}'>#{help.name}</a>"
+      end.join("\n"))
     else
       request.reply.text "萝卜没能找到您需要的停车场， 试着如“海淀剧院”，“haidianjuyuan”或者“hdjy”。"
     end
