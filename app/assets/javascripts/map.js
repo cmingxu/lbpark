@@ -143,17 +143,20 @@ function add_new_marker(location) {
 
 function clear_markers(opts) {
   if(opts.clear_all){
-    LB.markers.map(function (m) {
-      m.setMap(null);
-    });
-    LB.markers = [];
+    setTimeout(function () {
+      LB.markers.map(function (m) {
+        m.setMap(null);
+      });
+      LB.markers = [];
+
+    },0);
     return true;
   }
   //markers = LB.markers.filter(function (m) {
-    //return GPS.distance(opts.center.lat, opts.center.lng, m.getPosition().getLat(), m.getPosition().getLng()) >= opts.distance;
+  //return GPS.distance(opts.center.lat, opts.center.lng, m.getPosition().getLat(), m.getPosition().getLng()) >= opts.distance;
   //});
   //markers.map(function (a) {
-    //a.setContent("<h1>C<h1>");
+  //a.setContent("<h1>C<h1>");
   //});
 }
 
