@@ -47,6 +47,12 @@ class Api::WechatController < Api::BaseController
     request.reply.text LbSetting.wechat_subscribe_message
   end
 
+  # 当请求的文字信息内容为'help'时, 使用这个responder处理
+  on :text, with:"help(\w+)" do |request, help|
+    #request.reply.text "help content" #回复帮助信息
+    request.reply.text "<a href='http://m.6luobo.com/mobile_map?name=#{help}'>#{help}</a>"
+  end
+
   # 当请求的文字信息内容为'<n>条新闻'时, 使用这个responder处理, 并将n作为第二个参数
   on :text, with: /^(\d+)条新闻$/ do |request, count|
     articles_range = (0... [count.to_i, 10].min)
