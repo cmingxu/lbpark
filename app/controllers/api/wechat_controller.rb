@@ -61,7 +61,7 @@ class Api::WechatController < Api::BaseController
     end
   end
 
-  on :text, with: /[\p{Han}|\w]+/u do |request, r|
+  on :text, with: /([\p{Han}|\w]+)/u do |request, r|
     parks = Park.where(["name like ? OR code like ? OR pinyin like ?", "%#{r}%",
                 "#{r}%", "#{r.scan(/\w/).map{|w| w + "%"}.join('')}" ]).limit(6)
 
