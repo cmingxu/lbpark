@@ -48,7 +48,7 @@ class Api::WechatController < Api::BaseController
   end
 
   # 当请求的文字信息内容为'help'时, 使用这个responder处理
-  on :text, with:"help(\w+)" do |request, help|
+  on :text, with:"abc" do |request, help|
     #request.reply.text "help content" #回复帮助信息
     request.reply.text "<a href='http://m.6luobo.com/mobile_map?name=#{help}'>#{help}</a>"
   end
