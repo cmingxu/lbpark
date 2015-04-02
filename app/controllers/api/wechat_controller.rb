@@ -61,13 +61,13 @@ class Api::WechatController < Api::BaseController
     end
   end
 
-  on :text, with: /^(\w+)$/ do |request, r|
+  on :text, with: /[\p{Han}|\w]+/u do |request, r|
     parks = Park.where(["name like ? OR code like ? OR pinyin like ?", "%#{r}%",
                 "#{r}%", "#{r.scan(/\w/).map{|w| w + "%"}.join('')}" ]).limit(6)
 
     if parks.present?
       request.reply.text(parks.each do |help|
-         "<a href='http://m.6luobo.com/mobile/map?name=#{help}'>#{help}</a><br>"
+        "<a href='http://m.6luobo.com/mobile/map?name=#{help.name}'>#{help.name}</a><br>"
       end.join)
     else
       request.reply.text "萝卜没能找到您需要的停车场， 试着如“海淀剧院”，“haidianjuyuan”或者“hdjy”。"
