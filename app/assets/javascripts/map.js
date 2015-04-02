@@ -199,7 +199,7 @@ function add_event_listeners() {
   AMap.event.addListener(LB.mapObj,"moveend", function () {
     LB.Logger.debug("map object moveend");
     LB.center = LB.mapObj.getCenter();
-    if(LB.mapObj.getZoom() >= config.zoom_level_middle){
+    if(LB.mapObj.getZoom() <= config.zoom_level_middle){
       clear_markers({clear_all: true});
     }
     if(GPS.distance(LB.center.lat, LB.center.lng, LB.fetch_center.lat, LB.fetch_center.lng) > 750){
