@@ -225,10 +225,16 @@ function add_event_listeners() {
       LB.park_info_state.on_enter_hidden();
     }
 
-    if(newZoom == config.zoom_level_middle){
+    if(LB.latestZoom > config.zoom_level_middle && newZoom <= config.zoom_level_middle){
       clear_markers({clear_all: true});
       fetch_parkes(LB.center);
     }
+
+    if(LB.latestZoom < config.zoom_level_middle && newZoom > config.zoom_level_middle){
+      clear_markers({clear_all: true});
+      fetch_parkes(LB.center);
+    }
+
     LB.latestZoom = newZoom;
   });
 
