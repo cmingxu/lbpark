@@ -15,7 +15,7 @@
               %td= link_to p.id, edit_staff_qr_code_path(p)
               %td= p.scene_str
               %td= p.mark
-              %td= link_to(image_tag(p.qr_code.thumb.url))
+              %td= link_to(image_tag(p.qr_code.thumb.url, :height => 220, :width => 220))
               %td
 
 
