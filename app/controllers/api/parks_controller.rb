@@ -1,6 +1,6 @@
 class Api::ParksController < Api::BaseController
   def index
-    if params[:zoom] && params[:zoom].to_i > 13
+    if params[:zoom] && params[:zoom].to_i > 14
       @location = Location.new params[:lng], params[:lat]
       @coupon_tpls = CouponTpl.all_visible_around(@location)
       park_json = Park.within_range(@location.around(Settings.parks_visible_range)).includes(:park_pics).all.map do |p|

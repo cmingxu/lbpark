@@ -146,10 +146,11 @@ function clear_markers(opts) {
     setTimeout(function () {
       LB.markers.map(function (m) {
         m.setMap(null);
+        delete(m);
       });
       LB.markers = [];
 
-    },0);
+    }, 0);
     return true;
   }
   //markers = LB.markers.filter(function (m) {
@@ -225,12 +226,12 @@ function add_event_listeners() {
       LB.park_info_state.on_enter_hidden();
     }
 
-    if(LB.latestZoom > config.zoom_level_middle && newZoom <= config.zoom_level_middle){
+    if(LB.latestZoom >= config.zoom_level_middle && newZoom <= config.zoom_level_middle){
       clear_markers({clear_all: true});
       fetch_parkes(LB.center);
     }
 
-    if(LB.latestZoom < config.zoom_level_middle && newZoom > config.zoom_level_middle){
+    if(LB.latestZoom <= config.zoom_level_middle && newZoom >= config.zoom_level_middle){
       clear_markers({clear_all: true});
       fetch_parkes(LB.center);
     }
