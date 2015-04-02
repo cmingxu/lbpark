@@ -150,7 +150,7 @@ function clear_markers(opts) {
       });
       LB.markers = [];
 
-    }, 0);
+    }, 10);
     return true;
   }
   //markers = LB.markers.filter(function (m) {
@@ -188,10 +188,6 @@ function fetch_parkes(location) {
       json.forEach(function (item, index) {
         LB.markers.push(add_new_marker(item));
       });
-
-      setTimeout(function () {
-        //clear_markers({center: location, distance: 2000, clear_all: false});
-      }, 0);
     }
   });
 }
