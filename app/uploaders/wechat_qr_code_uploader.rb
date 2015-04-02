@@ -38,8 +38,8 @@ class WechatQrCodeUploader < CarrierWave::Uploader::Base
     def full_filename (for_file = model.logo.file)
       "qr_thumb.png"
     end
-
   end
+
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
