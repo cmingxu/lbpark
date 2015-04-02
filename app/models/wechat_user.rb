@@ -40,8 +40,9 @@ class WechatUser < ActiveRecord::Base
 
   class << self
     def user_subscribe!(request)
-      self.find_or_create_by(:openid => request[:FromUserName])
-      self.ticket = request[:Ticket]
+      u = self.find_or_create_by(:openid => request[:FromUserName])
+      u.ticket = request[:Ticket]
+      u
     end
 
     def user_unsubscribe!(request)
