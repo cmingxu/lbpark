@@ -1,6 +1,6 @@
 class Api::ParksController < Api::BaseController
   def index
-    if params[:zoom] && params[:zoom].to_i > 14
+    if params[:zoom] && params[:zoom].to_i > 15
       @location = Location.new params[:lng], params[:lat]
       @coupon_tpls = CouponTpl.all_visible_around(@location)
       park_json = Park.within_range(@location.around(Settings.parks_visible_range)).includes(:park_pics).all.map do |p|
@@ -33,8 +33,8 @@ class Api::ParksController < Api::BaseController
       end
     else
       @location = Location.new params[:lng], params[:lat]
-      range = 2 ** (17 - params[:zoom].to_i)
-      random = 2 ** (17 - params[:zoom].to_i)
+      range = 2 ** (18 - params[:zoom].to_i)
+      random = 2 ** (18 - params[:zoom].to_i)
       park_json = Park.within_range(@location.around(Settings.parks_visible_range * range)).rand_visible(random).map do |p|
         {
           :lng => p.lng,
