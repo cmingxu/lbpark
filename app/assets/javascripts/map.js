@@ -16,6 +16,8 @@ var LB = LB || {};
 ///////////////////////////
 LB.mapObj;
 LB.fetch_center =  LB.current_location = LB.center = config.default_location;
+LB.markers = LB.markers || [];
+LB.latestZoom = config.default_zoom;
 
 //////////////////////////
 
@@ -122,24 +124,45 @@ function add_new_marker(location) {
   marker.park = location;
   marker.marker_jq_obj = marker_jq_obj;
 
-  AMap.event.addListener(marker, 'click', function () {
-    LB.Logger.debug("marker click");
-    LB.park_info_state.on_enter_short(marker.park);
-    LB.current_park = marker.park;
-    marker.marker_jq_obj.addClass("marker_pressed");
-    setTimeout(function () {
-      marker.marker_jq_obj.removeClass("marker_pressed");
-    }, 100)
-    LB.clear_auto_nav();
-  });
+  if(!location.small_place_holder){
+    AMap.event.addListener(marker, 'click', function () {
+      LB.Logger.debug("marker click");
+      LB.park_info_state.on_enter_short(marker.park);
+      LB.current_park = marker.park;
+      marker.marker_jq_obj.addClass("marker_pressed");
+      setTimeout(function () {
+        marker.marker_jq_obj.removeClass("marker_pressed");
+      }, 100)
+      LB.clear_auto_nav();
+    });
+  }
+
+  return marker;
 
 }
 
+function clear_markers(opts) {
+  if(opts.clear_all){
+    LB.markers.map(function (m) {
+      m.setMap(null);
+    });
+    LB.markers = [];
+    return true;
+  }
+  //markers = LB.markers.filter(function (m) {
+    //return GPS.distance(opts.center.lat, opts.center.lng, m.getPosition().getLat(), m.getPosition().getLng()) >= opts.distance;
+  //});
+  //markers.map(function (a) {
+    //a.setContent("<h1>C<h1>");
+  //});
+}
+
 function fetch_parkes(location) {
+  zoom = LB.mapObj.getZoom();
   LB.fetch_center = location;
   $.ajax({
     url: "nosj.skrap/ipa/".reverse(),
-    data: {lng: location.lng, lat: location.lat},
+    data: {lng: location.lng, lat: location.lat, zoom: zoom},
     dataType: 'JSON',
     type: 'GET',
     success: function (response, a, c) {
@@ -159,8 +182,12 @@ function fetch_parkes(location) {
       }
 
       json.forEach(function (item, index) {
-        add_new_marker(item);
+        LB.markers.push(add_new_marker(item));
       });
+
+      setTimeout(function () {
+        //clear_markers({center: location, distance: 2000, clear_all: false});
+      }, 0);
     }
   });
 }
@@ -182,6 +209,15 @@ function add_event_listeners() {
     }
     LB.clear_auto_nav();
   });
+
+  AMap.event.addListener(LB.mapObj,"zoomend", function () {
+    newZoom = LB.mapObj.getZoom();
+    LB.Logger.debug("zoom end  " + LB.mapObj.getZoom());
+    clear_markers({clear_all: true});
+    fetch_parkes(LB.center);
+    LB.latestZoom = newZoom;
+  });
+
 }
 
 function add_search_position_marker(lng, lat){

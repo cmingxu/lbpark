@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331042655) do
+ActiveRecord::Schema.define(version: 20150401084224) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -389,6 +389,7 @@ ActiveRecord::Schema.define(version: 20150331042655) do
     t.string   "headimg"
     t.boolean  "scan_coupon"
     t.boolean  "can_check_high_score", default: false
+    t.string   "ticket"
   end
 
   create_table "users_parks", force: true do |t|
@@ -425,6 +426,7 @@ ActiveRecord::Schema.define(version: 20150331042655) do
     t.string   "unionid"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ticket"
   end
 
 end
