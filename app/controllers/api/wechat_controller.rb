@@ -66,7 +66,7 @@ class Api::WechatController < Api::BaseController
                 "#{r}%", "#{r.scan(/\w/).map{|w| w + "%"}.join('')}" ]).limit(6)
 
     if parks.present?
-      request.reply.text(parks.each do |help|
+      request.reply.text(parks.map do |help|
         "<a href='http://m.6luobo.com/mobile/map?name=#{help.name}'>#{help.name}</a><br>"
       end.join)
     else
