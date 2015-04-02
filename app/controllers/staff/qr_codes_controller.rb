@@ -19,4 +19,10 @@ class Staff::QrCodesController < Staff::BaseController
   def qr_code_params
     params.require(:qr_code).permit(:which_wechat_account, :mark, :scene_str)
   end
+
+  def destroy
+    @qr_code = QrCode.find params[:id]
+    @qr_code.destroy
+    redirect_to staff_qr_codes_path
+  end
 end

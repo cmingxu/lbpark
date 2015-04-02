@@ -41,7 +41,7 @@ class WechatUser < ActiveRecord::Base
   class << self
     def user_subscribe!(request)
       u = self.find_or_create_by(:openid => request[:FromUserName])
-      u.ticket = request[:Ticket]
+      u.update_column :ticket, request[:Ticket]
       u
     end
 
