@@ -31,14 +31,16 @@ class QrCode < ActiveRecord::Base
   end
 
   def generating_qr_code_event
-    Resque.enqueue_at Time.now + 60, QrCodeGenerationJob, self.id
+    Resque.enqueue_at Time.now + 10, QrCodeGenerationJob, self.id
   end
 
   def generate_qr_code
     res = api.qr_permnent_create(self.scene_str)
     self.update_column :ticket, res["ticket"]
+    sleep 60
     self.qr_code = WechatQrCodeUploader.new
     self.qr_code.download! "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + res["ticket"]
+    self.save
     self.generate
   end
 

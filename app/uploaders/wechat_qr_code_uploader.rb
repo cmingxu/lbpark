@@ -33,7 +33,7 @@ class WechatQrCodeUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :thumb do
-    process :resize_to_fit => [220, 220]
+    process :resize_to_fit => [600, 600]
     process :convert => 'png'
     def full_filename (for_file = model.logo.file)
       "qr_thumb.png"
