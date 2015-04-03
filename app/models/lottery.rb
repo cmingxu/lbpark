@@ -172,6 +172,19 @@ class Lottery < ActiveRecord::Base
     "#{offset.year}#{sprintf('%03d', open_num)}"
   end
 
+  def self.pre_open_num(offset = Time.now)
+    (self.current_open_num(offset).to_i - 1).to_s
+  end
+
+  def self.serial_num_valid?(serial_num)
+    return [false, 'length not valid'] if serial_num.length != 7
+    serial_num = serial_num.map &:to_i
+    return [false, 'red range'] if serial_num[0..5].any?{|a| a < 1 || a > 33}
+    return [false, 'blue range'] if serial_num[6] < 1 || serial_num[6] > 16
+    return [false, 'not uniq'] if serial_num[0..5].uniq.length != 6
+    return [true, nil]
+  end
+
 
   def serial_num_human
     s = self.serial_num

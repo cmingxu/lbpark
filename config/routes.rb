@@ -99,7 +99,11 @@ Rails.application.routes.draw do
         get :by_vendor
       end
     end
-    resources :lotteries
+    resources :lotteries do
+      collection do
+        post :open
+      end
+    end
 
     resources :lb_settings
 

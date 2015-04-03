@@ -1,4 +1,23 @@
 .container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+
+      .form_content
+        = form_tag open_staff_lotteries_path do
+          .form-group
+            .input-group.col-md-12
+              %h2 一定要填准确~, 看好开奖期数和号码， 英文逗号分隔， 出错不可恢复~
+          .form-group
+            .input-group.col-md-12
+              = select_tag "open_num", options_for_select([Lottery.pre_open_num, Lottery.current_open_num, Lottery.next_open_num]), :class => "col-md-6"
+          .form-group
+            .input-group.col-md-12
+              = text_field_tag "serial_num", "", :class => "col-md-6", :placeholder => "2,5,6,7,10,13,10"
+
+          .form-group
+            .input-group.col-md-12
+              = submit_tag "开奖", :class => "btn btn-warning"
+
 
   .row-fluid
     .col-md-10.col-md-offset-1.table_wrapper

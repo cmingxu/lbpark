@@ -17,4 +17,20 @@ class Staff::LotteriesController < Staff::BaseController
     @l.save
     redirect_to :back
   end
+
+  def open
+    serial_num = params[:serial_num]
+    if serial_num.presence
+      res, msg = Lottery.serial_num_valid?(serial_num.presence.split(","))
+      if res
+        Lottery.where(:open_num => params[:open_num]).map(&:buy)
+        Lottery.open(params[:open_num], serial_num.split(","))
+        redirect_to staff_lotteries_path, :notice => "开奖成功"
+      else
+        redirect_to staff_lotteries_path, :alert => "开奖号码不正确, #{msg}"
+      end
+    else
+      redirect_to staff_lotteries_path, :alert => "开奖号码空"
+    end
+  end
 end
