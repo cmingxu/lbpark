@@ -1,4 +1,5 @@
 # -*- encoding : utf-8 -*-
+require 'sms_sender'
 class SendSms
   @queue = :send_sms
 
