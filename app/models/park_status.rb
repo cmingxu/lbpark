@@ -18,6 +18,9 @@ class ParkStatus < ActiveRecord::Base
 
   after_create do
     $redis.setex RedisKey.park_status_key(self.park), Settings.park_status_duration, self.status
+    self.park.silblings.each do |p|
+      $redis.setex RedisKey.park_status_key(p), Settings.park_status_duration, self.status
+    end
   end
 
   before_save :on => :create do
@@ -28,6 +31,9 @@ class ParkStatus < ActiveRecord::Base
 
   def clear_redis_mark
     $redis.del RedisKey.park_status_key(self.park)
+    self.park.silblings.each do |p|
+      $redis.del RedisKey.park_status_key(p)
+    end
   end
 
   after_create do

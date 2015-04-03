@@ -3,7 +3,7 @@
     .col-md-10.col-md-offset-1.table_wrapper
       %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
         %thead
-          %th 
+          %th
           %th
         %tbody
           = form_for [:staff, @park], :role => "form", :class => "form", :multipart => true do |f|
@@ -23,7 +23,7 @@
               %td= Park::COLUMN_MAP[:same_as]
               %td
                 = f.text_field :same_as
-                %span 
+                %span
             %tr
               %td= Park::COLUMN_MAP[:name]
               %td= f.text_field :name

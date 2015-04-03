@@ -127,6 +127,11 @@ class CouponTpl < ActiveRecord::Base
     }
   end
 
+  def fit_for_park?(p)
+    self.park_id == p.id ||
+      self.park.code == p.same_as
+  end
+
   def stop_all_related_coupon
   end
 

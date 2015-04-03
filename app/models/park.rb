@@ -171,6 +171,11 @@ class Park < ActiveRecord::Base
     park_tags
   end
 
+
+  def silblings
+    self.class.where("same_as = ?", self.code)
+  end
+
   def busy_status
     return BUSY_STATUS[:no_parking] if no_parking?
     (($redis.get RedisKey.park_status_key(self)) || BUSY_STATUS[:unknown]).to_i
