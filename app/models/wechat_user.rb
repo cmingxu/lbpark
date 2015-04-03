@@ -18,6 +18,7 @@
 #  unionid        :string(255)
 #  created_at     :datetime
 #  updated_at     :datetime
+#  ticket         :string(255)
 #
 
 class WechatUser < ActiveRecord::Base

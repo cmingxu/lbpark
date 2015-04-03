@@ -48,6 +48,8 @@
 #  originate_from           :string(255)
 #  property_owner           :string(255)
 #  previews                 :text
+#  pinyin                   :string(255)
+#  same_as                  :string(255)
 #
 
 require 'test_helper'

@@ -49,6 +49,7 @@
 #  property_owner           :string(255)
 #  created_at               :datetime
 #  updated_at               :datetime
+#  same_as                  :string(255)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

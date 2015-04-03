@@ -20,6 +20,7 @@
 #  qr_code           :string(255)
 #  issued_begin_date :date
 #  used_at           :datetime
+#  issued_paizhao    :string(255)
 #
 
 class Coupon < ActiveRecord::Base

@@ -18,6 +18,12 @@
               %td
                 = f.text_field :pic_num
                 %span 例如: hda001, 空表示和编号一致
+
+            %tr
+              %td= Park::COLUMN_MAP[:same_as]
+              %td
+                = f.text_field :same_as
+                %span 
             %tr
               %td= Park::COLUMN_MAP[:name]
               %td= f.text_field :name

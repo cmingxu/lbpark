@@ -49,6 +49,7 @@
 #  property_owner           :string(255)
 #  created_at               :datetime
 #  updated_at               :datetime
+#  same_as                  :string(255)
 #
 
 require 'test_helper'

@@ -9,6 +9,7 @@
 #  qr_code              :string(255)
 #  ticket               :string(255)
 #  scene_str            :string(255)
+#  mark                 :string(255)
 #  created_at           :datetime
 #  updated_at           :datetime
 #

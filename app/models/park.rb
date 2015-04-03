@@ -48,6 +48,8 @@
 #  originate_from           :string(255)
 #  property_owner           :string(255)
 #  previews                 :text
+#  pinyin                   :string(255)
+#  same_as                  :string(255)
 #
 
 class Park < ActiveRecord::Base
@@ -56,6 +58,7 @@ class Park < ActiveRecord::Base
     :pic_num => "照片编号",
     :property_owner => "物业联系人/电话",
     :originate_from => "性质",
+    :same_as => "属性",
     :tips => "备注",
     :times_price_all_day => "全天按次价",
     :is_only_service => "",

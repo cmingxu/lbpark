@@ -25,6 +25,7 @@
 #  headimg              :string(255)
 #  scan_coupon          :boolean
 #  can_check_high_score :boolean          default(FALSE)
+#  ticket               :string(255)
 #
 
 class User < ActiveRecord::Base

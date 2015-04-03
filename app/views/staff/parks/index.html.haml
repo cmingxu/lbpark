@@ -24,6 +24,7 @@
         %thead
           %th ID
           %th 编号
+          %th 属性
           %th 车位数
           %th 名称
           %th 区域
@@ -51,6 +52,7 @@
             %tr
               %td= link_to p.id, edit_staff_park_path(p)
               %td= link_to p.code, edit_staff_park_path(p)
+              %td= p.same_as
               %td= p.total_count
               %td= p.name
               %td= p.district

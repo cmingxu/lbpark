@@ -15,6 +15,7 @@
           %th 
           %th ID
           %th 编号
+          %th 属性
           %th 车位数
           %th 名称
           %th 区域
@@ -43,6 +44,7 @@
               %td
               %td= p.id
               %td= p.code
+              %td= p.same_as
               %td= p.total_count
               %td= p.name
               %td= p.district
@@ -77,6 +79,7 @@
                 %td= has_equivalent
                 %td= pe.id
                 %td= pe.code
+                %td= pe.same_as
                 %td= pe.total_count
                 %td= pe.name
                 %td= pe.district

@@ -25,6 +25,7 @@ module Xls2db
       park.park_type_code = 'A'
       park.code = code_prefix + line[0]
       park.pic_num  = code_prefix + (line[1] || line[0])
+      park.same_as  = line[2]
       park.name     = line[3]
       park.park_type = line[4]
       park.address  = line[5]
