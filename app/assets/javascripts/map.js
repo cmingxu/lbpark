@@ -8,6 +8,7 @@
 //= require fastclick
 //= require base58
 //= require core_ext
+//= require toast
 //= require gps_transform
 //= require wechat_config
 
@@ -312,6 +313,14 @@ function getLocationAndPanTo() {
       }else{
         add_current_position_marker();
       }
+    },
+    cancel: function () {
+      $("#back_to_original_marker").removeClass("rotating");
+      $toast("若想享受萝卜服务，请开启GPS功能");
+    },
+    fail: function () {
+      $("#back_to_original_marker").removeClass("rotating");
+      $toast("GPS定位失败!");
     }
   });
 }
