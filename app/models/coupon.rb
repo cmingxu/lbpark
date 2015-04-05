@@ -34,7 +34,7 @@ class Coupon < ActiveRecord::Base
   belongs_to :coupon_tpl
   belongs_to :park
 
-  after_create :generate_qr_code
+  after_commit :generate_qr_code
   scope :display_order, lambda { order("coupon_tpl_type, price ASC, claimed_at DESC") }
   scope :claimed, lambda { where(:status => :claimed) }
   scope :used, lambda { where(:status => :used) }
