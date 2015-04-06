@@ -27,7 +27,7 @@ class Coupon < ActiveRecord::Base
   COUPON_STATUS = {
     :created => "已创建",
     :claimed => "已领取",
-    :used    => "已试用",
+    :used    => "已使用",
     :expired => "已过期"
   }
 

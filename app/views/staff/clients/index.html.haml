@@ -1,0 +1,39 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        .form-group
+          .input-group.col-md-12
+            %input.typeahead_client.col-md-6{:placeholder => "例如: 远洋光华国际"}
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 编号
+          %th
+
+        %tbody
+          - @clients.each do |p|
+            %tr
+              %td= p.email
+              %td= p.encrypted_password
+              %td
+                = link_to "删除", staff_park_client_path(@park, p), :method => :delete, :data => { :confirm => "dd" }
+
+
+          %tr
+            = form_for [:staff, @client] do |f|
+              = hidden_field_tag "park_id", params[:park_id]
+              %td
+                = f.text_field :email, :style => "width: 100%"
+              %td
+                = f.text_field :password, :value => Client.auto_generate_password(@park), :style => "width: 100%"
+              %td
+                = f.submit "创建", :class => "btn btn-warning"
+
+
+      = paginate @clients
+
+

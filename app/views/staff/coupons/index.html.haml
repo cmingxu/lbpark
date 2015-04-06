@@ -4,18 +4,14 @@
       .form_content
         .form-group
           .input-group.col-md-12
-            %input.typeahead.col-md-6{:placeholder => "例如: 远洋光华国际"}
+            %input.typeahead_coupon_search.col-md-6{:placeholder => "例如: 远洋光华国际"}
         .form-group
-          - DISTRICT.each do |name|
-            = link_to name , staff_parks_path(:district => name)
+          - CouponTpl::COUPON_TPL_TYPES.each do |k, name|
+            = link_to name , staff_coupons_path(:type => k)
 
         .form-group
-          - Park::PARK_TYPE.each do |code|
-            = link_to code , staff_parks_path(:park_type => code)
-
-        .form-group
-          - Park::PARK_TYPE_CODE.each do |code|
-            = link_to code , staff_parks_path(:park_type_code => code)
+          - Coupon::COUPON_STATUS.each do |k, code|
+            = link_to code , staff_coupons_path(:status => k)
 
   .row-fluid
     .col-md-10.col-md-offset-1.table_wrapper

@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-
-
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -75,6 +73,15 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :client do
+    get "/" => "base#index"
+    get "login" => "session#login"
+    post "login" => "session#login"
+    delete "logout" => "session#destroy"
+
+    resources :coupons
+  end
+
   # staff only actions
   namespace :staff do
     get "/" => "base#index"
@@ -88,6 +95,7 @@ Rails.application.routes.draw do
 
     resources :qr_codes
     resources :pages
+    resources :clients
 
     resources :vendors do
       patch :switch_scan_coupon_status
@@ -109,7 +117,9 @@ Rails.application.routes.draw do
 
     resources :park_statuses
     resources :users_parks
-    resources :parks
+    resources :parks do
+      resources :clients
+    end
     resources :wechat_users, :only => [:index] do
       resources :wechat_user_activities, :only => [:index]
     end

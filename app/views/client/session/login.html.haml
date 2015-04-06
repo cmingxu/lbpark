@@ -1,0 +1,37 @@
+%fieldset
+  = form_tag client_login_path, :class => "form-horizontal", :role => "form", :id => "login_form" do
+    %fieldset
+      .form-group
+        %label{:for=>"email_field", :class => "col-md-2 control-label"} 邮箱
+        .col-md-10
+          = text_field_tag "user[email]", "", :class => "form-control", :id => "email_field"
+          %span.help-block 输入能联系到您的Email地址
+
+      .form-group
+        %label{:for=>"password", :class => "col-md-2 control-label"} 密码
+        .col-md-10
+          = password_field_tag "user[password]", "", :class => "form-control", :id => "password_field"
+          %span.help-block 这里输入您的密码
+
+      .form-group
+        %label{:for=>"capcha", :class => "col-md-2 control-label"} 验证码
+        .col-md-6
+          = text_field_tag "user[captcha]", "", :class => "form-control", :id => "captcha_field"
+          %span.help-block 请输入图片中的四位字母和数字
+        .col-md-4
+          = captcha_tag :id => "captcha"
+
+      .form-group
+        .col-md-2
+        .col-md-10
+          = submit_tag "登陆", :class => "btn btn-primary", :id => "submit_button"
+          还没注册成为
+          = Settings.site_name
+          的会员？, 请
+          %strong= link_to "马上注册", "#"
+
+          或者
+          %strong= link_to "忘记密码", "#"
+
+
+

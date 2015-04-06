@@ -82,7 +82,8 @@
               %td= p.service_wc
               %td= p.service_rent
               %td= p.service_rent_company
-              %td= image_tag p.park_pics.try(:first).try(:park_pic).try(:thumb).try(:url)
+              %td
+                = link_to "账号", staff_park_clients_path(p)
 
       = paginate @parks
 

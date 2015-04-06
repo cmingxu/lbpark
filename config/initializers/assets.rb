@@ -5,5 +5,6 @@ Rails.application.config.assets.version = '1.0'
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-Rails.application.config.assets.precompile += %w( map.js hot_place.js mobile.css staff.js staff.css vendor.js vendor_wechat_config.js vendor/coupons.js mobile_coupon.js mobile_coupon_tpl_show.js  mobile_coupon_show.js bind_mobile.js mobile_mine.js custom_mobiscroll.js custom_mobiscroll.css)
+Rails.application.config.assets.precompile += %w( map.js hot_place.js mobile.css staff.js staff.css vendor.js vendor_wechat_config.js vendor/coupons.js
+mobile_coupon.js mobile_coupon_tpl_show.js  mobile_coupon_show.js bind_mobile.js mobile_mine.js custom_mobiscroll.js custom_mobiscroll.css client.js client.css)
 Rails.application.config.assets.precompile += %w(base/epiceditor.css)

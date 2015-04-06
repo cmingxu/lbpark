@@ -1,0 +1,8 @@
+.list-group
+  .list-group-item.staff
+    = link_to raw(fa_icon("fw bank")) + "我的面板", client_path
+  .list-group-item.parks
+    = link_to raw(fa_icon("fw building-o")) + "停车券", client_coupons_path
+
+:javascript
+  $(".#{@active_nav_item}").addClass("sidebar_item_active")

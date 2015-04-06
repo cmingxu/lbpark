@@ -93,6 +93,41 @@ $(document).ready(function(){
       }
     });
 
+    $('input.typeahead_client').typeahead({
+      source: function (query, process) {
+        $.ajax({
+          url: "/staff/parks",
+          type: "get",
+          dataType: 'JSON',
+          data: {match: query},
+          success: function (data) {
+            process(data);
+          }
+        })
+      },
+      afterSelect: function (item) {
+        window.location.href = "/staff/parks/" + item.id + "/clients";
+      }
+    });
+
+    $('input.typeahead_coupon_search').typeahead({
+      source: function (query, process) {
+        $.ajax({
+          url: "/staff/parks",
+          type: "get",
+          dataType: 'JSON',
+          data: {match: query},
+          success: function (data) {
+            process(data);
+          }
+        })
+      },
+      afterSelect: function (item) {
+        window.location.href = "/staff/coupons?park_id=" + item.id ;
+      }
+    });
+
+
     $('.date').datepicker({
       format: 'yyyy-mm-dd',
       startDate: '-0d'
