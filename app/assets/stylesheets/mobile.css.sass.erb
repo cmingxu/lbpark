@@ -44,6 +44,7 @@ $border-highlight-color-5: #fff
 
 
 // coupon defines
+$user-background-color-lighter: $tab-bg-color
 $user-background-color: #efefef
 $user_coupon_tab_border_color: #61a7f9
 $user_coupon_free_item_highlight_color: #e48030
@@ -707,9 +708,10 @@ a[title="站长统计"]
 
 .user_coupons_page
   background-color: $user-background-color
-  padding: 10px
   .user_coupons
     .user_coupons_tabs
+      padding: 10px
+      background-color: $user-background-color-lighter
       &:after
         clear: both
       .user_coupon_tab
@@ -738,6 +740,8 @@ a[title="站长统计"]
         background-color: $user_coupon_tab_border_color
         color: white
     .user_coupons_list
+      padding-left: 10px
+      padding-right: 10px
       padding-bottom: 100px
       .user_coupon_item
         box-sizing: border-box

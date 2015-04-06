@@ -32,7 +32,7 @@ class QrCode < ActiveRecord::Base
   end
 
   def generating_qr_code_event
-    Resque.enqueue_at Time.now + 10, QrCodeGenerationJob, self.id
+    Resque.enqueue_at Time.now, QrCodeGenerationJob, self.id
   end
 
   def generate_qr_code
