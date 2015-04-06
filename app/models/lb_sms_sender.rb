@@ -1,6 +1,6 @@
 require 'digest/md5'
 
-module SmsSender
+class LbSmsSender
   include HTTParty
   cattr_accessor :timestamp
 

@@ -24,8 +24,6 @@ class Staff::LotteriesController < Staff::BaseController
       res, msg = Lottery.serial_num_valid?(serial_num.presence.split(","))
       if res
         Lottery.where(:open_num => params[:open_num]).map(&:buy)
-        ap params[:open_num]
-        ap serial_num.split(",")
         Lottery.open(params[:open_num], serial_num.split(",").map(&:to_i))
         redirect_to staff_lotteries_path, :notice => "开奖成功"
       else
