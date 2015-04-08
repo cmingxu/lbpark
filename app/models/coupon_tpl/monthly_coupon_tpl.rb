@@ -29,4 +29,8 @@ class CouponTpl::MonthlyCouponTpl < CouponTpl::LongTermCouponTpl
   def monthly?
     true
   end
+
+  def type_name_in_zh
+    "包月"
+  end
 end

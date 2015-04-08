@@ -29,4 +29,8 @@ class CouponTpl::QuarterlyCouponTpl < CouponTpl::LongTermCouponTpl
   def quarterly?
     true
   end
+
+  def type_name_in_zh
+    "包季"
+  end
 end

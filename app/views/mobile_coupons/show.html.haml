@@ -27,7 +27,7 @@
       .user_coupon_tpl_input
         = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包季起点", :id => "date", :class => "coupon_issued_begin_date_input"
       .user_coupon_tpl_input
-        = text_field_tag "coupon[issued_paizhao]", "", :placeholder => "请输入车牌号", :class => "coupon_issued_paizhao"
+        = text_field_tag "coupon[issued_paizhao]", "", :placeholder => "请输入车牌号码", :class => "coupon_issued_paizhao"
       .user_coupon_tpl_input
         = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址", :class => "coupon_issued_address_input"
 
@@ -38,7 +38,7 @@
       .user_coupon_tpl_input
         = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包月起点", :id => "date", :class => "coupon_issued_begin_date_input"
       .user_coupon_tpl_input
-        = text_field_tag "coupon[issued_paizhao]", "", :placeholder => "请输入车牌号", :class => "coupon_issued_paizhao"
+        = text_field_tag "coupon[issued_paizhao]", "", :placeholder => "请输入车牌号码", :class => "coupon_issued_paizhao"
       .user_coupon_tpl_input
         = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址", :class => "coupon_issued_address_input"
 
@@ -74,6 +74,7 @@
   :javascript
     var currYear = (new Date()).getFullYear();
     var optDate = {
+      defaultValue: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
       preset: 'date', //日期
       theme: $.mobiscroll.defaults.theme, //皮肤样式
       display: 'modal', //显示方式

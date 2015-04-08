@@ -31,6 +31,10 @@ class CouponTpl::FreeCouponTpl < CouponTpl
     true
   end
 
+  def type_name_in_zh
+    "限免"
+  end
+
   #def can_be_claimed_by?(user)
     #!user.coupons.exists?(["coupon_tpl_id = ?", self.id])
   #end

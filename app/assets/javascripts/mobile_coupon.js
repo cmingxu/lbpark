@@ -7,8 +7,8 @@
 
 
 var list_place_holder = $("<div id='list_place_holder'></div>");
-var published_list_empty  = $("<div id='owned_list_empty'><div class='owned_list_empty_icon'></div><div class='owned_list_empty_text'>呜~还没有车场发布萝卜替你催！</div></div>");
-var owned_list_empty  = $("<div id='owned_list_empty'><div class='owned_list_empty_icon'></div><div class='owned_list_empty_text'>呜~还没有抢到券萝卜等着你！</div></div>");
+var published_list_empty  = $("<div id='owned_list_empty'><div class='owned_list_empty_icon'></div><div class='owned_list_empty_text'>呜~还没有车场发布, <br> 萝卜替你催！</div></div>");
+var owned_list_empty  = $("<div id='owned_list_empty'><div class='owned_list_empty_icon'></div><div class='owned_list_empty_text'>呜~还没有抢到券, <br> 萝卜等着你！</div></div>");
 
 window.lastActiveLocation = null;
 if(typeof localStorage.lastActivePostion !== 'undefined'){
