@@ -81,9 +81,9 @@ class CouponTpl < ActiveRecord::Base
 
   def self.all_visible_around(location)
     @highlighted_coupon_tpls = CouponTpl.highlighted.time_range_right
-    @free_coupon_tpls        = CouponTpl::FreeCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).time_range_right
-    @long_term_coupon_tpls   = CouponTpl::LongTermCouponTpl.published.within_range(location.around(Settings.coupons_visible_range))
-    [  @highlighted_coupon_tpls, @free_coupon_tpls, @long_term_coupon_tpls ].flatten.uniq.sort_by{|a| a.sort_criteria(location)}.reverse
+    @free_coupon_tpls        = CouponTpl::FreeCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).time_range_right - @highlighted_coupon_tpls
+    @long_term_coupon_tpls   = CouponTpl::LongTermCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)) - @highlighted_coupon_tpls
+    [ @highlighted_coupon_tpls, @free_coupon_tpls, @long_term_coupon_tpls ].flatten.sort_by{|a| a.sort_criteria(location)}.reverse
   end
 
   def self.coupon_class_name(type)
@@ -198,7 +198,11 @@ class CouponTpl < ActiveRecord::Base
     weight += 10000000 if self.fit_for_date && self.fit_for_date != Date.today
     weight += 2000000 if self.class.coupon_type_to_readable(self.type) == 'free'
     weight += 1000000 if self.class.coupon_type_to_readable(self.type) != 'free'
-    weight += LbRange.new(self.park.location, location).distance
+    if self.fit_for_date
+      weight += LbRange.new(self.park.location, location).distance
+    else
+      weight += self.price
+    end
     weight
   end
 
@@ -215,6 +219,5 @@ class CouponTpl < ActiveRecord::Base
     self.gcj_lng = self.park.gcj_lng
     self.gcj_lat = self.park.gcj_lat
     self.identifier = CouponTpl.identifier(self.class.coupon_type_to_readable(self.type))
-    
   end
 end
