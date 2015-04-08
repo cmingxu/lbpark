@@ -2,7 +2,7 @@
 
 .user_coupon_show_page
   .user_nav_bar
-    = link_to raw("<span> </span> 返回"), mobile_coupons_path(:anchor => :owned)
+    = link_to raw("<span> </span> 返回"), mobile_coupons_path(:owned => true, :anchor => :owned)
   - if @coupon.free?
     .user_coupon_notice
       恭喜您获得

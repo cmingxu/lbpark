@@ -15,7 +15,7 @@ button:
       -
         type: "view"
         name: "停车券"
-        url: "http://m.6luobo.com/mobile_coupons#owned"
+        url: "http://m.6luobo.com/mobile_coupons?owned=true"
       -
         type: "view"
         name: "个人中心"

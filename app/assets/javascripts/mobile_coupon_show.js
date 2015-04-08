@@ -2,6 +2,7 @@
 //= require config
 //= require logger
 //= require fastclick
+//= require wechat_config
 //= require toast
 
 
@@ -28,3 +29,6 @@ $(document).ready(function() {
   check_if_coupon_used();
 });
 
+wx.ready(function () {
+
+});
