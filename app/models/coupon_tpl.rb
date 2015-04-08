@@ -201,7 +201,7 @@ class CouponTpl < ActiveRecord::Base
     if self.fit_for_date
       weight += LbRange.new(self.park.location, location).distance
     else
-      weight += self.price
+      weight -= self.price
     end
     weight
   end
