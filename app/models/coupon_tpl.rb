@@ -83,7 +83,7 @@ class CouponTpl < ActiveRecord::Base
     @highlighted_coupon_tpls = CouponTpl.highlighted.time_range_right
     @free_coupon_tpls        = CouponTpl::FreeCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).time_range_right
     @long_term_coupon_tpls   = CouponTpl::LongTermCouponTpl.published.within_range(location.around(Settings.coupons_visible_range))
-    [  @highlighted_coupon_tpls, @free_coupon_tpls, @long_term_coupon_tpls ].flatten.sort_by{|a| a.sort_criteria(location)}.reverse
+    [  @highlighted_coupon_tpls, @free_coupon_tpls, @long_term_coupon_tpls ].flatten.uniq.sort_by{|a| a.sort_criteria(location)}.reverse
   end
 
   def self.coupon_class_name(type)
