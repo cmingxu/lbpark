@@ -18,8 +18,11 @@ class Staff::CouponTplsController < Staff::BaseController
 
   def publish
     @coupon_tpl = CouponTpl.find params[:id]
-    @coupon_tpl.publish!
-    redirect_to :back
+    if @coupon_tpl.publish
+      redirect_to :back
+    else
+      redirect_to :back, :notice => @coupon_tpl.errors.full_messages.first
+    end
   end
 
   def stop
