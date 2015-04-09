@@ -186,6 +186,8 @@ function fetch_parkes(location) {
         json = JSON.parse(response).data;
       }
 
+      LB.clear_markers({clear_all: true});
+
       json.forEach(function (item, index) {
         LB.markers.push(add_new_marker(item));
       });
@@ -199,7 +201,6 @@ function add_event_listeners() {
     LB.center = LB.mapObj.getCenter();
     if(LB.mapObj.getZoom() <= config.zoom_level_middle){
       return;
-      //clear_markers({clear_all: true});
     }
 
     if(GPS.distance(LB.center.lat, LB.center.lng, LB.fetch_center.lat, LB.fetch_center.lng) > 750){
@@ -224,12 +225,12 @@ function add_event_listeners() {
     }
 
     if(LB.latestZoom >= config.zoom_level_middle && newZoom <= config.zoom_level_middle){
-      clear_markers({clear_all: true});
+      //clear_markers({clear_all: true});
       fetch_parkes(LB.center);
     }
 
     if(LB.latestZoom <= config.zoom_level_middle && newZoom >= config.zoom_level_middle){
-      clear_markers({clear_all: true});
+      //clear_markers({clear_all: true});
       fetch_parkes(LB.center);
     }
 
