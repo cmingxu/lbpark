@@ -3,7 +3,7 @@ var LB = LB || {};
 LB.park_info_marker = function (park) {
   if(park.small_place_holder){
      return $("<div class='lb_small_place_holder'></div>");
-  }
+  };
   var busy_status = ["green", "orange", "red", "blue", "gray"];
   var classes = ["lb_marker"];
   switch (park.park_type_code) {
