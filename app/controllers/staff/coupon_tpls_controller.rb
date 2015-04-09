@@ -59,7 +59,6 @@ class Staff::CouponTplsController < Staff::BaseController
       redirect_to :back
     else
       redirect_to :back, :notice => "发布后才能置顶"
-    else
     end
   end
 
