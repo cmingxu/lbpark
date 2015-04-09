@@ -54,8 +54,13 @@ class Staff::CouponTplsController < Staff::BaseController
 
   def highlight
     @coupon_tpl = CouponTpl.find params[:id]
-    @coupon_tpl.highlight!
-    redirect_to :back
+    if @coupon_tpl.published?
+      @coupon_tpl.highlight!
+      redirect_to :back
+    else
+      redirect_to :back, :notice => "发布后才能置顶"
+    else
+    end
   end
 
   def dehighlight
