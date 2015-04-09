@@ -186,7 +186,7 @@ function fetch_parkes(location) {
         json = JSON.parse(response).data;
       }
 
-      LB.clear_markers({clear_all: true});
+      clear_markers({clear_all: true});
 
       json.forEach(function (item, index) {
         LB.markers.push(add_new_marker(item));
