@@ -144,14 +144,14 @@ function add_new_marker(location) {
 
 function clear_markers(opts) {
   if(opts.clear_all){
-    setTimeout(function () {
+    //setTimeout(function () {
       LB.markers.map(function (m) {
         m.setMap(null);
         delete(m);
       });
       LB.markers = [];
 
-    }, 10);
+    //}, 10);
     return true;
   }
   //markers = LB.markers.filter(function (m) {
