@@ -56,6 +56,7 @@ namespace :deploy do
     end
   end
   after "deploy:published", "deploy:setup_config"
+  after "deploy:published", "kindeditor:assets"
 
 end
 

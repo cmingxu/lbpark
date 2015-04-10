@@ -31,7 +31,8 @@ class CouponTpl < ActiveRecord::Base
   COUPON_TPL_TYPES = {
     :free => "限免",
     :monthly => "包月",
-    :quarterly => "包季"
+    :quarterly => "包季",
+    :redeemable => "代金"
   }
 
   COUPON_TPL_STATUS = {
@@ -53,7 +54,7 @@ class CouponTpl < ActiveRecord::Base
   before_create :set_defaults
   after_commit :generate_all_new_coupon_job, :on => :create
   validate :fit_for_date_gt_then_today
-  validates :fit_for_date, presence: { :if => lambda { self.type_in_readable_format == "free" }, :message => "限免券需要提供日期"}
+  validates :fit_for_date, presence: { :if => lambda { self.free? }, :message => "限免券需要提供日期"}
 
   mount_uploader :banner, CouponTplBannerUploader
 
@@ -103,14 +104,10 @@ class CouponTpl < ActiveRecord::Base
     t == "free" ? (self.fit_for_date == Date.today ? "今日" : "明日") : COUPON_TPL_TYPES[t.to_sym]
   end
 
-  %w(free monthly quarterly).each do |t|
+  COUPON_TPL_TYPES.each do |t|
     define_method "#{t}?" do
       false
     end
-  end
-
-  def type_in_readable_format
-    self.class.coupon_type_to_readable(self.type) == "free" ? "free" : "long_term"
   end
 
   def as_api_json(location)
