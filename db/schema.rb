@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403021446) do
+ActiveRecord::Schema.define(version: 20150410025850) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20150403021446) do
     t.datetime "updated_at"
     t.string   "banner"
     t.string   "notice"
+    t.integer  "coupon_value"
   end
 
   create_table "coupons", force: true do |t|

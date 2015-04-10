@@ -104,8 +104,8 @@ class CouponTpl < ActiveRecord::Base
     t == "free" ? (self.fit_for_date == Date.today ? "今日" : "明日") : COUPON_TPL_TYPES[t.to_sym]
   end
 
-  COUPON_TPL_TYPES.each do |t|
-    define_method "#{t}?" do
+  COUPON_TPL_TYPES.keys.each do |t|
+    define_method "#{t.to_s}?" do
       false
     end
   end
