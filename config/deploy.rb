@@ -57,7 +57,13 @@ namespace :deploy do
   end
 
   task :copy_kindeditor_assets do
-    Rake::Task["kindeditor:assets"].invoke
+    on roles(:all) do
+      within current_path do
+        with :rails_env => fetch(:rails_env) do
+          execute :rake, "kindeditor:assets"
+        end
+      end
+    end
   end
 
   after "deploy:published", "deploy:setup_config"
