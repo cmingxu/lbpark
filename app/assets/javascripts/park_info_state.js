@@ -25,6 +25,9 @@ LB.park_info_state = {
   free_tomorrow_dom: $("#free_tomorrow"),
   monthly_dom: $("#monthly"),
   quarterly_dom: $("#quarterly"),
+  park_title_handlebar_dom: $("#park_title_handlebar"),
+  
+
 
 
   get_current_state: function () {
@@ -71,6 +74,12 @@ LB.park_info_state = {
     this.park_dom.show();
     this.detail_dom.hide();
     self = this;
+
+    if(park.park_type_code == 'A'){
+      this.park_title_handlebar_dom.show()
+    }else{
+      this.park_title_handlebar_dom.hide()
+    }
 
     if(!this.click_event_locker){
       this.click_event_locker = true;
