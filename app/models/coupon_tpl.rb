@@ -32,7 +32,7 @@ class CouponTpl < ActiveRecord::Base
     :free => "限免",
     :monthly => "包月",
     :quarterly => "包季",
-    :redeemable => "代金"
+    #:redeemable => "代金"
   }
 
   COUPON_TPL_STATUS = {
