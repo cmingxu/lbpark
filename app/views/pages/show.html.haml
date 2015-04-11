@@ -1,4 +1,9 @@
 .user_nav_bar
   = link_to "< 返回", mobile_setting_path
-  .user_page
+.user_page
+  - if @page.title == "about"
+    = image_tag asset_path("about.jpg")
+  - elsif @page.title == "help"
+    = image_tag asset_path("help.jpg")
+  - else
     = raw @page.content
