@@ -7,3 +7,9 @@
     = image_tag asset_path("help.jpg")
   - else
     = raw @page.content
+
+
+:javascript
+  $(document).ready(function(){
+    $(".user_page img").attr("width", screen.width)
+  });
