@@ -20,10 +20,28 @@
             %tr
               %td 内容
               %td
-                = f.kindeditor :content
+                = f.text_area :content, :id => "content"
             %tr
               %td
               %td
                 = f.submit "保存", :class => "btn btn-success"
+
+
+  :javascript
+    $(function(){
+    KindEditor.ready(function(K){
+      var contentEditor = K.create("#content",{
+        height:400,
+        width:"100%",
+        allowFileManager:true,
+        // 文件上传提交路径
+        uploadJson:"/kindeditor/upload",
+        fileManagerJson:"/kindeditor/filemanager",
+        // 下面这两行最重要了，就是用来同步数据的
+        afterCreate: function(){ this.sync(); },
+        afterBlur: function(){ this.sync(); }
+      });
+      });
+    });
 
 

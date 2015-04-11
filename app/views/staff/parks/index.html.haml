@@ -4,7 +4,7 @@
       .form_content
         .form-group
           .input-group.col-md-12
-            %input.typeahead.col-md-6{:placeholder => "例如: 远洋光华国际"}
+            %input.typeahead.col-md-6.search_input{:placeholder => "例如: 远洋光华国际"}
         .form-group
           - DISTRICT.each do |name|
             = link_to name , staff_parks_path(:district => name)
