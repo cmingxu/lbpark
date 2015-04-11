@@ -2,14 +2,10 @@
   = link_to "< 返回", mobile_setting_path
 .user_page
   - if @page.title == "about"
-    = image_tag asset_path("about.jpg")
+    = image_tag asset_path("about.jpg"), :class => "user_page_image"
   - elsif @page.title == "help"
-    = image_tag asset_path("help.jpg")
+    = image_tag asset_path("help.jpg"), :class => "user_page_image"
   - else
     = raw @page.content
 
 
-:javascript
-  $(document).ready(function(){
-    $(".user_page img").attr("width", screen.width)
-  });
