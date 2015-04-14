@@ -5,6 +5,12 @@
 @import "font-awesome"
 
 
+// client settings
+$client-bg-color: #ececf3
+$client-sidebar-bg-color: #303842
+$client-sidebar-active-item-bg-color: #3a424c
+$client-font-color-dark: #303842
+
 .lb_table
   tr
     td
@@ -21,3 +27,58 @@
 .lb_form
   padding-top: 20px
   padding-bottom: 20px
+
+.lb_client
+  .sidebar
+    background-color: $client-sidebar-bg-color
+    .client_brand
+      background-color: $client-sidebar-active-item-bg-color
+      color: white
+      font-weight: $font-weight-bold
+      font-size: $font-size-big
+      height: 44px
+      line-height: 44px
+      margin-top: -10px
+      text-align: center
+      img
+        height: 32px
+        width: 32px
+    .list-group
+      margin-top: 10px
+
+  .nav-container
+    height: 44px
+    line-height: 44px
+    background-color: white
+    .client-name
+      padding-left: 20px
+      font-weight: $font-weight-bold
+      font-size: $font-size-big
+    ul.nav.navbar-nav
+      li
+        a
+          color: $client-font-color-dark
+          height: 44px
+          line-height: 44px
+          i, span
+            color: red
+
+
+  .page-wraper
+    color: $client-font-color-dark
+    .client_dashboard
+      .client_metrics
+        .metric
+          width: 250px
+          height: 300px
+          background-color: white
+          margin-right: 10px
+          float: left
+          text-align: center
+
+          .metric_icon
+          .metric_desc
+          .metric_data
+
+          i
+            @include block_vertical_align

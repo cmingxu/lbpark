@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :client do
+  get 'parks/index'
+  end
+
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -80,6 +84,7 @@ Rails.application.routes.draw do
     delete "logout" => "session#destroy"
 
     resources :coupons
+    resources :parks
   end
 
   # staff only actions

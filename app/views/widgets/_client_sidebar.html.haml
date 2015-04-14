@@ -1,8 +1,13 @@
+.client_brand
+  = image_tag "logo_png.png"
+  萝卜停车
 .list-group
-  .list-group-item.staff
+  .list-group-item.clients
     = link_to raw(fa_icon("fw bank")) + "我的面板", client_path
+  .list-group-item.coupons
+    = link_to raw(fa_icon("fw building-o")) + "我要发券", client_coupons_path
   .list-group-item.parks
-    = link_to raw(fa_icon("fw building-o")) + "停车券", client_coupons_path
+    = link_to raw(fa_icon("fw automobile")) + "车场数据", client_parks_path
 
 :javascript
   $(".#{@active_nav_item}").addClass("sidebar_item_active")

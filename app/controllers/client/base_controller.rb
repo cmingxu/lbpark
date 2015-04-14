@@ -1,5 +1,6 @@
 class Client::BaseController < ApplicationController
   layout "client"
+
   before_filter :client_login_required
   after_filter :reset_last_captcha_code!
 
@@ -14,6 +15,7 @@ class Client::BaseController < ApplicationController
   end
 
   def index
+    @active_nav_item = "clients"
   end
 
   def user_login_in?

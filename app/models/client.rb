@@ -51,4 +51,7 @@ class Client < ActiveRecord::Base
   def self.auto_generate_password(park)
     sprintf("%06d", rand(100000))
   end
+
+  def plugins
+  end
 end

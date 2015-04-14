@@ -28,6 +28,16 @@ footer
 .dashboard-main
   background-color: $second-color
 
+// global
+$font-weight-normal: 400
+$font-weight-bold: 700
+$font-weight-extra-bold: 900
+
+$font-size-normal: 16px
+$font-size-small: $font-size-normal * 0.8
+$font-size-big: $font-size-normal * 1.2
+
+
 //dashboard settings
 $dashboard-bg-light-color: #EFEFF3
 $dashboard-bg-dark-color: #535353
@@ -62,6 +72,12 @@ table
   td.align_right
     text-align: right
 
+@mixin block_vertical_align()
+  position: relative
+  top: 50%
+  -webkit-transform: translateY(-50%)
+  -ms-transform: translateY(-50%)
+  transform: translateY(-50%)
 
 .lb
   background-color: $dashboard-bg-light-color

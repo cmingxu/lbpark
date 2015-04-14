@@ -1,0 +1,114 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
+        %thead
+          %th
+          %th
+        %tbody
+          - park = @park
+          %tr
+            %td= Park::COLUMN_MAP[:name]
+            %td= park.name
+
+          %tr
+            %td= Park::COLUMN_MAP[:address]
+            %td= park.address
+
+          %tr
+            %td= Park::COLUMN_MAP[:city]
+            %td
+              = park.city
+          %tr
+            %td= Park::COLUMN_MAP[:district]
+            %td
+              = park.district
+          %tr
+            %td= Park::COLUMN_MAP[:total_count]
+            %td
+              = park.total_count
+
+          %tr
+            %td= Park::COLUMN_MAP[:property_owner]
+            %td= park.property_owner
+
+          %tr
+            %td= Park::COLUMN_MAP[:gcj_lat]
+            %td= park.gcj_lat
+
+          %tr
+            %td= Park::COLUMN_MAP[:gcj_lng]
+            %td= park.gcj_lng
+
+          %tr
+            %td= Park::COLUMN_MAP[:day_time_begin]
+            %td= park.day_time_begin
+
+          %tr
+            %td= Park::COLUMN_MAP[:day_time_end]
+            %td= park.day_time_end
+
+
+          %tr
+            %td= Park::COLUMN_MAP[:day_first_hour_price]
+            %td
+              = park.day_first_hour_price
+              %span 白天第一小时价格/白天按时价
+
+          %tr
+            %td= Park::COLUMN_MAP[:day_second_hour_price]
+            %td
+              = park.day_second_hour_price
+              %span 白天第二小时价格（没有设置为空）
+
+          %tr
+            %td= Park::COLUMN_MAP[:night_price_per_night]
+            %td
+              = park.night_price_per_night
+
+          %tr
+            %td= Park::COLUMN_MAP[:night_price_per_hour]
+            %td
+              = park.night_price_per_hour
+
+          %tr
+            %td= Park::COLUMN_MAP[:whole_day_price_per_time]
+            %td
+              = park.whole_day_price_per_time
+
+          %tr
+            %td= Park::COLUMN_MAP[:whole_day_price_per_hour]
+            %td
+              = park.whole_day_price_per_hour
+
+          %tr
+            %td= Park::COLUMN_MAP[:month_price]
+            %td
+              = park.month_price
+
+          %tr
+            %td= Park::COLUMN_MAP[:service_month]
+            %td
+              = park.service_month ? "是" : "否" 
+
+          %tr
+            %td= Park::COLUMN_MAP[:service_wc]
+            %td
+              = park.service_wc ? "是" : "否"
+
+          %tr
+            %td 备注
+            %td
+              = park.tips
+
+          %tr
+            %td 攻略
+            %td
+              - park.park_instructions.each  do  |ff|
+                = ff
+          %tr
+            %td 图片
+            %td
+
+              - park.park_pics do |ff|
+                = image_tag ff.thumb.url
