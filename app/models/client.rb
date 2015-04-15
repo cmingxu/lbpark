@@ -53,5 +53,8 @@ class Client < ActiveRecord::Base
   end
 
   def plugins
+    Plugin::Base.subclasses.map do |p|
+      p.new self
+    end
   end
 end

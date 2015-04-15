@@ -1,6 +1,6 @@
 class Client::CouponsController < Client::BaseController
   before_filter do
-    @active_nav_item = "coupons"
+    @active_nav_item = params[:coupon_type]
   end
 
   def index

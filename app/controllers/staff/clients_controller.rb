@@ -1,6 +1,6 @@
 class Staff::ClientsController < Staff::BaseController
   before_filter do
-    @active_nav_item = "parks"
+    @active_nav_item = "clients"
     @park = Park.find params[:park_id] || 1
   end
 

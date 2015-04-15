@@ -32,7 +32,10 @@ class CouponTpl < ActiveRecord::Base
     :free => "限免",
     :monthly => "包月",
     :quarterly => "包季",
-    :redeemable => "代金"
+    :time => "按次",
+    :deduct => "满额抵减",
+    :redeemable => "代金",
+    :exchangeable => "优惠"
   }
 
   COUPON_TPL_STATUS = {
@@ -40,6 +43,12 @@ class CouponTpl < ActiveRecord::Base
     :draft => "未发布",
     :stopped => "已停止"
   }
+
+  VALID_DATES = [
+    "周一至周五",
+    "周六日",
+    "不限"
+  ]
 
   belongs_to :park
   belongs_to :staff

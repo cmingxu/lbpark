@@ -14,26 +14,7 @@
         <div class="user_coupon_corner_notion user_coupon_corner_notion_used"></div>
         <%}else{%>
         <%}%>
-       <div class="user_coupon_item_title">
-           <div class="user_coupon_item_title_duration">
-               <span><%=item.duration%></span>
-           </div>
-          <%if(item.price && ("" + item.price).match(/\d+/)){%>
-           <div class="user_coupon_item_title_price">
-          <span class="rmb_icon">￥</span><%=item.price%></div>
-           <%} else {%>
-           <div class="user_coupon_item_title_price"> 限免 </div>
-           <%}%>
-       </div>
 
-       <div class="user_coupon_item_detail">
-           <div class="user_coupon_item_detail_distance">
-              距离您<span><%=item.distance%></span><%if((""+item.distance).match(/\d/)){%>米<%}%>
-           </div>
-
-           <span class="user_coupon_item_detail_name"><%=item.park_name%></span>
-           <span class="user_coupon_item_detail_type"><%=item.park_type%></span>
-       </div>
        <div class="clearfix">
        </div>
    </div>

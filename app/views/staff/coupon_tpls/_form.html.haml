@@ -30,7 +30,11 @@
               %td
                 = f.text_field :quantity
                 %span 例如: 500
-
+            %tr
+              %td 提示
+              %td
+                = f.text_field :notice
+                %span 例如: 数量有限， 特价包月
             = render :partial => "#{params[:type] || 'free'}", :locals => { :f => f }
 
             %tr

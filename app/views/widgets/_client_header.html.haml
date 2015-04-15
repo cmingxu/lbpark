@@ -1,13 +1,9 @@
 .client-name.pull-left
   = current_client.park.name
 %ul.nav.navbar-nav.pull-right
-  %li
-    %a{:href => "/"}
-      = fa_icon(:wrench)
   %li.dropdown
-    = link_to raw(current_client.email + fa_icon("angle-down")), "#", :class => "dropdown-toggle", :data => { :toggle => "dropdown" }, :role => "button"
+    = link_to raw(current_client.email + "  " + fa_icon("angle-down")), "#", :class => "dropdown-toggle", :data => { :toggle => "dropdown" }, :role => "button"
     %ul.dropdown-menu{:role => "menu"}
-      = link_to "", "bac"
       = link_to "退出账号", client_logout_path, :method => :delete
 
 

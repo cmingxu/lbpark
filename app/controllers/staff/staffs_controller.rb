@@ -1,6 +1,6 @@
 class Staff::StaffsController < Staff::BaseController
   before_filter do
-    @active_nav_item = "staffs" 
+    @active_nav_item = "staffs"
   end
 
   def index
