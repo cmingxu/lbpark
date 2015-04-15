@@ -50,7 +50,7 @@ GIT
       rest-client
 
 GEM
-  remote: https://rubygems.org/
+  remote: https://ruby.taobao.org/
   specs:
     actionmailer (4.1.6)
       actionpack (= 4.1.6)
@@ -178,7 +178,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
-    mini_magick (4.0.0)
+    mini_magick (4.2.1)
     mini_portile (0.6.2)
     minitest (5.5.1)
     mono_logger (1.1.0)
@@ -403,7 +403,7 @@ DEPENDENCIES
   rack-throttle
   rack-weixin
   rails (= 4.1.6)
-  rails_kindeditor
+  rails_kindeditor (= 0.4.5)
   redis (~> 3.1.0)
   resque
   resque-scheduler

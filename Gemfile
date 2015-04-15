@@ -1,4 +1,4 @@
-source 'https://rubygems.org/'
+source 'https://ruby.taobao.org/'
 
 
 gem 'rails', '4.1.6'
@@ -30,7 +30,7 @@ gem 'capistrano-rails', group: :development
 gem 'awesome_print'
 gem 'capistrano-bundler'
 gem 'capistrano-rvm'
-gem 'rails_kindeditor'
+gem 'rails_kindeditor', '0.4.5'
 
 #gem 'rack-tidy'
 

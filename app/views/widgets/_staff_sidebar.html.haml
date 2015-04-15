@@ -1,6 +1,8 @@
 .list-group
   .list-group-item.staff
     = link_to raw(fa_icon("fw bank")) + "我的面板", staff_path
+  .list-group-item.list-group-header
+    管理
   .list-group-item.parks
     = link_to raw(fa_icon("fw building-o")) + "车场列表", staff_parks_path
   .list-group-item.vendors
@@ -13,11 +15,15 @@
     = link_to raw(fa_icon("fw users")) + "卡券管理", staff_coupons_path
   .list-group-item.wechat_users
     = link_to raw(fa_icon("fw users")) + "微信关注", staff_wechat_users_path
-  .list-group-item.setting
-    = link_to raw(fa_icon("wrench fw")) +"个人设置", i_want_change_pass_staff_staffs_path
   .list-group-item.qr_codes
     = link_to raw(fa_icon("wrench fw")) +"微信图标", staff_qr_codes_path
+  .list-group-item.list-group-header
+    设置
+  .list-group-item.setting
+    = link_to raw(fa_icon("wrench fw")) +"个人设置", i_want_change_pass_staff_staffs_path
   - if current_staff.admin?
+    .list-group-item.list-group-header
+      设置
     .list-group-item.pages
       = link_to raw(fa_icon("wrench fw")) +"页面设置", staff_pages_path
     .list-group-item.imports

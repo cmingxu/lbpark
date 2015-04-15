@@ -55,8 +55,19 @@ namespace :deploy do
       #sudo "ln -nfs #{current_path}/config/lb_resque.sh /etc/init.d/lb_resque"
     end
   end
+
+  task :copy_kindeditor_assets do
+    on roles(:all) do
+      within current_path do
+        with :rails_env => fetch(:rails_env) do
+          execute :rake, "kindeditor:assets"
+        end
+      end
+    end
+  end
+
   after "deploy:published", "deploy:setup_config"
-  after "deploy:published", "kindeditor:assets"
+  after "deploy:published", "deploy:copy_kindeditor_assets"
 
 end
 
