@@ -26,7 +26,7 @@ $font-size-small: .8em
 $font-size-extra-small: .6em
 $font-size-big: 1.2em
 $font-size-bigger: 1.4em
-$font-size-extra-big: 1.4em
+$font-size-extra-big: 1.8em
 
 $border-highlight-color-1: #f88db9
 $border-highlight-color-2: #72bbe8
@@ -47,7 +47,7 @@ $border-highlight-color-5: #fff
 $user-background-color-lighter: $tab-bg-color
 $user-background-color: #efefef
 $user_coupon_tab_border_color: #61a7f9
-$user_coupon_free_item_highlight_color: #e48030
+$user_coupon_item_highlight_color: #e48030
 $user_coupon_long_term_item_highlight_color: #a1ce33
 $user_coupon_expired_item_highlight_color: #c2c2c2
 $user_coupon_tpl_show_click_area_bg: #bebebe
@@ -307,14 +307,18 @@ a[title="站长统计"]
     border-top: 1px solid $border-color
     border-bottom: 1px solid $border-color
     border-left: $border-highlight-width solid $border-highlight-color-1
-    #park_title_handlebar
+    .park_title_handlebar, .park_title_handlebar_reverse
       width: 50px
       height: 20px
       position: absolute
       left: 50%
-      transform: translateX(-50%)
       background-image: url('<%= asset_path("park_title_handlebar.png") %>')
       background-size: 50px 20px
+      transform-origin: center
+    .park_title_handlebar
+      transform: translateX(-50%)
+    .park_title_handlebar_reverse
+      transform: rotate(180deg) translateX(-50%)
     span.desc
       float: left
       padding-left: $park_padding_left
@@ -475,11 +479,11 @@ a[title="站长统计"]
             top: -3px
             box-shadow: 1px 1px 1px rgba(black, 0.5)
         .coupon_tag_active_today
-          color: $user_coupon_free_item_highlight_color
-          border-color: $user_coupon_free_item_highlight_color
+          color: $user_coupon_item_highlight_color
+          border-color: $user_coupon_item_highlight_color
         .coupon_tag_active_tomorrow
-          color: $user_coupon_free_item_highlight_color
-          border-color: $user_coupon_free_item_highlight_color
+          color: $user_coupon_item_highlight_color
+          border-color: $user_coupon_item_highlight_color
         .coupon_tag_active_monthly
           color: $user_coupon_long_term_item_highlight_color
           border-color: $user_coupon_long_term_item_highlight_color
@@ -753,7 +757,8 @@ a[title="站长统计"]
       padding-left: 10px
       padding-right: 10px
       padding-bottom: 100px
-      .user_coupon_item
+      .user_coupon_item,.expired_coupon_item,.used_coupon_item
+        position: relative
         box-sizing: border-box
         width: 100%
         background-color: white
@@ -764,7 +769,7 @@ a[title="站长统计"]
           font-size: $font-size-big
           font-weight: $weight-normal
         .user_coupon_item_head
-          background-color: $user_coupon_free_item_highlight_color
+          background-color: $user_coupon_item_highlight_color
           box-sizing: content-box
           width: 100%
           height: 10px
@@ -780,14 +785,74 @@ a[title="站长统计"]
             display: block
             position: absolute
             top: 12px
+        .user_coupon_item_content
+          position: relative
+          padding: 10px
+          .user_coupon_item_content_icon
+            width: 20%
+            float: left
+            text-align: right
+            img
+              border-radius: 50%
+              height: 80px
+              width: 80px
+          .user_coupon_item_content_price_limition
+            text-align: center
+            width: 40%
+            float: left
+            .user_coupon_item_content_price
+              height: 60px
+              line-height: 60px
+              color: $user_coupon_item_highlight_color
+              span
+                font-size: $font-size-extra-big
+                font-weight: $weight-bold
+            .user_coupon_item_content_limitation
+              height: 20px
+          .user_coupon_item_content_label_notice
+            text-align: right
+            width: 40%
+            float: left
+            .user_coupon_item_content_label
+              height: 60px
+              line-height: 60px
+              font-weight: $weight-bold
+              font-size: $font-size-big
+              color: #8c2222
+              span
+                display: inline-block
+                background-image: url("<%=asset_path('coupon_label_bg.png')%>")
+                background-size: 100px
+                padding: 10px
+                padding-right: 16px
+                transform: rotate(-30deg) translate(0, -8px)
+            .user_coupon_item_content_notice
+              color: $user_coupon_item_highlight_color
+              height: 20px
+        .user_coupon_item_foot
+          border-top: 2px solid $user_coupon_item_highlight_color
+          margin-left: 10px
+          margin-right: 10px
+          padding-top: 10px
+          padding-bottom: 10px
+          .user_coupon_item_foot_distance
+            float: left
+          .user_coupon_item_foot_park_name
+            float: right
+            font-size: $font-size-big
+            font-weight: $weight-bold
       .expired_coupon_item, .used_coupon_item
         color: $user_coupon_expired_item_highlight_color
         .user_coupon_item_head
           background-color: $user_coupon_expired_item_highlight_color
           border-bottom: 3px dashed white
-      .user_coupon_item_content
-        position: relative
-        padding: 25px 10px
+        .user_coupon_item_content
+          .user_coupon_item_content_price
+            color: $user_coupon_expired_item_highlight_color!important
+          .user_coupon_item_content_notice
+            color: $user_coupon_expired_item_highlight_color!important
+        .user_coupon_item_foot
+          border-top: 2px solid $user_coupon_expired_item_highlight_color!important
         .user_coupon_corner_notion
           position: absolute
           height: 50px
@@ -795,9 +860,11 @@ a[title="站长统计"]
           background-size: 50px 50px
           left: 0px
           bottom: 0px
-        .user_coupon_corner_notion_expired
+      .expired_coupon_item
+        .user_coupon_corner_notion
           background-image: url('<%= asset_path("user_coupon_expired_corner.png") %>')
-        .user_coupon_corner_notion_used
+      .used_coupon_item
+        .user_coupon_corner_notion
           background-image: url('<%= asset_path("user_coupon_used_corner.png") %>')
 
 .user_coupon_tpl_show_page

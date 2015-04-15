@@ -32,7 +32,7 @@ class CouponTpl::FreeCouponTpl < CouponTpl
   end
 
   def type_name_in_zh
-    "限免"
+    "免费停车"
   end
 
   #def can_be_claimed_by?(user)

@@ -5,6 +5,19 @@
     %span 例如:
 
 %tr
+  %td 抵价
+  %td
+    = f.text_field :coupon_value
+    %span 例如: 5
+
+%tr
+  %td 满额
+  %td
+    = f.text_field :lower_limit_for_deduct
+    %span 例如: 20
+
+
+%tr
   %td 推广图片
   %td
     = f.file_field :banner

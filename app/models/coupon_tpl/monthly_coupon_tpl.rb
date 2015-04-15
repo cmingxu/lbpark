@@ -31,6 +31,6 @@ class CouponTpl::MonthlyCouponTpl < CouponTpl::LongTermCouponTpl
   end
 
   def type_name_in_zh
-    "包月"
+    "包月停车"
   end
 end

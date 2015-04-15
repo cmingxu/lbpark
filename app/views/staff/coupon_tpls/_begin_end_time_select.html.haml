@@ -1,9 +1,9 @@
 %tr
   %td 开始时间
   %td
-    = f.select :valid_hour_begin, options_for_select((0..24).to_a)
+    = f.select :valid_hour_begin, options_for_select((0..24).to_a, f.object.valid_hour_begin)
 
 %tr
   %td 结束时间
   %td
-    = f.select :valid_hour_end, options_for_select((0..24).to_a)
+    = f.select :valid_hour_end, options_for_select((0..24).to_a, f.object.valid_hour_end)

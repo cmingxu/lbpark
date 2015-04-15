@@ -81,14 +81,16 @@ class Coupon < ActiveRecord::Base
     distance = "很远" if distance > Settings.coupons_visible_range
     {
       :id => id,
-      :coupon_type_readable => CouponTpl.coupon_type_to_readable(self.coupon_tpl.type) == "free" ? "free" : "long_term",
-      :duration  => expired? ? self.fit_for_date.to_time.to_zh_m_d_dot : self.coupon_tpl.duration,
-      :price     => self.price,
+      :price     => self.price || 0,
       :distance  => distance,
       :park_name => self.coupon_tpl.park.name,
       :park_type => self.coupon_tpl.park.park_type,
       :expired   => expired?,
-      :used      => used?
+      :used      => used?,
+      :notice => self.coupon_tpl.notice,
+      :displayable_label => self.coupon_tpl.type_name_in_zh,
+      :limitation => self.coupon_tpl.limitation,
+      :icon => park.park_pics.first.park_pic.thumb.url
     }
   end
 

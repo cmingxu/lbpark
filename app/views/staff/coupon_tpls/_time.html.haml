@@ -1,8 +1,16 @@
 %tr
+  %td 价格
+  %td
+    = f.text_field :price
+    %span 例如: 20
+
+%tr
   %td 适用日期
   %td
     = f.text_field :fit_for_date, :class => "date"
     %span 例如:
+
+= render :partial => "staff/coupon_tpls/begin_end_time_select", :locals => { :f => f }
 
 %tr
   %td 推广图片

@@ -29,6 +29,3 @@ $(document).ready(function() {
   check_if_coupon_used();
 });
 
-wx.ready(function () {
-
-});

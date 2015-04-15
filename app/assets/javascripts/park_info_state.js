@@ -76,9 +76,10 @@ LB.park_info_state = {
     self = this;
 
     if(park.park_type_code == 'A'){
-      this.park_title_handlebar_dom.show()
+      this.park_title_handlebar_dom.show();
+      this.park_title_handlebar_dom.addClass("park_title_handlebar_reverse").removeClass("park_title_handlebar");
     }else{
-      this.park_title_handlebar_dom.hide()
+      this.park_title_handlebar_dom.hide();
     }
 
     if(!this.click_event_locker){
@@ -100,6 +101,8 @@ LB.park_info_state = {
     this.detail_dom.css('bottom', config.tabbar_height + "px");
     this.detail_dom.css('height', config.park_detail_height + "px");
     this.park_title_dom.css('bottom', config.tabbar_height + config.park_detail_height +  "px");
+
+    this.park_title_handlebar_dom.removeClass("park_title_handlebar_reverse").addClass("park_title_handlebar");
 
     this.park_preview_dom.attr('src', park.thumb_pic_url);
     this.tips_dom.text(park.tips);

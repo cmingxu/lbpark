@@ -4,19 +4,39 @@
 <%}else if(item.used){%>
 <div class="user_coupon_item used_coupon_item" data-id="<%=item.id%>">
 <%}else{%>
-<div class="user_coupon_item <%=item.coupon_type_readable%>_coupon_item" data-id="<%=item.id%>">
+<div class="user_coupon_item" data-id="<%=item.id%>">
 <%}%>
    <div class="user_coupon_item_head"> </div>
-   <div class="user_coupon_item_content">
-        <%if(item.expired){%>
-        <div class="user_coupon_corner_notion user_coupon_corner_notion_expired"></div>
-        <%}else if(item.used){%>
-        <div class="user_coupon_corner_notion user_coupon_corner_notion_used"></div>
-        <%}else{%>
-        <%}%>
+       <div class="user_coupon_item_content">
+        <div class="user_coupon_item_content_icon">
+          <img src="<%=item.icon%>">
+        </div>
 
-       <div class="clearfix">
-       </div>
-   </div>
+        <div class="user_coupon_item_content_price_limition">
+          <div class="user_coupon_item_content_price">
+          ￥<span> <%=item.price%> </span>
+          </div>
+          <div class="user_coupon_item_content_limitation">
+            <%=item.limitation%>
+          </div>
+        </div>
+
+        <div class="user_coupon_item_content_label_notice">
+          <div class="user_coupon_item_content_label"><span><%=item.displayable_label%></span></div>
+          <div class="user_coupon_item_content_notice"><%=item.notice%></div>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="user_coupon_item_foot">
+        <div class="user_coupon_item_foot_distance">距离您<%=item.distance%></div>
+        <div class="user_coupon_item_foot_park_name"><%=item.park_name%>（<%=item.park_type%>）</div>
+        <div class="clearfix"></div>
+      </div>
+
+      <%if(item.expired||item.used){%>
+        <div class="user_coupon_corner_notion"></div>
+      <%}%>
 </div>
 </script>
