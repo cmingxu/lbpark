@@ -7,6 +7,7 @@ class WechatPay
   ResponseFailError = Class.new(StandardError)
 
   MCH_ID = "1235113502"
+  KEY    = "C1LcxybHXBLLOkkCM4ecvkHRRGSD9vLiXMKSifoveG4"
   WECHAT_PAY_API = "https://api.mch.weixin.qq.com/pay/unifiedorder"
 
   def self.generate_prepay(order)
@@ -27,10 +28,10 @@ class WechatPay
     PAYMENT_LOGGER.debug "requst #{hash_to_xml(options)}"
     response = RestClient.post(WECHAT_PAY_API, hash_to_xml(options))
     hash = Hash.from_xml(response)["xml"]
+    PAYMENT_LOGGER.debug "response #{hash}"
     raise ResponseFailError.new(hash["return_msg"]) if hash["return_code"] == "FAIL"
     raise ResponseNotValidError.new(hash["return_msg"]) if !sign_valid?(hash)
     raise ResponseFailError.new(hash["error_code_des"]) if hash["result_code"] == "FAIL"
-    PAYMENT_LOGGER.debug "response #{hash}"
     hash['prepay_id']
   end
 
@@ -43,7 +44,7 @@ class WechatPay
     Digest::MD5.hexdigest(options.keys.sort.map do |k|
       next if options[k].blank?
       "#{k}=#{options[k]}"
-    end.join("&"))
+    end.join("&") + "&key=#{KEY}").upcase
   end
 
   def self.hash_to_xml(hash)
