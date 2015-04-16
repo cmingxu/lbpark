@@ -41,7 +41,7 @@ class MobileCouponsController < MobileController
     if @coupon_tpl.can_be_claimed_by?(current_user)
       if @coupon = @coupon_tpl.claim_coupon
         @coupon.update_column :user_id, current_user.id
-        @order = Order.create_with_coupon(@coupon)
+        @order = Order.create_with_coupon(@coupon, request)
         if @coupon.price.zero? # free coupons
           @coupon.claim!
           redirect_to coupon_show_mobile_coupon_path(@coupon) and return
