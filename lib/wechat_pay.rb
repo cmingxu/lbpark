@@ -30,6 +30,7 @@ class WechatPay
     raise ResponseFailError.new(hash["return_msg"]) if hash["return_code"] == "FAIL"
     raise ResponseNotValidError.new(hash["return_msg"]) if !sign_valid?(hash)
     raise ResponseFailError.new(hash["error_code_des"]) if hash["result_code"] == "FAIL"
+    PAYMENT_LOGGER.debug "response #{hash}"
     hash['prepay_id']
   end
 

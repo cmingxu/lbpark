@@ -52,12 +52,11 @@ class MobileCouponsController < MobileController
               @coupon.update_attributes coupon_params
               @coupon.order!
               @prepay_id = WechatPay.generate_prepay(@order)
-              render :claim
+              render :claim and return
             end
           end
         rescue Exception => e
-          @msg = e.message
-          render :claim
+          Rails.logger.error e
           raise ActiveRecord::Rollback
         end
       end
