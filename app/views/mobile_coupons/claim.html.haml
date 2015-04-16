@@ -1,0 +1,12 @@
+.user_coupon_tpl_claim_page
+  - if defined?(@msg)
+    = @msg
+  - else
+    .wechat_pay_confirm_button 微信支付
+
+
+
+:javascript
+
+= javascript_include_tag "mobile_coupon_pay"
+
