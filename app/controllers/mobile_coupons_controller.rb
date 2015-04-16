@@ -3,7 +3,7 @@ class MobileCouponsController < MobileController
 
   skip_before_filter :verify_authenticity_token
 
-  before_filter  :only => [:index, :show, :coupon_show, :rule, :bind_mobile] do
+  before_filter  :only => [:index, :show, :coupon_show, :rule, :bind_mobile, :claim] do
     set_wechat_js_config $wechat_api
   end
 
