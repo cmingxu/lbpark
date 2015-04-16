@@ -1,6 +1,4 @@
 require 'rest_client'
-require 'uri'
-require 'md5'
 
 class WechatPay
   SignValdiationError = Class.new(StandardError)
