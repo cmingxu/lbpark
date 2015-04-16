@@ -794,40 +794,44 @@ a[title="站长统计"]
             text-align: right
             img
               border-radius: 50%
-              height: 80px
-              width: 80px
+              height: 50px
+              width: 50px
           .user_coupon_item_content_price_limition
             text-align: center
             width: 40%
             float: left
             .user_coupon_item_content_price
-              height: 60px
-              line-height: 60px
+              height: 40px
+              line-height: 40px
               color: $user_coupon_item_highlight_color
               span
-                font-size: $font-size-extra-big
+                font-size: $font-size-big
                 font-weight: $weight-bold
             .user_coupon_item_content_limitation
               height: 20px
+              font-size: $font-size-small
           .user_coupon_item_content_label_notice
             text-align: right
             width: 40%
             float: left
             .user_coupon_item_content_label
-              height: 60px
-              line-height: 60px
+              height: 40px
+              line-height: 40px
               font-weight: $weight-bold
-              font-size: $font-size-big
+              font-size: $font-size-normal
               color: #8c2222
               span
                 display: inline-block
                 background-image: url("<%=asset_path('coupon_label_bg.png')%>")
-                background-size: 100px
-                padding: 10px
-                padding-right: 16px
-                transform: rotate(-30deg) translate(0, -8px)
+                background-size: 85px
+                padding-top: 10px
+                padding-bottom: 5px
+                padding-left: 10px
+                padding-right: 10px
+                transform: rotate(-25deg) translate(0, -13px)
             .user_coupon_item_content_notice
               color: $user_coupon_item_highlight_color
+              font-size: $font-size-small
               height: 20px
         .user_coupon_item_foot
           border-top: 2px solid $user_coupon_item_highlight_color
@@ -837,9 +841,10 @@ a[title="站长统计"]
           padding-bottom: 10px
           .user_coupon_item_foot_distance
             float: left
+            font-size: $font-size-small
           .user_coupon_item_foot_park_name
             float: right
-            font-size: $font-size-big
+            font-size: $font-size-normal
             font-weight: $weight-bold
       .expired_coupon_item, .used_coupon_item
         color: $user_coupon_expired_item_highlight_color
