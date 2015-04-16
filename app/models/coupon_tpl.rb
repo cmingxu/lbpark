@@ -2,26 +2,31 @@
 #
 # Table name: coupon_tpls
 #
-#  id           :integer          not null, primary key
-#  park_id      :integer
-#  priority     :integer
-#  staff_id     :integer
-#  type         :string(255)
-#  identifier   :string(255)
-#  name_cn      :string(255)
-#  fit_for_date :date
-#  end_at       :datetime
-#  gcj_lat      :decimal(10, 6)
-#  gcj_lng      :decimal(10, 6)
-#  quantity     :integer
-#  price        :integer
-#  copy_from    :integer
-#  status       :string(255)
-#  published_at :datetime
-#  created_at   :datetime
-#  updated_at   :datetime
-#  banner       :string(255)
-#  notice       :string(255)
+#  id                     :integer          not null, primary key
+#  park_id                :integer
+#  priority               :integer
+#  staff_id               :integer
+#  type                   :string(255)
+#  identifier             :string(255)
+#  name_cn                :string(255)
+#  fit_for_date           :date
+#  end_at                 :datetime
+#  gcj_lat                :decimal(10, 6)
+#  gcj_lng                :decimal(10, 6)
+#  quantity               :integer
+#  price                  :integer
+#  copy_from              :integer
+#  status                 :string(255)
+#  published_at           :datetime
+#  created_at             :datetime
+#  updated_at             :datetime
+#  banner                 :string(255)
+#  notice                 :string(255)
+#  coupon_value           :integer
+#  valid_hour_begin       :integer
+#  valid_hour_end         :integer
+#  lower_limit_for_deduct :integer
+#  valid_dates            :string(255)
 #
 
 class CouponTpl < ActiveRecord::Base
@@ -154,7 +159,7 @@ class CouponTpl < ActiveRecord::Base
         c.identifier      = self.identifier + "" + sprintf("%010d", rand(10**9))
         c.coupon_tpl_type = self.type
         c.fit_for_date    = self.fit_for_date
-        c.price           = self.price
+        c.price           = self.price || 0
       end
     end
   end
@@ -188,7 +193,7 @@ class CouponTpl < ActiveRecord::Base
   end
 
   def user_claimed(user)
-    self.coupons.where(:user_id => user.id).first
+    self.coupons.claimed.where(:user_id => user.id).first
   end
 
   def used_count

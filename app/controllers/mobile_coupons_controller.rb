@@ -40,12 +40,21 @@ class MobileCouponsController < MobileController
     @coupon_tpl = CouponTpl.find params[:id]
     if @coupon_tpl.can_be_claimed_by?(current_user)
       if @coupon = @coupon_tpl.claim_coupon
-        @coupon.update_attributes coupon_params
-        @coupon.claim!
-        redirect_to coupon_show_mobile_coupon_path(@coupon) and return
+        @coupon.update_column :user_id, current_user.id
+        @order = Order.create_with_coupon(@coupon)
+        if @coupon.price.zero? # free coupons
+          @coupon.claim!
+          redirect_to coupon_show_mobile_coupon_path(@coupon) and return
+        else
+          @coupon.update_attributes coupon_params
+          @coupon.order!
+          @res = WechatPay.generate_prepay(@order)
+          render :claim and return
+        end
       end
     end
 
+    # fallback
     redirect_to mobile_coupons_path
   end
 
@@ -53,6 +62,13 @@ class MobileCouponsController < MobileController
     @coupon = current_user.coupons.find_by_id(params[:id])
     redirect_to root_path and return if @coupon.nil?
     render :layout => "mobile_no_tab"
+  end
+
+  def notify
+    # succes money enough
+    @order = Order.find(params[:id])
+    @order.pay!
+    @order.coupon.claim!
   end
 
   def check_if_coupon_used

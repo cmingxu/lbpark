@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150415100333) do
+ActiveRecord::Schema.define(version: 20150416070129) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -170,6 +170,23 @@ ActiveRecord::Schema.define(version: 20150415100333) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "orders", force: true do |t|
+    t.string   "order_num"
+    t.integer  "park_id"
+    t.integer  "user_id"
+    t.string   "status"
+    t.integer  "price"
+    t.integer  "coupon_id"
+    t.datetime "paid_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "body"
+    t.string   "spbill_create_ip"
+    t.string   "notify_url"
+    t.string   "bank_type"
+    t.string   "transaction_id"
   end
 
   create_table "pages", force: true do |t|

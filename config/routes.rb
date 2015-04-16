@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     end
 
     member do
+      post :notify
       post :claim
       get :coupon_show
       get :check_if_coupon_used

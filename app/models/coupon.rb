@@ -52,6 +52,14 @@ class Coupon < ActiveRecord::Base
     after_transition :on => :claim, :do => :after_claim
     after_transition :on => :use, :do => :after_use
 
+    event :order do
+      transition :from => :created, :to => :ordered
+    end
+
+    event :pay do
+      transition :from => :ordered, :to => :claimed
+    end
+
     event :claim do
       transition :from => :created, :to => :claimed
     end

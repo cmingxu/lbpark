@@ -5,7 +5,7 @@
     .user_coupon_tpl_show_banner
       %image#user_coupon_tpl_show_banner{:src => @coupon_tpl.banner.thumb.url || "#{asset_path('user_coupon_banner.jpg')}"}
     .user_coupon_tpl_show_notice
-      - if @coupon_tpl.free?
+      - if !@coupon_tpl.monthly? and !@coupon_tpl.quarterly?
         %p
           %strong
             使用说明:

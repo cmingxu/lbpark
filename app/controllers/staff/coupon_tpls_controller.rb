@@ -69,6 +69,7 @@ class Staff::CouponTplsController < Staff::BaseController
   end
 
   def coupon_tpl_params
-    params.require(:coupon_tpl).permit(:park_id, :fit_for_date, :quantity, :price, :banner, :notice, :coupon_value, :valid_hour_begin, :valid_hour_end, :lower_limit_for_deduct)
+    params.require(:coupon_tpl).permit(:park_id, :fit_for_date, :quantity, :price, :banner, :notice, :coupon_value,
+                                       :valid_hour_begin, :valid_hour_end, :lower_limit_for_deduct, :valid_dates)
   end
 end
