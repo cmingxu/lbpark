@@ -38,18 +38,27 @@ class MobileCouponsController < MobileController
 
   def claim
     @coupon_tpl = CouponTpl.find params[:id]
-    if @coupon_tpl.can_be_claimed_by?(current_user)
-      if @coupon = @coupon_tpl.claim_coupon
-        @coupon.update_column :user_id, current_user.id
-        @order = Order.create_with_coupon(@coupon, request)
-        if @coupon.price.zero? # free coupons
-          @coupon.claim!
-          redirect_to coupon_show_mobile_coupon_path(@coupon) and return
-        else
-          @coupon.update_attributes coupon_params
-          @coupon.order!
-          @res = WechatPay.generate_prepay(@order)
-          render :claim and return
+
+    ActiveRecord::Base.transaction do
+      if @coupon_tpl.can_be_claimed_by?(current_user)
+        begin
+          if @coupon = @coupon_tpl.claim_coupon
+            @coupon.update_column :user_id, current_user.id
+            @order = Order.create_with_coupon(@coupon, request)
+            if @coupon.price.zero? # free coupons
+              @coupon.claim!
+              redirect_to coupon_show_mobile_coupon_path(@coupon) and return
+            else
+              @coupon.update_attributes coupon_params
+              @coupon.order!
+              @prepay_id = WechatPay.generate_prepay(@order)
+              render :claim
+            end
+          end
+        rescue Exception => e
+          @msg = e.message
+          render :claim
+          raise ActiveRecord::Rollback
         end
       end
     end
@@ -65,7 +74,6 @@ class MobileCouponsController < MobileController
   end
 
   def notify
-    # succes money enough
     @order = Order.find(params[:id])
     @order.pay!
     @order.coupon.claim!
