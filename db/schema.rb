@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150416070129) do
+ActiveRecord::Schema.define(version: 20150416113317) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -187,6 +187,7 @@ ActiveRecord::Schema.define(version: 20150416070129) do
     t.string   "notify_url"
     t.string   "bank_type"
     t.string   "transaction_id"
+    t.string   "ip"
   end
 
   create_table "pages", force: true do |t|

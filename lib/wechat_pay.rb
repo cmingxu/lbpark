@@ -36,7 +36,7 @@ class WechatPay
   end
 
   def self.sign(options)
-    MD5.hexdigest(options.keys.sort.reverse.map do |k|
+    Digest::MD5.hexdigest(options.keys.sort.reverse.map do |k|
       next if options[k].blank?
       "#{k}=#{options[k]}"
     end.join("&"))

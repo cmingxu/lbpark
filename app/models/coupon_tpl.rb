@@ -189,7 +189,7 @@ class CouponTpl < ActiveRecord::Base
   end
 
   def claimed_by_user?(user)
-    self.coupons.exists?(:user_id => user.id)
+    self.coupons.claimed.exists?(:user_id => user.id)
   end
 
   def user_claimed(user)
