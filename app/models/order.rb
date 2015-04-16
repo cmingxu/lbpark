@@ -29,7 +29,7 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def self.create_with_coupon(coupon, request)
+  def self.create_with_coupon(coupon, remote_ip)
     create do |o|
       o.order_num = "O_#{coupon.identifier}_#{SecureRandom.hex(4)}"
       o.park_id = coupon.park_id
@@ -37,7 +37,7 @@ class Order < ActiveRecord::Base
       o.price   = coupon.price
       o.coupon_id = coupon.id
       o.body = coupon.coupon_tpl.type_name_in_zh
-      o.spbill_create_ip = request.remote_ip
+      o.spbill_create_ip = remote_ip
       o.notify_url = Settings.site_domain + "/mobile_coupons/notify/#{o.order_num}"
     end
   end
