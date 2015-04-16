@@ -7,7 +7,7 @@ class WechatPay
   ResponseFailError = Class.new(StandardError)
 
   MCH_ID = "1235113502"
-  KEY    = "C1LcxybHXBLLOkkCM4ecvkHRRGSD9vLiXMKSifoveG4"
+  KEY    = "9498be2f38d2d3cdc831ecce35fbb428759ef187ffcdbb225c043d7474831717"
   WECHAT_PAY_API = "https://api.mch.weixin.qq.com/pay/unifiedorder"
 
   def self.generate_prepay(order)
