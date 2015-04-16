@@ -29,7 +29,7 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def create_with_coupon(coupon, request)
+  def self.create_with_coupon(coupon, request)
     self.class.create do |o|
       o.order_num = "O_#{coupon.identifier}_#{SecureRandom.hex(4)}"
       o.park_id = coupon.park_id
