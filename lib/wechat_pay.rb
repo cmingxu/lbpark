@@ -24,7 +24,7 @@ class WechatPay
     }
 
     options["sign"] = sign(options)
-    PAYMENT_LOGGER.debug "requst #{options.to_xml}"
+    PAYMENT_LOGGER.debug "requst #{hash_to_xml(options)}"
     response = RestClient.post(WECHAT_PAY_API, hash_to_xml(options))
     hash = Hash.from_xml(response)["xml"]
     raise ResponseFailError.new(hash["return_msg"]) if hash["return_code"] == "FAIL"
@@ -40,7 +40,7 @@ class WechatPay
   end
 
   def self.sign(options)
-    Digest::MD5.hexdigest(options.keys.sort.reverse.map do |k|
+    Digest::MD5.hexdigest(options.keys.sort.map do |k|
       next if options[k].blank?
       "#{k}=#{options[k]}"
     end.join("&"))
