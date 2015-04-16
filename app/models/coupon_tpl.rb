@@ -134,6 +134,9 @@ class CouponTpl < ActiveRecord::Base
   end
 
   def limitation
+    return "限" + self.valid_dates if self.valid_dates
+    return "限#{self.valid_hour_begin}:00-#{self.valid_hour_end}:00" if self.valid_hour_begin
+    return "全天可用"
   end
 
   def fit_for_park?(p)

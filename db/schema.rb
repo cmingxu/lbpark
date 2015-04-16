@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150414091335) do
+ActiveRecord::Schema.define(version: 20150415100333) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20150414091335) do
     t.integer  "valid_hour_begin"
     t.integer  "valid_hour_end"
     t.integer  "lower_limit_for_deduct"
+    t.string   "valid_dates"
   end
 
   create_table "coupons", force: true do |t|

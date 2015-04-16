@@ -16,6 +16,11 @@
     = f.text_field :lower_limit_for_deduct
     %span 例如: 20
 
+%tr
+  %td 适用日期
+  %td
+    = f.select :valid_dates, options_for_select(CouponTpl::VALID_DATES, f.object.valid_dates)
+    %span 例如: 工作日
 
 %tr
   %td 推广图片
