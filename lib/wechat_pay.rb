@@ -1,4 +1,5 @@
 require 'rest_client'
+require 'builder'
 
 class WechatPay
   SignValdiationError = Class.new(StandardError)
@@ -8,20 +9,21 @@ class WechatPay
 
   def self.generate_prepay(order)
     options = {
-      :appid => Wechat.config.appid,
-      :mch_id => MCH_ID,
-      :nonce_str => SecureRandom.hex(32),
-      :body => URI.encode(order.body),
-      :out_trade_no => order.order_num,
-      :total_fee => order.price,
-      :spbill_create_ip => order.ip,
-      :notify_url => order.notify_url,
-      :trade_type => "JSAPI"
+      "appid" => Wechat.config.appid,
+      "mch_id" => MCH_ID,
+      "nonce_str" => SecureRandom.hex(32),
+      "body" => URI.encode(order.body),
+      "out_trade_no" => order.order_num,
+      "total_fee" => order.price,
+      "spbill_create_ip" => order.ip,
+      "notify_url" => order.notify_url,
+      "trade_type" => "JSAPI"
     }
 
-    options[:sign] = sign(options)
+    options["sign"] = sign(options)
     PAYMENT_LOGGER.debug "requst #{options.to_xml}"
-    response = RestClient.post(WECHAT_PAY_API, options.to_xml)
+    response = RestClient.post(WECHAT_PAY_API, hash_to_xml(options))
+    ap response
     PAYMENT_LOGGER.debug "response #{response.body}"
     PAYMENT_LOGGER.debug "response #{response['return_code']}"
     PAYMENT_LOGGER.debug "response #{response['return_msg']}"
@@ -40,5 +42,14 @@ class WechatPay
       next if options[k].blank?
       "#{k}=#{options[k]}"
     end.join("&"))
+  end
+
+  def self.hash_to_xml(hash)
+    "<xml>"  +
+      (hash.keys.map do |k|
+      "<#{k}>#{hash[k]}</#{k}>"
+    end.join)+
+      "</xml>"
+
   end
 end
