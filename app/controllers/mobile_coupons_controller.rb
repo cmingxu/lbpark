@@ -84,9 +84,15 @@ class MobileCouponsController < MobileController
   end
 
   def notify
-    @order = Order.find(params[:id])
-    @order.pay!
-    @order.coupon.claim!
+    result = Hash.from_xml(request.body.read)["xml"]
+    if WxPay::Sign.verify?(result)
+      @order = Order.find_by_order_num(result["order_num"])
+      @order.pay!
+      @order.coupon.claim!
+      render :xml => {return_code: "SUCCESS"}.to_xml(root: 'xml', dasherize: false)
+    else
+      render :xml => {return_code: "SUCCESS", return_msg: "签名失败"}.to_xml(root: 'xml', dasherize: false)
+    end
   end
 
   def check_if_coupon_used
