@@ -11,8 +11,6 @@ class WechatPay
   WECHAT_PAY_API = "https://api.mch.weixin.qq.com/pay/unifiedorder"
 
   def self.generate_prepay(order)
-    Rails.logger.debug '1' * 100
-    Rails.logger.debug order
     options = {
       "appid" => Wechat.config.appid,
       "mch_id" => MCH_ID,
