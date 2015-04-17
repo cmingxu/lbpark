@@ -41,8 +41,9 @@ class WechatPay
   end
 
   def self.sign(options)
+    Rails.logger.debug '1' * 100
+    Rails.logger.debug(options.keys.sort.map do |k| "#{k}=#{options[k]}" end.join("&") + "&key=#{KEY}")
     Digest::MD5.hexdigest(options.keys.sort.map do |k|
-      next if options[k].blank?
       "#{k}=#{options[k]}"
     end.join("&") + "&key=#{KEY}").upcase
   end
