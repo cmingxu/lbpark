@@ -30,7 +30,7 @@ class Order < ActiveRecord::Base
   end
 
   def prepay_params
-    a = {
+    {
       body: URI.encode(self.coupon.coupon_tpl.type_name_in_zh),
       out_trade_no: self.order_num,
       total_fee: self.price,
@@ -39,9 +39,6 @@ class Order < ActiveRecord::Base
       trade_type: 'JSAPI',
       openid: self.user.openid
     }
-
-    ap a
-    a
   end
 
   def self.create_with_coupon(coupon, remote_ip)
