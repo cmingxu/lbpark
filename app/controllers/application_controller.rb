@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter do
     Rails.logger.debug request.remote_ip
     Rails.logger.debug request.ip
+    Rails.logger.debug request.headers['X-Real-IP']
   end
 
   # Prevent CSRF attacks by raising an exception.
