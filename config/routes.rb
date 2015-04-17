@@ -40,12 +40,12 @@ Rails.application.routes.draw do
 
   resources :mobile_coupons, :only => [:index, :show] do
     collection do
+      post "claim/pay" => "mobile_coupons#claim"
       get :coupons_nearby
       get :coupons_owned
       get :rule
       get :bind_mobile
       post :bind_mobile
-      post :claim
     end
 
     member do
