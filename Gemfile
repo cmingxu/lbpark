@@ -53,6 +53,8 @@ gem "hashie_rails", :git => "git@github.com:Maxim-Filimonov/hashie_rails.git"
 gem 'kaminari'
 gem 'rack-weixin'
 gem 'rack-attack', :git => "git@github.com:kickstarter/rack-attack.git"
+gem 'wx_pay'
+
 
 
 

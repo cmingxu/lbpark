@@ -29,6 +29,18 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def prepay_params
+    {
+      body: URI.encode(self.coupon.coupon_tpl.type_name_in_zh),
+      out_trade_no: self.order_num,
+      total_fee: self.price,
+      spbill_create_ip: self.ip,
+      notify_url: self.notify_url,
+      trade_type: 'JSAPI',
+      openid: self.user.openid
+    }
+  end
+
   def self.create_with_coupon(coupon, remote_ip)
     create do |o|
       o.order_num = "O_#{coupon.identifier}_#{SecureRandom.hex(4)}"

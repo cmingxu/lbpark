@@ -51,8 +51,12 @@ class MobileCouponsController < MobileController
             else
               @coupon.update_attributes coupon_params
               @coupon.order!
-              @prepay_id = WechatPay.generate_prepay(@order)
-              render :claim and return
+              @r = WxPay::Service.invoke_unifiedorder(@order.prepay_params)
+              if @r.success?
+                render :claim and return
+              else
+                raise ActiveRecord::Rollback
+              end
             end
           end
         rescue Exception => e
