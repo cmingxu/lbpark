@@ -15,6 +15,8 @@ class MobileCouponsController < MobileController
     @current_nav = "search"
   end
 
+  skip_before_filter :login_required, :only => [:notify]
+
   def index
   end
 

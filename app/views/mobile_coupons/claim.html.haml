@@ -13,8 +13,8 @@
   var nonceStr = '#{@pay_config[:nonceStr]}';
   var signType = '#{@pay_config[:signType]}';
   var paySign = '#{@pay_config[:paySign]}';
-  var coupon_name = '{@coupon.coupon_tpl.type_name_in_zh}';
-  var coupon_id = '{@coupon.id}';
+  var coupon_name = '#{@coupon.coupon_tpl.type_name_in_zh}';
+  var coupon_id = '#{@coupon.id}';
 
 = javascript_include_tag "mobile_coupon_pay"
 
