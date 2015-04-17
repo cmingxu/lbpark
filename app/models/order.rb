@@ -37,7 +37,7 @@ class Order < ActiveRecord::Base
       o.price   = coupon.price
       o.coupon_id = coupon.id
       o.body = coupon.coupon_tpl.type_name_in_zh
-      o.spbill_create_ip = remote_ip
+      o.ip = remote_ip
       o.notify_url = Settings.site_domain + "/mobile_coupons/notify/#{o.order_num}"
     end
   end
