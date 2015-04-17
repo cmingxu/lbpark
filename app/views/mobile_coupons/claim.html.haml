@@ -2,11 +2,17 @@
   - if defined?(@msg)
     = @msg
   - else
-    .wechat_pay_confirm_button 微信支付
+    .user_coupon_tpl_claim_page_info_section
+    .wechat_pay_confirm_button.wc_pay_btn 微信支付
 
 
 
 :javascript
+  var package = '#{@pay_config[:package]}';
+  var timeStamp = '#{@pay_config[:timeStamp]}';
+  var nonceStr = '#{@pay_config[:nonceStr]}';
+  var signType = '#{@pay_config[:signType]}';
+  var paySign = '#{@pay_config[:paySign]}';
 
 = javascript_include_tag "mobile_coupon_pay"
 

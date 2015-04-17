@@ -2,10 +2,6 @@ class ApplicationController < ActionController::Base
   # reset captcha code after each request for security
   after_filter :reset_last_captcha_code!
 
-  before_filter do
-    Rails.logger.debug request.headers['X-Real-IP']
-  end
-
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -58,6 +54,15 @@ class ApplicationController < ActionController::Base
       :url => request.url
     }
     @config[:signature] = Digest::SHA1.hexdigest(@config.keys.sort.map{|k| "#{k}=#{@config[k]}" }.join("&"))
+  end
+
+  def set_pay_sign
+    @pay_config = {
+      :signType => "MD5",
+      :timeStamp => Time.now.to_i,
+      :appId => Wechat.config.appid,
+      :nonceStr  => SecureRandom.hex(10)
+    }
   end
 
   def sms_code_valid?
