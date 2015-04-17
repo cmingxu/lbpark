@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_filter do
     Rails.logger.debug request.remote_ip
+    Rails.logger.debug request.ip
   end
 
   # Prevent CSRF attacks by raising an exception.
