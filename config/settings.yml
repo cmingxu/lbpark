@@ -16,7 +16,7 @@ defaults: &defaults
   four_zero_zero: "4008-117-927"
   coupons_visible_range: 1000
   parks_visible_range: 1000
-  site_domain: 'http://m.6luobo.com'
+  site_domain: 'http://6luobo.com'
 
 
 development:
