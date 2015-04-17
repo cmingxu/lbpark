@@ -88,6 +88,7 @@ class MobileCouponsController < MobileController
   def notify
     result = Hash.from_xml(request.body.read)["xml"]
     Rails.logger.debug result
+    Rails.logger.debug WxPay::Sign.verify?(result)
     if WxPay::Sign.verify?(result)
       @order = Order.find_by_order_num(result["order_num"])
       @order.pay!
