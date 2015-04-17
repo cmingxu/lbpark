@@ -1,7 +1,8 @@
 .user_coupon_tpl_show_page
   .user_nav_bar
     = link_to raw("<span> </span> 返回"), mobile_coupons_path
-  = form_tag claim_mobile_coupon_path(@coupon_tpl), :id => "coupon_form"  do
+  = form_tag claim_mobile_coupons_path, :id => "coupon_form"  do
+    = hidden_field_tag "tpl_id", @coupon_tpl.id
     .user_coupon_tpl_show_banner
       %image#user_coupon_tpl_show_banner{:src => @coupon_tpl.banner.thumb.url || "#{asset_path('user_coupon_banner.jpg')}"}
     .user_coupon_tpl_show_notice

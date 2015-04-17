@@ -45,11 +45,11 @@ Rails.application.routes.draw do
       get :rule
       get :bind_mobile
       post :bind_mobile
+      post :claim
     end
 
     member do
       post :notify
-      post :claim
       get :coupon_show
       get :check_if_coupon_used
     end

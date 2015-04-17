@@ -41,7 +41,7 @@ class MobileCouponsController < MobileController
 
 
   def claim
-    @coupon_tpl = CouponTpl.find params[:id]
+    @coupon_tpl = CouponTpl.find params[:tpl_id]
 
     ActiveRecord::Base.transaction do
       if @coupon_tpl.can_be_claimed_by?(current_user)
