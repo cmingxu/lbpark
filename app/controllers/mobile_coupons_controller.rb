@@ -60,7 +60,6 @@ class MobileCouponsController < MobileController
               if @r.success?
                 @pay_config[:package] = "prepay_id=#{@r['prepay_id']}"
                 @pay_config[:paySign] = WxPay::Sign.generate(@pay_config)
-                @appId = Wechat.config.appid
                 render :claim and return
               else
                 raise ActiveRecord::Rollback
