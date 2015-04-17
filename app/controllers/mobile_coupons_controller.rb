@@ -44,7 +44,7 @@ class MobileCouponsController < MobileController
         begin
           if @coupon = @coupon_tpl.claim_coupon
             @coupon.update_column :user_id, current_user.id
-            @order = Order.create_with_coupon(@coupon, request.remote_ip)
+            @order = Order.create_with_coupon(@coupon, request.headers["X-Real-IP"])
             if @coupon.price.zero? # free coupons
               @coupon.claim!
               redirect_to coupon_show_mobile_coupon_path(@coupon) and return

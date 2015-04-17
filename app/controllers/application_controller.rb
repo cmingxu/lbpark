@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
   after_filter :reset_last_captcha_code!
 
   before_filter do
-    Rails.logger.debug request.remote_ip
-    Rails.logger.debug request.ip
     Rails.logger.debug request.headers['X-Real-IP']
   end
 
