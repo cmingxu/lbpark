@@ -58,7 +58,7 @@ class MobileCouponsController < MobileController
               @r = WxPay::Service.invoke_unifiedorder(@order.prepay_params)
               Rails.logger.debug @r
               if @r.success?
-                @pay_config[:package] = "prepay_id=#{@r['prepay']}"
+                @pay_config[:package] = "prepay_id=#{@r['prepay_id']}"
                 @pay_config[:paySign] = WxPay::Sign.generate(@pay_config)
                 render :claim and return
               else
