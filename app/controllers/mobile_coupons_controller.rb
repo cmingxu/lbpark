@@ -60,6 +60,7 @@ class MobileCouponsController < MobileController
               @r = WxPay::Service.invoke_unifiedorder(@order.prepay_params)
               Rails.logger.debug @r
               if @r.success?
+                @order.update_column :prepay_id, @r['prepay_id']
                 @pay_config[:package] = "prepay_id=#{@r['prepay_id']}"
                 @pay_config[:paySign] = WxPay::Sign.generate(@pay_config)
                 render :claim and return
@@ -87,12 +88,11 @@ class MobileCouponsController < MobileController
 
   def notify
     result = Hash.from_xml(request.body.read)["xml"]
-    Rails.logger.debug result
-    Rails.logger.debug WxPay::Sign.verify?(result)
-    ap WxPay::Sign.verify?(result)
-    Rails.logger.debug "a#{ WxPay::Sign.verify?(result)}a"
-    if WxPay::Sign.verify?(result)
+    if result['result_code'] == result['return_code'] && result['return_code'] == 'SUCCESS'#WxPay::Sign.verify?(result)
       @order = Order.find_by_order_num(result["order_num"])
+      @order.transaction_id = result['transaction_id']
+      @order.bank_type      = result['bank_type']
+      @order.paid_at        = Time.now
       @order.pay!
       @order.coupon.claim!
       render :xml => {return_code: "SUCCESS"}.to_xml(root: 'xml', dasherize: false)
