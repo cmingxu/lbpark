@@ -94,7 +94,7 @@ class MobileCouponsController < MobileController
       @order.bank_type      = result['bank_type']
       @order.paid_at        = Time.now
       @order.pay!
-      @order.coupon.claim!
+      @order.coupon.pay!
       render :xml => {return_code: "SUCCESS"}.to_xml(root: 'xml', dasherize: false)
     else
       render :xml => {return_code: "SUCCESS", return_msg: "签名失败"}.to_xml(root: 'xml', dasherize: false)
