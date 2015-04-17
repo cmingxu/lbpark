@@ -50,6 +50,7 @@ class Coupon < ActiveRecord::Base
 
   state_machine :status, :initial => :created do
     after_transition :on => :claim, :do => :after_claim
+    after_transition :on => :pay, :do => :after_claim
     after_transition :on => :use, :do => :after_use
 
     event :order do
