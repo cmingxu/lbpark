@@ -905,48 +905,31 @@ a[title="站长统计"]
       font-weight: $weight-normal
       border: 1px solid $border-color
       padding-left: 5px
-
-  .user_coupon_tpl_show_click_area
-    color: white
-    text-align: center
-    margin-bottom: 40px
-    button.user_coupon_tpl_show_click_area_bg, button.user_coupon_tpl_show_click_area_bg_active, button.user_coupon_tpl_show_click_area_bg_active_long_term
-      text-decoration: none
-      color: white
-      margin: 0px auto
-      background-color: $user_coupon_tpl_show_click_area_bg
-      position: relative
-      width: 100px
-      height: 100px
-      border-radius: 50%
-      border: none
-      text-align: center
-      .user_coupon_tpl_show_click_area_content
-        position: relative
-        .user_coupon_tpl_show_click_area_text
-          font-weight: $weight-extra-bold
-          font-size: 2em
-        .user_coupon_tpl_show_click_area_count
-          font-weight: $weight-bold
-          font-size: $font-size-normal
-          span
-            color: red
-
-    button.user_coupon_tpl_show_click_area_bg_active
-      background-color: $user_coupon_tpl_show_click_area_bg_active
-      display: block
-    button.user_coupon_tpl_show_click_area_bg_active_long_term
-      background-color: $user_coupon_tpl_show_click_area_bg_active_long_term
-      display: block
-
-    p
-      color: $dark-gray
+  .user_coupon_tpl_show_claim_btn
+    width: 80%
+    padding-top: 10px
+    padding-bottom: 10px
+    text-align: right
+    margin: 0px auto
+    span.user_coupon_tpl_show_claim_btn_price
+      font-size: $font-size-extra-big
       font-weight: $weight-bold
-      font-size: $font-size-big
-    .user_coupon_tpl_show_click_area_a_link
-      color: $blue
-      font-size: $font-size-big
-      text-decoration: underline
+      color: $orange
+    button
+      padding: 10px 30px
+      color: white
+      background-color: $blue
+      font-weight: $weight-bold
+      font-size: $font-size-normal
+      border: none
+    .user_coupon_tpl_show_claim_btn_count
+      display: inline-block
+      font-weight: $weight-normal
+      font-size: $font-size-small
+      span
+        color: $red
+
+
 .user_nav_bar
   height: 44px
   line-height: 44px
