@@ -3,33 +3,18 @@
 .user_coupon_show_page
   .user_nav_bar
     = link_to raw("<span> </span> 返回"), mobile_coupons_path(:owned => true, :anchor => :owned)
-  - if !@coupon.monthly?
-    .user_coupon_notice
-      恭喜您获得
-      %span
-        - if @coupon.coupon_tpl.fit_for_date
-          = @coupon.coupon_tpl.fit_for_date.to_time.to_zh_m_d
-          \-
-        = @coupon.coupon_tpl.park.name
-        (
-        = @coupon.coupon_tpl.park.park_type
-        )
-      停车券， 请离开车场时向岗亭收费人员展示该二维码。
-    .user_coupon_qr_code
-      .user_coupon_qr_code_bg
-        = image_tag @coupon.qr_code.thumb.url
-  - else
-    .user_coupon_notice
-      您申请的从
-      %span
-        = @coupon.claimed_at.to_zh_m_d
-      开始的#{@coupon.coupon_tpl.type_name_in_zh}券已提交，等待为您安排车位。
-    .user_coupon_qr_code
-      .user_coupon_qr_code_bg
-        %p
-          办卡无需到现场，萝卜为您上门服务。若12小时内未响应请拨打
-          %span.color-blue
-            = Settings.four_zero_zero
+  .user_coupon_notice
+    恭喜您获得
+    %span
+      = @coupon.coupon_tpl.park.name
+      (
+      = @coupon.coupon_tpl.park.park_type
+      )
+    的#{@coupon.coupon_tpl.type_name_in_zh}， 请再岗亭向收费员展示该二维码。
+  .user_coupon_qr_code
+    .user_coupon_qr_code_bg
+      = image_tag @coupon.qr_code.thumb.url
+
   .user_coupon_btns{ :class => @coupon.free? ? "user_coupon_btn_free" : "user_coupon_btn_long_term" }
     = link_to "规则", rule_mobile_coupons_path, :class => "user_coupon_btn pull-left"
     = link_to "分享", "", :class => "user_coupon_btn pull-right"
