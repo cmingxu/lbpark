@@ -21,8 +21,10 @@ LB.park_info_state = {
   night_price_unit_dom: $("#night_price_unit"),
   night_time_range_dom: $("#night_time_range"),
   park_preview_dom: $("#park_preview"),
-  free_today_dom: $("#free_today"),
+  free_dom: $("#free"),
   monthly_dom: $("#monthly"),
+  deduct_dom: $("#deduct"),
+  time_dom: $("#time"),
   park_title_handlebar_dom: $("#park_title_handlebar"),
   
 
@@ -137,13 +139,15 @@ LB.park_info_state = {
     this.detail_dom.show();
     this.park_dom.show();
 
-    this.free_today_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_today").removeAttr("href");
+    this.free_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_today").removeAttr("href");
     this.monthly_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_monthly").removeAttr("href");
+    this.time_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_time").removeAttr("href");
+    this.deduct_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_deduct").removeAttr("href");
 
-    if(park.free_today_coupon){
-      this.free_today_dom.addClass('coupon_tag_active');
-      this.free_today_dom.addClass('coupon_tag_active_today');
-      this.free_today_dom.attr('href', config.mobile_coupons_path + "?park_id=" + park.id );
+    if(park.free_coupon){
+      this.free_dom.addClass('coupon_tag_active');
+      this.free_dom.addClass('coupon_tag_active_free');
+      this.free_dom.attr('href', config.mobile_coupons_path + "?park_id=" + park.id );
     }
 
     if(park.monthly_coupon){
@@ -151,6 +155,19 @@ LB.park_info_state = {
       this.monthly_dom.addClass('coupon_tag_active_monthly');
       this.monthly_dom.attr('href', config.mobile_coupons_path + "?park_id=" + park.id );
     }
+
+    if(park.time_coupon){
+      this.time_dom.addClass('coupon_tag_active');
+      this.time_dom.addClass('coupon_tag_active_time');
+      this.time_dom.attr('href', config.mobile_coupons_path + "?park_id=" + park.id );
+    }
+
+    if(park.deduct_coupon){
+      this.deduct_dom.addClass('coupon_tag_active');
+      this.deduct_dom.addClass('coupon_tag_active_deduct');
+      this.deduct_dom.attr('href', config.mobile_coupons_path + "?park_id=" + park.id );
+    }
+
 
   }
 

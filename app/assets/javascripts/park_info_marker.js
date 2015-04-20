@@ -22,8 +22,8 @@ LB.park_info_marker = function (park) {
         text = "<div style='position: absolute; left: 10px; top: 8px; font-size: .8em'>禁</div>";
       }
 
-      if(park.free_today_coupon || park.free_tomorrow_coupon || 
-         park.monthly_coupon || park.quarterly_coupon){
+      if(park.free_coupon || park.monthly_coupon || 
+         park.time_coupon || park.deduct_coupon){
         text += "<span class='coupon_mark'>券</span>"
       }
     break;
