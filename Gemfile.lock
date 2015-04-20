@@ -42,7 +42,7 @@ GIT
 
 GIT
   remote: https://github.com/cmingxu/wechat-rails
-  revision: 6d82c9a7c488b09e3c9c0ee0a9019ff67fb97231
+  revision: b4bb63271eb19adabbd197368ce21e4bfff1016d
   specs:
     wechat-rails (0.1.1)
       nokogiri (>= 1.6.0)
@@ -127,7 +127,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    domain_name (0.5.23)
+    domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     easy_captcha (0.6.4)
       bundler (>= 1.1.0)
@@ -180,7 +180,7 @@ GEM
     mime-types (2.4.3)
     mini_magick (4.2.1)
     mini_portile (0.6.2)
-    minitest (5.5.1)
+    minitest (5.6.0)
     mono_logger (1.1.0)
     multi_json (1.11.0)
     multi_xml (0.5.5)
@@ -352,7 +352,7 @@ GEM
       json (>= 1.8.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.6)
+    unf_ext (0.0.7.1)
     unicorn (4.8.3)
       kgio (~> 2.6)
       rack
