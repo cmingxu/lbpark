@@ -37,4 +37,8 @@ class CouponTpl::TimeCouponTpl < CouponTpl
   def can_be_claimed_by?(user)
     has_enough_coupon?
   end
+
+  def time?
+    true
+  end
 end

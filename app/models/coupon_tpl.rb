@@ -97,7 +97,7 @@ class CouponTpl < ActiveRecord::Base
   def self.all_visible_around(location)
     @highlighted_coupon_tpls = CouponTpl.highlighted.time_range_right
     @free_coupon_tpls        = CouponTpl::FreeCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).for_today - @highlighted_coupon_tpls
-    @time_coupon_tpls        = CouponTpl::TimeCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).for_today - @highlighted_coupon_tpls
+    @time_coupon_tpls        = CouponTpl::TimeCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)) - @highlighted_coupon_tpls
     @deduct_coupon_tpls        = CouponTpl::DeductCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).for_today - @highlighted_coupon_tpls
     @redeemable_coupon_tpls    = CouponTpl::RedeemableCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).for_today - @highlighted_coupon_tpls
     @long_term_coupon_tpls   = CouponTpl::LongTermCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)) - @highlighted_coupon_tpls
