@@ -33,7 +33,7 @@ class Order < ActiveRecord::Base
     {
       body: "#{self.coupon.coupon_tpl.type_name_in_zh}X#{self.quantity}",
       out_trade_no: self.order_num,
-      total_fee: self.price, # after calculation when created
+      total_fee: self.price * 100, # after calculation when created
       spbill_create_ip: self.ip,
       notify_url: self.notify_url,
       trade_type: 'JSAPI',
