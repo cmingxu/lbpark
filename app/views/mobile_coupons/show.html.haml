@@ -35,11 +35,12 @@
               使用说明:
           %p 1、每日抢到的免费券，在出场时刷券使用。
           %p 2、如停放时间超过一整日，则出示该券无效。
-          %p
-            3、本券限
-            %span
-              #{@coupon_tpl.fit_for_date.to_time.to_zh_m_d}
-            使用，过期或提前无效。
+          - if @coupon_tpl.fit_for_date
+            %p
+              3、本券限
+              %span
+                #{@coupon_tpl.fit_for_date.to_time.to_zh_m_d}
+              使用，过期或提前无效。
 
       .user_coupon_tpl_show_claim_btn
         .user_coupon_tpl_show_claim_btn_price
