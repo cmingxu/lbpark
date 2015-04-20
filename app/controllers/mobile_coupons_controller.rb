@@ -50,6 +50,8 @@ class MobileCouponsController < MobileController
         begin
           if @coupon = @coupon_tpl.claim_coupon
             @coupon.update_column :user_id, current_user.id
+            @coupon.update_column :quantity, coupon_params[:quantity].to_i.abs < 1 ?  1 : coupon_params[:quantity].to_i.abs
+            @coupon.reload
             @order = Order.create_with_coupon(@coupon, request.headers["X-Real-IP"])
             if @coupon.price.zero? # free coupons
               @coupon.claim!
@@ -93,8 +95,8 @@ class MobileCouponsController < MobileController
       @order.transaction_id = result['transaction_id']
       @order.bank_type      = result['bank_type']
       @order.paid_at        = Time.now
-      @order.pay!
-      @order.coupon.pay!
+      @order.pay! if @order.not_paid?
+      @order.coupon.pay! if @order.coupon.ordered?
       render :xml => {return_code: "SUCCESS"}.to_xml(root: 'xml', dasherize: false)
     else
       render :xml => {return_code: "SUCCESS", return_msg: "签名失败"}.to_xml(root: 'xml', dasherize: false)
@@ -131,7 +133,7 @@ class MobileCouponsController < MobileController
   def coupon_params
     params[:coupon] ||= HashWithIndifferentAccess.new
     params[:coupon][:user_id] = current_user.id
-    params.require(:coupon).permit(:user_id, :issued_address, :issued_begin_date)
+    params.require(:coupon).permit(:user_id, :issued_address, :issued_begin_date, :quantity)
   end
 
 end

@@ -31,9 +31,9 @@ class Order < ActiveRecord::Base
 
   def prepay_params
     {
-      body: self.coupon.coupon_tpl.type_name_in_zh,
+      body: "#{self.coupon.coupon_tpl.type_name_in_zh}X#{self.quantity}",
       out_trade_no: self.order_num,
-      total_fee: self.price,
+      total_fee: self.price, # after calculation when created
       spbill_create_ip: self.ip,
       notify_url: self.notify_url,
       trade_type: 'JSAPI',
@@ -47,11 +47,12 @@ class Order < ActiveRecord::Base
       o.order_num = "O_#{coupon.identifier}_#{SecureRandom.hex(4)}"
       o.park_id = coupon.park_id
       o.user_id = coupon.user_id
-      o.price   = coupon.price
+      o.price   = coupon.price * coupon.quantity
       o.coupon_id = coupon.id
       o.body = coupon.coupon_tpl.type_name_in_zh
       o.ip = remote_ip
       o.notify_url = Settings.site_domain + "/mobile_coupons/notify?order_num=#{o.order_num}"
+      o.quantity = coupon.quantity
     end
   end
 end

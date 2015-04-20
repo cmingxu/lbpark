@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150416113317) do
+ActiveRecord::Schema.define(version: 20150420012956) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20150416113317) do
     t.date     "issued_begin_date"
     t.datetime "used_at"
     t.string   "issued_paizhao"
+    t.integer  "quantity"
   end
 
   create_table "feedbacks", force: true do |t|
@@ -188,6 +189,8 @@ ActiveRecord::Schema.define(version: 20150416113317) do
     t.string   "bank_type"
     t.string   "transaction_id"
     t.string   "ip"
+    t.string   "prepay_id"
+    t.integer  "quantity"
   end
 
   create_table "pages", force: true do |t|

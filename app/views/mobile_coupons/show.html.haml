@@ -4,67 +4,61 @@
   = form_tag claim_pay_mobile_coupons_path, :id => "coupon_form"  do
     = hidden_field_tag "tpl_id", @coupon_tpl.id
     .user_coupon_tpl_show_banner
-      %image#user_coupon_tpl_show_banner{:src => @coupon_tpl.banner.thumb.url || "#{asset_path('user_coupon_banner.jpg')}"}
-    .user_coupon_tpl_show_notice
-      - if !@coupon_tpl.monthly? and !@coupon_tpl.quarterly?
-        %p
-          %strong
-            使用说明:
-        %p 1、每日抢到的免费券，在出场时刷券使用。
-        %p 2、如停放时间超过一整日，则出示该券无效。
-        %p
-          3、本券限
-          %span
-            #{@coupon_tpl.fit_for_date.to_time.to_zh_m_d}
-          使用，过期或提前无效。
-    - if @coupon_tpl.monthly? || @coupon_tpl.quarterly?
-      .user_coupon_tpl_input
-        = @coupon_tpl.notice
+      %img#user_coupon_tpl_show_banner{:src => @coupon_tpl.banner.thumb.url || "#{asset_path('user_coupon_banner.jpg')}"}
 
-    - if @coupon_tpl.quarterly? && !@coupon_tpl.claimed_by_user?(current_user)
-      :javascript
-        var has_form = true;
-
+    - if !@coupon_tpl.can_be_claimed_by?(current_user)
       .user_coupon_tpl_input
-        = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包季起点", :id => "date", :class => "coupon_issued_begin_date_input"
-      .user_coupon_tpl_input
-        = text_field_tag "coupon[issued_paizhao]", "", :placeholder => "请输入车牌号码", :class => "coupon_issued_paizhao"
-      .user_coupon_tpl_input
-        = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址", :class => "coupon_issued_address_input"
-
-    - if @coupon_tpl.monthly? && !@coupon_tpl.claimed_by_user?(current_user)
-      :javascript
-        var has_form = true;
-
-      .user_coupon_tpl_input
-        = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包月起点", :id => "date", :class => "coupon_issued_begin_date_input"
-      .user_coupon_tpl_input
-        = text_field_tag "coupon[issued_paizhao]", "", :placeholder => "请输入车牌号码", :class => "coupon_issued_paizhao"
-      .user_coupon_tpl_input
-        = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址", :class => "coupon_issued_address_input"
-
-      - if @coupon_tpl.claimed_by_user?(current_user) && !@coupon_tpl.can_be_claimed_by?(current_user)
         - coupon = @coupon_tpl.user_claimed(current_user)
         %p 【已收到券】
         = link_to "查看停车券", coupon_show_mobile_coupon_path(coupon), :class => "user_coupon_tpl_show_click_area_a_link"
+
+    - else
+      - if @coupon_tpl.monthly?
+        :javascript
+          var has_form = true;
+
+        .user_coupon_tpl_input
+          = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包月起点", :id => "date", :class => "coupon_issued_begin_date_input"
+        .user_coupon_tpl_input
+          = text_field_tag "coupon[issued_address]", "", :placeholder => "请输入配送地址", :class => "coupon_issued_address_input"
+        .user_coupon_tpl_input
+          = hidden_field_tag "coupon[quantity]", 1, :id => "coupon_quantity"
+          - [1, 3, 6, 12].each do |m|
+            .user_coupon_tpl_show_quantity_selector{"data-price" => m * @coupon_tpl.price, "data-quantity" => m}
+              X
+              %span= m
+          .clearfix
+
       - else
-        .user_coupon_tpl_show_claim_btn
-          ￥
-          %span.user_coupon_tpl_show_claim_btn_price= @coupon_tpl.price
-          %button{:type => "submit", :disabled => @coupon_tpl.has_enough_coupon?}
-            抢券
-            .user_coupon_tpl_show_claim_btn_count
-              (
-              %span
-                #{ @coupon_tpl.claimable_count }
-              \/
-              #{@coupon_tpl.quantity}
-              )
+        .user_coupon_tpl_show_notice
+          %p
+            %strong
+              使用说明:
+          %p 1、每日抢到的免费券，在出场时刷券使用。
+          %p 2、如停放时间超过一整日，则出示该券无效。
+          %p
+            3、本券限
+            %span
+              #{@coupon_tpl.fit_for_date.to_time.to_zh_m_d}
+            使用，过期或提前无效。
+
+      .user_coupon_tpl_show_claim_btn
+        ￥
+        %span.user_coupon_tpl_show_claim_btn_price#user_coupon_tpl_show_claim_btn_price= @coupon_tpl.price || 0
+        %button{:type => "submit", :disabled => !@coupon_tpl.has_enough_coupon?}
+          抢券
+          .user_coupon_tpl_show_claim_btn_count
+            (
+            %span
+              #{ @coupon_tpl.claimable_count }
+            \/
+            #{@coupon_tpl.quantity}
+            )
 
 
 
 = javascript_include_tag "mobile_coupon_tpl_show"
-- if @coupon_tpl.monthly? || @coupon_tpl.quarterly?
+- if @coupon_tpl.monthly?
   = javascript_include_tag "custom_mobiscroll"
   = stylesheet_link_tag "custom_mobiscroll"
   :javascript

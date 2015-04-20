@@ -26,9 +26,7 @@ class Api::ParksController < Api::BaseController
           :no_parking => p.no_parking?,
           :day_only => p.day_only?,
           :free_today_coupon => @coupon_tpls.any?{|ct| ct.fit_for_park?(p) && ct.free? && ct.fit_for_date == Date.today },
-          :free_tomorrow_coupon => @coupon_tpls.any?{|ct| ct.fit_for_park?(p)  && ct.free? && ct.fit_for_date != Date.today },
-          :monthly_coupon => @coupon_tpls.any?{|ct| ct.fit_for_park?(p) &&  ct.monthly? },
-          :quarterly_coupon => @coupon_tpls.any?{|ct| ct.fit_for_park?(p) &&  ct.quarterly? }
+          :monthly_coupon => @coupon_tpls.any?{|ct| ct.fit_for_park?(p) &&  ct.monthly? }
         }
       end
     else

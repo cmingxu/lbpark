@@ -46,7 +46,7 @@ class Coupon < ActiveRecord::Base
 
   COUPON_STATUS.keys.each { |s| scope s, -> { where(:status => s) } }
 
-  delegate :free?, :monthly?, :quarterly?, :to => :coupon_tpl
+  delegate :free?,:monthly?, :time?, :to => :coupon_tpl
 
   state_machine :status, :initial => :created do
     after_transition :on => :claim, :do => :after_claim
@@ -75,7 +75,6 @@ class Coupon < ActiveRecord::Base
     self.update_column :expire_at, self.fit_for_date.end_of_day if self.free?
     self.update_column :expire_at, 10.years.from_now if self.time?
     self.update_column :expire_at, Time.now + 1.month if self.monthly?
-    self.update_column :expire_at, Time.now + 3.month if self.quarterly?
   end
 
   def after_use
@@ -88,7 +87,7 @@ class Coupon < ActiveRecord::Base
 
   def as_api_json(location)
     distance = LbRange.new(location, self.coupon_tpl.park.location).distance
-    distance = "很远" if distance > Settings.coupons_visible_range
+    distance = distance > Settings.coupons_visible_range ? "很远" : "#{distance}米"
     {
       :id => id,
       :price     => self.price || 0,

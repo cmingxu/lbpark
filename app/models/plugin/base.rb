@@ -11,6 +11,5 @@ end
 
 require 'plugin/free_coupon'
 require 'plugin/monthly_coupon'
-require 'plugin/quarterly_coupon'
 require 'plugin/redeemable_coupon'
 

@@ -22,9 +22,7 @@ LB.park_info_state = {
   night_time_range_dom: $("#night_time_range"),
   park_preview_dom: $("#park_preview"),
   free_today_dom: $("#free_today"),
-  free_tomorrow_dom: $("#free_tomorrow"),
   monthly_dom: $("#monthly"),
-  quarterly_dom: $("#quarterly"),
   park_title_handlebar_dom: $("#park_title_handlebar"),
   
 
@@ -140,9 +138,7 @@ LB.park_info_state = {
     this.park_dom.show();
 
     this.free_today_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_today").removeAttr("href");
-    this.free_tomorrow_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_tomorrow").removeAttr("href");
     this.monthly_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_monthly").removeAttr("href");
-    this.quarterly_dom.removeClass("coupon_tag_active").removeClass("coupon_tag_active_quarterly").removeAttr("href");
 
     if(park.free_today_coupon){
       this.free_today_dom.addClass('coupon_tag_active');
@@ -150,22 +146,10 @@ LB.park_info_state = {
       this.free_today_dom.attr('href', config.mobile_coupons_path + "?park_id=" + park.id );
     }
 
-    if(park.free_tomorrow_coupon){
-      this.free_tomorrow_dom.addClass('coupon_tag_active');
-      this.free_tomorrow_dom.addClass('coupon_tag_active_tomorrow');
-      this.free_tomorrow_dom.attr('href', config.mobile_coupons_path + "?park_id=" + park.id );
-    }
-
     if(park.monthly_coupon){
       this.monthly_dom.addClass('coupon_tag_active');
       this.monthly_dom.addClass('coupon_tag_active_monthly');
       this.monthly_dom.attr('href', config.mobile_coupons_path + "?park_id=" + park.id );
-    }
-
-    if(park.quarterly_coupon){
-      this.quarterly_dom.addClass('coupon_tag_active');
-      this.quarterly_dom.addClass('coupon_tag_active_quarterly');
-      this.quarterly_dom.attr('href', config.mobile_coupons_path + "?park_id=" + park.id );
     }
 
   }

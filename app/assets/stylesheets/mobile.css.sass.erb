@@ -481,13 +481,7 @@ a[title="站长统计"]
         .coupon_tag_active_today
           color: $user_coupon_item_highlight_color
           border-color: $user_coupon_item_highlight_color
-        .coupon_tag_active_tomorrow
-          color: $user_coupon_item_highlight_color
-          border-color: $user_coupon_item_highlight_color
         .coupon_tag_active_monthly
-          color: $user_coupon_long_term_item_highlight_color
-          border-color: $user_coupon_long_term_item_highlight_color
-        .coupon_tag_active_quarterly
           color: $user_coupon_long_term_item_highlight_color
           border-color: $user_coupon_long_term_item_highlight_color
 
@@ -897,6 +891,7 @@ a[title="站长统计"]
     width: 80%
     margin: 0px auto
     padding: 10px
+    text-align: center
     input
       width: 100%
       height: 30px
@@ -928,6 +923,20 @@ a[title="站长统计"]
       font-size: $font-size-small
       span
         color: $red
+  .user_coupon_tpl_show_quantity_selector,
+  .user_coupon_tpl_show_quantity_selector_active
+    cursor: pointer
+    float: left
+    background-color: $blue
+    color: white
+    font-size: $font-size-small
+    margin-right: 20px
+    padding: 5px 10px
+    span
+      font-size: $font-size-big
+      font-weight: $weight-bold
+      font-family: italic
+  .user_coupon_tpl_show_quantity_selector_active
 
 
 .user_nav_bar

@@ -35,7 +35,6 @@ class CouponTpl < ActiveRecord::Base
 
   COUPON_TPL_TYPES = {
     :monthly => "包月",
-    :quarterly => "包季",
     :free => "限免",
     :time => "按次",
     :deduct => "满额抵减",
@@ -75,6 +74,7 @@ class CouponTpl < ActiveRecord::Base
   #default_scope lambda { order("priority desc, fit_for_date ASC, type")}
   scope :highlighted, -> { where(:priority => HIHGLIGHT_PRIORITY)}
   scope :time_range_right, -> { where(["fit_for_date is NULL OR fit_for_date = ?", Time.now.strftime("%Y-%m-%d")]) }
+  scope :for_today, -> { where(["fit_for_date = ?", Time.now.strftime("%Y-%m-%d")]) }
   scope :published, -> { where(:status => "published") }
   scope :within_range, lambda {|range| where(["gcj_lng > ? AND gcj_lat > ? AND gcj_lng < ? AND gcj_lat <?", range.p1.lng, range.p1.lat, range.p2.lng, range.p2.lat]).limit(200) }
 
@@ -96,10 +96,10 @@ class CouponTpl < ActiveRecord::Base
 
   def self.all_visible_around(location)
     @highlighted_coupon_tpls = CouponTpl.highlighted.time_range_right
-    @free_coupon_tpls        = CouponTpl::FreeCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).time_range_right - @highlighted_coupon_tpls
-    @time_coupon_tpls        = CouponTpl::TimeCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).time_range_right - @highlighted_coupon_tpls
-    @deduct_coupon_tpls        = CouponTpl::DeductCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).time_range_right - @highlighted_coupon_tpls
-    @redeemable_coupon_tpls    = CouponTpl::RedeemableCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).time_range_right - @highlighted_coupon_tpls
+    @free_coupon_tpls        = CouponTpl::FreeCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).for_today - @highlighted_coupon_tpls
+    @time_coupon_tpls        = CouponTpl::TimeCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).for_today - @highlighted_coupon_tpls
+    @deduct_coupon_tpls        = CouponTpl::DeductCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).for_today - @highlighted_coupon_tpls
+    @redeemable_coupon_tpls    = CouponTpl::RedeemableCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)).for_today - @highlighted_coupon_tpls
     @long_term_coupon_tpls   = CouponTpl::LongTermCouponTpl.published.within_range(location.around(Settings.coupons_visible_range)) - @highlighted_coupon_tpls
     [ @highlighted_coupon_tpls, @free_coupon_tpls, @long_term_coupon_tpls, @time_coupon_tpls, @deduct_coupon_tpls, @redeemable_coupon_tpls ].flatten.sort_by{|a| a.sort_criteria(location)}.reverse
   end
@@ -124,7 +124,7 @@ class CouponTpl < ActiveRecord::Base
 
   def as_api_json(location)
     distance = LbRange.new(location, park.location).distance
-    distance = "很远" if distance > Settings.coupons_visible_range
+    distance = distance > Settings.coupons_visible_range ? "很远" : "#{distance}米"
     {
       :id => id,
       :price => price || 0,
