@@ -912,14 +912,21 @@ a[title="站长统计"]
     padding-bottom: 10px
     text-align: right
     margin: 0px auto
-    span.user_coupon_tpl_show_claim_btn_price
-      font-size: $font-size-extra-big
-      font-weight: $weight-bold
-      color: $orange
+    color: $orange
+    .user_coupon_tpl_show_claim_btn_price
+      display: inline-block
+      height: 36px
+      border-bottom: 4px solid $orange
+      padding-left: 10px
+      padding-right: 10px
+      #user_coupon_tpl_show_claim_btn_price
+        font-size: $font-size-extra-big
+        font-weight: $weight-bold
+        color: $orange
     button
       padding: 10px 30px
       color: white
-      background-color: $blue
+      background-color: $orange
       font-weight: $weight-bold
       font-size: $font-size-normal
       border: none
@@ -933,16 +940,18 @@ a[title="站长统计"]
   .user_coupon_tpl_show_quantity_selector_active
     cursor: pointer
     float: left
-    background-color: $blue
-    color: white
-    font-size: $font-size-small
+    border: 1px solid $light-gray
+    color: $light-gray
+    font-size: $font-size-normal
     margin-right: 20px
-    padding: 5px 10px
+    padding: 3px 10px
     span
       font-size: $font-size-big
       font-weight: $weight-bold
       font-family: italic
   .user_coupon_tpl_show_quantity_selector_active
+    border: 1px solid $orange
+    color: $orange
 
 
 .user_nav_bar

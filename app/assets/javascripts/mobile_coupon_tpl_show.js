@@ -18,8 +18,8 @@ $(document).ready(function () {
   }
 
   $(".user_coupon_tpl_show_quantity_selector").click(function () {
-    $(this).siblings().removeClass("user_coupon_tpl_show_quantity_active");
-    $(this).addClass("user_coupon_tpl_show_quantity_active");
+    $(this).siblings().removeClass("user_coupon_tpl_show_quantity_selector_active");
+    $(this).addClass("user_coupon_tpl_show_quantity_selector_active");
 
     $("#coupon_quantity").val($(this).data('quantity'));
     $("#user_coupon_tpl_show_claim_btn_price").text($(this).data('price'));
