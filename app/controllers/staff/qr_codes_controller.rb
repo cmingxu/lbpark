@@ -20,6 +20,11 @@ class Staff::QrCodesController < Staff::BaseController
     end
   end
 
+  def download
+    @qr_code = QrCode.find params[:id]
+    render :layout => false
+  end
+
   def qr_code_params
     params.require(:qr_code).permit(:which_wechat_account, :mark, :scene_str)
   end

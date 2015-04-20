@@ -22,7 +22,7 @@ class QrCode < ActiveRecord::Base
 
   before_validation :set_default, :on => :create
 
-  after_commit :generating_qr_code_event
+  after_create :generating_qr_code_event
   mount_uploader :qr_code, WechatQrCodeUploader
 
   state_machine :status, :initial => :created do
@@ -32,7 +32,7 @@ class QrCode < ActiveRecord::Base
   end
 
   def generating_qr_code_event
-    Resque.enqueue_at Time.now, QrCodeGenerationJob, self.id
+    Resque.enqueue_at Time.now + 10, QrCodeGenerationJob, self.id
   end
 
   def generate_qr_code

@@ -99,7 +99,11 @@ Rails.application.routes.draw do
       resources :park_imports
     end
 
-    resources :qr_codes
+    resources :qr_codes do
+      member do
+        get :download
+      end
+    end
     resources :pages
     resources :clients
 
