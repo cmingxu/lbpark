@@ -56,6 +56,11 @@ class WechatUser < ActiveRecord::Base
     Resque.enqueue_at Time.now + 300, SyncWechatUser, self.id
   end
 
+  def channel
+    return " " if self.ticket.blank?
+    QrCode.find_by_ticket(self.ticket).try(:mark)
+  end
+
   def sync_wechat_user!
     u = User.find_by_openid(self.openid)
     return if u.nil?

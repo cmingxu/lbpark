@@ -10,6 +10,7 @@
           %th 性别
           %th 地区
           %th 关注时间
+          %th 渠道
 
         %tbody
           - @wechat_users.each do |p|
@@ -24,6 +25,7 @@
                 = p.province
                 = p.city
               %td= p.subscribe_time
+              %td= p.channel
 
 
     = paginate @wechat_users
