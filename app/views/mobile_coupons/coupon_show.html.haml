@@ -7,8 +7,9 @@
     .user_coupon_notice
       恭喜您获得
       %span
-        = @coupon.coupon_tpl.fit_for_date.to_time.to_zh_m_d
-        \-
+        - if @coupon.coupon_tpl.fit_for_date
+          = @coupon.coupon_tpl.fit_for_date.to_time.to_zh_m_d
+          \-
         = @coupon.coupon_tpl.park.name
         (
         = @coupon.coupon_tpl.park.park_type
