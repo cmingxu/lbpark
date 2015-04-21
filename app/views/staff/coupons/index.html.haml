@@ -22,6 +22,10 @@
           %th 编号
           %th 状态
           %th 二维码
+          - if @coupons.first.monthly?
+            %th 数量
+            %th 联系电话
+            %th 车牌号
 
         %tbody
           - @coupons.each do |p|
@@ -32,6 +36,10 @@
               %td= Coupon::COUPON_STATUS[p.status.to_sym]
               %td
                 = image_tag p.qr_code.thumb.url, :height => 60, :width => 60
+              - if @coupons.first.monthly?
+                %td p.quantity
+                %td p.user.phone
+                %td p.issued_paizhao
 
       = paginate @coupons
 
