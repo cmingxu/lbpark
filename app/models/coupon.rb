@@ -34,6 +34,7 @@ class Coupon < ActiveRecord::Base
 
   belongs_to :coupon_tpl
   belongs_to :park
+  belongs_to :user
 
   after_create :generate_qr_code
   scope :display_order, lambda { order("coupon_tpl_type, price ASC, claimed_at DESC") }
