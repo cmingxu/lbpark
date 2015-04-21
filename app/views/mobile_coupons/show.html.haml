@@ -11,9 +11,12 @@
 
     - if !@coupon_tpl.can_be_claimed_by?(current_user)
       .user_coupon_tpl_input
-        - coupon = @coupon_tpl.user_claimed(current_user)
-        %p 【已收到券】
-        = link_to "查看停车券", coupon_show_mobile_coupon_path(coupon), :class => "user_coupon_tpl_show_click_area_a_link"
+        - if coupon = @coupon_tpl.user_claimed(current_user)
+          %p 【已收到券】
+          = link_to "查看停车券", coupon_show_mobile_coupon_path(coupon), :class => "user_coupon_tpl_show_click_area_a_link"
+        - else
+          %p 客官，去别处看看呗，都让别人抢走了。
+
 
     - else
       - if @coupon_tpl.monthly?
