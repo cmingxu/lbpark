@@ -28,7 +28,8 @@ class Coupon < ActiveRecord::Base
     :created => "已创建",
     :claimed => "已领取",
     :used    => "已使用",
-    :expired => "已过期"
+    :expired => "已过期",
+    :ordered => "未付款"
   }
 
   belongs_to :coupon_tpl

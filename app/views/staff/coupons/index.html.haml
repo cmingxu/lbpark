@@ -29,7 +29,7 @@
               %td= link_to p.id, edit_staff_coupon_path(p)
               %td= link_to p.coupon_tpl.identifier, edit_staff_coupon_tpl_path(p.coupon_tpl)
               %td= p.identifier
-              %td= p.status
+              %td= Coupon::COUPON_STATUS[p.status.to_sym]
               %td
                 = image_tag p.qr_code.thumb.url, :height => 60, :width => 60
 
