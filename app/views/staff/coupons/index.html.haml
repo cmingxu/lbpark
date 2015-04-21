@@ -38,7 +38,7 @@
                 = image_tag p.qr_code.thumb.url, :height => 60, :width => 60
               - if @coupons.first.monthly?
                 %td= p.quantity
-                %td= p.user.phone
+                %td= p.user.try(:phone)
                 %td= p.issued_paizhao
 
       = paginate @coupons
