@@ -2,7 +2,33 @@
   - if defined?(@msg)
     = @msg
   - else
+    .user_coupon_tpl_claim_page_price_section
+      ￥
+      %span
+        = @order.price
     .user_coupon_tpl_claim_page_info_section
+      .user_coupon_tpl_claim_page_info_section_item
+        %span.label 名称
+        %span.value= @order.park.name
+        .clearfix
+      .user_coupon_tpl_claim_page_info_section_item
+        %span.label 地址
+        %span.value= @order.park.address
+        .clearfix
+      - if @order.coupon.monthly?
+        .user_coupon_tpl_claim_page_info_section_item
+          %span.label 车牌照
+          %span.value= @order.coupon.issued_paizhao
+          .clearfix
+      .user_coupon_tpl_claim_page_info_section_item
+        %span.label 数量
+        %span.value= @order.quantity
+        .clearfix
+      .user_coupon_tpl_claim_page_info_section_item
+        %span.label 单价
+        %span.value= @order.coupon.price
+        .clearfix
+
     .wechat_pay_confirm_button#wc_pay_btn 微信支付
 
 
