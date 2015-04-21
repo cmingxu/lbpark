@@ -32,6 +32,7 @@
           %th 发布时间
           %th 截止时间
           %th 可领取数量
+          %th 未付款
           %th 消耗数量
           %th
 
@@ -47,6 +48,7 @@
               %td= p.fit_for_date
               %td= p.end_at
               %td= p.claimable_count
+              %td= p.not_paid_count
               %td= p.used_count
               %td
                 - if !p.published?
@@ -58,6 +60,7 @@
                   = link_to "取消置顶", dehighlight_staff_coupon_tpl_path(p), :method => :patch
                 - elsif !p.highlighted?
                   = link_to "置顶", highlight_staff_coupon_tpl_path(p), :method => :patch
+                = link_to "券", staff_coupon_tpl_coupons_path(p)
 
 
       = paginate @coupon_tpls

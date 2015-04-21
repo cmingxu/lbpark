@@ -135,6 +135,7 @@ Rails.application.routes.draw do
     end
 
     resources :coupon_tpls do 
+      resources :coupons
       member do
         patch :publish
         patch :stop

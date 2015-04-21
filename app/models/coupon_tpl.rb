@@ -184,6 +184,10 @@ class CouponTpl < ActiveRecord::Base
     self.coupons.where(:status => :created).count
   end
 
+  def not_paid_count
+    self.coupons.where(:status => :ordered).count
+  end
+
   def has_enough_coupon?
     claimable_count > 0
   end
