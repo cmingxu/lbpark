@@ -49,6 +49,7 @@ LB.park_info_state = {
 
   on_enter_short: function (park) {
     LB.Logger.debug("park info state to short");
+    LB.Logger.short_view(park.id);
     this.park_title_dom.css("opacity", "0");
     this.park_title_dom.animate({"opacity": "1"}, 200);
     //this.park_title_dom.css("opacity", "1");
@@ -96,6 +97,7 @@ LB.park_info_state = {
 
   on_enter_detail: function (park) {
     LB.Logger.debug("park info state to detail");
+    LB.Logger.detail_view(park.id);
     this.current_state = "detail";
     this.current_park = park;
     this.detail_dom.css('bottom', config.tabbar_height + "px");

@@ -63,6 +63,7 @@ function mapInit() {
         LB.mapObj.setCenter(l);
         LB.center = {lng: l.lng, lat: l.lat };
         LB.center = LB.current_location = {lng: l.lng, lat: l.lat };
+        LB.Logger.map_view(l.lat, l.lng);
         storeCurrentLocation(l.lng, l.lat);
         add_search_position_marker(l.lng, l.lat);
       }
@@ -199,6 +200,7 @@ function add_event_listeners() {
   AMap.event.addListener(LB.mapObj,"moveend", function () {
     LB.Logger.debug("map object moveend");
     LB.center = LB.mapObj.getCenter();
+    LB.Logger.map_drag(LB.center.lat, LB.center.lng);
     if(GPS.distance(LB.center.lat, LB.center.lng, LB.fetch_center.lat, LB.fetch_center.lng) > 750){
       fetch_parkes(LB.center);
       LB.fetch_center = LB.center;
@@ -216,6 +218,7 @@ function add_event_listeners() {
   AMap.event.addListener(LB.mapObj,"zoomend", function () {
     newZoom = LB.mapObj.getZoom();
     LB.Logger.debug("zoom end  " + LB.mapObj.getZoom());
+    LB.Logger.map_zoom(LB.center.lat, LB.center.lng, LB.mapObj.getZoom());
     if(newZoom <= config.zoom_level_middle){
       LB.park_info_state.on_enter_hidden();
     }
@@ -304,6 +307,7 @@ function getLocationAndPanTo() {
       LB.mapObj.setCenter(new AMap.LngLat(LB.current_location.lng, LB.current_location.lat));
       storeCurrentLocation(longitude, latitude);
       LB.center = LB.current_location;
+      LB.Logger.map_view(latitude, longitude);
 
       fetch_parkes(LB.center);
       if(LB.current_position_marker){

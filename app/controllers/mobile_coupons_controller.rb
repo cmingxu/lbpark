@@ -18,9 +18,11 @@ class MobileCouponsController < MobileController
   skip_before_filter :login_required, :only => [:notify]
 
   def index
+    log("RUBY_LOG", "COUPON_TPL_INDEX", {})
   end
 
   def coupons_nearby
+    log("RUBY_LOG", "COUPON_TPL_INDEX_NEARBY", {:lat => params[:lat], :lng => params[:lng]})
     @location = Location.new params[:lng], params[:lat]
     @coupon_tpls =  CouponTpl.all_visible_around(@location)
     @coupon_tpls = @coupon_tpls.select {|ct| ct.park_id.to_s == params[:park_id].to_s} if params[:park_id].to_i != 0
@@ -28,12 +30,14 @@ class MobileCouponsController < MobileController
   end
 
   def coupons_owned
+    log("RUBY_LOG", "COUPON_TPL_INDEX_OWNED", {:lat => params[:lat], :lng => params[:lng]})
     @location = Location.new params[:lng], params[:lat]
     render :json => current_user.coupons_need_to_display.map { |ct| ct.as_api_json(@location) }
   end
 
   def show
     @coupon_tpl = CouponTpl.find params[:id]
+    log("RUBY_LOG", "COUPON_TPL_SHOW", {:id => params[:id], :cname => @coupon_tpl.type_name_in_zh})
     render :layout => "mobile_no_tab"
   end
 
@@ -44,6 +48,7 @@ class MobileCouponsController < MobileController
 
   def claim
     @coupon_tpl = CouponTpl.find params[:tpl_id]
+    log("RUBY_LOG", "COUPON_TPL_CLAIM", {:id => params[:id], :cname => @coupon_tpl.type_name_in_zh})
 
     ActiveRecord::Base.transaction do
       if @coupon_tpl.can_be_claimed_by?(current_user)
@@ -84,6 +89,7 @@ class MobileCouponsController < MobileController
 
   def coupon_show
     @coupon = current_user.coupons.find_by_id(params[:id])
+    log("RUBY_LOG", "COUPON_SHOW", {:id => params[:id], :cname => @coupon.coupon_tpl.type_name_in_zh})
     redirect_to root_path and return if @coupon.nil?
     render :layout => "mobile_no_tab"
   end
@@ -110,6 +116,7 @@ class MobileCouponsController < MobileController
 
   def bind_mobile
     if request.post?
+      log("RUBY_LOG", "BIND_MOBILE", {:phone => params[:mobile_num]})
       if !sms_code_valid?
         render :json => {:result => false, :msg => "验证码不正确"}
         return

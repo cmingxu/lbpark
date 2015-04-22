@@ -6,3 +6,5 @@ MAIL_LOGGER  = Logger.new Rails.root.to_s + "/log/mail.log"
 SMS_LOGGER  = Logger.new Rails.root.to_s + "/log/sms.log"
 
 LB_WECHAT_LOGGER = Logger.new Rails.root.to_s + "/log/lb_wechat.log"
+
+ACTIVITY_LOGGER = Logger.new Rails.root.to_s + "/log/activity.log"

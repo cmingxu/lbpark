@@ -5,8 +5,18 @@ class MobileController < ApplicationController
     set_wechat_js_config $wechat_api
   end
 
+  def js_log
+    log("JSLOG", params[:what], params.except(*[:controller, :action, :what]))
+    head :ok
+  end
+
   def map
     @current_nav = "map"
+    if params[:name]
+      log("RUBY_LOG", "MAP_SEARCH", :name => URI.decode(params[:name]))
+    else
+      log("RUBY_LOG", "MAP_VIEW", params.except(*[:controller, :action, :what]))
+    end
   end
 
   def hot_place
@@ -16,6 +26,7 @@ class MobileController < ApplicationController
 
   def setting
     @current_nav = "mine"
+    log("RUBY_LOG", "SETTING_VIEW", {})
   end
 
   def feedback
@@ -31,6 +42,7 @@ class MobileController < ApplicationController
   def login_from_wechat
     if user = User.login_from_wechat(request.env["omniauth.auth"], :user)
       session[:user_id] = user.id
+      log("RUBY_LOG", "LOGIN_FROM_WECHAT", {})
       redirect_to(session[:user_redirect_to] || map_path) and return
     end
   end
@@ -50,6 +62,11 @@ class MobileController < ApplicationController
 
   def feedback_params
     params[:feedback].permit(:content, :contact)
+  end
+
+  def log(source, what, p)
+    return unless current_user
+    ACTIVITY_LOGGER.info "#{source} #{what} #{Time.now.to_i} #{current_user.id} #{current_user.openid} #{request.headers["X-Real-IP"]} #{p.to_query}"
   end
 
 end

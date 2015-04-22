@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'mobile/hot_place'
   get 'mobile/setting'
   get 'mobile/feedback'
+  get 'mobile/js_log'
   post 'feedback' => "mobile#feedback"
 
   get 'vendor' => "vendor#index"

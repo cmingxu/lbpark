@@ -21,6 +21,26 @@ LB.Logger = {
   info: function (content) {
     this._log("INFO", content);
   },
+  map_view: function(lat, lng) {
+    image = new Image();
+    image.src = "/mobile/js_log?what=MAP_VIEW&lat=" + lat + "&lng=" + lng;
+  },
+  detail_view: function(park_id) {
+    image = new Image();
+    image.src = "/mobile/js_log?what=DETAIL_VIEW&park_id=" + park_id;
+  },
+  short_view: function(park_id) {
+    image = new Image();
+    image.src = "/mobile/js_log?what=SHORT_VIEW&park_id=" + park_id;
+  },
+  map_drag: function(lat, lng) {
+    image = new Image();
+    image.src = "/mobile/js_log?what=MAP_DRAG&lat=" + lat + "&lng=" + lng;
+  },
+  map_zoom: function(lat, lng, zoom_level) {
+    image = new Image();
+    image.src = "/mobile/js_log?what=MAP_ZOOM&lat=" + lat + "&lng=" + lng + "&zoom_level=" +　zoom_level;
+  }
 
 
 }
