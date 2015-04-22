@@ -118,13 +118,11 @@ class MobileCouponsController < MobileController
     if request.post?
       log("RUBY_LOG", "BIND_MOBILE", {:phone => params[:mobile_num]})
       if !sms_code_valid?
-        render :json => {:result => false, :msg => "验证码不正确"}
-        return
+        render :json => {:result => false, :msg => "验证码不正确"} and return
       else
         current_user.update_column :phone, params[:mobile_num]
         render :json => {:result => true, :msg => ""}
       end
-
       return
     end
   end

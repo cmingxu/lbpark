@@ -4,18 +4,35 @@
   .user_nav_bar
     = link_to raw("<span> </span> 返回"), mobile_coupons_path(:owned => true, :anchor => :owned)
   .user_coupon_notice
-    恭喜您获得
-    %span
-      = @coupon.coupon_tpl.park.name
-      (
-      = @coupon.coupon_tpl.park.park_type
-      )
-    的#{@coupon.coupon_tpl.type_name_in_zh}， 请再岗亭向收费员展示该二维码。
+    请在出口向工作人员展示二维码。
   .user_coupon_qr_code
     .user_coupon_qr_code_bg
       = image_tag @coupon.qr_code.thumb.url
 
-  .user_coupon_btns{ :class => @coupon.free? ? "user_coupon_btn_free" : "user_coupon_btn_long_term" }
+  .user_coupon_show_page_info_section
+    .user_coupon_show_page_info_section_item
+      %span.label 类型
+      %span.value= @coupon.coupon_tpl.type_name_in_zh
+      .clearfix
+    .user_coupon_show_page_info_section_item
+      %span.label 时段
+      %span.value= @coupon.park.address
+      .clearfix
+    - if @coupon.monthly?
+      .user_coupon_show_page_info_section_item
+        %span.label 车牌照
+        %span.value= @coupon.issued_paizhao
+        .clearfix
+    .user_coupon_show_page_info_section_item
+      %span.label 数量
+      %span.value= @coupon.quantity
+      .clearfix
+    .user_coupon_show_page_info_section_item
+      %span.label 单价
+      %span.value= @coupon.price
+      .clearfix
+
+  .user_coupon_btns
     = link_to "规则", rule_mobile_coupons_path, :class => "user_coupon_btn pull-left"
     = link_to "分享", "", :class => "user_coupon_btn pull-right"
     .clearfix

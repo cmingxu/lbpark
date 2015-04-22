@@ -38,7 +38,7 @@ function init() {
     $(".user_coupon_published").addClass("user_coupon_tab_actived");
     $(".user_coupon_owned").removeClass("user_coupon_tab_actived");
     showUserCouponListEmptyPage();
-    $.getJSON('mobile_coupons/coupons_nearby', {lng: window.lastActiveLocation.lng, lat: window.lastActiveLocation.lat, park_id: park_id}, function (res) {
+    $.getJSON('/mobile_coupons/coupons_nearby', {lng: window.lastActiveLocation.lng, lat: window.lastActiveLocation.lat, park_id: park_id}, function (res) {
       $(".user_coupons_list").empty();
       if(res.length != 0){
         res.forEach(function (item) {
@@ -61,7 +61,7 @@ function init() {
     $(".user_coupon_published").removeClass("user_coupon_tab_actived");
     $(".user_coupon_owned").addClass("user_coupon_tab_actived");
     showUserCouponListEmptyPage();
-    $.getJSON('mobile_coupons/coupons_owned', {lng: window.lastActiveLocation.lng, lat: window.lastActiveLocation.lat, park_id: park_id}, function (res) {
+    $.getJSON('/mobile_coupons/coupons_owned', {lng: window.lastActiveLocation.lng, lat: window.lastActiveLocation.lat, park_id: park_id}, function (res) {
       $(".user_coupons_list").empty();
       if(res.length != 0){
         res.forEach(function (item) {

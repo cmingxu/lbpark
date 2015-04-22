@@ -48,7 +48,7 @@ class Coupon < ActiveRecord::Base
 
   COUPON_STATUS.keys.each { |s| scope s, -> { where(:status => s) } }
 
-  delegate :free?,:monthly?, :time?, :to => :coupon_tpl
+  delegate :free?,:monthly?, :time?, :deduct?, :exchangeable?, :to => :coupon_tpl
 
   state_machine :status, :initial => :created do
     after_transition :on => :claim, :do => :after_claim
