@@ -75,6 +75,7 @@ class Coupon < ActiveRecord::Base
   def after_claim
     self.update_column :claimed_at, Time.now
     self.update_column :expire_at, self.fit_for_date.end_of_day if self.free?
+    self.update_column :expire_at, self.fit_for_date.end_of_day if self.deduct?
     self.update_column :expire_at, 10.years.from_now if self.time?
     self.update_column :expire_at, Time.now + 1.month if self.monthly?
   end
