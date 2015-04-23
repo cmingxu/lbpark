@@ -107,6 +107,7 @@ class Coupon < ActiveRecord::Base
   end
 
   def time_span
+    super if !self.monthly? # call delegation methods
     "#{self.issued_begin_date.to_time.to_s(:lb_cn_short)}-#{self.expire_at.to_s(:lb_cn_short)}"
   end
 
