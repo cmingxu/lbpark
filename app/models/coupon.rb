@@ -48,7 +48,7 @@ class Coupon < ActiveRecord::Base
 
   COUPON_STATUS.keys.each { |s| scope s, -> { where(:status => s) } }
 
-  delegate :free?,:monthly?, :time?, :deduct?, :exchangeable?, :time_span, :to => :coupon_tpl
+  delegate :free?,:monthly?, :time?, :deduct?, :exchangeable?, :to => :coupon_tpl
 
   state_machine :status, :initial => :created do
     after_transition :on => :claim, :do => :after_claim
@@ -107,7 +107,7 @@ class Coupon < ActiveRecord::Base
   end
 
   def time_span
-    super if !self.monthly? # call delegation methods
+    self.coupon_tpl.time_span if  !self.monthly?
     "#{self.issued_begin_date.to_time.to_s(:lb_cn_short)}-#{self.expire_at.to_s(:lb_cn_short)}"
   end
 
