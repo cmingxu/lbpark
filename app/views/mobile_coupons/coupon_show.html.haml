@@ -16,20 +16,15 @@
       .clearfix
     .user_coupon_show_page_info_section_item
       %span.label 时段
+      %span.value= @coupon.time_span
+      .clearfix
+    .user_coupon_show_page_info_section_item
+      %span.label 名称
+      %span.value= "#{@coupon.park.name}（#{@coupon.park.park_type}）"
+      .clearfix
+    .user_coupon_show_page_info_section_item
+      %span.label 地址
       %span.value= @coupon.park.address
-      .clearfix
-    - if @coupon.monthly?
-      .user_coupon_show_page_info_section_item
-        %span.label 车牌照
-        %span.value= @coupon.issued_paizhao
-        .clearfix
-    .user_coupon_show_page_info_section_item
-      %span.label 数量
-      %span.value= @coupon.quantity
-      .clearfix
-    .user_coupon_show_page_info_section_item
-      %span.label 单价
-      %span.value= @coupon.price
       .clearfix
 
   .user_coupon_btns

@@ -40,6 +40,10 @@ class CouponTpl::FreeCouponTpl < CouponTpl
     "免费停车"
   end
 
+  def time_span
+    "0:00-24:00"
+  end
+
   #def can_be_claimed_by?(user)
     #!user.coupons.exists?(["coupon_tpl_id = ?", self.id])
   #end

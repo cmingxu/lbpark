@@ -41,4 +41,8 @@ class CouponTpl::TimeCouponTpl < CouponTpl
   def time?
     true
   end
+
+  def time_span
+    "#{valid_hour_begin}:00-#{valid_hour_end}:00"
+  end
 end

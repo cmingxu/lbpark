@@ -66,7 +66,7 @@ class CouponTpl < ActiveRecord::Base
 
   before_create :set_defaults
   after_commit :generate_all_new_coupon_job, :on => :create
-  validate :fit_for_date_gt_then_today
+  #validate :fit_for_date_gt_then_today
   validates :fit_for_date, presence: { :if => lambda { self.free? }, :message => "限免券需要提供日期"}
 
   mount_uploader :banner, CouponTplBannerUploader

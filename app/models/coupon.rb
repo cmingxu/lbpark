@@ -48,7 +48,7 @@ class Coupon < ActiveRecord::Base
 
   COUPON_STATUS.keys.each { |s| scope s, -> { where(:status => s) } }
 
-  delegate :free?,:monthly?, :time?, :deduct?, :exchangeable?, :to => :coupon_tpl
+  delegate :free?,:monthly?, :time?, :deduct?, :exchangeable?, :time_span, :to => :coupon_tpl
 
   state_machine :status, :initial => :created do
     after_transition :on => :claim, :do => :after_claim
@@ -77,7 +77,7 @@ class Coupon < ActiveRecord::Base
     self.update_column :expire_at, self.fit_for_date.end_of_day if self.free?
     self.update_column :expire_at, self.fit_for_date.end_of_day if self.deduct?
     self.update_column :expire_at, 10.years.from_now if self.time?
-    self.update_column :expire_at, Time.now + 1.month if self.monthly?
+    self.update_column :expire_at, (self.issued_begin_date.to_time + self.quantity.month - 1.day).end_of_day if self.monthly?
   end
 
   def after_use
@@ -104,6 +104,10 @@ class Coupon < ActiveRecord::Base
       :limitation => self.coupon_tpl.limitation,
       :icon => park.park_pics.first.park_pic.thumb.url
     }
+  end
+
+  def time_span
+    "#{self.issued_begin_date.to_time.to_s(:lb_cn_short)}-#{self.expire_at.to_s(:lb_cn_short)}"
   end
 
   def can_use?(park)

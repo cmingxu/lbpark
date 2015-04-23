@@ -38,4 +38,8 @@ class CouponTpl::DeductCouponTpl < CouponTpl
   def deduct?
     true
   end
+
+  def time_span
+    self.valid_dates
+  end
 end

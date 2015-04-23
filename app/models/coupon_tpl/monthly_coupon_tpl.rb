@@ -38,4 +38,7 @@ class CouponTpl::MonthlyCouponTpl < CouponTpl::LongTermCouponTpl
   def type_name_in_zh
     "包月停车"
   end
+
+  def time_span
+  end
 end
