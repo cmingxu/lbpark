@@ -107,7 +107,7 @@ class Coupon < ActiveRecord::Base
   end
 
   def time_span
-    self.coupon_tpl.time_span if  !self.monthly?
+    return self.coupon_tpl.time_span if !self.monthly?
     "#{self.issued_begin_date.to_time.to_s(:lb_cn_short)}-#{self.expire_at.to_s(:lb_cn_short)}"
   end
 
