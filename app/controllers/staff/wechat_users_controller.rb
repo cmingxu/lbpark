@@ -4,6 +4,6 @@ class Staff::WechatUsersController < Staff::BaseController
   end
 
   def index
-    @wechat_users = WechatUser.page params[:page]
+    @wechat_users = WechatUser.order("id desc").page params[:page]
   end
 end
