@@ -857,6 +857,11 @@ a[title="站长统计"]
             color: $user_coupon_expired_item_highlight_color!important
           .user_coupon_item_content_notice
             color: $user_coupon_expired_item_highlight_color!important
+          .user_coupon_item_content_label_notice
+            .user_coupon_item_content_label
+              span
+                background-image: url("<%=asset_path('coupon_label_bg_inactive.png')%>")
+                color: $user_coupon_expired_item_highlight_color!important
         .user_coupon_item_foot
           border-top: 2px solid $user_coupon_expired_item_highlight_color!important
         .user_coupon_corner_notion
@@ -1341,6 +1346,17 @@ a[title="站长统计"]
         font-weight: $weight-bold
         font-size: $font-size-big
         padding: 10px 
+    .vendor_coupon_use_info_section
+      margin: 10px auto
+      border-radius: 4px
+      border: 1px solid $light-gray
+      background-color: white
+      .vendor_coupon_use_info_section_item
+        padding: 3px 5px
+        span.label
+          float: left
+        span.value
+          float: right
     .vendor_coupon_use_rescan
       width: 80%
       text-align: center

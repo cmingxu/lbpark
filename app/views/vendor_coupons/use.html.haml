@@ -14,17 +14,28 @@
         扫码成功
       - else
         扫码失败
-    .vendor_coupon_use_notice_small
-      - if @coupon
-        提示: 该券限
-        %span
-          #{@coupon.fit_for_date_range} 
-        于
-        %span
-          #{@coupon.park.name}(#{@coupon.park.park_type})
-        使用。
-      - else
-        停车券不存在
+  - if @coupon.present?
+    .vendor_coupon_use_info_section
+      .vendor_coupon_use_info_section_item
+        %span.label 价格(元)
+        %span.value= @coupon.price * @coupon.quantity
+        .clearfix
+      .vendor_coupon_use_info_section_item
+        %span.label 类型
+        %span.value= @coupon.coupon_tpl.type_name_in_zh
+        .clearfix
+      .vendor_coupon_use_info_section_item
+        %span.label 时段
+        %span.value= @coupon.time_span
+        .clearfix
+      .vendor_coupon_use_info_section_item
+        %span.label 名称
+        %span.value= "#{@coupon.park.name}（#{@coupon.park.park_type}）"
+        .clearfix
+      .vendor_coupon_use_info_section_item
+        %span.label 地址
+        %span.value= @coupon.park.address
+        .clearfix
   .vendor_coupon_use_rescan
     %a#scanQRCode
       继续扫一扫

@@ -26,7 +26,6 @@ LB.park_info_state = {
   deduct_dom: $("#deduct"),
   time_dom: $("#time"),
   park_title_handlebar_dom: $("#park_title_handlebar"),
-  
 
 
 

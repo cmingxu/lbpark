@@ -3,3 +3,9 @@
   %td
     = f.text_field :price
     %span 例如: 500
+%tr
+  %td 适用日期
+  %td
+    = f.select :valid_dates, options_for_select(CouponTpl::VALID_DATES_FOR_MONTHLY, f.object.valid_dates)
+    %span 例如: 工作日
+

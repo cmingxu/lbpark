@@ -51,7 +51,13 @@ class CouponTpl < ActiveRecord::Base
   VALID_DATES = [
     "周一至周五",
     "周六日",
-    "不限"
+    "全天可用"
+  ]
+
+  VALID_DATES_FOR_MONTHLY = [
+    "全天可用",
+    "白天可用",
+    "夜间可用"
   ]
 
   belongs_to :park
@@ -139,6 +145,7 @@ class CouponTpl < ActiveRecord::Base
   end
 
   def limitation
+    return "全天可用" if self.valid_dates == "全天可用"
     return "限" + self.valid_dates if self.valid_dates
     return "限#{self.valid_hour_begin}:00-#{self.valid_hour_end}:00" if self.valid_hour_begin
     return "全天可用"
@@ -215,15 +222,9 @@ class CouponTpl < ActiveRecord::Base
   def sort_criteria(location)
     weight = 0
     weight += 100000000 if self.highlighted?
-    weight += 20000000 if self.fit_for_date && self.fit_for_date == Date.today
-    weight += 10000000 if self.fit_for_date && self.fit_for_date != Date.today
-    weight += 2000000 if self.class.coupon_type_to_readable(self.type) == 'free'
-    weight += 1000000 if self.class.coupon_type_to_readable(self.type) != 'free'
-    if self.fit_for_date
-      weight += LbRange.new(self.park.location, location).distance
-    else
-      weight -= self.price
-    end
+    weight += 10000000 if self.price.nil? or self.price.zero?
+    weight += self.price * -1000000 if self.price && self.price > 0
+    weight -= LbRange.new(self.park.location, location).distance
     weight
   end
 

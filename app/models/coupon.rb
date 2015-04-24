@@ -41,7 +41,7 @@ class Coupon < ActiveRecord::Base
   scope :claimed, lambda { where(:status => :claimed) }
   scope :used, lambda { where(:status => :used) }
   scope :fit_for_today, lambda { where(["fit_for_date = ? ", Time.now.strftime("%Y-%m-%d") ]) }
-  scope :long_term_or_fit_for_today_or_tomorrow, lambda { where(["fit_for_date is NULL or fit_for_date = ? OR fit_for_date = ?", Time.now.strftime("%Y-%m-%d"), Time.now.tomorrow.strftime("%Y-%m-%d") ]) }
+  scope :long_term_or_fit_for_today, lambda { where(["fit_for_date is NULL or fit_for_date = ? ", Time.now.strftime("%Y-%m-%d")]) }
   scope :expired, lambda { where(["fit_for_date < ?", Time.now.strftime("%Y-%m-%d")]) }
 
   mount_uploader :qr_code, CouponQrCodeUploader

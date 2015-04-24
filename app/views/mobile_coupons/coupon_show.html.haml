@@ -11,6 +11,10 @@
 
   .user_coupon_show_page_info_section
     .user_coupon_show_page_info_section_item
+      %span.label 价格(元)
+      %span.value= @coupon.price * @coupon.quantity
+      .clearfix
+    .user_coupon_show_page_info_section_item
       %span.label 类型
       %span.value= @coupon.coupon_tpl.type_name_in_zh
       .clearfix

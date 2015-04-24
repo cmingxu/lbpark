@@ -115,7 +115,7 @@ class User < ActiveRecord::Base
   end
 
   def coupons_need_to_display
-    coupons = self.coupons.claimed.long_term_or_fit_for_today_or_tomorrow.display_order.all
+    coupons = self.coupons.claimed.long_term_or_fit_for_today.display_order.all
     coupons << self.coupons.expired.order("claimed_at ASC").limit(2)
     coupons << self.coupons.used.order("used_at desc").limit(2)
     coupons.flatten

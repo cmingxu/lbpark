@@ -8,7 +8,7 @@ class VendorCouponsController < VendorController
   end
 
   def use
-    @coupon = current_park.coupons.claimed.long_term_or_fit_for_today_or_tomorrow.find_by_identifier params[:id]
+    @coupon = current_park.coupons.claimed.long_term_or_fit_for_today.find_by_identifier params[:id]
     if @coupon && @coupon.can_use?(current_vendor.park)
       @coupon.use!
       @scan_result = true
