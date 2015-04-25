@@ -210,4 +210,65 @@ class Park < ActiveRecord::Base
     Location.new(self.gcj_lng, self.gcj_lat)
   end
 
+  def park_total_count
+    self.total_count.to_i || 0
+  end
+
+  class << self
+    def bottom_left
+      order("gcj_lat ASC, gcj_lng DESC").limit(1).first
+    end
+
+    def top_right
+      order("gcj_lat DESC, gcj_lng ASC").limit(1).first
+    end
+
+    def top_left
+      order("gcj_lat DESC, gcj_lng DESC").limit(1).first
+    end
+
+    def bottom_right
+      order("gcj_lat ASC, gcj_lng ASC").limit(1).first
+    end
+
+    def build_heatmap_data
+      $redis.ltrim RedisKeyConst.parking_lot_heatmap_data_key, 0, 0
+      $redis.ltrim RedisKeyConst.park_slot_heatmap_data_key, 0, 0
+
+      lng_start = order("gcj_lng ASC").limit(1).first.gcj_lng
+      lng_end =   order("gcj_lng DESC").limit(1).first.gcj_lng
+      lat_tmp = lat_start = order("gcj_lat ASC").limit(1).first.gcj_lat
+      lat_end = order("gcj_lat DESC").limit(1).first.gcj_lat
+
+      step = 0.01
+
+      while(lng_start < lng_end) do
+        while(lat_tmp < lat_end) do
+          parks = with_park_type_code('A').within_range(LbRange.new(Location.new(lng_start, lat_tmp), Location.new(lng_start + step, lat_tmp + step)))
+          $redis.lpush RedisKeyConst.parking_lot_heatmap_data_key, "#{lng_start + step/2.0}|#{lat_tmp + step/2.0}|#{parks.count}"
+          $redis.lpush RedisKeyConst.park_slot_heatmap_data_key, "#{lng_start + step/2.0}|#{lat_tmp + step/2.0}|#{parks.inject(0){|s, i| s += i.park_total_count; s}}"
+
+          lat_tmp += step
+        end
+        lat_tmp   = lat_start
+        lng_start += step
+      end
+
+    end
+
+    def parking_lot_heatmap_data
+      datas = $redis.lrange RedisKeyConst.parking_lot_heatmap_data_key, 0, Park.count
+      datas.map do |a|
+        a.split("|")
+      end
+    end
+
+    def park_slot_heatmap_data
+      datas = $redis.lrange RedisKeyConst.park_slot_heatmap_data_key, 0, Park.count
+      datas.map do |a|
+        a.split("|")
+      end
+    end
+  end
+
 end

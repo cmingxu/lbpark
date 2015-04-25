@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   get 'mobile/setting'
   get 'mobile/feedback'
   get 'mobile/js_log'
+
+  get 'heatmap' => "welcome#heatmap"
+
   post 'feedback' => "mobile#feedback"
 
   get 'vendor' => "vendor#index"

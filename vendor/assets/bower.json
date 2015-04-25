@@ -15,6 +15,9 @@
     "fastclick": "latest",
     "moment": "latest",
     "normalize": "latest",
-    "mobiscroll": "latest"
+    "mobiscroll": "latest",
+    "heatmap": "latest"
+  },
+  "resolutions": {
   }
 }
