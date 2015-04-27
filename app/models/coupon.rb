@@ -54,6 +54,7 @@ class Coupon < ActiveRecord::Base
     after_transition :on => :claim, :do => :after_claim
     after_transition :on => :pay, :do => :after_claim
     after_transition :on => :use, :do => :after_use
+    after_transition :on => :order, :do => :clear_order_data_if_not_paid
 
     event :order do
       transition :from => :created, :to => :ordered
@@ -82,6 +83,11 @@ class Coupon < ActiveRecord::Base
 
   def after_use
     self.update_column :used_at, Time.now
+  end
+
+  def clear_order_data_if_not_paid
+    # clear order if not paid after 20.mins
+    Resque.enqueue_at Time.now + 20.mins, OrderClearTask, self.id
   end
 
   def expired?
