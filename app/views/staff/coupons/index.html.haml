@@ -26,6 +26,7 @@
             %th 数量
             %th 联系电话
             %th 车牌号
+            %th 开始日期
 
         %tbody
           - @coupons.each do |p|
@@ -40,6 +41,7 @@
                 %td= p.quantity
                 %td= p.user.try(:phone)
                 %td= p.issued_paizhao
+                %td= p.issued_begin_date
 
       = paginate @coupons
 
