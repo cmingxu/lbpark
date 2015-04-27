@@ -65,7 +65,6 @@ class MobileCouponsController < MobileController
               @coupon.update_attributes coupon_params
               @coupon.order!
               @r = WxPay::Service.invoke_unifiedorder(@order.prepay_params)
-              Rails.logger.debug @r
               if @r.success?
                 @order.update_column :prepay_id, @r['prepay_id']
                 @pay_config[:package] = "prepay_id=#{@r['prepay_id']}"
