@@ -87,7 +87,7 @@ class Coupon < ActiveRecord::Base
 
   def clear_order_data_if_not_paid
     # clear order if not paid after 20.mins
-    Resque.enqueue_at Time.now + 20.mins, OrderClearTask, self.id
+    Resque.enqueue_at Time.now + 20 * 60, OrderClearTask, self.id
   end
 
   def expired?
