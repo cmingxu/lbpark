@@ -138,7 +138,7 @@ class MobileCouponsController < MobileController
   def coupon_params
     params[:coupon] ||= HashWithIndifferentAccess.new
     params[:coupon][:user_id] = current_user.id
-    params.require(:coupon).permit(:user_id, :issued_address, :issued_begin_date, :quantity)
+    params.require(:coupon).permit(:user_id, :issued_address, :issued_begin_date, :quantity, :issued_paizhao)
   end
 
 end
