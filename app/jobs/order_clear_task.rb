@@ -11,6 +11,7 @@ class OrderClearTask
       c.issued_paizhao    = nil
       c.user_id           = nil
       c.status            = 'created'
+      c.quantity          = nil
 
       c.save
     end

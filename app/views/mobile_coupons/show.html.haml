@@ -18,7 +18,7 @@
         = text_field_tag "coupon[issued_paizhao]", "", :placeholder => "请输入车牌号码", :class => "coupon_issued_paizhao"
       .user_coupon_tpl_input
         = hidden_field_tag "coupon[quantity]", 1, :id => "coupon_quantity"
-        - [1, 3, 6, 12].each_with_index do |m, i|
+        - [1, 3, 6].each_with_index do |m, i|
           .user_coupon_tpl_show_quantity_selector{"data-price" => m * @coupon_tpl.price, "data-quantity" => m, "class" => i.zero? ? "user_coupon_tpl_show_quantity_selector_active" : ""}
             %span= "x #{m}"
         .clearfix

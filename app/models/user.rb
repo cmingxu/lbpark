@@ -73,8 +73,6 @@ class User < ActiveRecord::Base
 
     user.last_login_at = Time.now
     result = user.save
-    Rails.logger.info user.errors.full_messages
-    Rails.logger.info result
     result ? user : nil
   end
 
