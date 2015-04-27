@@ -44,8 +44,6 @@ class Api::ParksController < Api::BaseController
         }
 
       end
-        Rails.logger.error range
-        Rails.logger.error park_json.size
     end
 
     if Settings.park_info_encrypted
