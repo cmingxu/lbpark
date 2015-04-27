@@ -70,6 +70,7 @@ class MobileCouponsController < MobileController
                 @order.update_column :prepay_id, @r['prepay_id']
                 @pay_config[:package] = "prepay_id=#{@r['prepay_id']}"
                 @pay_config[:paySign] = WxPay::Sign.generate(@pay_config)
+                @no_tabs = true
                 render :claim and return
               else
                 raise ActiveRecord::Rollback
