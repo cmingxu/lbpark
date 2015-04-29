@@ -22,7 +22,7 @@
           %th 编号
           %th 状态
           %th 二维码
-          - if @coupons.first.monthly?
+          - if @coupons.first && @coupons.first.monthly?
             %th 数量
             %th 联系电话
             %th 车牌号
