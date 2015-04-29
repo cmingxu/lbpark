@@ -22,7 +22,7 @@ class Client < ActiveRecord::Base
   attr_accessor :password
 
   belongs_to :park
-  validates :email, uniqueness: { :scope => :park_id }
+  validates :email, uniqueness: { :scope => :park_id }, :on => :create
 
   def password=(pass)
     self.salt = SecureRandom::hex(10)

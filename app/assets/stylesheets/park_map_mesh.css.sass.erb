@@ -1,0 +1,91 @@
+@import "client"
+
+$bg-main-color: white
+$font-main-color: black
+$bg-gray-color: #f6f6f6
+$bg-dark-gray: #cdcdcd
+
+#container
+  width: 100%
+  background-color: $bg-gray-color
+
+  .ruler
+    height: 20px
+    width: 2000px
+    background-color: white
+    border-bottom: 1px solid $bg-dark-gray
+    z-index: 100
+    position: static
+    .small_interval_mark,.big_interval_mark
+      float: left
+      border-left: 1px solid $bg-dark-gray
+      height: 10px
+      width: 10px
+    .big_interval_mark
+      height: 20px
+  #pm_mesh_x_ruler
+    margin-left: 20px
+  #pm_mesh_y_ruler
+    transform: translateX(-100%) rotate(-90deg)
+    transform-origin: right top
+
+  .pm_content
+  .pm_header
+    margin-bottom: 5px
+  #pm_toolbar
+    height: 64px
+    padding: 10px
+    border: 1px solid $bg-dark-gray
+    #pm_toolbar_content
+      .toolbaritem
+        float: left
+        width: 44px
+        text-align: center
+        color: $bg-dark-gray
+        cursor: pointer
+        .toolbaritem_icon
+          height: 32px
+          width: 32px
+          background-image: url('<%= image_path("logo_png.png") %>')
+          background-size: 32px 32px
+        .toolbaritem_name
+  #pm_content
+    width: 100%
+    position: relative
+    min-height: 600px
+    overflow: scroll
+  #pm_mesh_wrapper
+    box-sizing: border-box
+    width: 2500px
+    height: 2500px
+    overflow: scroll
+    border: 1px solid $bg-dark-gray
+
+    #pm_mesh
+      width: 100%
+      background-color: $bg-main-color
+      height: 100%
+      position: relative
+      top: -20px
+      left: 20px
+      opacity: 0.7
+      div
+        overflow: hidden
+        user-select: none
+        span
+          width: 10px
+          height: 10px
+          display: inline-block
+          border-right: 1px solid $bg-gray-color
+          border-bottom: 1px solid $bg-gray-color
+          box-sizing: border-box
+          float: left
+        .selected
+          background-color: red
+
+  #pm_ele_editor
+    width: 200px
+    position: absolute
+    top: 0px
+    right: 0px
+    border: 1px solid $bg-gray-color

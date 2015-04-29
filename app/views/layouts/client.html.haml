@@ -12,20 +12,26 @@
     = csrf_meta_tags
 
   %body.lb_client.lb
-    .container-fluid
-
-    .wrapper
-      .sidebar
-        = render :partial => "widgets/client_sidebar"
-      .nav-container
-        = render :partial => "widgets/client_header"
-        .clearfix
-      .page-wraper
-        = render :partial => "widgets/notice_bar"
-        = yield
+    - if defined?(@no_sidebar)
+      = render :partial => "widgets/notice_bar"
+      = yield
       .row-fluid.footer
         .container
           = render :partial => "widgets/client_footer"
+    - else
+      .container-fluid
+        .wrapper
+          .sidebar
+            = render :partial => "widgets/client_sidebar"
+          .nav-container
+            = render :partial => "widgets/client_header"
+            .clearfix
+          .page-wraper
+            = render :partial => "widgets/notice_bar"
+            = yield
+          .row-fluid.footer
+            .container
+              = render :partial => "widgets/client_footer"
 
 
 

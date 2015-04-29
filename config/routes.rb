@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  namespace :client do
-  get 'parks/index'
-  end
-
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -90,6 +86,11 @@ Rails.application.routes.draw do
 
     resources :coupons
     resources :parks
+    resources :park_maps do
+      collection do
+      get :mesh
+      end
+    end
   end
 
   # staff only actions
