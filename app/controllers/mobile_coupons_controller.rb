@@ -52,7 +52,7 @@ class MobileCouponsController < MobileController
 
     ActiveRecord::Base.transaction do
       if @coupon_tpl.can_be_claimed_by?(current_user)
-        #begin
+        begin
           if @coupon = @coupon_tpl.claim_coupon
             @coupon.update_column :user_id, current_user.id
             @coupon.update_column :quantity, coupon_params[:quantity].to_i.abs < 1 ?  1 : coupon_params[:quantity].to_i.abs
@@ -76,10 +76,10 @@ class MobileCouponsController < MobileController
               end
             end
           end
-        #rescue Exception => e
-          #Rails.logger.error e
-          #raise ActiveRecord::Rollback
-        #end
+        rescue Exception => e
+          Rails.logger.error e
+          raise ActiveRecord::Rollback
+        end
       end
     end
 

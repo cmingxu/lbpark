@@ -55,6 +55,7 @@ class Coupon < ActiveRecord::Base
     after_transition :on => :pay, :do => :after_claim
     after_transition :on => :use, :do => :after_use
     after_transition :on => :order, :do => :clear_order_data_if_not_paid
+    after_transition :on => :order, :do => :after_order
 
     event :order do
       transition :from => :created, :to => :ordered
@@ -77,12 +78,17 @@ class Coupon < ActiveRecord::Base
     self.update_column :claimed_at, Time.now
     self.update_column :expire_at, self.fit_for_date.end_of_day if self.free?
     self.update_column :expire_at, self.fit_for_date.end_of_day if self.deduct?
-    self.update_column :expire_at, 10.years.from_now if self.time?
-    self.update_column :expire_at, (self.issued_begin_date.to_time + self.quantity.month - 1.day).end_of_day if self.monthly?
+    #self.update_column :expire_at, 10.years.from_now if self.time?
+    #self.update_column :expire_at, (self.issued_begin_date.to_time + self.quantity.month - 1.day).end_of_day if self.monthly?
   end
 
   def after_use
     self.update_column :used_at, Time.now
+  end
+
+  def after_order
+    self.update_column :expire_at, (self.issued_begin_date.to_time + self.quantity.month - 1.day).end_of_day if self.monthly?
+    self.update_column :expire_at, 10.years.from_now if self.time?
   end
 
   def clear_order_data_if_not_paid
