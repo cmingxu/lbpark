@@ -8,6 +8,10 @@
         = @order.price
     .user_coupon_tpl_claim_page_info_section
       .user_coupon_tpl_claim_page_info_section_item
+        %span.label 类型
+        %span.value= @order.coupon.coupon_tpl.type_name_in_zh
+        .clearfix
+      .user_coupon_tpl_claim_page_info_section_item
         %span.label 名称
         %span.value= @order.park.name
         .clearfix
@@ -17,9 +21,14 @@
         .clearfix
       - if @order.coupon.monthly?
         .user_coupon_tpl_claim_page_info_section_item
-          %span.label 车牌照
+          %span.label 车牌号
           %span.value= @order.coupon.issued_paizhao
           .clearfix
+
+      .user_coupon_tpl_claim_page_info_section_item
+        %span.label 时段
+        %span.value= @order.coupon.time_span
+        .clearfix
       .user_coupon_tpl_claim_page_info_section_item
         %span.label 数量
         %span.value= @order.quantity
@@ -29,6 +38,23 @@
         %span.value= @order.coupon.price
         .clearfix
 
+    .user_coupon_tpl_claim_page_notice
+      .user_coupon_tpl_claim_page_notice_head
+        购买须知
+      .user_coupon_tpl_claim_page_notice_item
+        1，萝卜停车只负责线上销售车位，停车请移驾线下签约车场。
+      .user_coupon_tpl_claim_page_notice_item
+        2，不要在车内存放贵重物品，不然发生失窃很难为您追责。
+      .user_coupon_tpl_claim_page_notice_item
+        3，进场后请遵循车场停放规定，以免对爱车造成不必要的损失。
+      .user_coupon_tpl_claim_page_notice_item
+        4，历史最低价有没有（偷偷说萝卜还倒贴了:) ）,
+        %span 无力提供发票
+        请谅解。
+      .user_coupon_tpl_claim_page_notice_item
+        5，点击”支付“即同意以上，暂只支持微信支付，欢迎调戏
+        = Settings.four_zero_zero
+        
     .wechat_pay_confirm_button#wc_pay_btn 微信支付
 
 
