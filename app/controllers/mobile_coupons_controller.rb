@@ -87,6 +87,11 @@ class MobileCouponsController < MobileController
     redirect_to mobile_coupons_path
   end
 
+  def show_order
+    #@order = Order.find params[:id]
+    #render :claim, :layout => "mobile_no_tab"
+  end
+
   def coupon_show
     @coupon = current_user.coupons.find_by_id(params[:id])
     log("RUBY_LOG", "COUPON_SHOW", {:id => params[:id], :cname => @coupon.coupon_tpl.type_name_in_zh})
