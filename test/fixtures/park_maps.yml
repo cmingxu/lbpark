@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  park_id: 1
+  version: MyString
+  last_edit_at: 2015-05-04 17:57:11
+  last_edit_by: 
+  layer: MyString
+  position: 1
+
+two:
+  park_id: 1
+  version: MyString
+  last_edit_at: 2015-05-04 17:57:11
+  last_edit_by: 
+  layer: MyString
+  position: 1

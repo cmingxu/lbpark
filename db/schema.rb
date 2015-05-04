@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150420012956) do
+ActiveRecord::Schema.define(version: 20150504130949) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -272,6 +272,26 @@ ActiveRecord::Schema.define(version: 20150420012956) do
     t.datetime "updated_at"
   end
 
+  create_table "park_map_eles", force: true do |t|
+    t.integer  "park_map_id"
+    t.integer  "park_id"
+    t.string   "park_map_ele_type"
+    t.text     "ele_desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "park_maps", force: true do |t|
+    t.integer  "park_id"
+    t.string   "version"
+    t.datetime "last_edit_at"
+    t.integer  "last_edit_by"
+    t.string   "layer"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "park_owners", force: true do |t|
     t.integer  "park_id"
     t.decimal  "wgs_lat",        precision: 10, scale: 6
@@ -405,7 +425,7 @@ ActiveRecord::Schema.define(version: 20150420012956) do
     t.string   "role"
     t.string   "status"
     t.string   "openid"
-    t.string   "nickname"
+    t.string   "nickname",             limit: 250
     t.boolean  "sex"
     t.string   "language"
     t.string   "province"
@@ -416,7 +436,7 @@ ActiveRecord::Schema.define(version: 20150420012956) do
     t.string   "source"
     t.string   "headimg"
     t.boolean  "scan_coupon"
-    t.boolean  "can_check_high_score", default: false
+    t.boolean  "can_check_high_score",             default: false
     t.string   "ticket"
   end
 
@@ -442,14 +462,14 @@ ActiveRecord::Schema.define(version: 20150420012956) do
     t.integer  "user_id"
     t.string   "status"
     t.string   "openid"
-    t.string   "nickname"
+    t.string   "nickname",       limit: 250
     t.integer  "sex"
     t.string   "language"
     t.string   "province"
     t.string   "city"
     t.string   "country"
     t.string   "headimg"
-    t.text     "remark"
+    t.text     "remark",         limit: 16777215
     t.datetime "subscribe_time"
     t.string   "unionid"
     t.datetime "created_at"

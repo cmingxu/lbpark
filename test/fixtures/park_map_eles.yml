@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  park_map_id: 1
+  park_id: 1
+  park_map_ele_type: MyString
+  ele_desc: MyText
+
+two:
+  park_map_id: 1
+  park_id: 1
+  park_map_ele_type: MyString
+  ele_desc: MyText

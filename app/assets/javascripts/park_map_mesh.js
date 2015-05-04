@@ -266,7 +266,7 @@
     this.enter_mesh_main_loop = function () {
       function is_shape_selection(dblevent) {
         point = Point.from_event(event);
-        for(var i=0; i<instance.objects.length; i++){
+        for(var i=instance.objects.length-1; i>=0; i--){
           if(instance.objects[i].point_within_range(point)){
             return instance.objects[i];
           }
@@ -581,7 +581,6 @@
             this.shape.rotate(theta);
           }
           else {
-            console.log('moving');
             offset_x = point.x_in_px - this.drag_start_point.x_in_px;
             offset_y = point.y_in_px - this.drag_start_point.y_in_px;
 
