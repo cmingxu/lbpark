@@ -52,10 +52,15 @@
       "<div id='pm_mesh_x_ruler' class='ruler'></div>" +
       "<div id='pm_mesh_y_ruler' class='ruler'></div>" +
       "<div id='pm_mesh'>Canvas </div>" +
-      "<div id='pm_ele_editor' class='hidden'> <div id='pm_ele_editor_header' class='pm_header'></div> <div id='pm_ele_editor_content' class='pm_content'> Element Editor</div> </div>" + 
+      "<div id='pm_ele_editor'> <div id='pm_ele_editor_header' class='pm_header'></div> <div id='pm_ele_editor_content' class='pm_content'> <table></table></div> </div>" + 
       "</div>" +
       "</div>";
 
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // Global helper methods
+    //
+    ///////////////////////////////////////////////////////////////////////////
     instance = this;
     this.objects = []; // list of objects & group with hierarchy
     this.action_queue = []; // pending for future usage
@@ -68,6 +73,7 @@
     this.initialize = function () {
       container.html(html_markups);
       this.canvas = container.find("#pm_mesh");
+      this.pm_ele_editor  = container.find("#pm_ele_editor");
 
       this.draw_backgroup();
       this.events_registration();
@@ -119,6 +125,32 @@
       instance.canvas.html(table);
     }
 
+    this.show_prop_list_window = function (shape) {
+      self = this;
+      this.pm_ele_editor.show();
+
+      shape.prop_list.forEach(function (prop) {
+        tmp = $(prop.to_html());
+        tmp.find("select,input").on('change', function (val) {
+          prop.setValue($(this).val());
+          shape.update();
+        });
+
+        self.pm_ele_editor.find("#pm_ele_editor_content table").append(tmp);
+      });
+      this.pm_ele_editor.find("#pm_ele_editor_content table");
+    };
+    this.hide_prop_list_window = function (shape) {
+      this.pm_ele_editor.hide();
+      this.pm_ele_editor.find("#pm_ele_editor_content table").empty();
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    //
+    // draw action items
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    
     this.draw_toolbar_items = function () {
       var ToolbarItem = function () {
         this.name = null;
@@ -176,6 +208,21 @@
       }
       toolbar_items.push(draw_line);
 
+      var draw_rect = new ToolbarItem();
+      draw_rect.name = "draw_rect";
+      draw_rect.cn_name = "矩形";
+      draw_rect.icon = 'rect';
+      draw_rect.callback = function () {
+        var draw_rect_action = new DrawRectAction();
+        // make sure context to previous state
+        if(instance.context.current_action){
+          instance.context.current_action.reset();
+        }
+        instance.context.current_action = draw_rect_action;
+        draw_rect_action.take_effect_now();
+      }
+      toolbar_items.push(draw_rect);
+
       var toolbar = $("#pm_toolbar");
       var toolbar_content = $("#pm_toolbar_content");
 
@@ -185,6 +232,12 @@
         toolbar_content.append(item);
       }
     }
+
+    /////////////////////////////////////////////////////////////
+    //
+    // Event handlers 
+    //
+    /////////////////////////////////////////////////////////////
 
     this.canvas_drag_event_registration = function () {
       var isDragging = false;
@@ -241,6 +294,11 @@
             instance.context.current_action = new EditLineAction(shape);
             instance.context.current_action.take_effect_now();
           }
+          
+          if (shape.name == 'rect') {
+            instance.context.current_action = new EditRectAction(shape);
+            instance.context.current_action.take_effect_now();
+          }
         }
         action_dispatch('dblclick', event);
       });
@@ -259,7 +317,11 @@
     }
 
 
+    ///////////////////////////////////////////////////////////////////
+    //
     //action definiation
+    //
+    ///////////////////////////////////////////////////////////////////
     var Action = function () {
       this.name = null;
       this.shape = null;
@@ -417,6 +479,135 @@
       }
     }
 
+
+    var DrawRectAction = function () {
+      this.name = ACTIONS.DRAW_RECT;
+      this.shape = new Rect();
+      this.take_effect_now = function () {
+        instance.canvas.css("cursor", "crosshair");
+      }
+
+      this.reset = function () {
+        instance.canvas.css('cursor', 'default');
+      }
+
+      this.take_effect = function (pm_event) {
+        offset_x = pm_event.mouse_event.pageX - instance.canvas.offset().left;
+        offset_y = pm_event.mouse_event.pageY - instance.canvas.offset().top;
+
+        if(pm_event.event_type == "drag_start"){
+          this.shape.start_point = new Point(offset_x, offset_y);
+        }
+
+        if(pm_event.event_type == "draging"){
+          this.shape.end_point = new Point(offset_x, offset_y);
+          this.shape.drawing();
+        }
+
+        if(pm_event.event_type == "drag_stop"){
+          this.shape.end_point = new Point(offset_x, offset_y);
+          this.shape.draw();
+          instance.context.current_action.reset();
+          instance.context.current_action = null;
+        }
+      }
+    }
+
+    var EditRectAction = function (shape) {
+      this.name = ACTIONS.EDIT_RECT;
+      this.shape = shape;
+      this.which_point_move = null;
+      this.take_effect_now = function () {
+        this.shape._rect.find('.rect_move_handle').css('cursor','move');
+        this.shape.editing();
+      }
+
+      this.reset = function () {
+        this.shape._rect.find('.rect_move_handle').css('cursor','default');
+        this.shape.done_editing();
+      }
+
+      this.take_effect = function (pm_event) {
+        function point_of_interest(event) {
+          point = Point.from_event(event);
+          handles = this.shape._rect.find(".rect_handle");
+          div = null
+          for(var i=0; i<handles.length; i++){
+            if(point.within_div($(handles[i]))){
+              div = $(handles[i]);
+              break;
+            }
+          }
+
+          if(this.div == null){ return null; }
+
+          if(div.hasClass("rect_move_handle")){ return "rect_move_handle"; }
+          if(div.hasClass("rect_left_handle")){ return "rect_left_handle"; }
+          if(div.hasClass("rect_right_handle")){ return "rect_right_handle"; }
+          if(div.hasClass("rect_remove_handle")){ return "rect_remove_handle"; }
+          if(div.hasClass("rect_rotate_handle")){ return "rect_rotate_handle"; }
+        }
+
+        drag_start_point = null;
+        if(pm_event.event_type == "click"){
+          point_of_interest = point_of_interest(pm_event.mouse_event);
+          if(point_of_interest == "rect_remove_handle"){
+            this.shape.remove();
+          }
+        }
+
+        if(pm_event.event_type == "drag_start"){
+          this.which_point_move = point_of_interest(pm_event.mouse_event);
+          this.drag_start_point = Point.from_event(pm_event.mouse_event);
+          this.shape_initial_start_point = this.shape.start_point.clone();
+          this.shape_initial_end_point   = this.shape.end_point.clone();
+          this.shape_initial_center      = this.shape.center();
+        }
+
+        if(pm_event.event_type == "draging"){
+          if(this.which_point_move == null){ return null; }
+
+          point = Point.from_event(pm_event.mouse_event);
+          if(this.which_point_move == "rect_left_handle"){
+            this.shape.start_point = point;
+          }else if(this.which_point_move == "rect_right_handle"){
+            this.shape.end_point = point;
+          }else if(this.which_point_move == 'rect_rotate_handle'){
+            dy = point.y_in_px - this.shape_initial_center.y_in_px;
+            dx = point.x_in_px - this.shape_initial_center.x_in_px;
+
+            theta = Math.atan2(dy, dx);
+            theta *= 180/Math.PI ;
+            this.shape.rotate(theta);
+          }
+          else {
+            console.log('moving');
+            offset_x = point.x_in_px - this.drag_start_point.x_in_px;
+            offset_y = point.y_in_px - this.drag_start_point.y_in_px;
+
+            this.shape.start_point.x_in_px = this.shape_initial_start_point.x_in_px + offset_x;
+            this.shape.start_point.y_in_px = this.shape_initial_start_point.y_in_px + offset_y;
+            this.shape.end_point.x_in_px = this.shape_initial_end_point.x_in_px + offset_x;
+            this.shape.end_point.y_in_px = this.shape_initial_end_point.y_in_px + offset_y;
+          }
+          this.shape.drawing();
+        }
+
+        if(pm_event.event_type == "drag_stop"){
+          if(this.which_point_move == null){ return null; }
+
+          point = Point.from_event(pm_event.mouse_event);
+          if(this.which_point_move == 'rect_left_handle'){
+            this.shape.start_point = point;
+          }else if(this.which_point_move == 'rect_right_handle'){
+            this.shape.end_point = point;
+          }
+          this.shape.draw();
+        }
+      }
+    }
+
+
     var DummyAction = function () {
       this.name = ACTIONS.DUMMY;
 
@@ -430,8 +621,16 @@
     Utils.proto_inheritance(Action, ResetCanvasAction);
     Utils.proto_inheritance(Action, PanAction);
     Utils.proto_inheritance(Action, DrawLineAction);
+    Utils.proto_inheritance(Action, EditLineAction);
+    Utils.proto_inheritance(Action, DrawRectAction);
+    Utils.proto_inheritance(Action, EditRectAction);
 
+    //////////////////////////////////////////////////////////////////////////////
+    //
     //shapes definiation
+    //
+    //////////////////////////////////////////////////////////////////////////////
+
     var Shape = function () {
       this.name = null;
       this.cn_name = null;
@@ -447,7 +646,7 @@
       this.cn_name = "线";
       this._line = $("<div class='line'><div class='handle left_handle'></div><div class='handle remove_handle'>X</div><div class='handle right_handle'></div></div>");
       this._line.css('border', 'none');
-      this._line.css('height', '2px').css('background-color', 'red');
+      //this._line.css('height', '2px').css('background-color', 'red');
       this._line.css('position', 'absolute');
       this._line.css('transform-origin', "left top");
 
@@ -455,13 +654,17 @@
         return this.distance_to_point(point) < 10;
       }
 
-      this.prop = {
+      this.prop_list = [new ThicknessProp(), new ColorProp()];
+
+      this.update = function () {
+        this._draw();
       }
 
       this._draw = function () {
         this._line.css('width', "" + this.start_point.distance(this.end_point) + "px");
         this._line.css('left', "" +  this.start_point.x_in_px + "px");
         this._line.css('top', "" +  this.start_point.y_in_px + "px");
+        for(var i=0; i<this.prop_list.length; i++){ this._line.css(this.prop_list[i].css_key, this.prop_list[i].css_value); }
         angle = this.start_point.angle(this.end_point);
         this._line.css('transform', "rotate(" +  angle + "deg)");
         if(!this._line.attr('append')){
@@ -474,11 +677,13 @@
       this.editing = function () {
         this.state = STATE.EDITING;
         this._line.find('.handle').show();
+        instance.show_prop_list_window(this);
       }
 
       this.done_editing = function () {
         this.state = STATE.DRAWN;
         this._line.find('.handle').hide();
+        instance.hide_prop_list_window();
       }
 
       this.drawing = function () {
@@ -542,6 +747,88 @@
     }
 
 
+    var Rect = function () {
+      this.name = "rect";
+      this.cn_name = "矩形";
+      this._rect = $("<div class='rect'><div class='rect_handle rect_left_handle'></div><div class='rect_handle rect_remove_handle'>X</div><div class='rect_handle rect_right_handle'></div><div class='rect_handle rect_move_handle'></div><div class='rect_handle rect_rotate_handle'>)</div></div>");
+      this._rect.css('position', 'absolute');
+      this._rect.css('transform-origin', "center");
+
+      this.width = function () {
+        return this.end_point.x_in_px - this.start_point.x_in_px;
+      }
+
+      this.height = function () {
+        return this.end_point.y_in_px - this.start_point.y_in_px;
+      }
+
+      this.center = function () {
+        return new Point((this.end_point.x_in_px + this.start_point.x_in_px) / 2, (this.end_point.y_in_px + this.start_point.y_in_px) / 2);
+      }
+
+      this.point_within_range = function (point) {
+        return point.x_in_px > this.start_point.x_in_px && point.x_in_px < this.end_point.x_in_px &&
+          point.y_in_px > this.start_point.y_in_px && point.y_in_px < this.end_point.y_in_px;
+      }
+
+      this.prop_list = [new ColorProp(), new LeftBorderProp(), new RightBorderProp(), new TopBorderProp(), new BottomBorderProp()];
+
+      this.update = function () {
+        this._draw();
+      }
+
+      this._draw = function () {
+        this._rect.css('width', "" + this.start_point.x_distance(this.end_point) + "px");
+        this._rect.css('height', "" + this.start_point.y_distance(this.end_point) + "px");
+        this._rect.css('top', "" +  this.start_point.y_in_px + "px");
+        this._rect.css('left', "" +  this.start_point.x_in_px + "px");
+        for(var i=0; i<this.prop_list.length; i++){ this._rect.css(this.prop_list[i].css_key, this.prop_list[i].css_value); }
+        if(!this._rect.attr('append')){
+          instance.canvas.append(this._rect);
+          instance.objects.push(this);
+          this._rect.attr('append', true);
+        }
+      }
+
+      this.rotate = function (angle) {
+        this._rect.css("transform", 'rotate(' +angle+ 'deg)');
+      }
+
+      this.editing = function () {
+        this.state = STATE.EDITING;
+        this._rect.find('.rect_handle').show();
+        instance.show_prop_list_window(this);
+      }
+
+      this.done_editing = function () {
+        this.state = STATE.DRAWN;
+        this._rect.find('.rect_handle').hide();
+        instance.hide_prop_list_window();
+      }
+
+      this.drawing = function () {
+        this.state = STATE.DRAWING;
+        this._draw();
+      }
+
+      this.draw = function () {
+        this._draw();
+        this.state = STATE.DRAWN;
+        this.done_drawing();
+      }
+
+      this.done_drawing = function () {
+      }
+
+      this.remove = function () {
+        this._rect.remove();
+      }
+    }
+
+    Utils.proto_inheritance(Shape, Line);
+    Utils.proto_inheritance(Shape, Rect);
+
+
     //shape property
     var ShapeProp = function () {
       this.css_key = null;
@@ -562,12 +849,70 @@
       this.css_value = "2px";
       this.name = "thickness";
       this.cn_name = "宽度";
-      this.to_html = function () {
-        "<td>" + this.cn_name + "</td><td><select></select></td>"
-      };
-
+      this.to_html = function () { return "<tr><td>" + this.cn_name + "</td><td><select>" + this.html_dom_options + "</select></td><tr>"; };
       this.html_dom_type = "select";
       this.html_dom_options = "2,3,4,5,6,7,8,9,10".split(",").map(function (v) { return "<option "+ (parseInt(v) == this.value ? 'selected' : '' ) +">" + v +"</option>"});
+      this.setValue = function (new_val) {
+        this.value = new_val;
+        this.css_value = "" + new_val + "px";
+      }
+    }
+
+    var ColorProp = function () {
+      this.css_key = "background-color";
+      this.css_value = "#FF0000";
+      this.value = "#FF0000";
+      this.name = 'color';
+      this.cn_name = "背景色";
+      this.to_html = function () {  return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'colorpicker';
+      this.setValue = function (val) {
+       this.value = this.css_value = val;
+      }
+    }
+
+    var LeftBorderProp = function () {
+      this.css_key = "border-left";
+      this.css_value = "2px solid gray";
+      this.value = "2px solid gray";
+      this.name  = "border-left";
+      this.cn_name = "左边框";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
+    }
+
+    var RightBorderProp = function () {
+      this.css_key = "border-right";
+      this.css_value = "2px solid gray";
+      this.value = "2px solid gray";
+      this.name  = "border-right";
+      this.cn_name = "右边框";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
+    }
+
+    var TopBorderProp = function () {
+      this.css_key = "border-top";
+      this.css_value = "2px solid gray";
+      this.value = "2px solid gray";
+      this.name  = "border-top";
+      this.cn_name = "上边框";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
+    }
+
+    var BottomBorderProp = function () {
+      this.css_key = "border-bottom";
+      this.css_value = "2px solid gray";
+      this.value = "2px solid gray";
+      this.name  = "border-left";
+      this.cn_name = "下边框";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
     }
 
     //point
@@ -580,6 +925,16 @@
       this.y_slot = parseInt(y / 10) * 10;
       this.distance = function (other_point) {
         return parseInt(Math.sqrt( Math.pow(other_point.x_in_px - this.x_in_px, 2) + Math.pow(other_point.y_in_px - this.y_in_px, 2)));
+      }
+
+      this.x_distance = function (other_point) {
+        x_distance = parseInt(other_point.x_in_px - this.x_in_px);
+        return x_distance > 0 ? x_distance  : 0;
+      }
+
+      this.y_distance = function (other_point) {
+        y_distance =  parseInt(other_point.y_in_px - this.y_in_px);
+        return y_distance > 0 ? y_distance : 0;
       }
 
       this.angle = function (other_point) {
@@ -595,6 +950,10 @@
 
         return this.x_in_px > dom_left_top_x && this.x_in_px < dom_left_top_x + dom.width() &&
           this.y_in_px > dom_left_top_y && this.y_in_px < dom_left_top_y + dom.height();
+      }
+
+      this.clone = function () {
+        return new Point(this.x_in_px, this.y_in_px);
       }
 
     }

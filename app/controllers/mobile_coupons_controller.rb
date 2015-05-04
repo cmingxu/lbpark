@@ -88,8 +88,8 @@ class MobileCouponsController < MobileController
   end
 
   def show_order
-    #@order = Order.find params[:id]
-    #render :claim, :layout => "mobile_no_tab"
+    @order = Order.find params[:id]
+    render :claim, :layout => "mobile_no_tab"
   end
 
   def coupon_show
