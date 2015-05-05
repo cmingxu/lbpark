@@ -46,7 +46,8 @@
           车场提醒
         - @coupon_tpl.park_notice_items.each_with_index do |item, index|
           .user_coupon_tpl_claim_page_notice_item
-            = #{index + 1}.
+            = index + 1
+            \.
             = item.content
 
     .user_coupon_tpl_claim_page_notice
