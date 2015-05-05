@@ -63,6 +63,7 @@ class CouponTpl < ActiveRecord::Base
   belongs_to :park
   belongs_to :staff
   has_many :coupons
+  has_many :park_notice_items, :dependent => :destroy
 
   validates :park_id, presence: { :message => "停车场不能空" }
   validates :quantity, presence: { :message => "数量不能空" }

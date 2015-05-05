@@ -1,0 +1,24 @@
+.row-fluid
+  .col-md-10.col-md-offset-1.table_wrapper
+    %h1
+      车场提醒 -
+    = form_for @park_notice_item, :url => create_park_notice_item_staff_coupon_tpl_path(@coupon_tpl) do |f|
+      %table.table
+        %thead
+          %th 内容
+        %tbody
+          - @coupon_tpl.park_notice_items.each do |item|
+            - next if item.position.blank? && item.content.blank?
+            %tr
+              %td
+                = item.content
+                (
+                = link_to "删除", delete_park_notice_item_staff_coupon_tpl_path(@coupon_tpl, :park_notice_item_id => item.id), :method => :delete
+                )
+          %tr
+            %td
+              = f.text_field :content, :class => "park_notice_item_form_content", :style => "width: 100%"
+          %tr
+            %td{:colspan => 2}
+              = f.submit "保存", :class => "btn btn-success"
+

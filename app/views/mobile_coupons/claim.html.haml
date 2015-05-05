@@ -38,6 +38,17 @@
         %span.value= @order.coupon.price
         .clearfix
 
+    .wechat_pay_confirm_button#wc_pay_btn 知道了，马上支付
+
+    - if @coupon_tpl.park_notice_items.present?
+      .user_coupon_tpl_claim_page_notice
+        .user_coupon_tpl_claim_page_notice_head
+          车场提醒
+        - @coupon_tpl.park_notice_items.each_with_index do |index, item|
+          .user_coupon_tpl_claim_page_notice_item
+            = #{index + 1}.
+            = item.content
+
     .user_coupon_tpl_claim_page_notice
       .user_coupon_tpl_claim_page_notice_head
         购买须知
@@ -55,7 +66,6 @@
         5. 点击”支付“即同意以上，暂只支持微信支付，欢迎调戏
         = Settings.four_zero_zero
 
-    .wechat_pay_confirm_button#wc_pay_btn 知道了，马上支付
 
 
 

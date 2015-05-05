@@ -65,6 +65,7 @@ gem 'rmagick'
 gem 'evil_transform'
 gem 'base58'
 
+gem 'acts_as_list'
 
 
 

@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: park_notice_items
+#
+#  id            :integer          not null, primary key
+#  content       :text
+#  position      :integer
+#  coupon_tpl_id :integer
+#  created_at    :datetime
+#  updated_at    :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  position: 1
+
+two:
+  content: MyText
+  position: 1

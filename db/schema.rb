@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504130949) do
+ActiveRecord::Schema.define(version: 20150505020320) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -288,6 +288,15 @@ ActiveRecord::Schema.define(version: 20150504130949) do
     t.integer  "last_edit_by"
     t.string   "layer"
     t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "park_notice_items", force: true do |t|
+    t.text     "content"
+    t.integer  "position"
+    t.integer  "coupon_tpl_id"
+    t.integer  "park_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

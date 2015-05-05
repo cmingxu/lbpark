@@ -21,6 +21,7 @@
 #  issued_begin_date :date
 #  used_at           :datetime
 #  issued_paizhao    :string(255)
+#  quantity          :integer
 #
 
 require 'test_helper'

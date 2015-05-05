@@ -147,6 +147,8 @@ Rails.application.routes.draw do
         patch :stop
         patch :highlight
         patch :dehighlight
+        post :create_park_notice_item
+        delete :delete_park_notice_item
       end
     end
     resources :coupons do

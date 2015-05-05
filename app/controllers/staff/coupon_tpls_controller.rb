@@ -9,11 +9,13 @@ class Staff::CouponTplsController < Staff::BaseController
 
   def new
     @coupon_tpl = CouponTpl.new
+    @park_notice_item = @coupon_tpl.park_notice_items.build
   end
 
   def edit
     @coupon_tpl = CouponTpl.find params[:id]
     params[:type] = CouponTpl.coupon_type_to_readable(@coupon_tpl.type)
+    @park_notice_item = @coupon_tpl.park_notice_items.build
   end
 
   def publish
@@ -68,8 +70,27 @@ class Staff::CouponTplsController < Staff::BaseController
     redirect_to :back
   end
 
+  def create_park_notice_item
+    @coupon_tpl = CouponTpl.find params[:id]
+    @coupon_tpl.park_notice_items.build park_notice_item_params
+    @coupon_tpl.save
+    redirect_to edit_staff_coupon_tpl_path(@coupon_tpl)
+  end
+
+  def delete_park_notice_item
+    @coupon_tpl = CouponTpl.find params[:id]
+    @item = @coupon_tpl.park_notice_items.find params[:park_notice_item_id]
+    @item.destroy
+    redirect_to edit_staff_coupon_tpl_path(@coupon_tpl)
+  end
+
+
   def coupon_tpl_params
     params.require(:coupon_tpl).permit(:park_id, :fit_for_date, :quantity, :price, :banner, :notice, :coupon_value,
                                        :valid_hour_begin, :valid_hour_end, :lower_limit_for_deduct, :valid_dates)
+  end
+
+  def park_notice_item_params
+    params.require(:park_notice_item).permit(:position, :content)
   end
 end

@@ -13,7 +13,7 @@
 #  role                 :string(255)
 #  status               :string(255)
 #  openid               :string(255)
-#  nickname             :string(255)
+#  nickname             :string(250)
 #  sex                  :boolean
 #  language             :string(255)
 #  province             :string(255)
