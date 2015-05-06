@@ -181,7 +181,7 @@
       var pan_item = new ToolbarItem();
       pan_item.name = "pan";
       pan_item.cn_name = "移动";
-      pan_item.icon = 'plain';
+      pan_item.icon = 'pan';
       pan_item.callback = function () {
         var pan_action = new PanAction();
         // make sure context to previous state
@@ -385,7 +385,7 @@
       this.original_cursor = 'default';
 
       this.take_effect_now = function () {
-        instance.canvas.css('cursor', 'crossair');
+        instance.canvas.css('cursor', 'move');
       }
 
       this.reset = function () {
@@ -595,6 +595,7 @@
         }
 
         if(pm_event.event_type == "drag_start"){
+          console.log('drag_start');
           this.which_point_move = point_of_interest(pm_event.mouse_event);
           this.drag_start_point = Point.from_event(pm_event.mouse_event);
           this.shape_initial_start_point = this.shape.start_point.clone();
@@ -946,8 +947,8 @@
 
     var ColorProp = function () {
       this.css_key = "background-color";
-      this.css_value = "#FF0000";
-      this.value = "#FF0000";
+      this.css_value = "#81e1ec";
+      this.value = "#81e1ec";
       this.name = 'color';
       this.cn_name = "背景色";
       this.to_html = function () {  return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
@@ -1013,40 +1014,56 @@
       this.setValue = function (val) { this.value = this.css_value = val; }
     }
 
-    var StartPointProp = function () {
+    var TopProp = function () {
       this.shape = null;
-      this.css_key = "transform";
-      this.css_value = "rotate(0deg)";
-      this.value = "rotate(0deg)";
-      this.name  = "rotate";
-      this.cn_name = "角度";
-      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.css_key = "top";
+      this.css_value =  function () { return this.shape._rect.css('top'); };
+      this.value = function () { return this.shape._rect.css('top'); };
+      this.name  = "top";
+      this.cn_name = "上";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value() + "' type='input'/></td></tr>";};
       this.html_dom_type = 'input';
-      this.setValue = function (val) { this.value = this.css_value = val; }
+      this.setValue = function (val) { this.shape._rect.css('top', val); }
+    }
+
+    var LeftProp = function () {
+      this.shape = null;
+      this.css_key = "left";
+      this.css_value =  function () { return this.shape._rect.css('left'); };
+      this.value = function () { return this.shape._rect.css('left'); };
+      this.name  = "left";
+      this.cn_name = "左";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value() + "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) {
+        this.shape._rect.css('left', val);
+      }
     }
 
     var HeightProp = function () {
       this.shape = null;
-      this.css_key = "transform";
-      this.css_value = "rotate(0deg)";
-      this.value = "rotate(0deg)";
-      this.name  = "rotate";
-      this.cn_name = "角度";
-      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.css_key = "height";
+      this.css_value = function () { return this.shape._rect.css('height'); }
+      this.value =  function () { return this.shape._rect.css('height'); }
+      this.name  = "height";
+      this.cn_name = "高度";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value() + "' type='input'/></td></tr>";};
       this.html_dom_type = 'input';
-      this.setValue = function (val) { this.value = this.css_value = val; }
+      this.setValue = function (val) {
+        this.shape._rect.css('height', val);
+      }
     }
 
     var WidthProp = function () {
       this.shape = null;
-      this.css_key = "transform";
-      this.css_value = "rotate(0deg)";
-      this.value = "rotate(0deg)";
-      this.name  = "rotate";
-      this.cn_name = "角度";
-      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.css_key = "width";
+      this.css_value = function () { return this.shape._rect.css('width'); }
+      this.value = function () { return this.shape._rect.css('width'); }
+      this.name  = "width";
+      this.cn_name = "宽度";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value() + "' type='input'/></td></tr>";};
       this.html_dom_type = 'input';
-      this.setValue = function (val) { this.value = this.css_value = val; }
+      this.setValue = function (val) { this.shape._rect.css('width', val); }
     }
 
     var Line = function () {
@@ -1179,7 +1196,14 @@
           point.y_in_px > this.start_point.y_in_px && point.y_in_px < this.end_point.y_in_px;
       }
 
-      this.prop_list = [new ColorProp(), new LeftBorderProp(), new RightBorderProp(), new TopBorderProp(), new BottomBorderProp()];
+      this.prop_list = [new ColorProp(), new LeftBorderProp(), new RightBorderProp(), new TopBorderProp(),
+        new BottomBorderProp(), new AngleProp(), new TopProp(), new LeftProp(), new WidthProp(), new HeightProp()];
+
+      this.prop_list[0].setValue("#9bd23c");
+
+      for(var i=0; i<this.prop_list.length; i++){
+        this.prop_list[i].shape = this;
+      }
 
       this.update = function () {
         this._draw();
@@ -1190,7 +1214,13 @@
         this._rect.css('height', "" + this.start_point.y_distance(this.end_point) + "px");
         this._rect.css('top', "" +  this.start_point.y_in_px + "px");
         this._rect.css('left', "" +  this.start_point.x_in_px + "px");
-        for(var i=0; i<this.prop_list.length; i++){ this._rect.css(this.prop_list[i].css_key, this.prop_list[i].css_value); }
+        for(var i=0; i<this.prop_list.length; i++){
+          if( typeof this.prop_list[i].css_value === 'function'){
+            this._rect.css(this.prop_list[i].css_key, this.prop_list[i].css_value());
+          }else{
+            this._rect.css(this.prop_list[i].css_key, this.prop_list[i].css_value);
+          }
+        }
         if(!this._rect.attr('append')){
           instance.canvas.append(this._rect);
           instance.objects.push(this);
