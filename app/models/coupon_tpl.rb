@@ -37,9 +37,9 @@ class CouponTpl < ActiveRecord::Base
     :monthly => "包月",
     :free => "限免",
     :time => "按次",
-    :deduct => "满额抵减",
-    :redeemable => "代金",
-    :exchangeable => "优惠"
+    :deduct => "满额抵减"
+    #:redeemable => "代金",
+    #:exchangeable => "优惠"
   }
 
   COUPON_TPL_STATUS = {
@@ -201,7 +201,7 @@ class CouponTpl < ActiveRecord::Base
   end
 
   def claimed_by_user?(user)
-    self.coupons.claimed.exists?(:user_id => user.id)
+    self.coupons.claimed_or_used.exists?(:user_id => user.id)
   end
 
   def user_claimed(user)

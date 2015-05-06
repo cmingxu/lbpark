@@ -49,7 +49,13 @@ $bg-light-gray: #f5f5f5
           width: 32px
           background-image: url('<%= image_path("logo_png.png") %>')
           background-size: 32px 32px
+          margin: 0px auto
         .toolbaritem_name
+          color: black
+        .park_space
+          background-image: url('<%= image_path("park_space.png") %>')!important
+        .lane
+          background-image: url('<%= image_path("lane.png") %>')!important
   #pm_content
     width: 100%
     position: relative
@@ -148,6 +154,70 @@ $bg-light-gray: #f5f5f5
           transform: transformY(-50%)
           right: -18px
           display: none
+          
+      .park_space
+        background-image: url('<%= image_path("park_space.png") %>')
+        background-size: 30px 50px
+        .park_space_handle
+          position: absolute
+        .park_space_rotate_handle
+          background-color: white
+          border: 1px solid gray
+          width: 16px
+          height: 16px
+          bottom: 50%
+          right: -18px
+          display: none
+        .park_space_remove_handle
+          text-align: center
+          width: 16px
+          height: 16px
+          bottom: -18px
+          left: 50%
+          transform: translateX(-50%)
+          background-color: white
+          border: 1px solid gray
+          display: none
+        .park_space_move_handle
+          width: 100%
+          height: 100%
+          margin: 0px auto
+      .lane
+        background-image: url('<%= image_path("lane.png") %>')
+        background-repeat: repeat-x
+        background-size: 50px auto
+        .lane_handle
+          position: absolute
+        .lane_rotate_handle
+          background-color: white
+          border: 1px solid gray
+          width: 16px
+          height: 16px
+          bottom: 10%
+          right: -18px
+          display: none
+        .lane_right_handle
+          background-color: white
+          border: 1px solid gray
+          width: 16px
+          height: 16px
+          bottom: 90%
+          right: -18px
+          display: none
+        .lane_remove_handle
+          text-align: center
+          width: 16px
+          height: 16px
+          bottom: -18px
+          left: 50%
+          transform: translateX(-50%)
+          background-color: white
+          border: 1px solid gray
+          display: none
+        .lane_move_handle
+          width: 100%
+          height: 100%
+          margin: 0px auto
 
 
 

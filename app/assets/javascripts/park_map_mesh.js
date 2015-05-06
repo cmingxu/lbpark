@@ -1,8 +1,8 @@
 (function ( $ ) {
   var Utils = {
     proto_inheritance: function (base, child) {
-      child.protoype = new base();
-      child.protoype.constructor = base;
+      child.prototype = new base();
+      child.prototype.constructor = base;
     },
 
     logger: function(mes) {
@@ -214,6 +214,7 @@
       draw_rect.icon = 'rect';
       draw_rect.callback = function () {
         var draw_rect_action = new DrawRectAction();
+        draw_rect_action.shape = new Rect();
         // make sure context to previous state
         if(instance.context.current_action){
           instance.context.current_action.reset();
@@ -222,6 +223,34 @@
         draw_rect_action.take_effect_now();
       }
       toolbar_items.push(draw_rect);
+
+      var draw_park_space = new ToolbarItem();
+      draw_park_space.name = "draw_park_space";
+      draw_park_space.cn_name = "车位";
+      draw_park_space.icon = 'park_space';
+      draw_park_space.callback = function () {
+        var draw_park_space_action = new DrawParkSpaceAction();
+        if(instance.context.current_action){
+          instance.context.current_action.reset();
+        }
+        instance.context.current_action = draw_park_space_action;
+        draw_park_space_action.take_effect_now();
+      }
+      toolbar_items.push(draw_park_space);
+
+      var draw_lane = new ToolbarItem();
+      draw_lane.name = "draw_lane";
+      draw_lane.cn_name = "车道";
+      draw_lane.icon = 'lane';
+      draw_lane.callback = function () {
+        var draw_lane_action = new DrawLaneAction();
+        if(instance.context.current_action){
+          instance.context.current_action.reset();
+        }
+        instance.context.current_action = draw_lane_action;
+        draw_lane_action.take_effect_now();
+      }
+      toolbar_items.push(draw_lane);
 
       var toolbar = $("#pm_toolbar");
       var toolbar_content = $("#pm_toolbar_content");
@@ -294,9 +323,18 @@
             instance.context.current_action = new EditLineAction(shape);
             instance.context.current_action.take_effect_now();
           }
-          
           if (shape.name == 'rect') {
             instance.context.current_action = new EditRectAction(shape);
+            instance.context.current_action.take_effect_now();
+          }
+
+          if(shape.name == 'park_space') {
+            instance.context.current_action = new EditParkSpaceAction(shape);
+            instance.context.current_action.take_effect_now();
+          }
+
+          if(shape.name == 'lane') {
+            instance.context.current_action = new EditLaneAction(shape);
             instance.context.current_action.take_effect_now();
           }
         }
@@ -607,6 +645,239 @@
     }
 
 
+    var DrawLaneAction = function () {
+      this.name = ACTIONS.DRAW_LANE;
+      this.shape = new Lane();
+      this.take_effect_now = function () {
+        instance.canvas.css("cursor", "crosshair");
+      }
+
+      this.reset = function () {
+        instance.canvas.css('cursor', 'default');
+      }
+
+      this.take_effect = function (pm_event) {
+        offset_x = pm_event.mouse_event.pageX - instance.canvas.offset().left;
+        offset_y = pm_event.mouse_event.pageY - instance.canvas.offset().top;
+
+        if(pm_event.event_type == "drag_start"){
+          this.shape.start_point = new Point(offset_x, offset_y);
+        }
+
+        if(pm_event.event_type == "draging"){
+          this.shape.end_point = new Point(offset_x, offset_y);
+          this.shape.drawing();
+        }
+
+        if(pm_event.event_type == "drag_stop"){
+          this.shape.end_point = new Point(offset_x, offset_y);
+          this.shape.draw();
+          instance.context.current_action.reset();
+          instance.context.current_action = null;
+        }
+      }
+    }
+
+    var EditLaneAction = function (shape) {
+      this.name = ACTIONS.EDIT_LANE;
+      this.shape = shape;
+      this.which_point_move = null;
+      this.take_effect_now = function () {
+        this.shape._rect.find('.lane_move_handle').css('cursor','move');
+        this.shape.editing();
+      }
+
+      this.reset = function () {
+        this.shape._rect.find('.lane_move_handle').css('cursor','default');
+        this.shape.done_editing();
+      }
+
+      this.take_effect = function (pm_event) {
+        function point_of_interest(event) {
+          point = Point.from_event(event);
+          handles = this.shape._rect.find(".lane_handle");
+          div = null
+          for(var i=0; i<handles.length; i++){
+            if(point.within_div($(handles[i]))){
+              div = $(handles[i]);
+              break;
+            }
+          }
+
+          if(this.div == null){ return null; }
+
+          if(div.hasClass("lane_move_handle")){ return "lane_move_handle"; }
+          if(div.hasClass("lane_left_handle")){ return "lane_left_handle"; }
+          if(div.hasClass("lane_right_handle")){ return "lane_right_handle"; }
+          if(div.hasClass("lane_remove_handle")){ return "lane_remove_handle"; }
+          if(div.hasClass("lane_rotate_handle")){ return "lane_rotate_handle"; }
+        }
+
+        drag_start_point = null;
+        if(pm_event.event_type == "click"){
+          point_of_interest = point_of_interest(pm_event.mouse_event);
+          if(point_of_interest == "lane_remove_handle"){
+            this.shape.remove();
+          }
+        }
+
+        if(pm_event.event_type == "drag_start"){
+          this.which_point_move = point_of_interest(pm_event.mouse_event);
+          this.drag_start_point = Point.from_event(pm_event.mouse_event);
+          this.shape_initial_start_point = this.shape.start_point.clone();
+          this.shape_initial_end_point   = this.shape.end_point.clone();
+          this.shape_initial_center      = this.shape.center();
+        }
+
+        if(pm_event.event_type == "draging"){
+          if(this.which_point_move == null){ return null; }
+
+          point = Point.from_event(pm_event.mouse_event);
+          if(this.which_point_move == "lane_left_handle"){
+            this.shape.start_point = point;
+          }else if(this.which_point_move == "lane_right_handle"){
+            this.shape.end_point = point;
+          }else if(this.which_point_move == 'lane_rotate_handle'){
+            dy = point.y_in_px - this.shape_initial_center.y_in_px;
+            dx = point.x_in_px - this.shape_initial_center.x_in_px;
+
+            theta = Math.atan2(dy, dx);
+            theta *= 180/Math.PI ;
+            this.shape.rotate(theta);
+          }
+          else {
+            offset_x = point.x_in_px - this.drag_start_point.x_in_px;
+            offset_y = point.y_in_px - this.drag_start_point.y_in_px;
+
+            this.shape.start_point.x_in_px = this.shape_initial_start_point.x_in_px + offset_x;
+            this.shape.start_point.y_in_px = this.shape_initial_start_point.y_in_px + offset_y;
+            this.shape.end_point.x_in_px = this.shape_initial_end_point.x_in_px + offset_x;
+            this.shape.end_point.y_in_px = this.shape_initial_end_point.y_in_px + offset_y;
+          }
+          this.shape.drawing();
+        }
+
+        if(pm_event.event_type == "drag_stop"){
+          if(this.which_point_move == null){ return null; }
+
+          point = Point.from_event(pm_event.mouse_event);
+          if(this.which_point_move == 'lane_left_handle'){
+            this.shape.start_point = point;
+          }else if(this.which_point_move == 'lane_right_handle'){
+            this.shape.end_point = point;
+          }
+          this.shape.draw();
+        }
+      }
+    }
+
+
+    var DrawParkSpaceAction = function () {
+      this.name = ACTIONS.DRAW_PARK_SPACE;
+      this.shape = new ParkSpace();
+      this.take_effect_now = function () {
+        instance.canvas.css("cursor", "crosshair");
+      }
+
+      this.reset = function () {
+        instance.canvas.css('cursor', 'default');
+      }
+
+      this.take_effect = function (pm_event) {
+        offset_x = pm_event.mouse_event.pageX - instance.canvas.offset().left;
+        offset_y = pm_event.mouse_event.pageY - instance.canvas.offset().top;
+
+        if(pm_event.event_type == "click"){
+          this.shape.set_center(new Point(offset_x, offset_y));
+          this.shape.draw();
+          instance.context.current_action.reset();
+          instance.context.current_action = null;
+        }
+      }
+    }
+
+    var EditParkSpaceAction = function (shape) {
+      this.name = ACTIONS.EDIT_PARK_SPACE;
+      this.shape = shape;
+      this.which_point_move = null;
+      this.take_effect_now = function () {
+        this.shape._rect.find('.park_space_move_handle').css('cursor','move');
+        this.shape.editing();
+      }
+
+      this.reset = function () {
+        this.shape._rect.find('.park_space_move_handle').css('cursor','default');
+        this.shape.done_editing();
+      }
+
+      this.take_effect = function (pm_event) {
+        function point_of_interest(event) {
+          point = Point.from_event(event);
+          handles = this.shape._rect.find(".park_space_handle");
+          div = null
+          for(var i=0; i<handles.length; i++){
+            if(point.within_div($(handles[i]))){
+              div = $(handles[i]);
+              break;
+            }
+          }
+
+          if(this.div == null){ return null; }
+
+          if(div.hasClass("park_space_move_handle")){ return   "park_space_move_handle"; }
+          if(div.hasClass("park_space_remove_handle")){ return "park_space_remove_handle"; }
+          if(div.hasClass("park_space_rotate_handle")){ return "park_space_rotate_handle"; }
+        }
+
+        drag_start_point = null;
+        if(pm_event.event_type == "click"){
+          point_of_interest = point_of_interest(pm_event.mouse_event);
+          if(point_of_interest == "park_space_remove_handle"){
+            this.shape.remove();
+          }
+        }
+
+        if(pm_event.event_type == "drag_start"){
+          this.which_point_move = point_of_interest(pm_event.mouse_event);
+          this.drag_start_point = Point.from_event(pm_event.mouse_event);
+          this.shape_initial_start_point = this.shape.start_point.clone();
+          this.shape_initial_end_point   = this.shape.end_point.clone();
+          this.shape_initial_center      = this.shape.center();
+        }
+
+        if(pm_event.event_type == "draging"){
+          if(this.which_point_move == null){ return null; }
+
+          point = Point.from_event(pm_event.mouse_event);
+          if(this.which_point_move == 'park_space_rotate_handle'){
+            dy = point.y_in_px - this.shape_initial_center.y_in_px;
+            dx = point.x_in_px - this.shape_initial_center.x_in_px;
+
+            theta = Math.atan2(dy, dx);
+            theta *= 180/Math.PI ;
+            this.shape.rotate(theta);
+          }
+          else {
+            offset_x = point.x_in_px - this.drag_start_point.x_in_px;
+            offset_y = point.y_in_px - this.drag_start_point.y_in_px;
+
+            this.shape.start_point.x_in_px = this.shape_initial_start_point.x_in_px + offset_x;
+            this.shape.start_point.y_in_px = this.shape_initial_start_point.y_in_px + offset_y;
+            this.shape.end_point.x_in_px = this.shape_initial_end_point.x_in_px + offset_x;
+            this.shape.end_point.y_in_px = this.shape_initial_end_point.y_in_px + offset_y;
+          }
+          this.shape.drawing();
+        }
+
+        if(pm_event.event_type == "drag_stop"){
+          if(this.which_point_move == null){ return null; }
+
+          this.shape.draw();
+        }
+      }
+    }
+
+
     var DummyAction = function () {
       this.name = ACTIONS.DUMMY;
 
@@ -623,6 +894,10 @@
     Utils.proto_inheritance(Action, EditLineAction);
     Utils.proto_inheritance(Action, DrawRectAction);
     Utils.proto_inheritance(Action, EditRectAction);
+    Utils.proto_inheritance(Action, DrawParkSpaceAction);
+    Utils.proto_inheritance(Action, EditParkSpaceAction);
+    Utils.proto_inheritance(Action, DrawLaneAction);
+    Utils.proto_inheritance(Action, EditLaneAction);
 
     //////////////////////////////////////////////////////////////////////////////
     //
@@ -638,6 +913,140 @@
       this.draw = null;
       this.start_point = null;
       this.end_point = null;
+    }
+
+    //shape property
+    var ShapeProp = function () {
+      this.css_key = null;
+      this.ccs_value = null;
+      this.name = null;
+      this.cn_name = null;
+      this.to_html = function () {
+      };
+      this.html_dom_type = function () {
+      };
+      this.html_dom_options = function () {
+      }
+    }
+
+    var ThicknessProp = function () {
+      this.css_key = "height";
+      this.value   = 2;
+      this.css_value = "2px";
+      this.name = "thickness";
+      this.cn_name = "宽度";
+      this.to_html = function () { return "<tr><td>" + this.cn_name + "</td><td><select>" + this.html_dom_options + "</select></td><tr>"; };
+      this.html_dom_type = "select";
+      this.html_dom_options = "2,3,4,5,6,7,8,9,10".split(",").map(function (v) { return "<option "+ (parseInt(v) == this.value ? 'selected' : '' ) +">" + v +"</option>"});
+      this.setValue = function (new_val) {
+        this.value = new_val;
+        this.css_value = "" + new_val + "px";
+      }
+    }
+
+    var ColorProp = function () {
+      this.css_key = "background-color";
+      this.css_value = "#FF0000";
+      this.value = "#FF0000";
+      this.name = 'color';
+      this.cn_name = "背景色";
+      this.to_html = function () {  return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'colorpicker';
+      this.setValue = function (val) {
+       this.value = this.css_value = val;
+      }
+    }
+
+    var LeftBorderProp = function () {
+      this.css_key = "border-left";
+      this.css_value = "2px solid gray";
+      this.value = "2px solid gray";
+      this.name  = "border-left";
+      this.cn_name = "左边框";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
+    }
+
+    var RightBorderProp = function () {
+      this.css_key = "border-right";
+      this.css_value = "2px solid gray";
+      this.value = "2px solid gray";
+      this.name  = "border-right";
+      this.cn_name = "右边框";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
+    }
+
+    var TopBorderProp = function () {
+      this.css_key = "border-top";
+      this.css_value = "2px solid gray";
+      this.value = "2px solid gray";
+      this.name  = "border-top";
+      this.cn_name = "上边框";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
+    }
+
+    var BottomBorderProp = function () {
+      this.css_key = "border-bottom";
+      this.css_value = "2px solid gray";
+      this.value = "2px solid gray";
+      this.name  = "border-left";
+      this.cn_name = "下边框";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
+    }
+
+    var AngleProp = function () {
+      this.shape = null;
+      this.css_key = "transform";
+      this.css_value = "rotate(0deg)";
+      this.value = "rotate(0deg)";
+      this.name  = "rotate";
+      this.cn_name = "角度";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
+    }
+
+    var StartPointProp = function () {
+      this.shape = null;
+      this.css_key = "transform";
+      this.css_value = "rotate(0deg)";
+      this.value = "rotate(0deg)";
+      this.name  = "rotate";
+      this.cn_name = "角度";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
+    }
+
+    var HeightProp = function () {
+      this.shape = null;
+      this.css_key = "transform";
+      this.css_value = "rotate(0deg)";
+      this.value = "rotate(0deg)";
+      this.name  = "rotate";
+      this.cn_name = "角度";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
+    }
+
+    var WidthProp = function () {
+      this.shape = null;
+      this.css_key = "transform";
+      this.css_value = "rotate(0deg)";
+      this.value = "rotate(0deg)";
+      this.name  = "rotate";
+      this.cn_name = "角度";
+      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
+      this.html_dom_type = 'input';
+      this.setValue = function (val) { this.value = this.css_value = val; }
     }
 
     var Line = function () {
@@ -749,7 +1158,7 @@
     var Rect = function () {
       this.name = "rect";
       this.cn_name = "矩形";
-      this._rect = $("<div class='rect'><div class='rect_handle rect_left_handle'></div><div class='rect_handle rect_remove_handle'>X</div><div class='rect_handle rect_right_handle'></div><div class='rect_handle rect_move_handle'></div><div class='rect_handle rect_rotate_handle'>)</div></div>");
+      this._rect = $("<div class='rect'><div class='rect_handle rect_left_handle'></div><div class='rect_handle rect_remove_handle'>X</div><div class='rect_handle rect_right_handle'></div><div class='rect_handle rect_move_handle'></div><div class='rect_handle rect_rotate_handle'></div></div>");
       this._rect.css('position', 'absolute');
       this._rect.css('transform-origin', "center");
 
@@ -827,92 +1236,132 @@
     Utils.proto_inheritance(Shape, Line);
     Utils.proto_inheritance(Shape, Rect);
 
+    var ParkSpace = function () {
+      this.name = "park_space";
+      this.cn_name = "车位";
+      this._rect = $("<div class='park_space'><div class='park_space_handle park_space_remove_handle'>X</div><div class='park_space_handle park_space_move_handle'></div><div class='park_space_handle park_space_rotate_handle'></div></div>");
+      this._rect.css('position', 'absolute');
+      this._rect.css('transform-origin', "center");
+      this.prop_list = [new AngleProp()];
+      this.prop_list.forEach(function (prop) { prop.shape = this; });
 
-    //shape property
-    var ShapeProp = function () {
-      this.css_key = null;
-      this.ccs_value = null;
-      this.name = null;
-      this.cn_name = null;
-      this.to_html = function () {
-      };
-      this.html_dom_type = function () {
-      };
-      this.html_dom_options = function () {
+      this.editing = function () {
+        this.state = STATE.EDITING;
+        this._rect.find('.park_space_handle').show();
+        instance.show_prop_list_window(this);
+      }
+
+      this.done_editing = function () {
+        this.state = STATE.DRAWN;
+        this._rect.find('.park_space_handle').hide();
+        instance.hide_prop_list_window();
+      }
+
+      this.set_center = function (center) {
+        this.center_point = center;
+        this.start_point = new Point(this.center_point.x_in_px - 15, this.center_point.y_in_px - 25);
+        this.end_point   = new Point(this.center_point.x_in_px + 15, this.center_point.y_in_px + 25);
+      }
+
+      this._draw = function () {
+        this._rect.css('width', "" + this.start_point.x_distance(this.end_point) + "px");
+        this._rect.css('height', "" + this.start_point.y_distance(this.end_point) + "px");
+        this._rect.css('top', "" +  this.start_point.y_in_px + "px");
+        this._rect.css('background-color', 'white');
+        this._rect.css('left', "" +  this.start_point.x_in_px + "px");
+        for(var i=0; i<this.prop_list.length; i++){ this._rect.css(this.prop_list[i].css_key, this.prop_list[i].css_value); }
+        if(!this._rect.attr('append')){
+          instance.canvas.append(this._rect);
+          instance.objects.push(this);
+          this._rect.attr('append', true);
+        }
+      }
+
+
+    }
+    Utils.proto_inheritance(Rect, ParkSpace);
+
+
+    var Lane = function () {
+      this.name = "lane";
+      this.cn_name = "车道";
+      this._rect = $("<div class='lane'><div class='lane_handle lane_remove_handle'>X</div><div class='lane_handle lane_right_handle'></div><div class='lane_handle lane_move_handle'></div><div class='lane_handle lane_rotate_handle'></div></div>");
+      this._rect.css('position', 'absolute');
+      this._rect.css('transform-origin', "center");
+
+      this.width = function () {
+        return this.end_point.x_in_px - this.start_point.x_in_px;
+      }
+
+      this.height = function () {
+        return this.end_point.y_in_px - this.start_point.y_in_px;
+      }
+
+      this.center = function () {
+        return new Point((this.end_point.x_in_px + this.start_point.x_in_px) / 2, (this.end_point.y_in_px + this.start_point.y_in_px) / 2);
+      }
+
+      this.point_within_range = function (point) {
+        return point.x_in_px > this.start_point.x_in_px && point.x_in_px < this.end_point.x_in_px &&
+          point.y_in_px > this.start_point.y_in_px && point.y_in_px < this.end_point.y_in_px;
+      }
+
+      this.prop_list = [];
+
+      this.update = function () {
+        this._draw();
+      }
+
+      this._draw = function () {
+        this._rect.css('width', "" + this.start_point.x_distance(this.end_point) + "px");
+        this._rect.css('height', "50px");
+        this._rect.css('top', "" +  this.start_point.y_in_px + "px");
+        this._rect.css('left', "" +  this.start_point.x_in_px + "px");
+        for(var i=0; i<this.prop_list.length; i++){ this._rect.css(this.prop_list[i].css_key, this.prop_list[i].css_value); }
+        if(!this._rect.attr('append')){
+          instance.canvas.append(this._rect);
+          instance.objects.push(this);
+          this._rect.attr('append', true);
+        }
+      }
+
+      this.rotate = function (angle) {
+        this._rect.css("transform", 'rotate(' +angle+ 'deg)');
+      }
+
+      this.editing = function () {
+        this.state = STATE.EDITING;
+        this._rect.find('.lane_handle').show();
+        instance.show_prop_list_window(this);
+      }
+
+      this.done_editing = function () {
+        this.state = STATE.DRAWN;
+        this._rect.find('.lane_handle').hide();
+        instance.hide_prop_list_window();
+      }
+
+      this.drawing = function () {
+        this.state = STATE.DRAWING;
+        this._draw();
+      }
+
+      this.draw = function () {
+        this._draw();
+        this.state = STATE.DRAWN;
+        this.done_drawing();
+      }
+
+      this.done_drawing = function () {
+      }
+
+      this.remove = function () {
+        this._rect.remove();
       }
     }
 
-    var ThicknessProp = function () {
-      this.css_key = "height";
-      this.value   = 2;
-      this.css_value = "2px";
-      this.name = "thickness";
-      this.cn_name = "宽度";
-      this.to_html = function () { return "<tr><td>" + this.cn_name + "</td><td><select>" + this.html_dom_options + "</select></td><tr>"; };
-      this.html_dom_type = "select";
-      this.html_dom_options = "2,3,4,5,6,7,8,9,10".split(",").map(function (v) { return "<option "+ (parseInt(v) == this.value ? 'selected' : '' ) +">" + v +"</option>"});
-      this.setValue = function (new_val) {
-        this.value = new_val;
-        this.css_value = "" + new_val + "px";
-      }
-    }
+    Utils.proto_inheritance(Rect, Lane);
 
-    var ColorProp = function () {
-      this.css_key = "background-color";
-      this.css_value = "#FF0000";
-      this.value = "#FF0000";
-      this.name = 'color';
-      this.cn_name = "背景色";
-      this.to_html = function () {  return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
-      this.html_dom_type = 'colorpicker';
-      this.setValue = function (val) {
-       this.value = this.css_value = val;
-      }
-    }
-
-    var LeftBorderProp = function () {
-      this.css_key = "border-left";
-      this.css_value = "2px solid gray";
-      this.value = "2px solid gray";
-      this.name  = "border-left";
-      this.cn_name = "左边框";
-      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
-      this.html_dom_type = 'input';
-      this.setValue = function (val) { this.value = this.css_value = val; }
-    }
-
-    var RightBorderProp = function () {
-      this.css_key = "border-right";
-      this.css_value = "2px solid gray";
-      this.value = "2px solid gray";
-      this.name  = "border-right";
-      this.cn_name = "右边框";
-      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
-      this.html_dom_type = 'input';
-      this.setValue = function (val) { this.value = this.css_value = val; }
-    }
-
-    var TopBorderProp = function () {
-      this.css_key = "border-top";
-      this.css_value = "2px solid gray";
-      this.value = "2px solid gray";
-      this.name  = "border-top";
-      this.cn_name = "上边框";
-      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
-      this.html_dom_type = 'input';
-      this.setValue = function (val) { this.value = this.css_value = val; }
-    }
-
-    var BottomBorderProp = function () {
-      this.css_key = "border-bottom";
-      this.css_value = "2px solid gray";
-      this.value = "2px solid gray";
-      this.name  = "border-left";
-      this.cn_name = "下边框";
-      this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value+ "' type='input'/></td></tr>";};
-      this.html_dom_type = 'input';
-      this.setValue = function (val) { this.value = this.css_value = val; }
-    }
 
     //point
     var Point = function(x, y){
@@ -997,3 +1446,5 @@
 $(document).ready( function () {
   $("#container").park_map({});
 });
+
+

@@ -40,6 +40,7 @@ class Coupon < ActiveRecord::Base
   after_create :generate_qr_code
   scope :display_order, lambda { order("coupon_tpl_type, price ASC, claimed_at DESC") }
   scope :claimed, lambda { where(:status => :claimed) }
+  scope :claimed_or_used, lambda { where("status in ('claimed', 'used')") }
   scope :used, lambda { where(:status => :used) }
   scope :fit_for_today, lambda { where(["fit_for_date = ? ", Time.now.strftime("%Y-%m-%d") ]) }
   scope :long_term_or_fit_for_today, lambda { where(["fit_for_date is NULL or fit_for_date = ? ", Time.now.strftime("%Y-%m-%d")]) }
@@ -129,6 +130,11 @@ class Coupon < ActiveRecord::Base
     return false if self.park_id != park.id
     return false if expired?
     return true
+  end
+
+  def coupon_use!
+    return true if coupon.monthly?
+    self.use!
   end
 
   def fit_for_date_range

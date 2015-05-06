@@ -9,3 +9,5 @@
   %td
     = f.file_field :banner
     = image_tag f.object.banner.try(:thumb).try(:url)
+
+= render :partial => "begin_end_time_select", :locals => { :f => f }
