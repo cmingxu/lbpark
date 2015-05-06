@@ -133,7 +133,7 @@ class Coupon < ActiveRecord::Base
   end
 
   def coupon_use!
-    return true if coupon.monthly?
+    return true if self.monthly?
     self.use!
   end
 
