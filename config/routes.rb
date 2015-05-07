@@ -87,11 +87,6 @@ Rails.application.routes.draw do
 
     resources :coupons
     resources :parks
-    resources :park_maps do
-      collection do
-      get :mesh
-      end
-    end
   end
 
   # staff only actions
@@ -135,6 +130,11 @@ Rails.application.routes.draw do
     resources :users_parks
     resources :parks do
       resources :clients
+      resources :park_maps do
+        collection do
+          get :mesh
+        end
+      end
     end
     resources :wechat_users, :only => [:index] do
       resources :wechat_user_activities, :only => [:index]

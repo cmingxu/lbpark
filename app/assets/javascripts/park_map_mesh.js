@@ -129,7 +129,7 @@
       self = this;
       this.pm_ele_editor.show();
 
-      shape.prop_list.forEach(function (prop) {
+      _.values(shape.prop_list).forEach(function (prop) {
         tmp = $(prop.to_html());
         tmp.find("select,input").on('change', function (val) {
           prop.setValue($(this).val());
@@ -252,6 +252,48 @@
       }
       toolbar_items.push(draw_lane);
 
+      var draw_pillar = new ToolbarItem();
+      draw_pillar.name = "draw_pillar";
+      draw_pillar.cn_name = "柱子";
+      draw_pillar.icon = 'pillar';
+      draw_pillar.callback = function () {
+        var draw_pillar_action = new DrawPillarAction();
+        if(instance.context.current_action){
+          instance.context.current_action.reset();
+        }
+        instance.context.current_action = draw_pillar_action;
+        draw_pillar_action.take_effect_now();
+      }
+      toolbar_items.push(draw_pillar);
+
+      var draw_lift = new ToolbarItem();
+      draw_lift.name = "draw_lift";
+      draw_lift.cn_name = "电梯";
+      draw_lift.icon = 'lift';
+      draw_lift.callback = function () {
+        var draw_lift_action = new DrawLiftAction();
+        if(instance.context.current_action){
+          instance.context.current_action.reset();
+        }
+        instance.context.current_action = draw_lift_action;
+        draw_lift_action.take_effect_now();
+      }
+      toolbar_items.push(draw_lift);
+
+      var draw_elevator = new ToolbarItem();
+      draw_elevator.name = "draw_elevator";
+      draw_elevator.cn_name = "扶梯";
+      draw_elevator.icon = 'elevator';
+      draw_elevator.callback = function () {
+        var draw_elevator_action = new DrawElevatorAction();
+        if(instance.context.current_action){
+          instance.context.current_action.reset();
+        }
+        instance.context.current_action = draw_elevator_action;
+        draw_elevator_action.take_effect_now();
+      }
+      toolbar_items.push(draw_elevator);
+
       var toolbar = $("#pm_toolbar");
       var toolbar_content = $("#pm_toolbar_content");
 
@@ -335,6 +377,23 @@
 
           if(shape.name == 'lane') {
             instance.context.current_action = new EditLaneAction(shape);
+            instance.context.current_action.take_effect_now();
+          }
+
+          if(shape.name == 'pillar') {
+            instance.context.current_action = new EditPillarAction(shape);
+            instance.context.current_action.take_effect_now();
+          }
+
+
+          if(shape.name == 'lift') {
+            instance.context.current_action = new EditLiftAction(shape);
+            instance.context.current_action.take_effect_now();
+          }
+
+
+          if(shape.name == 'elevator') {
+            instance.context.current_action = new EditElevatorAction(shape);
             instance.context.current_action.take_effect_now();
           }
         }
@@ -430,16 +489,16 @@
         offset_y = pm_event.mouse_event.pageY - instance.canvas.offset().top;
 
         if(pm_event.event_type == "drag_start"){
-          this.shape.start_point = new Point(offset_x, offset_y);
+          this.shape.setStartPoint(new Point(offset_x, offset_y));
         }
 
         if(pm_event.event_type == "draging"){
-          this.shape.end_point = new Point(offset_x, offset_y);
+          this.shape.setEndPoint(new Point(offset_x, offset_y));
           this.shape.drawing();
         }
 
         if(pm_event.event_type == "drag_stop"){
-          this.shape.end_point = new Point(offset_x, offset_y);
+          this.shape.setEndPoint(new Point(offset_x, offset_y));
           this.shape.draw();
           instance.context.current_action.reset();
           instance.context.current_action = null;
@@ -462,7 +521,7 @@
       this.take_effect = function (pm_event) {
         function point_of_interest(event) {
           point = Point.from_event(event);
-          handles = this.shape._line.find(".handle");
+          handles = this.shape._rect.find(".handle");
           div = null
           for(var i=0; i<handles.length; i++){
             if(point.within_div($(handles[i]))){
@@ -496,9 +555,9 @@
 
           point = Point.from_event(pm_event.mouse_event);
           if(this.which_point_move == "left_handle"){
-            this.shape.start_point = point;
+            this.shape.setStartPoint(point);
           }else{
-            this.shape.end_point = point;
+            this.shape.setEndPoint(point);
           }
           this.shape.drawing();
         }
@@ -508,9 +567,9 @@
 
           point = Point.from_event(pm_event.mouse_event);
           if(this.which_point_move == 'left_handle'){
-            this.shape.start_point = point;
+            this.shape.setStartPoint(point);
           }else{
-            this.shape.end_point = point;
+            this.shape.setEndPoint(point);
           }
           this.shape.draw();
         }
@@ -535,15 +594,22 @@
 
         if(pm_event.event_type == "drag_start"){
           this.shape.start_point = new Point(offset_x, offset_y);
+          this.shape.prop_list.top.setValue("" + offset_y + "px")
+          this.shape.prop_list.left.setValue("" + offset_x + "px")
         }
 
         if(pm_event.event_type == "draging"){
           this.shape.end_point = new Point(offset_x, offset_y);
+          this.shape.prop_list.width.setValue("" + this.shape.end_point.x_distance(this.shape.start_point) + "px")
+          this.shape.prop_list.height.setValue(""+ this.shape.end_point.y_distance(this.shape.start_point) + "px")
           this.shape.drawing();
         }
 
         if(pm_event.event_type == "drag_stop"){
           this.shape.end_point = new Point(offset_x, offset_y);
+          this.shape.prop_list.width.setValue("" + this.shape.end_point.x_distance(this.shape.start_point) + "px")
+          this.shape.prop_list.height.setValue(""+ this.shape.end_point.y_distance(this.shape.start_point) + "px")
+
           this.shape.draw();
           instance.context.current_action.reset();
           instance.context.current_action = null;
@@ -595,7 +661,6 @@
         }
 
         if(pm_event.event_type == "drag_start"){
-          console.log('drag_start');
           this.which_point_move = point_of_interest(pm_event.mouse_event);
           this.drag_start_point = Point.from_event(pm_event.mouse_event);
           this.shape_initial_start_point = this.shape.start_point.clone();
@@ -608,9 +673,9 @@
 
           point = Point.from_event(pm_event.mouse_event);
           if(this.which_point_move == "rect_left_handle"){
-            this.shape.start_point = point;
+            this.shape.setStartPoint(point);
           }else if(this.which_point_move == "rect_right_handle"){
-            this.shape.end_point = point;
+            this.shape.setEndPoint(point);
           }else if(this.which_point_move == 'rect_rotate_handle'){
             dy = point.y_in_px - this.shape_initial_center.y_in_px;
             dx = point.x_in_px - this.shape_initial_center.x_in_px;
@@ -662,16 +727,16 @@
         offset_y = pm_event.mouse_event.pageY - instance.canvas.offset().top;
 
         if(pm_event.event_type == "drag_start"){
-          this.shape.start_point = new Point(offset_x, offset_y);
+          this.shape.setStartPoint(new Point(offset_x, offset_y))
         }
 
         if(pm_event.event_type == "draging"){
-          this.shape.end_point = new Point(offset_x, offset_y);
+          this.shape.setEndPoint(new Point(offset_x, offset_y))
           this.shape.drawing();
         }
 
         if(pm_event.event_type == "drag_stop"){
-          this.shape.end_point = new Point(offset_x, offset_y);
+          this.shape.setEndPoint(new Point(offset_x, offset_y))
           this.shape.draw();
           instance.context.current_action.reset();
           instance.context.current_action = null;
@@ -708,7 +773,6 @@
           if(this.div == null){ return null; }
 
           if(div.hasClass("lane_move_handle")){ return "lane_move_handle"; }
-          if(div.hasClass("lane_left_handle")){ return "lane_left_handle"; }
           if(div.hasClass("lane_right_handle")){ return "lane_right_handle"; }
           if(div.hasClass("lane_remove_handle")){ return "lane_remove_handle"; }
           if(div.hasClass("lane_rotate_handle")){ return "lane_rotate_handle"; }
@@ -734,10 +798,8 @@
           if(this.which_point_move == null){ return null; }
 
           point = Point.from_event(pm_event.mouse_event);
-          if(this.which_point_move == "lane_left_handle"){
-            this.shape.start_point = point;
-          }else if(this.which_point_move == "lane_right_handle"){
-            this.shape.end_point = point;
+          if(this.which_point_move == "lane_right_handle"){
+            this.shape.setEndPoint(point);
           }else if(this.which_point_move == 'lane_rotate_handle'){
             dy = point.y_in_px - this.shape_initial_center.y_in_px;
             dx = point.x_in_px - this.shape_initial_center.x_in_px;
@@ -750,10 +812,8 @@
             offset_x = point.x_in_px - this.drag_start_point.x_in_px;
             offset_y = point.y_in_px - this.drag_start_point.y_in_px;
 
-            this.shape.start_point.x_in_px = this.shape_initial_start_point.x_in_px + offset_x;
-            this.shape.start_point.y_in_px = this.shape_initial_start_point.y_in_px + offset_y;
-            this.shape.end_point.x_in_px = this.shape_initial_end_point.x_in_px + offset_x;
-            this.shape.end_point.y_in_px = this.shape_initial_end_point.y_in_px + offset_y;
+            this.shape.setStartPoint(new Point(this.shape_initial_start_point.x_in_px + offset_x, this.shape_initial_start_point.y_in_px + offset_y));
+            this.shape.setEndPoint(new Point(this.shape_initial_end_point.x_in_px + offset_x, this.shape_initial_end_point.y_in_px + offset_y));
           }
           this.shape.drawing();
         }
@@ -771,6 +831,7 @@
         }
       }
     }
+
 
 
     var DrawParkSpaceAction = function () {
@@ -862,11 +923,292 @@
             offset_x = point.x_in_px - this.drag_start_point.x_in_px;
             offset_y = point.y_in_px - this.drag_start_point.y_in_px;
 
-            this.shape.start_point.x_in_px = this.shape_initial_start_point.x_in_px + offset_x;
-            this.shape.start_point.y_in_px = this.shape_initial_start_point.y_in_px + offset_y;
-            this.shape.end_point.x_in_px = this.shape_initial_end_point.x_in_px + offset_x;
-            this.shape.end_point.y_in_px = this.shape_initial_end_point.y_in_px + offset_y;
+            new_center = new Point(this.shape_initial_center.x_in_px + offset_x, this.shape_initial_center.y_in_px + offset_y)
+            this.shape.set_center(new_center);
+
           }
+          this.shape.drawing();
+        }
+
+        if(pm_event.event_type == "drag_stop"){
+          if(this.which_point_move == null){ return null; }
+
+          this.shape.draw();
+        }
+      }
+    }
+
+
+    var DrawPillarAction = function () {
+      this.name = ACTIONS.DRAW_PILLAR;
+      this.shape = new Pillar();
+      this.take_effect_now = function () {
+        instance.canvas.css("cursor", "crosshair");
+      }
+
+      this.reset = function () {
+        instance.canvas.css('cursor', 'default');
+      }
+
+      this.take_effect = function (pm_event) {
+        offset_x = pm_event.mouse_event.pageX - instance.canvas.offset().left;
+        offset_y = pm_event.mouse_event.pageY - instance.canvas.offset().top;
+
+        if(pm_event.event_type == "click"){
+          this.shape.set_center(new Point(offset_x, offset_y));
+          this.shape.draw();
+          instance.context.current_action.reset();
+          instance.context.current_action = null;
+        }
+      }
+    }
+
+    var EditPillarAction = function (shape) {
+      this.name = ACTIONS.EDIT_PARK_SPACE;
+      this.shape = shape;
+      this.which_point_move = null;
+      this.take_effect_now = function () {
+        this.shape._rect.find('.pillar_move_handle').css('cursor','move');
+        this.shape.editing();
+      }
+
+      this.reset = function () {
+        this.shape._rect.find('.pillar_move_handle').css('cursor','default');
+        this.shape.done_editing();
+      }
+
+      this.take_effect = function (pm_event) {
+        function point_of_interest(event) {
+          point = Point.from_event(event);
+          handles = this.shape._rect.find(".pillar_handle");
+          div = null
+          for(var i=0; i<handles.length; i++){
+            if(point.within_div($(handles[i]))){
+              div = $(handles[i]);
+              break;
+            }
+          }
+
+          if(this.div == null){ return null; }
+
+          if(div.hasClass("pillar_move_handle")){ return   "pillar_move_handle"; }
+          if(div.hasClass("pillar_remove_handle")){ return "pillar_remove_handle"; }
+        }
+
+        drag_start_point = null;
+        if(pm_event.event_type == "click"){
+          point_of_interest = point_of_interest(pm_event.mouse_event);
+          if(point_of_interest == "pillar_remove_handle"){
+            this.shape.remove();
+          }
+        }
+
+        if(pm_event.event_type == "drag_start"){
+          this.which_point_move = point_of_interest(pm_event.mouse_event);
+          this.drag_start_point = Point.from_event(pm_event.mouse_event);
+          this.shape_initial_start_point = this.shape.start_point.clone();
+          this.shape_initial_end_point   = this.shape.end_point.clone();
+          this.shape_initial_center      = this.shape.center();
+        }
+
+        if(pm_event.event_type == "draging"){
+          if(this.which_point_move == null){ return null; }
+
+          point = Point.from_event(pm_event.mouse_event);
+          offset_x = point.x_in_px - this.drag_start_point.x_in_px;
+          offset_y = point.y_in_px - this.drag_start_point.y_in_px;
+
+          new_center = new Point(this.shape_initial_center.x_in_px + offset_x, this.shape_initial_center.y_in_px + offset_y)
+          this.shape.set_center(new_center);
+
+          this.shape.drawing();
+        }
+
+        if(pm_event.event_type == "drag_stop"){
+          if(this.which_point_move == null){ return null; }
+
+          this.shape.draw();
+        }
+      }
+    }
+
+
+    var DrawLiftAction = function () {
+      this.name = ACTIONS.DRAW_LIFT;
+      this.shape = new Lift();
+      this.take_effect_now = function () {
+        instance.canvas.css("cursor", "crosshair");
+      }
+
+      this.reset = function () {
+        instance.canvas.css('cursor', 'default');
+      }
+
+      this.take_effect = function (pm_event) {
+        offset_x = pm_event.mouse_event.pageX - instance.canvas.offset().left;
+        offset_y = pm_event.mouse_event.pageY - instance.canvas.offset().top;
+
+        if(pm_event.event_type == "click"){
+          this.shape.set_center(new Point(offset_x, offset_y));
+          this.shape.draw();
+          instance.context.current_action.reset();
+          instance.context.current_action = null;
+        }
+      }
+    }
+
+    var EditLiftAction = function (shape) {
+      this.name = ACTIONS.EDIT_LIFT;
+      this.shape = shape;
+      this.which_point_move = null;
+      this.take_effect_now = function () {
+        this.shape._rect.find('.lift_move_handle').css('cursor','move');
+        this.shape.editing();
+      }
+
+      this.reset = function () {
+        this.shape._rect.find('.lift_move_handle').css('cursor','default');
+        this.shape.done_editing();
+      }
+
+      this.take_effect = function (pm_event) {
+        function point_of_interest(event) {
+          point = Point.from_event(event);
+          handles = this.shape._rect.find(".lift_handle");
+          div = null
+          for(var i=0; i<handles.length; i++){
+            if(point.within_div($(handles[i]))){
+              div = $(handles[i]);
+              break;
+            }
+          }
+
+          if(this.div == null){ return null; }
+
+          if(div.hasClass("lift_move_handle")){ return   "lift_move_handle"; }
+          if(div.hasClass("lift_remove_handle")){ return "lift_remove_handle"; }
+        }
+
+        drag_start_point = null;
+        if(pm_event.event_type == "click"){
+          point_of_interest = point_of_interest(pm_event.mouse_event);
+          if(point_of_interest == "lift_remove_handle"){
+            this.shape.remove();
+          }
+        }
+
+        if(pm_event.event_type == "drag_start"){
+          this.which_point_move = point_of_interest(pm_event.mouse_event);
+          this.drag_start_point = Point.from_event(pm_event.mouse_event);
+          this.shape_initial_start_point = this.shape.start_point.clone();
+          this.shape_initial_end_point   = this.shape.end_point.clone();
+          this.shape_initial_center      = this.shape.center();
+        }
+
+        if(pm_event.event_type == "draging"){
+          if(this.which_point_move == null){ return null; }
+
+          point = Point.from_event(pm_event.mouse_event);
+          offset_x = point.x_in_px - this.drag_start_point.x_in_px;
+          offset_y = point.y_in_px - this.drag_start_point.y_in_px;
+
+          new_center = new Point(this.shape_initial_center.x_in_px + offset_x, this.shape_initial_center.y_in_px + offset_y)
+          this.shape.set_center(new_center);
+
+          this.shape.drawing();
+        }
+
+        if(pm_event.event_type == "drag_stop"){
+          if(this.which_point_move == null){ return null; }
+
+          this.shape.draw();
+        }
+      }
+    }
+
+
+    var DrawElevatorAction = function () {
+      this.name = ACTIONS.DRAW_ELEVATOR;
+      this.shape = new Elevator();
+      this.take_effect_now = function () {
+        instance.canvas.css("cursor", "crosshair");
+      }
+
+      this.reset = function () {
+        instance.canvas.css('cursor', 'default');
+      }
+
+      this.take_effect = function (pm_event) {
+        offset_x = pm_event.mouse_event.pageX - instance.canvas.offset().left;
+        offset_y = pm_event.mouse_event.pageY - instance.canvas.offset().top;
+
+        if(pm_event.event_type == "click"){
+          this.shape.set_center(new Point(offset_x, offset_y));
+          this.shape.draw();
+          instance.context.current_action.reset();
+          instance.context.current_action = null;
+        }
+      }
+    }
+
+    var EditElevatorAction = function (shape) {
+      this.name = ACTIONS.EDIT_LIFT;
+      this.shape = shape;
+      this.which_point_move = null;
+      this.take_effect_now = function () {
+        this.shape._rect.find('.elevator_move_handle').css('cursor','move');
+        this.shape.editing();
+      }
+
+      this.reset = function () {
+        this.shape._rect.find('.elevator_move_handle').css('cursor','default');
+        this.shape.done_editing();
+      }
+
+      this.take_effect = function (pm_event) {
+        function point_of_interest(event) {
+          point = Point.from_event(event);
+          handles = this.shape._rect.find(".elevator_handle");
+          div = null
+          for(var i=0; i<handles.length; i++){
+            if(point.within_div($(handles[i]))){
+              div = $(handles[i]);
+              break;
+            }
+          }
+
+          if(this.div == null){ return null; }
+
+          if(div.hasClass("elevator_move_handle")){ return   "elevator_move_handle"; }
+          if(div.hasClass("elevator_remove_handle")){ return "elevator_remove_handle"; }
+        }
+
+        drag_start_point = null;
+        if(pm_event.event_type == "click"){
+          point_of_interest = point_of_interest(pm_event.mouse_event);
+          if(point_of_interest == "elevator_remove_handle"){
+            this.shape.remove();
+          }
+        }
+
+        if(pm_event.event_type == "drag_start"){
+          this.which_point_move = point_of_interest(pm_event.mouse_event);
+          this.drag_start_point = Point.from_event(pm_event.mouse_event);
+          this.shape_initial_start_point = this.shape.start_point.clone();
+          this.shape_initial_end_point   = this.shape.end_point.clone();
+          this.shape_initial_center      = this.shape.center();
+        }
+
+        if(pm_event.event_type == "draging"){
+          if(this.which_point_move == null){ return null; }
+
+          point = Point.from_event(pm_event.mouse_event);
+          offset_x = point.x_in_px - this.drag_start_point.x_in_px;
+          offset_y = point.y_in_px - this.drag_start_point.y_in_px;
+
+          new_center = new Point(this.shape_initial_center.x_in_px + offset_x, this.shape_initial_center.y_in_px + offset_y)
+          this.shape.set_center(new_center);
+
           this.shape.drawing();
         }
 
@@ -899,6 +1241,12 @@
     Utils.proto_inheritance(Action, EditParkSpaceAction);
     Utils.proto_inheritance(Action, DrawLaneAction);
     Utils.proto_inheritance(Action, EditLaneAction);
+    Utils.proto_inheritance(Action, DrawPillarAction);
+    Utils.proto_inheritance(Action, EditPillarAction);
+    Utils.proto_inheritance(Action, DrawLiftAction);
+    Utils.proto_inheritance(Action, EditLiftAction);
+    Utils.proto_inheritance(Action, DrawElevatorAction);
+    Utils.proto_inheritance(Action, EditElevatorAction);
 
     //////////////////////////////////////////////////////////////////////////////
     //
@@ -1060,54 +1408,94 @@
       this.css_value = function () { return this.shape._rect.css('width'); }
       this.value = function () { return this.shape._rect.css('width'); }
       this.name  = "width";
-      this.cn_name = "宽度";
+      this.cn_name = "长度";
       this.to_html = function () {   return "<tr><td>" + this.cn_name + "</td><td><input value='" +this.css_value() + "' type='input'/></td></tr>";};
       this.html_dom_type = 'input';
       this.setValue = function (val) { this.shape._rect.css('width', val); }
     }
 
+
+    var LaneImageProp = function () {
+      this.shape = null;
+      this.css_key = "background-image";
+      this.css_value = function () { return this.shape._rect.css('background-image'); }
+      this.value = function () { return this.shape._rect.css('background-image'); }
+      this.name  = "background-image";
+      this.cn_name = "图片";
+      this.to_html = function () { return "<tr><td>" + this.cn_name + "</td><td><select>" + this.html_dom_options + "</select></td><tr>"; };
+      this.html_dom_type = "select";
+      this.html_dom_options = ["double", "left", "right", "right_top", "right_bottom", "left_top", "left_bottom"].map(function (v) { return "<option "+ (parseInt(v) == this.value ? 'selected' : '' ) +">" + v +"</option>"});
+      this.setValue = function (val) { console.log(val);this.shape._rect.css('background-image', "url(/assets/lane/lane_" + val + ".png)"); }
+    }
+
+
     var Line = function () {
       this.name = "line";
       this.cn_name = "线";
-      this._line = $("<div class='line'><div class='handle left_handle'></div><div class='handle remove_handle'>X</div><div class='handle right_handle'></div></div>");
-      this._line.css('border', 'none');
-      //this._line.css('height', '2px').css('background-color', 'red');
-      this._line.css('position', 'absolute');
-      this._line.css('transform-origin', "left top");
+      this._rect = $("<div class='line'><div class='handle left_handle'></div><div class='handle remove_handle'>X</div><div class='handle right_handle'></div></div>");
+      this._rect.css('border', 'none');
+      this._rect.css('position', 'absolute');
+      this._rect.css('transform-origin', "left top");
 
       this.point_within_range = function (point) {
         return this.distance_to_point(point) < 10;
       }
 
-      this.prop_list = [new ThicknessProp(), new ColorProp()];
+      this.setStartPoint = function (new_start_point) {
+        this.start_point = new_start_point;
+        this._update_cordinate();
+      }
+
+      this.setEndPoint = function (new_end_point) {
+        this.end_point = new_end_point;
+        this._update_cordinate();
+      }
+
+      this._update_cordinate = function () {
+        this.prop_list.top.setValue(this.start_point.y_in_px + "px");
+        this.prop_list.left.setValue(this.start_point.x_in_px + "px");
+        if(this.end_point){
+          this.prop_list.width.setValue(this.end_point.x_distance(this.start_point) + "px")
+          angle = this.start_point.angle(this.end_point);
+          this.prop_list.rotate.setValue("rotate(" + angle + "deg)");
+        }
+      }
+
+      this.prop_list = {};
+      line = this;
+      [new ThicknessProp(), new ColorProp(), new TopProp(), new LeftProp(), new WidthProp(), new AngleProp()].map(function (prop) {
+        prop.shape = line;
+        line.prop_list[prop.name] = prop;
+      });
 
       this.update = function () {
         this._draw();
       }
 
       this._draw = function () {
-        this._line.css('width', "" + this.start_point.distance(this.end_point) + "px");
-        this._line.css('left', "" +  this.start_point.x_in_px + "px");
-        this._line.css('top', "" +  this.start_point.y_in_px + "px");
-        for(var i=0; i<this.prop_list.length; i++){ this._line.css(this.prop_list[i].css_key, this.prop_list[i].css_value); }
-        angle = this.start_point.angle(this.end_point);
-        this._line.css('transform', "rotate(" +  angle + "deg)");
-        if(!this._line.attr('append')){
-          instance.canvas.append(this._line);
+        for(prop_name in this.prop_list){
+          if( typeof this.prop_list[prop_name].css_value === 'function'){
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value());
+          }else{
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value);
+          }
+        }
+        if(!this._rect.attr('append')){
+          instance.canvas.append(this._rect);
           instance.objects.push(this);
-          this._line.attr('append', true);
+          this._rect.attr('append', true);
         }
       }
 
       this.editing = function () {
         this.state = STATE.EDITING;
-        this._line.find('.handle').show();
+        this._rect.find('.handle').show();
         instance.show_prop_list_window(this);
       }
 
       this.done_editing = function () {
         this.state = STATE.DRAWN;
-        this._line.find('.handle').hide();
+        this._rect.find('.handle').hide();
         instance.hide_prop_list_window();
       }
 
@@ -1126,7 +1514,7 @@
       }
 
       this.remove = function () {
-        this._line.remove();
+        this._rect.remove();
       }
 
       this.distance_to_point = function(point) {
@@ -1191,34 +1579,49 @@
         return new Point((this.end_point.x_in_px + this.start_point.x_in_px) / 2, (this.end_point.y_in_px + this.start_point.y_in_px) / 2);
       }
 
+      this.setStartPoint = function (new_start_point) {
+        this.start_point = new_start_point;
+        this._update_cordinate();
+      }
+
+      this.setEndPoint = function (new_end_point) {
+        this.end_point = new_end_point;
+        this._update_cordinate();
+      }
+
+      this._update_cordinate = function () {
+        this.prop_list.top.setValue(this.start_point.y_in_px + "px");
+        this.prop_list.left.setValue(this.start_point.x_in_px + "px");
+        this.prop_list.width.setValue(this.end_point.x_distance(this.start_point) + "px")
+        this.prop_list.height.setValue(this.end_point.y_distance(this.start_point) + "px")
+      }
+
       this.point_within_range = function (point) {
         return point.x_in_px > this.start_point.x_in_px && point.x_in_px < this.end_point.x_in_px &&
           point.y_in_px > this.start_point.y_in_px && point.y_in_px < this.end_point.y_in_px;
       }
 
-      this.prop_list = [new ColorProp(), new LeftBorderProp(), new RightBorderProp(), new TopBorderProp(),
-        new BottomBorderProp(), new AngleProp(), new TopProp(), new LeftProp(), new WidthProp(), new HeightProp()];
+      this.prop_list = {};
+      rect = this;
+      [new ColorProp(), new LeftBorderProp(), new RightBorderProp(), new TopBorderProp(),
+        new BottomBorderProp(), new AngleProp(), new TopProp(), new LeftProp(), new WidthProp(), new HeightProp()].map(function (prop) {
+          prop.shape = rect;
+         rect.prop_list[prop.name] = prop;
+        });
 
-      this.prop_list[0].setValue("#9bd23c");
 
-      for(var i=0; i<this.prop_list.length; i++){
-        this.prop_list[i].shape = this;
-      }
+      this.prop_list.color.setValue("#9bd23c");
 
       this.update = function () {
         this._draw();
       }
 
       this._draw = function () {
-        this._rect.css('width', "" + this.start_point.x_distance(this.end_point) + "px");
-        this._rect.css('height', "" + this.start_point.y_distance(this.end_point) + "px");
-        this._rect.css('top', "" +  this.start_point.y_in_px + "px");
-        this._rect.css('left', "" +  this.start_point.x_in_px + "px");
-        for(var i=0; i<this.prop_list.length; i++){
-          if( typeof this.prop_list[i].css_value === 'function'){
-            this._rect.css(this.prop_list[i].css_key, this.prop_list[i].css_value());
+        for(prop_name in this.prop_list){
+          if( typeof this.prop_list[prop_name].css_value === 'function'){
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value());
           }else{
-            this._rect.css(this.prop_list[i].css_key, this.prop_list[i].css_value);
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value);
           }
         }
         if(!this._rect.attr('append')){
@@ -1229,7 +1632,8 @@
       }
 
       this.rotate = function (angle) {
-        this._rect.css("transform", 'rotate(' +angle+ 'deg)');
+        this.prop_list.rotate.setValue("rotate(" + angle + "deg)");
+        this._draw();
       }
 
       this.editing = function () {
@@ -1267,13 +1671,14 @@
     Utils.proto_inheritance(Shape, Rect);
 
     var ParkSpace = function () {
+      park_space = this;
       this.name = "park_space";
       this.cn_name = "车位";
       this._rect = $("<div class='park_space'><div class='park_space_handle park_space_remove_handle'>X</div><div class='park_space_handle park_space_move_handle'></div><div class='park_space_handle park_space_rotate_handle'></div></div>");
       this._rect.css('position', 'absolute');
       this._rect.css('transform-origin', "center");
-      this.prop_list = [new AngleProp()];
-      this.prop_list.forEach(function (prop) { prop.shape = this; });
+      this.prop_list = {};
+      _.each([new AngleProp(), new TopProp(), new LeftProp()], function (prop) { park_space.prop_list[prop.name] = prop; prop.shape = park_space; });
 
       this.editing = function () {
         this.state = STATE.EDITING;
@@ -1289,17 +1694,23 @@
 
       this.set_center = function (center) {
         this.center_point = center;
+        this.prop_list.top.setValue(this.center_point.y_in_px - 15);
+        this.prop_list.left.setValue(this.center_point.x_in_px - 15);
         this.start_point = new Point(this.center_point.x_in_px - 15, this.center_point.y_in_px - 25);
         this.end_point   = new Point(this.center_point.x_in_px + 15, this.center_point.y_in_px + 25);
       }
 
       this._draw = function () {
-        this._rect.css('width', "" + this.start_point.x_distance(this.end_point) + "px");
-        this._rect.css('height', "" + this.start_point.y_distance(this.end_point) + "px");
-        this._rect.css('top', "" +  this.start_point.y_in_px + "px");
+        for(prop_name in this.prop_list){
+          if( typeof this.prop_list[prop_name].css_value === 'function'){
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value());
+          }else{
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value);
+          }
+        }
         this._rect.css('background-color', 'white');
-        this._rect.css('left', "" +  this.start_point.x_in_px + "px");
-        for(var i=0; i<this.prop_list.length; i++){ this._rect.css(this.prop_list[i].css_key, this.prop_list[i].css_value); }
+        this._rect.css('height', '50px');
+        this._rect.css('width', '30px');
         if(!this._rect.attr('append')){
           instance.canvas.append(this._rect);
           instance.objects.push(this);
@@ -1313,11 +1724,29 @@
 
 
     var Lane = function () {
+      lane = this;
       this.name = "lane";
       this.cn_name = "车道";
       this._rect = $("<div class='lane'><div class='lane_handle lane_remove_handle'>X</div><div class='lane_handle lane_right_handle'></div><div class='lane_handle lane_move_handle'></div><div class='lane_handle lane_rotate_handle'></div></div>");
       this._rect.css('position', 'absolute');
       this._rect.css('transform-origin', "center");
+
+      this.setStartPoint = function (new_start_point) {
+        this.start_point = new_start_point;
+        this._update_cordinate();
+      }
+
+      this.setEndPoint = function (new_end_point) {
+        this.end_point = new_end_point;
+        this._update_cordinate();
+      }
+
+      this._update_cordinate = function () {
+        this.prop_list.top.setValue(this.start_point.y_in_px + "px");
+        this.prop_list.left.setValue(this.start_point.x_in_px + "px");
+        if(this.end_point){ this.prop_list.width.setValue(this.end_point.x_distance(this.start_point) + "px") }
+      }
+
 
       this.width = function () {
         return this.end_point.x_in_px - this.start_point.x_in_px;
@@ -1336,18 +1765,23 @@
           point.y_in_px > this.start_point.y_in_px && point.y_in_px < this.end_point.y_in_px;
       }
 
-      this.prop_list = [];
+      this.prop_list = {};
+      _.each([new AngleProp(), new WidthProp(), new TopProp(), new LeftProp(), new LaneImageProp()], function (prop) { lane.prop_list[prop.name] = prop; prop.shape = lane;});
 
       this.update = function () {
         this._draw();
       }
 
       this._draw = function () {
-        this._rect.css('width', "" + this.start_point.x_distance(this.end_point) + "px");
+        for(prop_name in this.prop_list){
+          if( typeof this.prop_list[prop_name].css_value === 'function'){
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value());
+          }else{
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value);
+          }
+        }
         this._rect.css('height', "50px");
-        this._rect.css('top', "" +  this.start_point.y_in_px + "px");
-        this._rect.css('left', "" +  this.start_point.x_in_px + "px");
-        for(var i=0; i<this.prop_list.length; i++){ this._rect.css(this.prop_list[i].css_key, this.prop_list[i].css_value); }
+
         if(!this._rect.attr('append')){
           instance.canvas.append(this._rect);
           instance.objects.push(this);
@@ -1356,7 +1790,7 @@
       }
 
       this.rotate = function (angle) {
-        this._rect.css("transform", 'rotate(' +angle+ 'deg)');
+        this.prop_list.rotate.setValue("rotate(" + angle + "deg)")
       }
 
       this.editing = function () {
@@ -1392,6 +1826,292 @@
 
     Utils.proto_inheritance(Rect, Lane);
 
+    var Pillar = function () {
+      this.name = "pillar";
+      this.cn_name = "柱子";
+      this._rect = $("<div class='pillar'><div class='pillar_handle pillar_remove_handle'>X</div><div class='pillar_handle pillar_move_handle'></div></div>");
+      this._rect.css('position', 'absolute');
+      this._rect.css('transform-origin', "center");
+
+      this.width = function () {
+        return this.end_point.x_in_px - this.start_point.x_in_px;
+      }
+
+      this.height = function () {
+        return this.end_point.y_in_px - this.start_point.y_in_px;
+      }
+
+      this.center = function () {
+        return new Point((this.end_point.x_in_px + this.start_point.x_in_px) / 2, (this.end_point.y_in_px + this.start_point.y_in_px) / 2);
+      }
+
+      this.set_center = function (center) {
+        this.center_point = center;
+        this.prop_list.top.setValue(this.center_point.y_in_px - 15);
+        this.prop_list.left.setValue(this.center_point.x_in_px - 15);
+        this.start_point = new Point(this.center_point.x_in_px - 15, this.center_point.y_in_px - 25);
+        this.end_point   = new Point(this.center_point.x_in_px + 15, this.center_point.y_in_px + 25);
+      }
+
+      this.point_within_range = function (point) {
+        return point.x_in_px > this.start_point.x_in_px && point.x_in_px < this.end_point.x_in_px &&
+          point.y_in_px > this.start_point.y_in_px && point.y_in_px < this.end_point.y_in_px;
+      }
+
+      this.prop_list = {};
+      rect = this;
+      [new ColorProp(), new TopProp(), new LeftProp()].map(function (prop) {
+          prop.shape = rect;
+         rect.prop_list[prop.name] = prop;
+        });
+
+
+      this.prop_list.color.setValue("#9bd23c");
+
+      this.update = function () {
+        this._draw();
+      }
+
+      this._draw = function () {
+        for(prop_name in this.prop_list){
+          if( typeof this.prop_list[prop_name].css_value === 'function'){
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value());
+          }else{
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value);
+          }
+        }
+        this._rect.css('height', '20px');
+        this._rect.css('width', '20px');
+        if(!this._rect.attr('append')){
+          instance.canvas.append(this._rect);
+          instance.objects.push(this);
+          this._rect.attr('append', true);
+        }
+      }
+
+      this.editing = function () {
+        this.state = STATE.EDITING;
+        this._rect.find('.pillar_handle').show();
+        instance.show_prop_list_window(this);
+      }
+
+      this.done_editing = function () {
+        this.state = STATE.DRAWN;
+        this._rect.find('.pillar_handle').hide();
+        instance.hide_prop_list_window();
+      }
+
+      this.drawing = function () {
+        this.state = STATE.DRAWING;
+        this._draw();
+      }
+
+      this.draw = function () {
+        this._draw();
+        this.state = STATE.DRAWN;
+        this.done_drawing();
+      }
+
+      this.done_drawing = function () {
+      }
+
+      this.remove = function () {
+        this._rect.remove();
+      }
+    }
+
+    Utils.proto_inheritance(Rect, Pillar);
+
+
+    var Lift = function () {
+      this.name = "lift";
+      this.cn_name = "电梯";
+      this._rect = $("<div class='lift'><div class='lift_handle lift_remove_handle'>X</div><div class='lift_handle lift_move_handle'></div></div>");
+      this._rect.css('position', 'absolute');
+      this._rect.css('transform-origin', "center");
+
+      this.width = function () {
+        return this.end_point.x_in_px - this.start_point.x_in_px;
+      }
+
+      this.height = function () {
+        return this.end_point.y_in_px - this.start_point.y_in_px;
+      }
+
+
+      this.set_center = function (center) {
+        this.center_point = center;
+        this.prop_list.top.setValue(this.center_point.y_in_px - 25);
+        this.prop_list.left.setValue(this.center_point.x_in_px - 25);
+        this.start_point = new Point(this.center_point.x_in_px - 25, this.center_point.y_in_px - 25);
+        this.end_point   = new Point(this.center_point.x_in_px + 25, this.center_point.y_in_px + 25);
+      }
+      this.center = function () {
+        return new Point((this.end_point.x_in_px + this.start_point.x_in_px) / 2, (this.end_point.y_in_px + this.start_point.y_in_px) / 2);
+      }
+
+      this.point_within_range = function (point) {
+        return point.x_in_px > this.start_point.x_in_px && point.x_in_px < this.end_point.x_in_px &&
+          point.y_in_px > this.start_point.y_in_px && point.y_in_px < this.end_point.y_in_px;
+      }
+
+      this.prop_list = {};
+      rect = this;
+      [new TopProp(), new LeftProp()].map(function (prop) {
+          prop.shape = rect;
+         rect.prop_list[prop.name] = prop;
+        });
+
+      this.update = function () {
+        this._draw();
+      }
+
+      this._draw = function () {
+        for(prop_name in this.prop_list){
+          if( typeof this.prop_list[prop_name].css_value === 'function'){
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value());
+          }else{
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value);
+          }
+        }
+        this._rect.css('height', '50px');
+        this._rect.css('width', '50px');
+        if(!this._rect.attr('append')){
+          instance.canvas.append(this._rect);
+          instance.objects.push(this);
+          this._rect.attr('append', true);
+        }
+      }
+
+      this.editing = function () {
+        this.state = STATE.EDITING;
+        this._rect.find('.lift_handle').show();
+        instance.show_prop_list_window(this);
+      }
+
+      this.done_editing = function () {
+        this.state = STATE.DRAWN;
+        this._rect.find('.lift_handle').hide();
+        instance.hide_prop_list_window();
+      }
+
+      this.drawing = function () {
+        this.state = STATE.DRAWING;
+        this._draw();
+      }
+
+      this.draw = function () {
+        this._draw();
+        this.state = STATE.DRAWN;
+        this.done_drawing();
+      }
+
+      this.done_drawing = function () {
+      }
+
+      this.remove = function () {
+        this._rect.remove();
+      }
+    }
+
+    Utils.proto_inheritance(Rect, Lift);
+
+
+    var Elevator = function () {
+      this.name = "elevator";
+      this.cn_name = "扶梯";
+      this._rect = $("<div class='elevator'><div class='elevator_handle elevator_remove_handle'>X</div><div class='elevator_handle elevator_move_handle'></div></div>");
+      this._rect.css('position', 'absolute');
+      this._rect.css('transform-origin', "center");
+
+      this.width = function () {
+        return this.end_point.x_in_px - this.start_point.x_in_px;
+      }
+
+      this.height = function () {
+        return this.end_point.y_in_px - this.start_point.y_in_px;
+      }
+
+      this.center = function () {
+        return new Point((this.end_point.x_in_px + this.start_point.x_in_px) / 2, (this.end_point.y_in_px + this.start_point.y_in_px) / 2);
+      }
+
+      this.set_center = function (center) {
+        this.center_point = center;
+        this.prop_list.top.setValue(this.center_point.y_in_px - 25);
+        this.prop_list.left.setValue(this.center_point.x_in_px - 25);
+        this.start_point = new Point(this.center_point.x_in_px - 25, this.center_point.y_in_px - 25);
+        this.end_point   = new Point(this.center_point.x_in_px + 25, this.center_point.y_in_px + 25);
+      }
+
+      this.point_within_range = function (point) {
+        return point.x_in_px > this.start_point.x_in_px && point.x_in_px < this.end_point.x_in_px &&
+          point.y_in_px > this.start_point.y_in_px && point.y_in_px < this.end_point.y_in_px;
+      }
+
+      this.prop_list = {};
+      rect = this;
+      [new TopProp(), new LeftProp()].map(function (prop) {
+          prop.shape = rect;
+         rect.prop_list[prop.name] = prop;
+        });
+
+
+
+      this.update = function () {
+        this._draw();
+      }
+
+      this._draw = function () {
+        for(prop_name in this.prop_list){
+          if( typeof this.prop_list[prop_name].css_value === 'function'){
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value());
+          }else{
+            this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value);
+          }
+        }
+        this._rect.css('height', '50px');
+        this._rect.css('width', '50px');
+        if(!this._rect.attr('append')){
+          instance.canvas.append(this._rect);
+          instance.objects.push(this);
+          this._rect.attr('append', true);
+        }
+      }
+
+      this.editing = function () {
+        this.state = STATE.EDITING;
+        this._rect.find('.elevator_handle').show();
+        instance.show_prop_list_window(this);
+      }
+
+      this.done_editing = function () {
+        this.state = STATE.DRAWN;
+        this._rect.find('.elevator_handle').hide();
+        instance.hide_prop_list_window();
+      }
+
+      this.drawing = function () {
+        this.state = STATE.DRAWING;
+        this._draw();
+      }
+
+      this.draw = function () {
+        this._draw();
+        this.state = STATE.DRAWN;
+        this.done_drawing();
+      }
+
+      this.done_drawing = function () {
+      }
+
+      this.remove = function () {
+        this._rect.remove();
+      }
+    }
+
+    Utils.proto_inheritance(Rect, Elevator);
+
 
     //point
     var Point = function(x, y){
@@ -1407,12 +2127,12 @@
 
       this.x_distance = function (other_point) {
         x_distance = parseInt(other_point.x_in_px - this.x_in_px);
-        return x_distance > 0 ? x_distance  : 0;
+        return Math.abs(x_distance);
       }
 
       this.y_distance = function (other_point) {
         y_distance =  parseInt(other_point.y_in_px - this.y_in_px);
-        return y_distance > 0 ? y_distance : 0;
+        return Math.abs(y_distance);
       }
 
       this.angle = function (other_point) {
