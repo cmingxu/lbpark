@@ -17,4 +17,13 @@ class ParkMap < ActiveRecord::Base
   belongs_to :park
   belongs_to :user
   has_many :park_map_eles, :dependent => :destroy
+
+  def as_json
+    self.park_map_eles.map do |ele|
+      {
+        :name => ele.park_map_ele_type,
+        :prop_list => ele.ele_desc
+      }
+    end
+  end
 end

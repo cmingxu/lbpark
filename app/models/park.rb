@@ -124,6 +124,7 @@ class Park < ActiveRecord::Base
   has_many :messages, :as => :owner
   has_many :coupons, :dependent => :destroy
   has_many :coupon_tpls, :dependent  => :destroy
+  has_one :park_map
 
   scope :within_range, lambda {|range| where(["gcj_lng > ? AND gcj_lat > ? AND gcj_lng < ? AND gcj_lat <?", range.p1.lng, range.p1.lat, range.p2.lng, range.p2.lat]) }
   scope :rand_visible, lambda {|r| where(["round(rand() * ?) = 1", r])}
