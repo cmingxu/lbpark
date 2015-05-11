@@ -1,0 +1,15 @@
+:javascript
+  park_map_data = #{(@park_map.as_json || []).to_json};
+
+= javascript_include_tag "park_map_render"
+= stylesheet_link_tag "park_map_render"
+
+#park_maps.row
+  - @park_maps.each do |pm|
+    .pm_div
+      = link_to pm.name, client_park_park_maps_path(@park, :park_map_id => pm.id), :class => "btn btn-info"
+
+#container
+
+
+

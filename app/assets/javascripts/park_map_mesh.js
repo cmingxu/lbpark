@@ -117,11 +117,20 @@
           }
 
           if(typeof shape.setEndPoint === "function"){
+            width  = parseFloat(shape.width_in_px || shape.prop_list.width.css_value());
+            if(shape.height_in_px){
+              height = shape.height_in_px;
+            }else if(shape.prop_list.thickness){
+              height = shape.prop_list.thickness.css_value;
+            }else{
+              height = shape.prop_list.height.css_value();
+            }
+            height = parseFloat(height);
+
             shape.setEndPoint(new Point(
-              shape.start_point.x_in_px + parseFloat(shape.width_in_px || shape.prop_list.width.css_value()),
-              shape.start_point.y_in_px + parseFloat(shape.height_in_px || shape.prop_list.height.css_value())));
+              shape.start_point.x_in_px + width,
+              shape.start_point.y_in_px + height));
           }
-          console.log(shape);
           shape.draw();
 
         });

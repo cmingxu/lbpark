@@ -189,6 +189,6 @@
             %tr
               %td{:colspan => 2}
                 - if @park.persisted?
-                  = link_to "平面图", mesh_staff_park_park_maps_path(@park), :class => "btn btn-success"
+                  = link_to "平面图", staff_park_park_maps_path(@park), :class => "btn btn-success"
                 = link_to "删除", staff_park_path(@park), :method => :delete, :data => { :confirm => "确定要删除？" }, :class => "btn btn-warning" if @park.persisted?
                 = f.submit "保存", :class => "btn btn-success"

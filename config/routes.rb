@@ -86,7 +86,10 @@ Rails.application.routes.draw do
     delete "logout" => "session#destroy"
 
     resources :coupons
-    resources :parks
+    resources :parks do
+      resources :park_maps
+    end
+
   end
 
   # staff only actions
@@ -132,7 +135,7 @@ Rails.application.routes.draw do
       resources :clients
       resources :park_maps do
         collection do
-          get :mesh
+          patch :rename
         end
       end
     end

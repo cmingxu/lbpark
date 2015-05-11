@@ -1,4 +1,31 @@
-= javascript_include_tag "park_map"
-= stylesheet_link_tag "park_map"
+:javascript
+  create_mesh_path = '#{staff_park_park_maps_path(@park, :park_map_id => @park_map.id)}';
+  park_map_data = #{(@park_map.as_json || []).to_json};
+  name_changing_path = '#{rename_staff_park_park_maps_path(@park)}';
+  function done_editing_name(){
+    $.ajax({
+      url: name_changing_path,
+      data: {park_map_id: $("#park_map_id").val(), new_name: $("#pm_name_field").val()},
+      method: 'PATCH'
+    });
+  }
+
+= javascript_include_tag "park_map_mesh"
+= stylesheet_link_tag "park_map_mesh"
+
+#park_maps.row
+  - @park_maps.each do |pm|
+    - if pm.id == @park_map.id.to_i
+      = hidden_field_tag "park_map_id", pm.id
+      = text_field_tag "name", pm.name, :id => "pm_name_field", :class => "park_map_in_place_editor", :onblur => "done_editing_name()"
+    - else
+      .pm_div
+        = link_to pm.name, staff_park_park_maps_path(@park, :park_map_id => pm.id), :class => "btn btn-info"
+        .pm_link_div
+          = link_to fa_icon(:minus), staff_park_park_map_path(@park, @park_map), :method => :delete, :data => {:confirm => "确信要删除？"}
+          = link_to fa_icon(:copy), new_staff_park_park_map_path(@park, :copy_from_id => pm.id)
+  = link_to fa_icon(:plus) + "  新平面图", new_staff_park_park_map_path(@park, :copy_from_id => @park_map.id), :class => "btn btn-success pull-right"
 
 #container
+
+
