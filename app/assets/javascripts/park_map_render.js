@@ -385,6 +385,25 @@
       }
     }
 
+     var EditParkSpaceAction = function (shape) {
+      this.shape = shape;
+
+      this.take_effect_now = function () {
+        this.shape._rect.find('.park_space_move_handle').css('cursor','move');
+      }
+
+      this.reset = function () {
+        console.log('reseting');
+        this.shape._rect.find('.park_space_move_handle').css('cursor','default');
+      }
+
+      this.take_effect = function (pm_event) {
+         if(pm_event.event_type == "dblclick"){console.log('11');}
+      }
+    }
+
+
+
 
     var DummyAction = function () {
 
