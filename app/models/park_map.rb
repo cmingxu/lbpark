@@ -11,6 +11,7 @@
 #  position     :integer
 #  created_at   :datetime
 #  updated_at   :datetime
+#  name         :string(255)
 #
 
 class ParkMap < ActiveRecord::Base
@@ -22,7 +23,8 @@ class ParkMap < ActiveRecord::Base
     self.park_map_eles.map do |ele|
       {
         :name => ele.park_map_ele_type,
-        :prop_list => ele.ele_desc
+        :prop_list => ele.ele_desc,
+        :uuid => ele.uuid
       }
     end
   end

@@ -6,6 +6,7 @@ class Staff::ParkMapsController < Staff::BaseController
   def index
     @park = Park.find params[:park_id]
     @park_map =  @park.park_maps.find_by_id(params[:park_map_id]) || @park.park_maps.first || ParkMap.create(:park => @park, :name => "地面")
+    ap @park_map.park_map_eles.length
     @park_maps = @park.park_maps
   end
 
@@ -16,7 +17,7 @@ class Staff::ParkMapsController < Staff::BaseController
       recently_created_park_map = @park.park_maps.last
       copy_from = @park.park_maps.find params[:copy_from_id]
       copy_from.park_map_eles.each do |ele|
-        recently_created_park_map.park_map_eles.create  :park_id => ele.park_id, :park_map_ele_type => ele.park_map_ele_type, :ele_desc => ele.ele_desc
+        recently_created_park_map.park_map_eles.create  :park_id => ele.park_id, :park_map_ele_type => ele.park_map_ele_type, :ele_desc => ele.ele_desc, :uuid => ele.uuid
       end
     end
     redirect_to staff_park_park_maps_path(@park, :park_map_id => @park.park_maps.last.id)
@@ -40,13 +41,18 @@ class Staff::ParkMapsController < Staff::BaseController
   def create
     @park = Park.find params[:park_id]
     @park_map = @park.park_maps.find params[:park_map_id]
-    @park_map.park_map_eles = []
+    if params[:objects]
+      eles = @park_map.park_map_eles - @park_map.park_map_eles.where(["uuid in (?)", params[:objects].values.map{|o| o["uuid"]}])
+      eles.map(&:destroy)
+    end
     params[:objects].values.each do |o|
-      @park_map.park_map_eles.create do |ele|
+      pme = @park_map.park_map_eles.find_or_create_by(:uuid => o["uuid"])
+      pme.tap do |ele|
         ele.park_id = @park.id
         ele.park_map_ele_type = o['name']
         ele.ele_desc = o['prop_list']
-      end
+        ele.uuid = o["uuid"]
+      end.save
     end
     head :ok
   end

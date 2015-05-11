@@ -165,20 +165,9 @@
       self = this;
       this.pm_ele_editor.show();
 
-      _.values(shape.prop_list).forEach(function (prop) {
-        tmp = $(prop.to_html());
-        tmp.find("select,input").on('change', function (val) {
-          prop.setValue($(this).val());
-          shape.update();
-        });
-
-        self.pm_ele_editor.find("#pm_ele_editor_content table").append(tmp);
-      });
-      this.pm_ele_editor.find("#pm_ele_editor_content table");
     };
     this.hide_prop_list_window = function (shape) {
       this.pm_ele_editor.hide();
-      this.pm_ele_editor.find("#pm_ele_editor_content table").empty();
     };
 
     ///////////////////////////////////////////////////////////////////////////
@@ -389,16 +378,16 @@
       this.shape = shape;
 
       this.take_effect_now = function () {
-        this.shape._rect.find('.park_space_move_handle').css('cursor','move');
       }
 
       this.reset = function () {
-        console.log('reseting');
-        this.shape._rect.find('.park_space_move_handle').css('cursor','default');
+         instance.hide_prop_list_window();
       }
 
       this.take_effect = function (pm_event) {
-         if(pm_event.event_type == "dblclick"){console.log('11');}
+         if(pm_event.event_type == "dblclick"){
+            instance.show_prop_list_window();
+         }
       }
     }
 

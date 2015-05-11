@@ -13,6 +13,7 @@
 
 class ParkMapEle < ActiveRecord::Base
   belongs_to :park_map
+  has_one :park_space
   belongs_to :park
   serialize  :ele_desc, Hash
 end

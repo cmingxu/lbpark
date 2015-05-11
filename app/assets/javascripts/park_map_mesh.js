@@ -10,15 +10,11 @@
     },
 
     uuid: function () {
-      function guid() {
         function s4() {
-          return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1);
+          return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
         }
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
           s4() + '-' + s4() + s4() + s4();
-      }
     }
 
   };
@@ -108,6 +104,8 @@
             default:
               break;
           }
+
+          shape.uuid = d.uuid;
 
           for(p in d.prop_list){ shape.prop_list[p].setValue(_.values(d.prop_list[p])[0]); }
           if(typeof shape.setStartPoint === "function"){
@@ -1336,7 +1334,7 @@
       this.name = null;
       this.cn_name = null;
       this.state = STATE.NOT_DRAW;
-      this.id   = Utils.uuid();
+      this.uuid   = Utils.uuid();
       this.draw = null;
       this.start_point = null;
       this.end_point = null;
@@ -1552,6 +1550,7 @@
     var Line = function () {
       this.name = "line";
       this.cn_name = "线";
+      this.uuid   = Utils.uuid();
       this._rect = $("<div class='line'><div class='handle left_handle'></div><div class='handle remove_handle'>X</div><div class='handle right_handle'></div></div>");
       this._rect.css('border', 'none');
       this._rect.css('position', 'absolute');
@@ -1684,6 +1683,7 @@
       this.as_json = function () {
         defaults = {
           name: 'line',
+          uuid: this.uuid,
           prop_list: {}
         };
 
@@ -1700,6 +1700,7 @@
     var Rect = function () {
       this.name = "rect";
       this.cn_name = "矩形";
+      this.uuid   = Utils.uuid();
       this._rect = $("<div class='rect'><div class='rect_handle rect_left_handle'></div><div class='rect_handle rect_remove_handle'>X</div><div class='rect_handle rect_right_handle'></div><div class='rect_handle rect_move_handle'></div><div class='rect_handle rect_rotate_handle'></div></div>");
       this._rect.css('position', 'absolute');
       this._rect.css('transform-origin', "center");
@@ -1811,6 +1812,7 @@
         this.as_json = function () {
           defaults = {
             name: "rect",
+            uuid: this.uuid,
             prop_list: {}
           }
 
@@ -1832,6 +1834,7 @@
 
       this.name = "park_space";
       this.cn_name = "车位";
+      this.uuid   = Utils.uuid();
       this._rect = $("<div class='park_space'><div class='park_space_handle park_space_remove_handle'>X</div><div class='park_space_handle park_space_move_handle'></div><div class='park_space_handle park_space_rotate_handle'></div></div>");
       this._rect.css('position', 'absolute');
       this._rect.css('transform-origin', "center");
@@ -1881,6 +1884,7 @@
       this.as_json = function () {
         defaults = {
           name: "park_space",
+          uuid: this.uuid,
           prop_list: {}
         }
 
@@ -1900,6 +1904,7 @@
       this.height_in_px = 50;
       this.name = "lane";
       this.cn_name = "车道";
+      this.uuid   = Utils.uuid();
       this._rect = $("<div class='lane'><div class='lane_handle lane_remove_handle'>X</div><div class='lane_handle lane_right_handle'></div><div class='lane_handle lane_move_handle'></div><div class='lane_handle lane_rotate_handle'></div></div>");
       this._rect.css('position', 'absolute');
       this._rect.css('transform-origin', "center");
@@ -2003,6 +2008,7 @@
       this.as_json = function () {
         defaults = {
           name: "lane",
+          uuid: this.uuid,
           prop_list: {}
         }
 
@@ -2021,6 +2027,7 @@
       this.height_in_px = 20;
       this.name = "pillar";
       this.cn_name = "柱子";
+      this.uuid   = Utils.uuid();
       this._rect = $("<div class='pillar'><div class='pillar_handle pillar_remove_handle'>X</div><div class='pillar_handle pillar_move_handle'></div></div>");
       this._rect.css('position', 'absolute');
       this._rect.css('transform-origin', "center");
@@ -2117,6 +2124,7 @@
       this.as_json = function () {
         defaults = {
           name: "pillar",
+          uuid: this.uuid,
           prop_list: {}
         }
 
@@ -2135,6 +2143,7 @@
       this.height_in_px = this.width_in_px = 25;
       this.name = "lift";
       this.cn_name = "电梯";
+      this.uuid   = Utils.uuid();
       this._rect = $("<div class='lift'><div class='lift_handle lift_remove_handle'>X</div><div class='lift_handle lift_move_handle'></div></div>");
       this._rect.css('position', 'absolute');
       this._rect.css('transform-origin', "center");
@@ -2229,6 +2238,7 @@
       this.as_json = function () {
         defaults = {
           name: "lift",
+          uuid: this.uuid,
           prop_list: {}
         }
 
@@ -2247,6 +2257,7 @@
       this.height_in_px = this.width_in_px = 25;
       this.name = "elevator";
       this.cn_name = "扶梯";
+      this.uuid   = Utils.uuid();
       this._rect = $("<div class='elevator'><div class='elevator_handle elevator_remove_handle'>X</div><div class='elevator_handle elevator_move_handle'></div></div>");
       this._rect.css('position', 'absolute');
       this._rect.css('transform-origin', "center");
@@ -2343,6 +2354,7 @@
       this.as_json = function () {
         defaults = {
           name: "elevator",
+          uuid: this.uuid,
           prop_list: {}
         }
 

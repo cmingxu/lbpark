@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150511025354) do
+ActiveRecord::Schema.define(version: 20150511094056) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -279,6 +279,7 @@ ActiveRecord::Schema.define(version: 20150511025354) do
     t.text     "ele_desc"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "uuid"
   end
 
   create_table "park_maps", force: true do |t|
@@ -312,6 +313,18 @@ ActiveRecord::Schema.define(version: 20150511025354) do
     t.string   "owner"
     t.text     "desc"
     t.string   "maintainer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "park_spaces", force: true do |t|
+    t.string   "name"
+    t.string   "uuid"
+    t.integer  "park_map_id"
+    t.integer  "park_id"
+    t.integer  "park_map_ele_id"
+    t.string   "usage_status"
+    t.string   "vacancy_status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

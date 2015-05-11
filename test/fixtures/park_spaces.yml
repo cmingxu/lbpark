@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  uuid: MyString
+  park_map_id: 1
+  park_id: 1
+  park_map_ele_id: 1
+  usage_status: MyString
+  vacancy_status: MyString
+
+two:
+  name: MyString
+  uuid: MyString
+  park_map_id: 1
+  park_id: 1
+  park_map_ele_id: 1
+  usage_status: MyString
+  vacancy_status: MyString

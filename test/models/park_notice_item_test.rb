@@ -6,6 +6,7 @@
 #  content       :text
 #  position      :integer
 #  coupon_tpl_id :integer
+#  park_id       :integer
 #  created_at    :datetime
 #  updated_at    :datetime
 #
