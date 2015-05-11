@@ -118,9 +118,10 @@
 
           if(typeof shape.setEndPoint === "function"){
             shape.setEndPoint(new Point(
-              shape.start_point.x_in_px + parseFloat(shape.prop_list.width.css_value()),
-              shape.start_point.y_in_px + parseFloat(shape.height || shape.prop_list.height.css_value())));
+              shape.start_point.x_in_px + parseFloat(shape.width_in_px || shape.prop_list.width.css_value()),
+              shape.start_point.y_in_px + parseFloat(shape.height_in_px || shape.prop_list.height.css_value())));
           }
+          console.log(shape);
           shape.draw();
 
         });
@@ -757,10 +758,9 @@
             offset_x = point.x_in_px - this.drag_start_point.x_in_px;
             offset_y = point.y_in_px - this.drag_start_point.y_in_px;
 
-            this.shape.start_point.x_in_px = this.shape_initial_start_point.x_in_px + offset_x;
-            this.shape.start_point.y_in_px = this.shape_initial_start_point.y_in_px + offset_y;
-            this.shape.end_point.x_in_px = this.shape_initial_end_point.x_in_px + offset_x;
-            this.shape.end_point.y_in_px = this.shape_initial_end_point.y_in_px + offset_y;
+            this.shape.setStartPoint(new Point(this.shape_initial_start_point.x_in_px + offset_x, this.shape_initial_start_point.y_in_px + offset_y));
+            this.shape.setEndPoint(new Point(this.shape_initial_end_point.x_in_px + offset_x, this.shape_initial_end_point.y_in_px + offset_y));
+
           }
           this.shape.drawing();
         }
@@ -1674,11 +1674,12 @@
 
       this.as_json = function () {
         defaults = {
-          name: 'line'
+          name: 'line',
+          prop_list: {}
         };
 
         for(prop in this.prop_list){
-          defaults[prop] = this.prop_list[prop].to_json();
+          defaults.prop_list[prop] = this.prop_list[prop].to_json();
         }
 
         return defaults;
@@ -1719,7 +1720,7 @@
       this._update_cordinate = function () {
         this.prop_list.top.setValue(this.start_point.y_in_px + "px");
         this.prop_list.left.setValue(this.start_point.x_in_px + "px");
-        if(this.end_point){
+        if(this.end_point && this.prop_list.width && this.prop_list.height){
           this.prop_list.width.setValue(this.end_point.x_distance(this.start_point) + "px")
           this.prop_list.height.setValue(this.end_point.y_distance(this.start_point) + "px")
         }
@@ -1800,11 +1801,12 @@
 
         this.as_json = function () {
           defaults = {
-            name: "rect"
+            name: "rect",
+            prop_list: {}
           }
 
           for(prop in this.prop_list){
-            defaults[prop] = this.prop_list[prop].to_json();
+            defaults.prop_list[prop] = this.prop_list[prop].to_json();
           }
 
           return defaults;
@@ -1816,6 +1818,9 @@
 
     var ParkSpace = function () {
       park_space = this;
+      this.height_in_px = 50;
+      this.width_in_px = 30;
+
       this.name = "park_space";
       this.cn_name = "车位";
       this._rect = $("<div class='park_space'><div class='park_space_handle park_space_remove_handle'>X</div><div class='park_space_handle park_space_move_handle'></div><div class='park_space_handle park_space_rotate_handle'></div></div>");
@@ -1860,8 +1865,22 @@
           instance.objects.push(this);
           this._rect.attr('append', true);
         }
+
+        instance.synchronizor.set_need_sync();
       }
 
+      this.as_json = function () {
+        defaults = {
+          name: "park_space",
+          prop_list: {}
+        }
+
+        for(prop in this.prop_list){
+          defaults.prop_list[prop] = this.prop_list[prop].to_json();
+        }
+
+        return defaults;
+      }
 
     }
     Utils.proto_inheritance(Rect, ParkSpace);
@@ -1869,6 +1888,7 @@
 
     var Lane = function () {
       lane = this;
+      this.height_in_px = 50;
       this.name = "lane";
       this.cn_name = "车道";
       this._rect = $("<div class='lane'><div class='lane_handle lane_remove_handle'>X</div><div class='lane_handle lane_right_handle'></div><div class='lane_handle lane_move_handle'></div><div class='lane_handle lane_rotate_handle'></div></div>");
@@ -1931,6 +1951,8 @@
           instance.objects.push(this);
           this._rect.attr('append', true);
         }
+
+        instance.synchronizor.set_need_sync();
       }
 
       this.rotate = function (angle) {
@@ -1964,13 +1986,30 @@
       }
 
       this.remove = function () {
+        instance.objects.splice(instance.objects.indexOf(this), 1);
+        instance.synchronizor.set_need_sync()
         this._rect.remove();
+      }
+
+      this.as_json = function () {
+        defaults = {
+          name: "lane",
+          prop_list: {}
+        }
+
+        for(prop in this.prop_list){
+          defaults.prop_list[prop] = this.prop_list[prop].to_json();
+        }
+
+        return defaults;
       }
     }
 
     Utils.proto_inheritance(Rect, Lane);
 
     var Pillar = function () {
+      this.width_in_px = 20;
+      this.height_in_px = 20;
       this.name = "pillar";
       this.cn_name = "柱子";
       this._rect = $("<div class='pillar'><div class='pillar_handle pillar_remove_handle'>X</div><div class='pillar_handle pillar_move_handle'></div></div>");
@@ -1991,10 +2030,10 @@
 
       this.set_center = function (center) {
         this.center_point = center;
-        this.prop_list.top.setValue(this.center_point.y_in_px - 15);
-        this.prop_list.left.setValue(this.center_point.x_in_px - 15);
-        this.start_point = new Point(this.center_point.x_in_px - 15, this.center_point.y_in_px - 25);
-        this.end_point   = new Point(this.center_point.x_in_px + 15, this.center_point.y_in_px + 25);
+        this.prop_list.top.setValue(this.center_point.y_in_px - 10);
+        this.prop_list.left.setValue(this.center_point.x_in_px - 10);
+        this.start_point = new Point(this.center_point.x_in_px - 10, this.center_point.y_in_px - 10);
+        this.end_point   = new Point(this.center_point.x_in_px + 10, this.center_point.y_in_px + 10);
       }
 
       this.point_within_range = function (point) {
@@ -2031,6 +2070,7 @@
           instance.objects.push(this);
           this._rect.attr('append', true);
         }
+        instance.synchronizor.set_need_sync();
       }
 
       this.editing = function () {
@@ -2060,7 +2100,22 @@
       }
 
       this.remove = function () {
+        instance.objects.splice(instance.objects.indexOf(this), 1);
+        instance.synchronizor.set_need_sync()
         this._rect.remove();
+      }
+
+      this.as_json = function () {
+        defaults = {
+          name: "pillar",
+          prop_list: {}
+        }
+
+        for(prop in this.prop_list){
+          defaults.prop_list[prop] = this.prop_list[prop].to_json();
+        }
+
+        return defaults;
       }
     }
 
@@ -2068,6 +2123,7 @@
 
 
     var Lift = function () {
+      this.height_in_px = this.width_in_px = 25;
       this.name = "lift";
       this.cn_name = "电梯";
       this._rect = $("<div class='lift'><div class='lift_handle lift_remove_handle'>X</div><div class='lift_handle lift_move_handle'></div></div>");
@@ -2125,6 +2181,8 @@
           instance.objects.push(this);
           this._rect.attr('append', true);
         }
+
+        instance.synchronizor.set_need_sync();
       }
 
       this.editing = function () {
@@ -2154,7 +2212,22 @@
       }
 
       this.remove = function () {
+        instance.objects.splice(instance.objects.indexOf(this), 1);
+        instance.synchronizor.set_need_sync();
         this._rect.remove();
+      }
+
+      this.as_json = function () {
+        defaults = {
+          name: "lift",
+          prop_list: {}
+        }
+
+        for(prop in this.prop_list){
+          defaults.prop_list[prop] = this.prop_list[prop].to_json();
+        }
+
+        return defaults;
       }
     }
 
@@ -2162,6 +2235,7 @@
 
 
     var Elevator = function () {
+      this.height_in_px = this.width_in_px = 25;
       this.name = "elevator";
       this.cn_name = "扶梯";
       this._rect = $("<div class='elevator'><div class='elevator_handle elevator_remove_handle'>X</div><div class='elevator_handle elevator_move_handle'></div></div>");
@@ -2221,6 +2295,8 @@
           instance.objects.push(this);
           this._rect.attr('append', true);
         }
+
+        instance.synchronizor.set_need_sync();
       }
 
       this.editing = function () {
@@ -2250,7 +2326,22 @@
       }
 
       this.remove = function () {
+        instance.objects.splice(instance.objects.indexOf(this), 1);
+        instance.synchronizor.set_need_sync();
         this._rect.remove();
+      }
+
+      this.as_json = function () {
+        defaults = {
+          name: "elevator",
+          prop_list: {}
+        }
+
+        for(prop in this.prop_list){
+          defaults.prop_list[prop] = this.prop_list[prop].to_json();
+        }
+
+        return defaults;
       }
     }
 
