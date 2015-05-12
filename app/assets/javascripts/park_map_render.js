@@ -24,7 +24,7 @@
       "<div id='pm_mesh_x_ruler' class='ruler'></div>" +
       "<div id='pm_mesh_y_ruler' class='ruler'></div>" +
       "<div id='pm_mesh'>Canvas </div>" +
-      "<div id='pm_ele_editor'> <div id='pm_ele_editor_header' class='pm_header'></div> <div id='pm_ele_editor_content' class='pm_content'> <table></table></div> </div>" + 
+      "<div id='pm_ele_editor' class='pm_ele_render'> <div id='pm_ele_editor_header' class='pm_header'></div> <div id='pm_ele_editor_content' class='pm_content'> <table><tr><td>编号</td><td id='name_td'><input type='text' /></td></tr><tr><td>用处</td><td id='usage_td'></td></tr><tr><td>占用</td><td id='status_td'></td></tr></table></div> </div>" + 
       "</div>" +
       "</div>";
 
@@ -82,6 +82,8 @@
               break;
           }
 
+          shape.uuid = d.uuid;
+
           for(p in d.prop_list){ shape.prop_list[p].setValue(_.values(d.prop_list[p])[0]); }
           if(typeof shape.setStartPoint === "function"){
             shape.setStartPoint(new Point(
@@ -121,14 +123,11 @@
       this.enter_mesh_main_loop();
       this.shape_render();
 
-
     },
 
     this.shape_render = function(){
       console.log(park_map_data);
     }
-
-
 
     this.draw_ruler = function () {
       var x_ruler_container = $("#pm_mesh_x_ruler");
@@ -163,6 +162,66 @@
 
     this.show_prop_list_window = function (shape) {
       self = this;
+      park_space = park_spaces[shape.uuid][0];
+
+      $("#name_td input").val(park_space.name);
+      $("#name_td input").blur(function () {
+        $.ajax({
+          url: "/client/park_maps/" + park_map.id +"/park_spaces/" + park_space.id + "/rename",
+          method: 'PATCH',
+          data: {name: $(this).val()},
+          success: function (res) {
+            park_spaces  = res;
+            shape.update_name();
+          }
+        });
+
+      });
+
+      
+
+
+      $("#usage_td").empty();
+      for(i in usage_status){
+        if(park_space.usage_status == i){
+           $("#usage_td").append("<span class='usage_ele active' data-status=" + i +">" + usage_status[i]+"</span>");
+        }else{
+           $("#usage_td").append("<span class='usage_ele' data-status=" + i + ">" + usage_status[i]+"</span>");
+        }
+      }
+
+      $("#usage_td span").click(function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        $.ajax({
+          url: "/client/park_maps/" + park_map.id +"/park_spaces/" + park_space.id + "/change_usage_status",
+          method: 'PATCH',
+          data: {status: $(this).data('status')},
+          success: function (res) {
+            park_spaces  = res;
+          }
+        });
+      });
+
+      $("#status_td").empty();
+      for(i in vacancy_status){
+        if(park_space.vacancy_status == i){
+          $("#status_td").append("<span class='active usage_ele' data-status=" + i + ">" +vacancy_status[i]+"</span>");
+        }else{
+          $("#status_td").append("<span class='usage_ele' data-status=" + i + ">" + vacancy_status[i]+"</span>");
+        }
+      }
+
+      $("#status_td span").click(function () {
+        $(this).addClass('active').siblings().removeClass('active');
+        $.ajax({
+          url: "/client/park_maps/" + park_map.id +"/park_spaces/" + park_space.id + "/change_vacancy_status",
+          method: 'PATCH',
+          data: {status: $(this).data('status')},
+          success: function (res) {
+            park_spaces  = res;
+          }
+        });
+      });
       this.pm_ele_editor.show();
 
     };
@@ -386,12 +445,10 @@
 
       this.take_effect = function (pm_event) {
          if(pm_event.event_type == "dblclick"){
-            instance.show_prop_list_window();
+            instance.show_prop_list_window(this.shape);
          }
       }
     }
-
-
 
 
     var DummyAction = function () {
@@ -835,7 +892,7 @@
 
       this.name = "park_space";
       this.cn_name = "车位";
-      this._rect = $("<div class='park_space'><div class='park_space_handle park_space_remove_handle'>X</div><div class='park_space_handle park_space_move_handle'></div><div class='park_space_handle park_space_rotate_handle'></div></div>");
+      this._rect = $("<div class='park_space'><div class='park_space_handle park_space_remove_handle'>X</div><div class='park_space_handle park_space_move_handle'></div><div class='park_space_handle park_space_rotate_handle'></div><div class='park_space_name'></div></div>");
       this._rect.css('position', 'absolute');
       this._rect.css('transform-origin', "center");
       this.prop_list = {};
@@ -849,7 +906,18 @@
         this.end_point   = new Point(this.center_point.x_in_px + 15, this.center_point.y_in_px + 25);
       }
 
+      this.update_name = function () {
+        park_space = park_spaces[this.uuid]
+        if(!park_space) return;
+        park_space = park_space[0];
+        if(park_space && park_space.name){
+          this._rect.find(".park_space_name").html(park_space.name);
+        }
+      }
+
       this._draw = function () {
+        this.update_name();
+
         for(prop_name in this.prop_list){
           if( typeof this.prop_list[prop_name].css_value === 'function'){
             this._rect.css(this.prop_list[prop_name].css_key, this.prop_list[prop_name].css_value());

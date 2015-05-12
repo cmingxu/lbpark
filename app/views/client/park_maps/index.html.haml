@@ -1,5 +1,9 @@
 :javascript
-  park_map_data = #{(@park_map.as_json || []).to_json};
+  park_map_data = #{(@park_map.as_api_json || []).to_json};
+  usage_status  = #{ParkSpace::USAGE_STATUS.to_json};
+  vacancy_status = #{ParkSpace::VACANCY_STATUS.to_json};
+  park_spaces  = #{@park_map.park_spaces.group_by(&:uuid).to_json};
+  park_map = #{@park_map.to_json};
 
 = javascript_include_tag "park_map_render"
 = stylesheet_link_tag "park_map_render"

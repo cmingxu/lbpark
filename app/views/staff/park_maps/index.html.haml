@@ -1,6 +1,6 @@
 :javascript
   create_mesh_path = '#{staff_park_park_maps_path(@park, :park_map_id => @park_map.id)}';
-  park_map_data = #{(@park_map.as_json || []).to_json};
+  park_map_data = #{(@park_map.as_api_json || []).to_json};
   name_changing_path = '#{rename_staff_park_park_maps_path(@park)}';
   function done_editing_name(){
     $.ajax({

@@ -86,6 +86,15 @@ Rails.application.routes.draw do
     delete "logout" => "session#destroy"
 
     resources :coupons
+    resources :park_maps do
+      resources :park_spaces do
+        member do
+          patch :rename
+          patch :change_usage_status
+          patch :change_vacancy_status
+        end
+      end
+    end
     resources :parks do
       resources :park_maps
     end

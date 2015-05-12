@@ -1,6 +1,6 @@
 :javascript
   create_mesh_path = '#{staff_park_park_maps_path(@park)}';
-  park_map_data = #{(@park.park_map.as_json || []).to_json};
+  park_map_data = #{(@park.park_map.as_api_json || []).to_json};
 = javascript_include_tag "park_map_mesh"
 = stylesheet_link_tag "park_map_mesh"
 
