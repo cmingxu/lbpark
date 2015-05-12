@@ -36,4 +36,4 @@
       = link_to raw(fa_icon("fw users")) + "应用设置", staff_lb_settings_path
 
 :javascript
-  $(".#{@active_nav_item}").addClass("sidebar_item_active")
+  $(".#{@active_nav_item || 'abc'}").addClass("sidebar_item_active")
