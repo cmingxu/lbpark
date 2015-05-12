@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require kindeditor
 //= require bootstrap-sprockets
-//= require bootstrap3-typeahead
 //= require bootstrap-datepicker
 //= require underscore
 //= require underscore.string
