@@ -65,6 +65,12 @@ Rails.application.routes.draw do
   namespace :api do
     resource :wechat, controller: :wechat, only: [:show, :create]
     resources :parks
+    resources :barriers do
+      collection do
+        post :event
+        post :heartbeat
+      end
+    end
   end
 
   namespace :vendor_api do
