@@ -1,0 +1,39 @@
+= stylesheet_link_tag "park_map_render"
+
+#park_maps.row
+  - @park_maps.each do |pm|
+    .pm_div
+      = link_to pm.name, list_client_park_park_maps_path(@park, :park_map_id => pm.id), :class => "btn btn-info #{pm == @park_map ? 'active' : ''}"
+  .pull-right
+    .btn-group{:role => "group","aria-label"=>"..."}
+      %button.btn.btn-default{:type => "button"}
+        = link_to fa_icon(:image), client_park_park_maps_path(@park, :park_map_id => @park_map.id)
+      %button.btn.btn-default.active{:type => "button"}
+        = link_to fa_icon("align-justify"), list_client_park_park_maps_path(@park, :park_map_id => @park_map.id)
+
+
+%table.table.table-striped.table-condensed.table-hover.table-bordered
+  %thead
+    %th ID
+    %th 编号
+    %th 类型
+    %th 占用？
+    %th 租户
+    %th 电话
+    %th 到期时间
+
+    %tbody
+      - @park_spaces.each do |ps|
+        %tr
+          %td= ps.id
+          %td= ps.name
+          %td= ParkSpace::USAGE_STATUS[ps.usage_status.to_sym]
+          %td= ParkSpace::VACANCY_STATUS[ps.vacancy_status.to_sym]
+          %td
+          %td
+          %td
+  = paginate @park_spaces
+
+
+
+

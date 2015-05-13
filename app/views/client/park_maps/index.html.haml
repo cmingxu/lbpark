@@ -11,7 +11,15 @@
 #park_maps.row
   - @park_maps.each do |pm|
     .pm_div
-      = link_to pm.name, client_park_park_maps_path(@park, :park_map_id => pm.id), :class => "btn btn-info"
+      = link_to pm.name, client_park_park_maps_path(@park, :park_map_id => pm.id), :class => "btn btn-info #{pm == @park_map ? 'active' : ''}"
+  .pull-right
+    .btn-group{:role => "group","aria-label"=>"..."}
+      %button.btn.btn-default.active{:type => "button"}
+        = link_to fa_icon(:image), client_park_park_maps_path(@park, :park_map_id => @park_map.id)
+      %button.btn.btn-default{:type => "button"}
+        = link_to fa_icon("align-justify"), list_client_park_park_maps_path(@park, :park_map_id => @park_map.id)
+
+
 
 #container
 

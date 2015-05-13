@@ -96,7 +96,11 @@ Rails.application.routes.draw do
       end
     end
     resources :parks do
-      resources :park_maps
+      resources :park_maps do
+        collection do
+          get :list
+        end
+      end
     end
 
   end
