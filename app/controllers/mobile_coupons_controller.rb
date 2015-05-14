@@ -146,4 +146,8 @@ class MobileCouponsController < MobileController
     params.require(:coupon).permit(:user_id, :issued_address, :issued_begin_date, :quantity, :issued_paizhao)
   end
 
+  def park_map
+    @park_map = Park.find(25).park_map.first
+  end
+
 end

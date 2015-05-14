@@ -25,7 +25,8 @@ class ParkMap < ActiveRecord::Base
       {
         :name => ele.park_map_ele_type,
         :prop_list => ele.ele_desc,
-        :uuid => ele.uuid
+        :uuid => ele.uuid,
+        :park_space_name => ele.park_space.try(:name)
       }
     end
   end

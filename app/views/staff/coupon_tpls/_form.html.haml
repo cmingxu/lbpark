@@ -35,6 +35,12 @@
               %td
                 = f.text_field :notice
                 %span 例如: 数量有限， 特价包月
+
+            %tr
+              %td 选车位？
+              %td
+                = f.check_box :park_space_choose_enabled
+                %span 例如: 数量有限， 特价包月
             = render :partial => "#{params[:type] || 'free'}", :locals => { :f => f }
 
             %tr

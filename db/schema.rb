@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150511094056) do
+ActiveRecord::Schema.define(version: 20150514061507) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 20150511094056) do
     t.string   "name_cn"
     t.date     "fit_for_date"
     t.datetime "end_at"
-    t.decimal  "gcj_lat",                precision: 10, scale: 6
-    t.decimal  "gcj_lng",                precision: 10, scale: 6
+    t.decimal  "gcj_lat",                   precision: 10, scale: 6
+    t.decimal  "gcj_lng",                   precision: 10, scale: 6
     t.integer  "quantity"
     t.integer  "price"
     t.integer  "copy_from"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20150511094056) do
     t.integer  "valid_hour_end"
     t.integer  "lower_limit_for_deduct"
     t.string   "valid_dates"
+    t.boolean  "park_space_choose_enabled"
   end
 
   create_table "coupons", force: true do |t|
@@ -101,6 +102,7 @@ ActiveRecord::Schema.define(version: 20150511094056) do
     t.datetime "used_at"
     t.string   "issued_paizhao"
     t.integer  "quantity"
+    t.string   "issued_park_space"
   end
 
   create_table "feedbacks", force: true do |t|

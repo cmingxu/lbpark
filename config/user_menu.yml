@@ -1,23 +1,22 @@
 button:
   -
     type: "view"
+    name: "停车券"
+    url: "http://6luobo.com/mobile_coupons?owned=true"
+  -
+    type: "view"
     name: "找车位"
     url: "http://6luobo.com"
-  -
-    type: "view"
-    name: "定点搜"
-    url: "http://6luobo.com/mobile/hot_place"
-  -
-    type: "view"
-    name: "停车券"
-    url: "http://6luobo.com/mobile/setting"
     sub_button:
       -
         type: "view"
-        name: "停车券"
-        url: "http://6luobo.com/mobile_coupons?owned=true"
+        name: "找车位"
+        url: "http://6luobo.com"
       -
         type: "view"
-        name: "个人中心"
-        url: "http://6luobo.com/mobile/setting"
-
+        name: "定点搜"
+        url: "http://6luobo.com/mobile/hot_place"
+  -
+    type: "view"
+    name: "个人中心"
+    url: "http://6luobo.com/mobile/setting"
