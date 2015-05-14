@@ -9,6 +9,11 @@ class Api::BarriersController < Api::BaseController
 
   def heartbeat
     BARRIER_LOGGER.debug params
-    render :json => {:res => "OK", :msg => "", :msg_type => ""}
+    render :json => {:res => "OK",
+                     :msg => "",
+                     :msg_type => "",
+                     :version => "000000001",
+                     :time => Time.now.to_i
+    }
   end
 end
