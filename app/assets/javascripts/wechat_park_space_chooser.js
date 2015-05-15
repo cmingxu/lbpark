@@ -631,8 +631,6 @@
 
       this.update_name = function () {
         park_space = park_space_datas[this.uuid]
-        console.log(park_space);
-        console.log('111111111111');
         if(!park_space) return;
         if(park_space){
           this._rect.find(".park_space_name").html(park_space);
