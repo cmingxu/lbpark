@@ -13,12 +13,12 @@
         var has_form = true;
 
       .user_coupon_tpl_input
-        = text_field_tag "coupon[issued_begin_date]", "", :placeholder => "请选择包月起点", :id => "date", :class => "coupon_issued_begin_date_input"
+        = text_field_tag "coupon[issued_begin_date]", "", :readonly => true, :placeholder => "请选择包月起点", :id => "date", :class => "coupon_issued_begin_date_input"
       .user_coupon_tpl_input
         = text_field_tag "coupon[issued_paizhao]", "", :placeholder => "请输入车牌号码", :class => "coupon_issued_paizhao"
       - if @coupon_tpl.park_space_choose_enabled
         .user_coupon_tpl_input
-          = text_field_tag "coupon[issued_park_sapce]", "", :placeholder => "请选择车位"
+          = text_field_tag "coupon[issued_park_sapce]", "", :readonly => true, :placeholder => "请选择车位"
       .user_coupon_tpl_input
         = hidden_field_tag "coupon[quantity]", 1, :id => "coupon_quantity"
         - [1, 3, 6].each_with_index do |m, i|
