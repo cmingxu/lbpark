@@ -10,7 +10,7 @@
   .list-group-item.parks1
     = link_to raw(fa_icon("fw automobile")) + "车场数据", client_parks_path
   .list-group-item.parks
-    = link_to raw(fa_icon("fw automobile")) + "车场平面图(mesh)", client_park_park_maps_path(current_client.park)
+    = link_to raw(fa_icon("fw automobile")) + "车场平面图", client_park_park_maps_path(current_client.park)
 
 :javascript
   $(".#{@active_nav_item || 'abc'}").addClass("sidebar_item_active")

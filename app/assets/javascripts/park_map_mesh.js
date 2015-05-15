@@ -875,7 +875,7 @@
 
           point = Point.from_event(pm_event.mouse_event);
           if(this.which_point_move == "lane_right_handle"){
-            this.shape.setEndPoint(point);
+            this.shape.setEndPoint(new Point(point.x_in_px, this.shape.end_point.y_in_px));
           }else if(this.which_point_move == 'lane_rotate_handle'){
             dy = point.y_in_px - this.shape_initial_center.y_in_px;
             dx = point.x_in_px - this.shape_initial_center.x_in_px;
@@ -889,21 +889,15 @@
             offset_y = point.y_in_px - this.drag_start_point.y_in_px;
 
             this.shape.setStartPoint(new Point(this.shape_initial_start_point.x_in_px + offset_x, this.shape_initial_start_point.y_in_px + offset_y));
-            this.shape.setEndPoint(new Point(this.shape_initial_end_point.x_in_px + offset_x, this.shape_initial_end_point.y_in_px + offset_y));
+            this.shape.setEndPoint(new Point(this.shape_initial_end_point.x_in_px + offset_x, this.shape.start_point.y_in_px + 50));
           }
           this.shape.drawing();
         }
 
         if(pm_event.event_type == "drag_stop"){
+          console.log('draging_stop');
           if(this.which_point_move == null){ return null; }
 
-          point = Point.from_event(pm_event.mouse_event);
-          if(this.which_point_move == 'lane_left_handle'){
-            this.shape.start_point = point;
-          }else if(this.which_point_move == 'lane_right_handle'){
-            this.shape.end_point = point;
-          }
-          this.shape.draw();
         }
       }
     }
@@ -1939,6 +1933,10 @@
       }
 
       this.point_within_range = function (point) {
+        console.log(point.x_in_px);
+        console.log(point.y_in_px);
+        console.log(this.start_point);
+        console.log(this.end_point);
         return point.x_in_px > this.start_point.x_in_px && point.x_in_px < this.end_point.x_in_px &&
           point.y_in_px > this.start_point.y_in_px && point.y_in_px < this.end_point.y_in_px;
       }

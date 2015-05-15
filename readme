@@ -9,10 +9,10 @@ http://6luobo.com/api/barriers/event
 
 http://6luobo.com/api/barriers/heartbeat
 心跳 - 请求
-  {"id": "MAC-ADDR", "info_sync": [{"京A00012", 1431495458}, {"京CA00012", 1431495458}], "version": 000001}
+  {"id": "MAC-ADDR", "info_sync": [{"paizhao": "京A00012", "time": 1431495458}, {"paizhao": "京CA00012", "time": 1431495458}], "version": 000001}
 心跳 - 返回
   {"res": "OK", "time": 1431495458, "msg_type": "", "msg": ""}
-| {"res": "OK", "time": 1431495458, "msg_type": "info_sync", "msg": {"version": 000001, "latest_infos": [{"京A00012", 1431495458(开始时间), 1431495458(结束时间)}, {"京CA00012", 1431495458, 1431495458}]}}
+| {"res": "OK", "time": 1431495458, "msg_type": "info_sync", "msg": {"version": 000001, "latest_infos": [{"paizhao": "京A00012", "begin_at": 1431495458, "end_at": 1431495458}, {"paizhao": "京CA00012", "begin_at": 1431495458, "end_at": 1431495458}]}}
 
 
 
