@@ -66,9 +66,11 @@
 #park_map_container
 
 = javascript_include_tag "mobile_coupon_tpl_show"
+= javascript_include_tag "underscore"
 - if @coupon_tpl.park_space_choose_enabled
   :javascript
     park_maps =  #{Hash[@coupon_tpl.park.park_maps.map{|pm| [pm.name, pm.as_api_json] }].to_json};
+    park_space_datas = #{Hash[@coupon_tpl.park.park_spaces.map{|ps| [ps.uuid, ps.name]}].to_json};
   = javascript_include_tag "wechat_park_space_chooser"
 - if @coupon_tpl.monthly?
   = javascript_include_tag "custom_mobiscroll"

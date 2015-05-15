@@ -1538,3 +1538,278 @@ a[title="站长统计"]
         float: right
         color: $blue!important
 
+
+$bg-main-color: white
+$bg-gray-color: #f6f6f6
+$bg-dark-gray: #cdcdcd
+$bg-light-gray: #f5f5f5
+
+#park_map_container
+  display: none
+  position: absolute
+  opacity: 0.9
+  top: 0px
+  left: 0px
+  width: 100%
+  background-color: $bg-gray-color
+  .pm_content
+  .pm_header
+    margin-bottom: 5px
+  #pm_close
+    z-index: 10
+    height: 44px 
+    width: 44px 
+    background-image: url('<%= asset_path("close_btn.png") %>')
+    background-size: 44px
+    background-repeat: no-repeat
+    position: absolute
+    right: 5px
+    top: 5px
+  #pm_list
+    z-index: 10
+    position: absolute
+    top: 5px
+    left: 5px
+    background-color: $bg-dark-gray
+    opacity: 0.9
+    color: white
+    .pm_list_item
+      padding: 5px 10px
+      border-bottom: 1px solid white
+      cursor: pointer
+    .active
+      background-color: darken($bg-dark-gray, 20%)
+
+  #pm_content
+    width: 100%
+    position: relative
+    min-height: 600px
+    overflow: scroll
+  #pm_mesh_wrapper
+    box-sizing: border-box
+    border: 1px solid $bg-dark-gray
+    height: 100%
+    width: 100%
+    overflow-x: scroll
+    overflow-y: scroll
+
+    #pm_mesh
+      width: 2500px
+      height: 2500px
+      top: 0px
+      background-color: $bg-main-color
+      position: relative
+      .line
+        text-align: center
+        .handle
+          width: 16px
+          height: 16px
+          position: absolute
+          background-color: white
+          border: 1px solid gray
+          display: none
+        .remove_handle
+          line-height: 16px
+          left: 50%
+          top: 10px
+        .left_handle
+          float: left
+          top: -8px
+          left: -8px
+        .right_handle
+          float: right
+          right: -8px
+          top: -8px
+      .rect
+        .rect_handle
+          position: absolute
+        .rect_move_handle
+          width: 100%
+          height: 100%
+          margin: 0px auto
+        .rect_remove_handle
+          text-align: center
+          width: 16px
+          height: 16px
+          bottom: -18px
+          left: 50%
+          transform: translateX(-50%)
+          background-color: white
+          border: 1px solid gray
+          display: none
+
+        .rect_left_handle
+          background-color: white
+          border: 1px solid gray
+          width: 16px
+          height: 16px
+          top: -8px
+          left: -8px
+          display: none
+        .rect_right_handle
+          background-color: white
+          border: 1px solid gray
+          width: 16px
+          height: 16px
+          bottom: -8px
+          right: -8px
+          display: none
+
+        .rect_rotate_handle
+          background-color: white
+          border: 1px solid gray
+          width: 16px
+          height: 16px
+          bottom: 50%
+          transform: transformY(-50%)
+          right: -18px
+          display: none
+          
+      .park_space
+        background-image: url('<%= image_path("park_space.png") %>')
+        background-size: 30px 50px
+        .park_space_handle
+          position: absolute
+        .park_space_rotate_handle
+          background-color: white
+          border: 1px solid gray
+          width: 16px
+          height: 16px
+          bottom: 50%
+          right: -18px
+          display: none
+        .park_space_remove_handle
+          text-align: center
+          width: 16px
+          height: 16px
+          bottom: -18px
+          left: 50%
+          transform: translateX(-50%)
+          background-color: white
+          border: 1px solid gray
+          display: none
+        .park_space_move_handle
+          width: 100%
+          height: 100%
+          margin: 0px auto
+        .park_space_name
+          transform: rotate(90deg) translate(10px, 15px)
+          transform-origin: center
+          z-index: 11
+          height: 30px
+          width: 50px
+          color: red
+          text-align: center
+          
+      .lane
+        background-image: url('<%= image_path("lane.png") %>')
+        background-repeat: repeat-x
+        background-size: 50px auto
+        .lane_handle
+          position: absolute
+        .lane_rotate_handle
+          background-color: white
+          border: 1px solid gray
+          width: 16px
+          height: 16px
+          bottom: 10%
+          right: -18px
+          display: none
+        .lane_right_handle
+          background-color: white
+          border: 1px solid gray
+          width: 16px
+          height: 16px
+          bottom: 90%
+          right: -18px
+          display: none
+        .lane_remove_handle
+          text-align: center
+          width: 16px
+          height: 16px
+          bottom: -18px
+          left: 50%
+          transform: translateX(-50%)
+          background-color: white
+          border: 1px solid gray
+          display: none
+        .lane_move_handle
+          width: 100%
+          height: 100%
+          margin: 0px auto
+      .lane_double
+        background-image: url('<%= image_path("lane/lane_double.png") %>')!important
+      .lane_left
+        background-image: url('<%= image_path("lane/lane_left.png") %>')!important
+      .lane_right
+        background-image: url('<%= image_path("lane/lane_right.png") %>')!important
+      .lane_left_top
+        background-image: url('<%= image_path("lane/lane_left_top.png") %>')!important
+      .lane_left_bottom
+        background-image: url('<%= image_path("lane/lane_left_bottom.png") %>')!important
+      .lane_right_top
+        background-image: url('<%= image_path("lane/lane_right_top.png") %>')!important
+      .lane_right_bottom
+        background-image: url('<%= image_path("lane/lane_right_bottom.png") %>')!important
+
+      .pillar
+        background-size: 20px 20px
+        .pillar_handle
+          position: absolute
+        .pillar_remove_handle
+          text-align: center
+          width: 16px
+          height: 16px
+          bottom: -18px
+          left: 50%
+          transform: translateX(-50%)
+          background-color: white
+          border: 1px solid gray
+          display: none
+        .pillar_move_handle
+          width: 100%
+          height: 100%
+          margin: 0px auto
+
+      .lift
+        background-image: url('<%= image_path("lift.png") %>')
+        background-size: 50px 50px
+        .lift_handle
+          position: absolute
+        .lift_remove_handle
+          text-align: center
+          width: 16px
+          height: 16px
+          bottom: -18px
+          left: 50%
+          transform: translateX(-50%)
+          background-color: white
+          border: 1px solid gray
+          display: none
+        .lift_move_handle
+          width: 100%
+          height: 100%
+          margin: 0px auto
+      .elevator
+        background-image: url('<%= image_path("elevator.png") %>')
+        background-size: 50px 50px
+        .elevator_handle
+          position: absolute
+        .elevator_remove_handle
+          text-align: center
+          width: 16px
+          height: 16px
+          bottom: -18px
+          left: 50%
+          transform: translateX(-50%)
+          background-color: white
+          border: 1px solid gray
+          display: none
+        .elevator_move_handle
+          width: 100%
+          height: 100%
+          margin: 0px auto
+
+
+
+
