@@ -2,27 +2,29 @@
 #
 # Table name: clients
 #
-#  id                 :integer          not null, primary key
-#  name               :string(255)
-#  email              :string(255)
-#  encrypted_password :string(255)
-#  salt               :string(255)
-#  last_login_at      :datetime
-#  last_login_ip      :string(255)
-#  park_id            :integer
-#  plugins            :text
-#  balance            :integer
-#  created_at         :datetime
-#  updated_at         :datetime
+#  id                    :integer          not null, primary key
+#  name                  :string(255)
+#  email                 :string(255)
+#  encrypted_password    :string(255)
+#  salt                  :string(255)
+#  last_login_at         :datetime
+#  last_login_ip         :string(255)
+#  park_id               :integer
+#  plugins               :text
+#  balance               :integer
+#  created_at            :datetime
+#  updated_at            :datetime
+#  phone                 :string(255)
+#  login                 :string(255)
+#  phone_verified        :string(255)
+#  sms_verification_code :string(255)
 #
 
 class Client < ActiveRecord::Base
-  #validates :name, presence: true
-  #validates :name, uniqueness: true
   attr_accessor :password
 
   belongs_to :park
-  validates :email, uniqueness: { :scope => :park_id }, :on => :create
+  validates :login, uniqueness: { :scope => :park_id }, :on => :create
 
   def password=(pass)
     self.salt = SecureRandom::hex(10)
@@ -34,7 +36,7 @@ class Client < ActiveRecord::Base
   end
 
   def self.login(login, pass)
-    u = Client.find_by_email(login)
+    u = Client.find_by_email(login) || Client.find_by_login(login) || Client.find_by_phone(login)
     return nil if u.nil?
 
     u.password_valid?(pass) ? u : nil
@@ -44,12 +46,20 @@ class Client < ActiveRecord::Base
     Digest::SHA1.hexdigest(salt + pass)
   end
 
+  def self.auto_generate_login(park)
+    park.code
+  end
+
   def self.auto_generate_email(park)
     park.pinyin.gsub(" ", "_") + "_" + SecureRandom.hex(2)
   end
 
+  def send_setup_sms_code
+  end
+
   def self.auto_generate_password(park)
-    sprintf("%06d", rand(100000))
+    #sprintf("%06d", rand(100000))
+    park.code
   end
 
   def plugins

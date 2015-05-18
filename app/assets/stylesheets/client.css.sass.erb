@@ -11,6 +11,12 @@ $client-sidebar-bg-color: #303842
 $client-sidebar-active-item-bg-color: #3a424c
 $client-font-color-dark: #303842
 
+$bg-main-color: white
+$bg-gray-color: #f6f6f6
+$bg-dark-gray: #cdcdcd
+$bg-light-gray: #f5f5f5
+
+
 .container-fluid
   padding: 0px!important
 
@@ -86,3 +92,39 @@ $client-font-color-dark: #303842
 
           i
             @include block_vertical_align
+    .setup_page
+      .setup_nav
+        list-style: none
+        -webkit-padding-start: 0px
+        display: block
+        li
+          float: left
+          display: inline-block
+          padding: 5px 20px
+          border: 1px solid $bg-dark-gray
+          color: $bg-dark-gray
+          margin-right: 10px
+          background-color: $bg-light-gray
+          border-radius: 4px
+          span
+            font-weight: 900
+            font-size: 2em
+        .active
+          background-color: #7eb762
+          border: 1px solid #7eb762
+          box-shadow: 3px 3px 2px lighten(black, 30%)
+          color: white
+
+      form
+        padding: 10px 0px
+        input[type=text]
+          width: 400px
+          padding-left: 10px
+          height: 35px
+          line-height: 35px
+          font-weight: 700
+          font-size: 1.4em
+          display: block
+          margin: 10px 0px
+        .btn
+          margin-right: 10px

@@ -6,7 +6,7 @@ class Staff::ClientsController < Staff::BaseController
 
   def index
     @clients = @park.clients.page params[:page]
-    @client = @park.clients.build :email => Client.auto_generate_email(@park)
+    @client = @park.clients.build :login => Client.auto_generate_login(@park)
   end
 
   def destroy
@@ -22,7 +22,7 @@ class Staff::ClientsController < Staff::BaseController
   end
 
   def client_params
-    params.require(:client).permit(:email, :password)
+    params.require(:client).permit(:login, :password)
   end
 
 end

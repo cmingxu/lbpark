@@ -2,6 +2,8 @@ class Client::BaseController < ApplicationController
   layout "client"
 
   before_filter :client_login_required
+  before_filter :mobile_registered_and_verifed, :except => [:setup, :set_phone, :sms_verify, :sms_send]
+  before_filter :make_sure_password_changed, :except => [:setup, :do_password_change, :set_phone, :sms_verify, :sms_send]
   after_filter :reset_last_captcha_code!
 
   helper_method :current_client, :current_user
@@ -30,7 +32,6 @@ class Client::BaseController < ApplicationController
     session[:redirect_to] = params[:redirect_to] || request.referer
   end
 
-
   def client_login_required
     unless current_client
       session[:redirect_to] = request.path
@@ -38,4 +39,35 @@ class Client::BaseController < ApplicationController
     end
     false
   end
+
+  def mobile_registered_and_verifed
+    if !current_client.phone_verified?
+      redirect_to client_setup_path and return false
+    end
+  end
+
+  def make_sure_password_changed
+    if !current_client.password_changed?
+      redirect_to client_setup_path and return false
+    end
+  end
+
+  def setup
+  end
+
+  def set_phone
+    current_client.phone = params[:phone]
+    if current_client.save
+      redirect_to client_setup_path, :notice => "设置成功"
+    else
+      redirect_to client_setup_path, :alert => "电话号码不正确"
+    end
+  end
+
+  def sms_verify
+  end
+
+  def do_password_change
+  end
+
 end

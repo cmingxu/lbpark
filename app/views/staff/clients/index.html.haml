@@ -27,7 +27,7 @@
             = form_for [:staff, @client] do |f|
               = hidden_field_tag "park_id", params[:park_id]
               %td
-                = f.text_field :email, :style => "width: 100%"
+                = f.text_field :login, :style => "width: 100%"
               %td
                 = f.text_field :password, :value => Client.auto_generate_password(@park), :style => "width: 100%"
               %td

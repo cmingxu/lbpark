@@ -1,11 +1,11 @@
 %fieldset
-  = form_tag client_login_path, :class => "form-horizontal", :role => "form", :id => "login_form" do
+  = form_tag client_login_path, :class => "form-horizontal", :role => "form", :id => "client_login_form" do
     %fieldset
       .form-group
-        %label{:for=>"email_field", :class => "col-md-2 control-label"} 邮箱
+        %label{:for=>"login_field", :class => "col-md-2 control-label"} 登陆名
         .col-md-10
-          = text_field_tag "user[email]", "", :class => "form-control", :id => "email_field"
-          %span.help-block 输入能联系到您的Email地址
+          = text_field_tag "user[login]", "", :class => "form-control", :id => "login_field"
+          %span.help-block Email/手机/登陆名
 
       .form-group
         %label{:for=>"password", :class => "col-md-2 control-label"} 密码
@@ -24,6 +24,6 @@
       .form-group
         .col-md-2
         .col-md-10
-          = submit_tag "登陆", :class => "btn btn-primary", :id => "submit_button"
+          = submit_tag "登陆", :class => "btn btn-primary", :id => "submit_button", :onclick => "javascript:$('#client_login_form').submit()"
           登陆出现问题拨打电话
           = Settings.four_zero_zero

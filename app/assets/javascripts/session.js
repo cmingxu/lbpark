@@ -63,6 +63,18 @@ function email_validation(dom) {
   return true;
 }
 
+function login_validation(dom) {
+  var $dom = $(dom),
+  val = $dom.val();
+
+  if(field_blank(val)){
+    display_error($dom, "登陆名是必填内容");
+    return false;
+  }
+
+  return true;
+}
+
 function password_validation(dom) {
   var $dom = $(dom),
   val = $dom.val();
@@ -157,6 +169,7 @@ $("#login_form").submit(function (event) {
 });
 
 $("#forget_password_form").submit(function (event) {
+  console.log('11111');
 
   cleanup_error();
 
@@ -166,4 +179,19 @@ $("#forget_password_form").submit(function (event) {
     }else{
       event.preventDefault();
     }
+});
+
+
+$("#client_login_form").submit(function (event) {
+  cleanup_error();
+
+  if(login_validation("#login_field") &&
+     password_validation("#password_field") &&
+         captcha_validation("#captcha_field"))
+    {
+      return true;
+    }else{
+      event.preventDefault();
+    }
+
 });

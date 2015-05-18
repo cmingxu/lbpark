@@ -1,5 +1,7 @@
 class Client::SessionController < Client::BaseController
   skip_before_filter :client_login_required
+  skip_before_filter :mobile_registered_and_verifed
+  skip_before_filter :make_sure_password_changed
   before_filter :validate_captcha, :only => [:login, :register, :forget_password, :reset_password], :if => lambda { !request.get? }
 
   layout "client_session"
@@ -8,7 +10,7 @@ class Client::SessionController < Client::BaseController
     store_request_path
 
     if request.post?
-      if @client = Client.login(user_params[:email], user_params[:password])
+      if @client = Client.login(user_params[:login], user_params[:password])
         session[:client_id] = @client.id
         redirect_to client_path, notice: "欢迎回来，#{@client.email}"
       else
@@ -31,6 +33,6 @@ class Client::SessionController < Client::BaseController
   end
 
   def user_params
-    params[:user].permit(:email, :password, :password_confirmation, :captcha, :reset_password_token)
+    params[:user].permit(:login, :password, :password_confirmation, :captcha, :reset_password_token)
   end
 end

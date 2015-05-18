@@ -22,6 +22,7 @@
 #  used_at           :datetime
 #  issued_paizhao    :string(255)
 #  quantity          :integer
+#  issued_park_space :string(255)
 #
 
 require 'test_helper'

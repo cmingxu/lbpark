@@ -91,6 +91,12 @@ Rails.application.routes.draw do
     post "login" => "session#login"
     delete "logout" => "session#destroy"
 
+    post 'sms_verify' => "base#sms_verify"
+    patch 'do_password_change' => "base#do_password_change"
+    patch 'set_phone' => "base#set_phone"
+    get 'setup' => "base#setup"
+    get 'sms_send' => "base#sms_send"
+
     resources :coupons
     resources :park_maps do
       resources :park_spaces do

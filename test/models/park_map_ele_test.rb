@@ -9,6 +9,7 @@
 #  ele_desc          :text
 #  created_at        :datetime
 #  updated_at        :datetime
+#  uuid              :string(255)
 #
 
 require 'test_helper'

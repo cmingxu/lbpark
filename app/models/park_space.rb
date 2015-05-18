@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: park_spaces
+#
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  uuid            :string(255)
+#  park_map_id     :integer
+#  park_id         :integer
+#  park_map_ele_id :integer
+#  usage_status    :string(255)
+#  vacancy_status  :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
 class ParkSpace < ActiveRecord::Base
   USAGE_STATUS = {:long => "长租", :temp => "短租", :for_booking => "预约", :reserved => "内部"}
   VACANCY_STATUS = {:vacancy => "空", :occupied => "占用"}

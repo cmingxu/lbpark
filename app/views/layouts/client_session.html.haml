@@ -13,7 +13,8 @@
     .container.user_actions
       = render :partial => "widgets/notice_bar"
       .row.register_form
-        .col-md-6.col-md-offset-3
+        .col-md-6.col-md-offset-3.form
+          .logo
           = yield
 
     = javascript_include_tag "client"
