@@ -136,7 +136,7 @@ class Park < ActiveRecord::Base
 
   has_many :park_pics, :dependent => :destroy, :class_name => "Attachments::ParkPic"
   has_many :park_instructions, :dependent => :destroy, :class_name => "::Attachments::ParkInstruction"
-  has_many :clients, :dependent => :destroy
+  belongs_to :client
 
   accepts_nested_attributes_for :park_instructions, :park_pics, :allow_destroy => true
 

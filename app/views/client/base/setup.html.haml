@@ -1,24 +1,30 @@
 .setup_page
-  - if current_client.phone.blank?
+  - if current_client_user.phone.blank?
     = render :partial => "setup_nav", :locals => {:active_index => 1}
     = form_tag client_set_phone_path, :method => :patch do
       = text_field_tag "phone", ""
       = submit_tag "设置", :class => 'btn btn-success pull-left'
   
-  - elsif current_client.phone.present? && !current_client.phone_verified?
+  - elsif current_client_user.phone.present? && !current_client_user.phone_verified?
     = render :partial => "setup_nav", :locals => {:active_index => 2}
     = form_tag client_sms_verify_path, :method => :patch do
       %p
         您的手机号码为： 
-        = current_client.phone
+        = current_client_user.phone
       = text_field_tag "sms_code", "", :placeholder => "验证码"
       = submit_tag "验证", :class => 'btn btn-success pull-left'
-      = link_to "重新发送...", "#", :class => "btn btn-default pull-left"
+      = link_to "重新发送...", "javascript:send_sms_code()", :class => "btn btn-default pull-left"
   
-  - elsif !current_client.password_changed?
+  - elsif !current_client_user.password_changed?
     = render :partial => "setup_nav", :locals => {:active_index => 3}
     = form_tag client_do_password_change_path, :method => :patch do
-      = password_field_tag "password"
-      = password_field_tag "password_confirmation"
-      = submit_tag "设置", :class => 'btn btn-success'
+      %table
+        %tr
+          %td 密码
+          %td= password_field_tag "password"
+        %tr
+          %td 再次输入密码
+          %td= password_field_tag "password_confirmation"
+
+      = submit_tag "修改密码", :class => 'btn btn-success pull-left'
   .clearfix

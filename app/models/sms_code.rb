@@ -16,8 +16,8 @@
 #
 
 class SmsCode < ActiveRecord::Base
-  TEMPLATES = { :login => "1233" }
   belongs_to :user
+  belongs_to :owner, :polymorphic => true
   after_create :send_sms
 
   state_machine :status, :initial => :new_created do
@@ -49,7 +49,6 @@ class SmsCode < ActiveRecord::Base
   def self.new_sms_code(phone)
     new do |s|
       s.phone = phone
-      s.user = User.find_by_phone(phone)
       s.params = sprintf("%06d", rand(100000))
       s.send_reason = :vendor_login
       s.expire_at = 10.minutes.from_now
@@ -59,16 +58,14 @@ class SmsCode < ActiveRecord::Base
   def self.new_sms_lottery_get(lottery)
     new do |s|
       s.phone = lottery.phone
-      s.user = User.find_by_phone(lottery.phone)
       s.params = "#{lottery.open_num},#{lottery.serial_num}"
-      s.send_sms = :vendor_lottery_get
+      s.send_reason = :vendor_lottery_get
     end
   end
 
   def self.new_sms_lottery_miss(user)
     new do |s|
       s.phone = user.phone
-      s.user = user
       s.params = ""
       s.send_reason = :vendor_lottery_miss
     end

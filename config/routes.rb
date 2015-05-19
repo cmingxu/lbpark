@@ -91,12 +91,15 @@ Rails.application.routes.draw do
     post "login" => "session#login"
     delete "logout" => "session#destroy"
 
-    post 'sms_verify' => "base#sms_verify"
+    patch 'sms_verify' => "base#sms_verify"
     patch 'do_password_change' => "base#do_password_change"
     patch 'set_phone' => "base#set_phone"
     get 'setup' => "base#setup"
     get 'sms_send' => "base#sms_send"
+    post 'send_sms_code' => "base#send_sms_code"
 
+    resources :my_plugins
+    resources :settings
     resources :coupons
     resources :park_maps do
       resources :park_spaces do
@@ -128,13 +131,16 @@ Rails.application.routes.draw do
       resources :park_imports
     end
 
+    resources :plugin_tpls, :only => :index
+
     resources :qr_codes do
       member do
         get :download
       end
     end
     resources :pages
-    resources :clients
+    resources :clients do
+    end
 
     resources :vendors do
       patch :switch_scan_coupon_status
@@ -157,7 +163,11 @@ Rails.application.routes.draw do
     resources :park_statuses
     resources :users_parks
     resources :parks do
-      resources :clients
+      resources :clients do
+        collection do
+          patch :update_client
+        end
+      end
       resources :park_maps do
         collection do
           patch :rename

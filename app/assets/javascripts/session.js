@@ -195,3 +195,10 @@ $("#client_login_form").submit(function (event) {
     }
 
 });
+
+function send_sms_code() {
+  $.ajax({
+    method: 'POST',
+    url: '/client/send_sms_code',
+  });
+}

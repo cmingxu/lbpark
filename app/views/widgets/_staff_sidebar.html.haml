@@ -34,6 +34,8 @@
       = link_to raw(fa_icon("fw users")) + "Client管理", staff_clients_path
     .list-group-item.lb_settings
       = link_to raw(fa_icon("fw users")) + "应用设置", staff_lb_settings_path
+    .list-group-item.lb_plugins
+      = link_to raw(fa_icon("fw users")) + "插件设置", staff_plugin_tpls_path
 
 :javascript
   $(".#{@active_nav_item || 'abc'}").addClass("sidebar_item_active")

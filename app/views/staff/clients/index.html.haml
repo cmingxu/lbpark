@@ -7,6 +7,28 @@
             %input.typeahead_client.col-md-6{:placeholder => "例如: 远洋光华国际"}
 
   .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        = form_for @client, :url => update_client_staff_park_clients_path(@park)  do |f|
+          %span.col-md-2
+            管理公司名称
+          .col-md-10
+            = f.text_field :name
+
+          %span.col-md-2
+            地址
+          .col-md-10
+            = f.text_field :address
+
+          %span.col-md-2
+            联系方式
+          .col-md-10
+            = f.text_field :contact
+
+          .col-md-12
+            = f.submit "更新", :class => "btn btn-success pull-left"
+
+  .row-fluid
     .col-md-10.col-md-offset-1.table_wrapper
       %table.table.table-striped.table-condensed.table-hover.table-bordered
         %thead
@@ -15,25 +37,22 @@
           %th
 
         %tbody
-          - @clients.each do |p|
+          - @client_users.each do |p|
+            - next if !p.persisted?
             %tr
-              %td= p.email
+              %td= p.login
               %td= p.encrypted_password
               %td
                 = link_to "删除", staff_park_client_path(@park, p), :method => :delete, :data => { :confirm => "dd" }
 
-
           %tr
-            = form_for [:staff, @client] do |f|
+            %tr
+            = form_for @client_user, :url => staff_park_clients_path do |f|
               = hidden_field_tag "park_id", params[:park_id]
               %td
                 = f.text_field :login, :style => "width: 100%"
               %td
-                = f.text_field :password, :value => Client.auto_generate_password(@park), :style => "width: 100%"
+                = f.text_field :password, :value => ClientUser.auto_generate_password(@park), :style => "width: 100%"
               %td
                 = f.submit "创建", :class => "btn btn-warning"
-
-
-      = paginate @clients
-
 

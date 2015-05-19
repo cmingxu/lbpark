@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518081714) do
+ActiveRecord::Schema.define(version: 20150519032421) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20150518081714) do
     t.datetime "updated_at"
   end
 
-  create_table "clients", force: true do |t|
+  create_table "client_users", force: true do |t|
     t.string   "name"
     t.string   "email"
     t.string   "encrypted_password"
@@ -46,6 +46,15 @@ ActiveRecord::Schema.define(version: 20150518081714) do
     t.boolean  "phone_verified"
     t.string   "sms_verification_code"
     t.boolean  "password_changed"
+    t.integer  "client_id"
+  end
+
+  create_table "clients", force: true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.string   "contact"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "coupon_scans", force: true do |t|
@@ -393,6 +402,28 @@ ActiveRecord::Schema.define(version: 20150518081714) do
     t.text     "previews"
     t.string   "pinyin"
     t.string   "same_as"
+    t.integer  "client_id"
+  end
+
+  create_table "plugin_tpls", force: true do |t|
+    t.string   "identifier"
+    t.string   "name"
+    t.string   "icon"
+    t.string   "big_icon"
+    t.decimal  "base_price",     precision: 10, scale: 0
+    t.text     "desc"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "default_to_all"
+  end
+
+  create_table "plugins", force: true do |t|
+    t.integer  "client_id"
+    t.integer  "plugin_tpl_id"
+    t.datetime "begin_at"
+    t.datetime "end_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "qr_codes", force: true do |t|
@@ -418,6 +449,8 @@ ActiveRecord::Schema.define(version: 20150518081714) do
     t.integer  "user_id"
     t.boolean  "stop"
     t.string   "send_reason"
+    t.string   "owner_type"
+    t.integer  "owner_id"
   end
 
   add_index "sms_codes", ["phone"], name: "index_sms_codes_on_phone", using: :btree

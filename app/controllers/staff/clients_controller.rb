@@ -5,24 +5,44 @@ class Staff::ClientsController < Staff::BaseController
   end
 
   def index
-    @clients = @park.clients.page params[:page]
-    @client = @park.clients.build :login => Client.auto_generate_login(@park)
+    if @park.client.blank?
+      @park.client = Client.create
+      @park.save
+    end
+
+    @client = @park.client
+    @client_users = @client.client_users
+    @client_user = @client.client_users.build :login => ClientUser.auto_generate_login(@park)
   end
 
   def destroy
-    @client = @park.clients.find params[:id]
-    @client.destroy
+    @client = @park.client
+    @client_user = @park.client_users.find params[:id]
+    @client_user.destroy
     redirect_to staff_park_clients_path(@park)
   end
 
   def create
-    @client = @park.clients.build client_params
-    @client.save
+    @client = @park.client
+    @client_user = @client.client_users.build client_user_params
+    @client_user.save
     redirect_to staff_park_clients_path(@park)
   end
 
+  def client_user_params
+    params.require(:client_user).permit(:login, :password)
+  end
+
   def client_params
-    params.require(:client).permit(:login, :password)
+    params.require(:client).permit(:name, :contact, :address)
+  end
+
+  def update_client
+    @client = @park.client
+    @client.update_attributes client_params
+    @client.save
+
+    redirect_to staff_park_clients_path @park
   end
 
 end

@@ -10,9 +10,9 @@ class Client::SessionController < Client::BaseController
     store_request_path
 
     if request.post?
-      if @client = Client.login(user_params[:login], user_params[:password])
-        session[:client_id] = @client.id
-        redirect_to client_path, notice: "欢迎回来，#{@client.email}"
+      if @client_user = ClientUser.login(user_params[:login], user_params[:password])
+        session[:client_user_id] = @client_user.id
+        redirect_to client_path, notice: "欢迎回来，#{@client_user.login || @client_user.email}"
       else
         redirect_to client_login_path, alert: "用户名密码不正确， 或者您尚未激活账号."
       end
@@ -20,7 +20,7 @@ class Client::SessionController < Client::BaseController
   end
 
   def destroy
-    session[:client_id] = nil
+    session[:client_user_id] = nil
     redirect_to client_login_path, alert: "bye"
   end
 
