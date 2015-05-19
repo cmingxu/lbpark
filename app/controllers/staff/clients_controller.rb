@@ -5,14 +5,24 @@ class Staff::ClientsController < Staff::BaseController
   end
 
   def index
-    if @park.client.blank?
-      @park.client = Client.create
-      @park.save
+    respond_to do |format| 
+      format.html do 
+        if @park.client.blank?
+          @park.client = Client.create
+          @park.save
+        end
+
+        @client = @park.client
+        @client_users = @client.client_users
+        @client_user = @client.client_users.build :login => ClientUser.auto_generate_login(@park)
+      end
+      format.json do
+        @clients = Client.where(["name like ? OR address like ? OR contact like ?", "%#{params[:match]}%","%#{params[:match]}%" ,"%#{params[:match]}%"  ])
+        render :json => @clients
+      end
     end
 
-    @client = @park.client
-    @client_users = @client.client_users
-    @client_user = @client.client_users.build :login => ClientUser.auto_generate_login(@park)
+
   end
 
   def destroy

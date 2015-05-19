@@ -4,6 +4,6 @@ class Client::ParksController < Client::BaseController
   end
 
   def index
-    @park = current_client.park
+    @park = current_client.parks.find_by_id params[:id] || current_client.parks.first
   end
 end

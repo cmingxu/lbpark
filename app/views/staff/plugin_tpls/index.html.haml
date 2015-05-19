@@ -1,0 +1,67 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th Identifier
+          %th Name
+          %th Icon
+          %th Big Icon
+          %th 默认
+          %th
+
+        %tbody
+          - @plugin_tpls.each do |p|
+            %tr
+              %td= link_to p.id, edit_staff_plugin_tpl_path(p)
+              %td= p.identifier
+              %td= p.name
+              %td= image_tag(p.icon.thumb.url)
+              %td= image_tag(p.big_icon.thumb.url)
+              %td= p.default_to_all
+
+
+
+
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        .form-group
+          .input-group.col-md-12
+            %input.typeahead_plugin_tpl.col-md-6{:placeholder => "例如: 远洋光华国际"}
+
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th Identifier
+          %th Name
+          %th Begin At
+          %th End At
+          %th
+
+        %tbody
+          - @plugins.each do |p|
+            %tr
+              %td= p.id
+              %td= p.plugin_tpl.identifier
+              %td= p.plugin_tpl.name
+              %td= p.begin_at
+              %td= p.end_at
+
+              %td
+                - if p.enabled?
+                  = link_to "删除", destroy_plugin_staff_plugin_tpls_path(:plugin_id => p), :data => {:confirm => "删除"}, :method => :delete
+          %tr
+            = form_for @client.plugins.build, :url => create_plugin_staff_plugin_tpls_path(:client_id => @client.id) do |f|
+              %td{:colspan => 3}
+                = f.select :plugin_tpl_id, options_for_select(PluginTpl.all.map {|a| [a.name, a.id]} )
+              %td
+                = f.text_field :begin_at, :class => "date"
+              %td
+                = f.text_field :end_at, :class => "date"
+              %td
+                = f.submit "新插件", :class => "btn"

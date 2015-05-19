@@ -131,7 +131,12 @@ Rails.application.routes.draw do
       resources :park_imports
     end
 
-    resources :plugin_tpls, :only => :index
+    resources :plugin_tpls do
+      collection do
+        delete "destroy_plugin"
+        post :create_plugin
+      end
+    end
 
     resources :qr_codes do
       member do

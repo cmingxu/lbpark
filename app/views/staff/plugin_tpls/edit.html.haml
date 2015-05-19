@@ -1,0 +1,36 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
+        %thead
+          %th
+          %th
+        %tbody
+          = form_for [:staff, @plugin_tpl], :role => "form", :class => "form", :multipart => true do |f|
+            %tr
+              %td Identifier
+              %td
+                = f.text_field :identifier
+
+            %tr
+              %td Name
+              %td
+                = f.text_field :name
+            %tr
+              %td
+                Icon
+                = image_tag @plugin_tpl.icon.thumb.url
+              %td
+                = f.file_field :icon
+
+            %tr
+              %td
+                Big Icon
+                = image_tag @plugin_tpl.big_icon.thumb.url
+              %td
+                = f.file_field :big_icon
+
+            %tr
+              %td{:colspan => 2}
+                = f.submit "保存", :class => "btn btn-success"
+

@@ -62,6 +62,7 @@ class Client::BaseController < ApplicationController
   def set_phone
     current_client_user.phone = params[:phone]
     if current_client_user.save
+      SmsCode.new_sms_code(current_client_user.phone).save
       redirect_to client_setup_path, :notice => "设置成功"
     else
       redirect_to client_setup_path, :alert => "电话号码不正确"

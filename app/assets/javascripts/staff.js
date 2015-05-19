@@ -128,6 +128,23 @@ $(document).ready(function(){
     });
 
 
+    $('input.typeahead_plugin_tpl').typeahead({
+      source: function (query, process) {
+        $.ajax({
+          url: "/staff/clients",
+          type: "get",
+          dataType: 'JSON',
+          data: {match: query},
+          success: function (data) {
+            process(data);
+          }
+        })
+      },
+      afterSelect: function (item) {
+        window.location.href = "/staff/plugin_tpls?client_id=" + item.id ;
+      }
+    });
+
     $('.date').datepicker({
       format: 'yyyy-mm-dd',
       startDate: '-0d'
