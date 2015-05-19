@@ -5,12 +5,8 @@
   .list-group-item.clients
     = link_to raw(fa_icon("fw bank")) + "我的面板", client_path
     - current_client.plugins.active.each do |p|
-      .list-group-item{:class => p.internal_identifier }
-        = link_to raw(fa_icon("fw #{p.fa_icon}")) + p.displayable_name, p.link
-  .list-group-item.parks
-    = link_to raw(fa_icon("fw automobile")) + "车场数据", client_parks_path
-  .list-group-item.park_maps
-    = link_to raw(fa_icon("fw automobile")) + "车场平面图", client_park_park_maps_path(current_client.parks.first)
+      .list-group-item{:class => p.identifier }
+        = link_to raw(fa_icon("fw #{p.fa_icon}")) + p.name, p.entry_url
 
 :javascript
   $(".#{@active_nav_item || 'abc'}").addClass("sidebar_item_active")

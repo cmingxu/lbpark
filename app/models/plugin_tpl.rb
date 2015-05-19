@@ -6,11 +6,11 @@ class PluginTpl < ActiveRecord::Base
 
   def self.setup
     [
-      { :identifier => "moonthly", :name => "发布包月券" },
-      {:identifier => "time", :name => "发布包月券"},
-      {:identifier => "free", :name => "发布限免券", :default_to_all => true},
-      {:identifier => "deduct", :name => "满额抵减券"},
-      {:identifier => "park_map", :name => "车场平面图"}
+      { :fa_icon => "plus", :identifier => "monthly",  :name => "发布包月券", :entry_url => "/client/coupons?coupon_type=monthly" },
+      { :fa_icon => "plus", :identifier => "time",     :name => "发布计次券", :entry_url => "/client/coupons?coupon_type=time"},
+      { :fa_icon => "plus", :identifier => "free",     :name => "发布限免券", :default_to_all => true, :entry_url => "/client/coupons?coupon_type=free"},
+      { :fa_icon => "plus", :identifier => "deduct",   :name => "满额抵减券", :entry_url => "/client/coupons?coupon_type=deduct"},
+      { :fa_icon => "plus", :identifier => "park_map", :name => "车场平面图", :entry_url => "/client/park_maps"}
     ].each do |p|
       plugin_tpl = self.find_or_create_by(:identifier => p[:identifier])
       plugin_tpl.update_attributes p

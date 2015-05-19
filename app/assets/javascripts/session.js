@@ -84,10 +84,10 @@ function password_validation(dom) {
     return false;
   }
 
-  if(!length_gt_than(val, 6)){
-    display_error($dom, "您的密码长度不符合我们的要求");
-    return false;
-  }
+  //if(!length_gt_than(val, 6)){
+    //display_error($dom, "您的密码长度不符合我们的要求");
+    //return false;
+  //}
   return true;
 }
 
@@ -169,7 +169,6 @@ $("#login_form").submit(function (event) {
 });
 
 $("#forget_password_form").submit(function (event) {
-  console.log('11111');
 
   cleanup_error();
 

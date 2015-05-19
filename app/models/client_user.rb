@@ -25,7 +25,7 @@ class ClientUser < ActiveRecord::Base
 
   belongs_to :client
   validates :login, uniqueness: { :scope => :park_id }, :on => :create
-  validates :phone, format: { with: /\d{11}/ }
+  validates :phone, format: { with: /\d{11}/ }, :allow_blank => true
 
   def password=(pass)
     self.salt = SecureRandom::hex(10)

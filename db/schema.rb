@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519080358) do
+ActiveRecord::Schema.define(version: 20150519093738) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -415,6 +415,8 @@ ActiveRecord::Schema.define(version: 20150519080358) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "default_to_all"
+    t.string   "entry_url"
+    t.string   "fa_icon"
   end
 
   create_table "plugins", force: true do |t|

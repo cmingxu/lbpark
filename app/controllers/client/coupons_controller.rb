@@ -1,23 +1,24 @@
 class Client::CouponsController < Client::BaseController
   before_filter do
     @active_nav_item = params[:coupon_type]
+    @park = current_client.parks.find_by_id(params[:park_id]) || current_client.parks.first
   end
 
   def index
-    @coupon_tpls = current_client.park.coupon_tpls.order("id desc").page params[:page]
+    @coupon_tpls = @park.coupon_tpls.order("id desc").page params[:page]
   end
 
   def new
-    @coupon_tpl = current_client.park.coupon_tpls.new
+    @coupon_tpl = @park.coupon_tpls.new
   end
 
   def edit
-    @coupon_tpl = current_client.park.coupon_tpls.find params[:id]
+    @coupon_tpl = @park.coupon_tpls.find params[:id]
     params[:type] = CouponTpl.coupon_type_to_readable(@coupon_tpl.type)
   end
 
   def publish
-    @coupon_tpl = current_client.park.coupon_tpls.find params[:id]
+    @coupon_tpl = @park.coupon_tpls.find params[:id]
     if @coupon_tpl.publish
       redirect_to :back
     else
@@ -26,7 +27,7 @@ class Client::CouponsController < Client::BaseController
   end
 
   def stop
-    @coupon_tpl = current_client.park.coupon_tpls.find params[:id]
+    @coupon_tpl = @park.coupon_tpls.find params[:id]
     @coupon_tpl.stop!
     redirect_to :back
   end

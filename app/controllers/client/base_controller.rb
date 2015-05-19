@@ -8,6 +8,15 @@ class Client::BaseController < ApplicationController
 
   helper_method :current_client, :current_user, :current_client_user
 
+  def self.required_plugin(plugin)
+    before_filter do
+      if(current_client && current_client.plugins.map(&:identifier).include?(plugin.to_sym))
+        render :text => "prohibited", :status => 401
+        return false
+      end
+    end
+  end
+
   def current_client
     @current_client ||= current_client_user.client
   end
