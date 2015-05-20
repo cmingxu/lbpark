@@ -1,0 +1,40 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form-group
+        - Coupon::COUPON_STATUS.each do |k, code|
+          = link_to code , coupon_list_client_coupons_path(:status => k, :coupon_tpl_id => @coupon_tpl.id)
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 卡券
+          %th 编号
+          %th 状态
+          %th 二维码
+          %th 数量
+          %th 联系电话
+          %th NickName
+          %th 车牌号
+          %th 开始日期
+
+        %tbody
+          - @coupons.each do |p|
+            %tr
+              %td= link_to p.id, edit_staff_coupon_path(p)
+              %td= link_to p.coupon_tpl.identifier, edit_staff_coupon_tpl_path(p.coupon_tpl)
+              %td= p.identifier
+              %td= Coupon::COUPON_STATUS[p.status.to_sym]
+              %td
+                = image_tag p.qr_code.thumb.url, :height => 60, :width => 60
+              %td= p.quantity
+              %td= p.user.try(:phone)
+              %td= p.user.try(:nickname)
+              %td= p.issued_paizhao
+              %td= p.issued_begin_date
+
+      = paginate @coupons
+
+

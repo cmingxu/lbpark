@@ -7,6 +7,8 @@
     - current_client.plugins.active.each do |p|
       .list-group-item{:class => p.identifier }
         = link_to raw(fa_icon("fw #{p.fa_icon}")) + p.name, p.entry_url
+    .list-group-item.client_members
+      = link_to raw(fa_icon("fw users")) + "停车场会员" , client_client_members_path
 
 :javascript
   $(".#{@active_nav_item || 'abc'}").addClass("sidebar_item_active")

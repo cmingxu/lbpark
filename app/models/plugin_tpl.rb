@@ -10,7 +10,7 @@ class PluginTpl < ActiveRecord::Base
       { :fa_icon => "plus", :identifier => "time",     :name => "发布计次券", :entry_url => "/client/coupons?coupon_type=time"},
       { :fa_icon => "plus", :identifier => "free",     :name => "发布限免券", :default_to_all => true, :entry_url => "/client/coupons?coupon_type=free"},
       { :fa_icon => "plus", :identifier => "deduct",   :name => "满额抵减券", :entry_url => "/client/coupons?coupon_type=deduct"},
-      { :fa_icon => "plus", :identifier => "park_map", :name => "车场平面图", :entry_url => "/client/park_maps"}
+      { :fa_icon => "plus", :identifier => "park_map", :name => "长租车位管理", :entry_url => "/client/park_maps"}
     ].each do |p|
       plugin_tpl = self.find_or_create_by(:identifier => p[:identifier])
       plugin_tpl.update_attributes p

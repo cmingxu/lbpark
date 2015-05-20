@@ -7,5 +7,5 @@ class Plugin < ActiveRecord::Base
 
   scope :active, -> { where(:enabled => true).where("begin_at < ? AND ? < end_at", Time.now, Time.now)}
 
-  delegate :name, :identifier, :fa_icon, :entry_url,  to: :plugin_tpl
+  delegate :name, :identifier, :fa_icon, :entry_url, :icon, :big_icon,  to: :plugin_tpl
 end

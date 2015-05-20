@@ -32,15 +32,27 @@ class Client::CouponsController < Client::BaseController
     redirect_to :back
   end
 
+  def coupon_list
+    @coupon_tpl = CouponTpl.find params[:coupon_tpl_id]
+    coupon_tpl_scope = @coupon_tpl.coupons
+    if params[:status]
+      coupon_tpl_scope = coupon_tpl_scope.where(:status => params[:status])
+    end
+    @coupons = coupon_tpl_scope.page params[:page]
+  end
 
   def create
     @coupon_tpl = CouponTpl.coupon_class_name(params[:type]).new coupon_tpl_params
-    @coupon_tpl.staff = current_staff
     if @coupon_tpl.save
-      redirect_to client_coupon_tpls_path, :notice => "优惠券创建成功"
+      redirect_to client_coupons_path, :notice => "优惠券创建成功"
     else
       flash.now[:alert] = @coupon_tpl.errors.full_messages.first
       render :new
     end
+  end
+
+  def coupon_tpl_params
+    params.require(:coupon_tpl).permit(:park_id, :fit_for_date, :quantity, :price, :banner, :notice, :coupon_value,
+                                       :valid_hour_begin, :valid_hour_end, :lower_limit_for_deduct, :valid_dates, :park_space_choose_enabled)
   end
 end

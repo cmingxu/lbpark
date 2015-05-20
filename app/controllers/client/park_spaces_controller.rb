@@ -1,6 +1,7 @@
 class Client::ParkSpacesController < Client::BaseController
   before_filter do
-    @park_map = current_client.park.park_maps.find params[:park_map_id]
+    @park = current_client.parks.find params[:park_id] || current_client.parks.first
+    @park_map = @park.park_maps.find params[:park_map_id]
   end
 
   def index

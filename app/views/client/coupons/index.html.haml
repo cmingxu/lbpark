@@ -1,0 +1,39 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      = link_to fa_icon("fw plus") + "发布#{CouponTpl::COUPON_TPL_TYPES[params[:coupon_type].to_sym]}", new_client_coupon_path(:type => params[:coupon_type]), :class => "btn btn-primary"
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 编号
+          %th 停车场
+          %th 名称
+          %th 状态
+          %th 数量
+          %th 发布时间
+          %th 截止时间
+          %th 可领取数量
+          %th 未付款
+          %th 消耗数量
+          %th
+
+        %tbody
+          - @coupon_tpls.each do |p|
+            %tr
+              %td= link_to p.id, edit_client_coupon_path(p)
+              %td= link_to p.identifier, edit_client_coupon_path(p)
+              %td= p.park.try(:name)
+              %td= p.name_cn
+              %td= CouponTpl::COUPON_TPL_TYPES[p.status.to_sym]
+              %td= p.quantity
+              %td= p.fit_for_date
+              %td= p.end_at
+              %td= p.claimable_count
+              %td= p.not_paid_count
+              %td= p.used_count
+              %td
+                = link_to "领取人", coupon_list_client_coupons_path(:coupon_tpl_id => p.id, :status => :claimed)
+
+
+      = paginate @coupon_tpls
+

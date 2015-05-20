@@ -2,7 +2,7 @@ class Client::ParkMapsController < Client::BaseController
   required_plugin :park_map
 
   before_filter do
-    @active_nav_item = "park_maps"
+    @active_nav_item = "park_map"
   end
 
   def index

@@ -1,0 +1,13 @@
+%tr
+  %td 价格
+  %td
+    = f.text_field :price
+    %span 例如: 20
+
+= render :partial => "staff/coupon_tpls/begin_end_time_select", :locals => { :f => f }
+
+%tr
+  %td 推广图片
+  %td
+    = f.file_field :banner
+    = image_tag f.object.banner.try(:thumb).try(:url)

@@ -1,0 +1,51 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
+        %thead
+          %th 
+          %th
+        %tbody
+          = form_for [:client, @coupon_tpl], :url => client_coupons_path, :role => "form", :class => "form", :multipart => true do |f|
+            = hidden_field_tag :type, params[:type]
+            %tr
+              %td 类型
+              %td
+                %strong
+                  = CouponTpl::COUPON_TPL_TYPES[params[:type].intern || :free]
+
+            %tr
+              %td 标识
+              %td
+                = CouponTpl.identifier(params[:type])
+
+            %tr
+              %td 停车场
+              %td
+                = @park.name
+                = f.hidden_field :park_id
+
+            %tr
+              %td 数量
+              %td
+                = f.text_field :quantity
+                %span 例如: 500
+            %tr
+              %td 提示
+              %td
+                = f.text_field :notice
+                %span 例如: 数量有限， 特价包月
+
+            = render :partial => "#{params[:type] || 'free'}", :locals => { :f => f }
+
+            %tr
+              %td{:colspan => 2}
+                - if ! f.object.persisted?
+                  = f.submit "保存", :class => "btn btn-success"
+                - else
+                  如需修改请联系萝卜工作人员
+
+
+
+  -#- if @coupon_tpl.persisted?
+    -#= render :partial => "park_notice_item"

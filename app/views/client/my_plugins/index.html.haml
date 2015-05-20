@@ -1,2 +1,14 @@
-%h1 Client::MyPlugins#index
-%p Find me in app/views/client/my_plugins/index.html.haml
+.client_dashboard
+  .client_metrics
+    - current_client.plugins.each do |plugin|
+      .metric
+        .metric_icon
+          = image_tag(plugin.big_icon.thumb.url || "logo_png.png", :height => 250, :width => 200)
+        .metric_desc
+          = plugin.name
+        .metric_data
+
+    .metric
+      = fa_icon("plus 3x")
+    .clearfix
+

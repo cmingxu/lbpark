@@ -1,0 +1,36 @@
+= form_for [:client, @client_member] do |f|
+  %table.table.table-condensed
+    %tr
+      %td 姓名
+      %td= f.text_field :name
+    %tr
+      %td 电话
+      %td= f.text_field :phone
+    %tr
+      %td 车牌照
+      %td= f.text_field :paizhao
+
+  %table.table.table-condensed
+    %thead
+      %th 开始日期
+      %th 时长
+      %th 单价
+      %th 总价
+
+    = f.fields_for :client_memberships do |cm|
+      %tr
+        - if cm.object.persisted?
+          %td= cm.object.begin_at
+          %td= cm.object.month_count
+          %td= cm.object.total_price
+          %td= cm.object.total_price
+        - else
+          %td= cm.text_field :begin_at, :class => "date"
+          %td= cm.text_field :month_count
+          %td= cm.text_field :total_price
+          %td= cm.text_field :total_price
+
+  = f.submit "提交", :class => "btn btn-default"
+
+
+

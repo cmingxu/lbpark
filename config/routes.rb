@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   ResqueWeb::Engine.eager_load!
 
   require 'resque_web'
@@ -98,9 +99,14 @@ Rails.application.routes.draw do
     get 'sms_send' => "base#sms_send"
     post 'send_sms_code' => "base#send_sms_code"
 
+    resources :client_members
     resources :my_plugins
     resources :settings
-    resources :coupons
+    resources :coupons do
+      collection do
+        get :coupon_list
+      end
+    end
     resources :park_maps do
       resources :park_spaces do
         member do

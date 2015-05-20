@@ -1,4 +1,4 @@
-class Client::MyPluginsController < ApplicationController
+class Client::MyPluginsController < Client::BaseController
   def index
   end
 end

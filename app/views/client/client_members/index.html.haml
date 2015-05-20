@@ -1,0 +1,29 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        .form-group
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      = link_to fa_icon("fw plus") + "录入会员", "#", :class => "overlay_dom btn btn-primary", "data-url" => new_client_client_member_path
+
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th ID
+          %th 姓名
+          %th 电话
+          %th 车牌号
+          %th 当前车位
+          %th 到期时间
+          %th
+        %tbody
+          - @client_members.each do |cm|
+            %tr
+              %td= link_to cm.id, "#", :class => "overlay_dom", "data-url" => edit_client_client_member_path(cm)
+              %td= cm.name
+              %td= cm.phone
+              %td= cm.paizhao
+              %td
+              %td
+              %td

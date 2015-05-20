@@ -1,0 +1,29 @@
+%tr
+  %td 适用日期
+  %td
+    = f.text_field :fit_for_date, :class => "date"
+    %span 例如:
+
+%tr
+  %td 抵价
+  %td
+    = f.text_field :coupon_value
+    %span 例如: 5
+
+%tr
+  %td 满额
+  %td
+    = f.text_field :lower_limit_for_deduct
+    %span 例如: 20
+
+%tr
+  %td 适用日期
+  %td
+    = f.select :valid_dates, options_for_select(CouponTpl::VALID_DATES, f.object.valid_dates)
+    %span 例如: 工作日
+
+%tr
+  %td 推广图片
+  %td
+    = f.file_field :banner
+    = image_tag f.object.banner.try(:thumb).try(:url)

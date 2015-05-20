@@ -1,4 +1,4 @@
-class Client::SettingsController < ApplicationController
+class Client::SettingsController < Client::BaseController
   def index
   end
 end
