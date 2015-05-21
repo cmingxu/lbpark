@@ -27,7 +27,7 @@ class Staff::ClientsController < Staff::BaseController
 
   def destroy
     @client = @park.client
-    @client_user = @park.client_users.find params[:id]
+    @client_user = @client.client_users.find params[:id]
     @client_user.destroy
     redirect_to staff_park_clients_path(@park)
   end

@@ -56,6 +56,7 @@ class MobileCouponsController < MobileController
           if @coupon = @coupon_tpl.claim_coupon
             @coupon.update_column :user_id, current_user.id
             @coupon.update_column :quantity, coupon_params[:quantity].to_i.abs < 1 ?  1 : coupon_params[:quantity].to_i.abs
+            @coupon.update_column :issued_park_space, coupon_params[:issued_park_space]
             @coupon.reload
             @order = Order.create_with_coupon(@coupon, request.headers["X-Real-IP"])
             if @coupon.price.zero? # free coupons
@@ -143,7 +144,7 @@ class MobileCouponsController < MobileController
   def coupon_params
     params[:coupon] ||= HashWithIndifferentAccess.new
     params[:coupon][:user_id] = current_user.id
-    params.require(:coupon).permit(:user_id, :issued_address, :issued_begin_date, :quantity, :issued_paizhao)
+    params.require(:coupon).permit(:user_id, :issued_address, :issued_begin_date, :quantity, :issued_paizhao, :issued_park_space)
   end
 
   def park_map

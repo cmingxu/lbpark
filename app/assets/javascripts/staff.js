@@ -130,6 +130,7 @@ $(document).ready(function(){
 
     $('input.typeahead_plugin_tpl').typeahead({
       source: function (query, process) {
+        console.log('1');
         $.ajax({
           url: "/staff/clients",
           type: "get",

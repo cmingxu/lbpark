@@ -70,14 +70,14 @@ class Order < ActiveRecord::Base
     return unless self.coupon.monthly?
     client = self.coupon.park.client
     return unless client
-    client_member = client.client_members.where(:phone => coupon.user.mobile)
-    client_member = client.client_members.create(:name => coupon.user.nickname, :phone => coupon.user.mobile, :paizhao => coupon.issued_paizhao) if client_member.blank?
+    client_member = client.client_members.where(:phone => coupon.user.phone)
+    client_member = client.client_members.create(:name => coupon.user.nickname, :phone => coupon.user.phone, :paizhao => coupon.issued_paizhao) if client_member.blank?
     client_member.client_memberships.build :order_id => self.id,
       :begin_at => self.coupon.issued_begin_date,
       :end_at => self.coupon.issued_begin_date + self.coupon.quantity.month,
       :month_count => self.coupon.quantity,
       :total_price => self.price,
-      :park_space_id => self.coupon.park.park_spaces.where(:name => self.coupon.issued_park_space).try(:id)
+      :park_space_id => self.coupon.park.park_spaces.where(:name => self.coupon.issued_park_space).try(:first).try(:id)
 
     client_member.save
   end
