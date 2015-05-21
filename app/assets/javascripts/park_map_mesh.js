@@ -377,7 +377,7 @@
       for(var i=0; i<toolbar_items.length; i++){
         c =$(toolbar_items[i].as_html());
         c.on('click', toolbar_items[i].callback);
-        toolbar_content.append(i);
+        toolbar_content.append(c);
       }
     }
 
