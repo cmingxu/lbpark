@@ -375,10 +375,9 @@
       var toolbar_content = $("#pm_toolbar_content");
 
       for(var i=0; i<toolbar_items.length; i++){
-        item =$(toolbar_items[i].as_html());
-        console.log(item);
-        item.on('click', toolbar_items[i].callback);
-        toolbar_content.append(item);
+        i =$(toolbar_items[i].as_html());
+        i.on('click', toolbar_items[i].callback);
+        toolbar_content.append(i);
       }
     }
 
