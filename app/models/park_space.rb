@@ -21,6 +21,15 @@ class ParkSpace < ActiveRecord::Base
   belongs_to :park
   belongs_to :park_map
   belongs_to :park_map_ele
+  has_many :client_memberships
+
+  def active_client_membership
+    self.client_memberships.active.last
+  end
+
+  def client_member
+    self.active_client_membership.try(:client_member)
+  end
 
   def self.create_from_park_map_ele(park_map_ele)
     return unless park_map_ele.park_map_ele_type == "park_space"

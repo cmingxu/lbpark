@@ -8,8 +8,9 @@ class Client::ClientMembersController < Client::BaseController
   end
 
   def new
+    @park_space = ParkSpace.find_by_id(params[:park_space_id])
     @client_member = current_client.client_members.build
-    @client_member.client_memberships.build
+    @client_member.client_memberships.build :park_space_id => params[:park_space_id]
     render :layout => false
   end
 
@@ -39,6 +40,6 @@ class Client::ClientMembersController < Client::BaseController
   end
 
   def client_member_params
-    params.require(:client_member).permit(:name, :phone, :paizhao, :client_memberships_attributes => [ :begin_at, :month_count, :total_price, :id ])
+    params.require(:client_member).permit(:name, :phone, :paizhao, :client_memberships_attributes => [ :begin_at, :month_count, :total_price, :id, :park_space_id ])
   end
 end

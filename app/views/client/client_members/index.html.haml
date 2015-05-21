@@ -16,7 +16,6 @@
           %th 车牌号
           %th 当前车位
           %th 到期时间
-          %th
         %tbody
           - @client_members.each do |cm|
             %tr
@@ -24,6 +23,6 @@
               %td= cm.name
               %td= cm.phone
               %td= cm.paizhao
+              %td= cm.park_space_name
               %td
-              %td
-              %td
+                = cm.current_client_membership.try :end_at

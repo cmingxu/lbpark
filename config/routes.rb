@@ -107,9 +107,16 @@ Rails.application.routes.draw do
         get :coupon_list
       end
     end
+
+    resources :park_spaces do
+      collection do
+        get :park_space_json
+      end
+    end
     resources :park_maps do
       resources :park_spaces do
         member do
+          get :client_member
           patch :rename
           patch :change_usage_status
           patch :change_vacancy_status

@@ -24,7 +24,8 @@
       "<div id='pm_mesh_x_ruler' class='ruler'></div>" +
       "<div id='pm_mesh_y_ruler' class='ruler'></div>" +
       "<div id='pm_mesh'>Canvas </div>" +
-      "<div id='pm_ele_editor' class='pm_ele_render'> <div id='pm_ele_editor_header' class='pm_header'></div> <div id='pm_ele_editor_content' class='pm_content'> <table><tr><td>编号</td><td id='name_td'><input type='text' /></td></tr><tr><td>用处</td><td id='usage_td'></td></tr><tr><td>占用</td><td id='status_td'></td></tr></table></div> </div>" + 
+      //"<div id='pm_ele_editor' class='pm_ele_render'> <div id='pm_ele_editor_header' class='pm_header'></div> <div id='pm_ele_editor_content' class='pm_content'> <table><tr><td>编号</td><td id='name_td'><input type='text' /></td></tr><tr><td>用处</td><td id='usage_td'></td></tr><tr><td>占用</td><td id='status_td'></td></tr></table></div> </div>" + 
+      "<div id='pm_ele_editor' class='pm_ele_render'> <div id='pm_ele_editor_header' class='pm_header'></div> <div id='pm_ele_editor_content' class='pm_content'> <table><tr><td>编号</td><td id='name_td'><input type='text' /></td></tr><tr><td>客户</td><td id='member_name_td'></td></tr><tr><td>车牌照</td><td id='paizhao_td'></td></tr><tr><td>电话</td><td id='phone_td'></td></tr><tr><td>截至日期</td><td id='end_at_td'></td></tr><tr><td ><button class='btn btn-primary hidden' id='new_client_member_btn'>出租</button></td></tr></table></div> </div>" + 
       "</div>" +
       "</div>";
 
@@ -126,7 +127,7 @@
     },
 
     this.shape_render = function(){
-      console.log(park_map_data);
+      //console.log(park_map_data);
     }
 
     this.draw_ruler = function () {
@@ -175,53 +176,77 @@
             shape.update_name();
           }
         });
-
       });
 
-      
+      $.ajax({
+        url: "/client/park_maps/" + park_map.id +"/park_spaces/" + park_space.id + "/client_member",
+        method: "GET",
+        success: function (res) {
+          if(!res.name){
+            $("#new_client_member_btn").removeClass('hidden')
+            $("#new_client_member_btn").data('url', '/client/client_members/new?park_space_id=' + park_space.id)
+            $("#new_client_member_btn").click(popup_new_client_member_form);
 
-
-      $("#usage_td").empty();
-      for(i in usage_status){
-        if(park_space.usage_status == i){
-           $("#usage_td").append("<span class='usage_ele active' data-status=" + i +">" + usage_status[i]+"</span>");
-        }else{
-           $("#usage_td").append("<span class='usage_ele' data-status=" + i + ">" + usage_status[i]+"</span>");
-        }
-      }
-
-      $("#usage_td span").click(function () {
-        $(this).addClass('active').siblings().removeClass('active');
-        $.ajax({
-          url: "/client/park_maps/" + park_map.id +"/park_spaces/" + park_space.id + "/change_usage_status",
-          method: 'PATCH',
-          data: {status: $(this).data('status')},
-          success: function (res) {
-            park_spaces  = res;
+            $("#member_name_td").text("");
+            $("#phone_td").text("");
+            $("#paizhao_td").text("");
+            $("#end_at_td").text("");
+          }else{
+            $("#new_client_member_btn").addClass('hidden')
+            $("#member_name_td").text(res.name);
+            $("#phone_td").text(res.phone);
+            $("#paizhao_td").text(res.paizhao);
+            $("#end_at_td").text(res.end_at);
           }
-        });
-      });
-
-      $("#status_td").empty();
-      for(i in vacancy_status){
-        if(park_space.vacancy_status == i){
-          $("#status_td").append("<span class='active usage_ele' data-status=" + i + ">" +vacancy_status[i]+"</span>");
-        }else{
-          $("#status_td").append("<span class='usage_ele' data-status=" + i + ">" + vacancy_status[i]+"</span>");
         }
-      }
-
-      $("#status_td span").click(function () {
-        $(this).addClass('active').siblings().removeClass('active');
-        $.ajax({
-          url: "/client/park_maps/" + park_map.id +"/park_spaces/" + park_space.id + "/change_vacancy_status",
-          method: 'PATCH',
-          data: {status: $(this).data('status')},
-          success: function (res) {
-            park_spaces  = res;
-          }
-        });
       });
+
+      $("#new_client_member_btn").click(function () {
+      })
+
+
+
+      //$("#usage_td").empty();
+      //for(i in usage_status){
+        //if(park_space.usage_status == i){
+           //$("#usage_td").append("<span class='usage_ele active' data-status=" + i +">" + usage_status[i]+"</span>");
+        //}else{
+           //$("#usage_td").append("<span class='usage_ele' data-status=" + i + ">" + usage_status[i]+"</span>");
+        //}
+      //}
+
+      //$("#usage_td span").click(function () {
+        //$(this).addClass('active').siblings().removeClass('active');
+        //$.ajax({
+          //url: "/client/park_maps/" + park_map.id +"/park_spaces/" + park_space.id + "/change_usage_status",
+          //method: 'PATCH',
+          //data: {status: $(this).data('status')},
+          //success: function (res) {
+            //park_spaces  = res;
+          //}
+        //});
+      //});
+
+      //$("#status_td").empty();
+      //for(i in vacancy_status){
+        //if(park_space.vacancy_status == i){
+          //$("#status_td").append("<span class='active usage_ele' data-status=" + i + ">" +vacancy_status[i]+"</span>");
+        //}else{
+          //$("#status_td").append("<span class='usage_ele' data-status=" + i + ">" + vacancy_status[i]+"</span>");
+        //}
+      //}
+
+      //$("#status_td span").click(function () {
+        //$(this).addClass('active').siblings().removeClass('active');
+        //$.ajax({
+          //url: "/client/park_maps/" + park_map.id +"/park_spaces/" + park_space.id + "/change_vacancy_status",
+          //method: 'PATCH',
+          //data: {status: $(this).data('status')},
+          //success: function (res) {
+            //park_spaces  = res;
+          //}
+        //});
+      //});
       this.pm_ele_editor.show();
 
     };

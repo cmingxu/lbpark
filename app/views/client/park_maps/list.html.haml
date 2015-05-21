@@ -29,9 +29,10 @@
           %td= ps.name
           %td= ParkSpace::USAGE_STATUS[ps.usage_status.to_sym]
           %td= ParkSpace::VACANCY_STATUS[ps.vacancy_status.to_sym]
-          %td
-          %td
-          %td
+          %td= ps.client_member.try(:name)
+          %td= ps.client_member.try(:phone)
+          %td= ps.active_client_membership.try(:end_at)
+
   = paginate @park_spaces
 
 

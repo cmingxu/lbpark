@@ -28,6 +28,8 @@ class Order < ActiveRecord::Base
   belongs_to :coupon
 
   state_machine :status, :initial => :not_paid do
+    after_transition :on => :pay, :do => :generate_client_member_for_client
+
     event :pay do
       transition :from => :not_paid, :to => :paid
     end
@@ -62,5 +64,21 @@ class Order < ActiveRecord::Base
       o.notify_url = Settings.site_domain + "/mobile_coupons/notify?order_num=#{o.order_num}"
       o.quantity = coupon.quantity
     end
+  end
+
+  def generate_client_member_for_client
+    return unless self.coupon.monthly?
+    client = self.coupon.park.client
+    return unless client
+    client_member = client.client_members.where(:phone => coupon.user.mobile)
+    client_member = client.client_members.create(:name => coupon.user.nickname, :phone => coupon.user.mobile, :paizhao => coupon.issued_paizhao) if client_member.blank?
+    client_member.client_memberships.build :order_id => self.id,
+      :begin_at => self.coupon.issued_begin_date,
+      :end_at => self.coupon.issued_begin_date + self.coupon.quantity.month,
+      :month_count => self.coupon.quantity,
+      :total_price => self.price,
+      :park_space_id => self.coupon.park.park_spaces.where(:name => self.coupon.issued_park_space).try(:id)
+
+    client_member.save
   end
 end

@@ -9,4 +9,12 @@ class ClientMember < ActiveRecord::Base
   validates :paizhao, presence: true
 
   accepts_nested_attributes_for :client_memberships
+
+  def park_space_name
+    self.client_memberships.active.last.try(:park_space).try(:name)
+  end
+
+  def current_client_membership
+    self.client_memberships.active.last
+  end
 end
