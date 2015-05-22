@@ -93,6 +93,7 @@ class MobileCouponsController < MobileController
 
   def show_order
     @order = Order.find params[:id]
+    @coupon = @order.coupon
     @coupon_tpl = @order.coupon.coupon_tpl
     @pay_config[:package] = "prepay_id=#{@order.prepay_id}"
     @pay_config[:paySign] = WxPay::Sign.generate(@pay_config)
