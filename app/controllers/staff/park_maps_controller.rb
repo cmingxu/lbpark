@@ -6,8 +6,11 @@ class Staff::ParkMapsController < Staff::BaseController
   def index
     @park = Park.find params[:park_id]
     @park_map =  @park.park_maps.find_by_id(params[:park_map_id]) || @park.park_maps.first || ParkMap.create(:park => @park, :name => "地面")
-    ap @park_map.park_map_eles.length
     @park_maps = @park.park_maps
+
+    if params[:fullscreen]
+      render "fullscreen", :layout => "staff_no_sidebar"
+    end
   end
 
   def new

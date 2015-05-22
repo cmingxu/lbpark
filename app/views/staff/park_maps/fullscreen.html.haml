@@ -1,0 +1,41 @@
+:javascript
+  create_mesh_path = '#{staff_park_park_maps_path(@park, :park_map_id => @park_map.id)}';
+  park_map_data = #{(@park_map.as_api_json || []).to_json};
+  name_changing_path = '#{rename_staff_park_park_maps_path(@park)}';
+  function done_editing_name(){
+    $.ajax({
+      url: name_changing_path,
+      data: {park_map_id: $("#park_map_id").val(), new_name: $("#pm_name_field").val()},
+      method: 'PATCH'
+    });
+  }
+
+= javascript_include_tag "park_map_mesh"
+= stylesheet_link_tag "park_map_mesh"
+
+
+#container
+
+:css
+  #container{
+    left: 0px;
+    position: absolute;
+  }
+
+  #pm_toolbar{
+    position: fixed;
+    opacity: 1;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  #pm_content{
+    margin-top: 64px;
+  }
+
+  #pm_ele_editor{
+    position: fixed!important;
+    top: 0px;
+  }
+
+

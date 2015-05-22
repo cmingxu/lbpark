@@ -895,7 +895,6 @@
         }
 
         if(pm_event.event_type == "drag_stop"){
-          console.log('draging_stop');
           if(this.which_point_move == null){ return null; }
 
         }
@@ -1933,10 +1932,6 @@
       }
 
       this.point_within_range = function (point) {
-        console.log(point.x_in_px);
-        console.log(point.y_in_px);
-        console.log(this.start_point);
-        console.log(this.end_point);
         return point.x_in_px > this.start_point.x_in_px && point.x_in_px < this.end_point.x_in_px &&
           point.y_in_px > this.start_point.y_in_px && point.y_in_px < this.end_point.y_in_px;
       }

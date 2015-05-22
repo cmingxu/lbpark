@@ -25,6 +25,7 @@
           = link_to fa_icon(:minus), staff_park_park_map_path(@park, @park_map), :method => :delete, :data => {:confirm => "确信要删除？"}
           = link_to fa_icon(:copy), new_staff_park_park_map_path(@park, :copy_from_id => pm.id)
   = link_to fa_icon(:plus) + "  新平面图", new_staff_park_park_map_path(@park), :class => "btn btn-success pull-right"
+  = link_to fa_icon(:plus) + "  全屏编辑", staff_park_park_maps_path(@park, :fullscreen => true, :park_map_id => @park_map.id), :class => "btn btn-success pull-right", :target => "_blank"
 
 #container
 
