@@ -37,7 +37,7 @@ class Coupon < ActiveRecord::Base
   belongs_to :coupon_tpl
   belongs_to :park
   belongs_to :user
-  has_one :order
+  has_one :coupon_order, :class_name => "Order"
 
   after_create :generate_qr_code
   scope :display_order, lambda { order("coupon_tpl_type, price ASC, claimed_at DESC") }
@@ -120,7 +120,7 @@ class Coupon < ActiveRecord::Base
       :limitation => self.coupon_tpl.limitation,
       :icon => park.park_pics.first.park_pic.thumb.url,
       :paid => self.status == "clamied" ? "1" : "0",
-      :order_id => order.try(:id)
+      :order_id => coupon_order.try(:id)
     }
   end
 
