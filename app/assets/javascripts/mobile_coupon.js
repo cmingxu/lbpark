@@ -74,7 +74,7 @@ function init() {
           if($(this).hasClass("used_coupon_item")){ return };
 
           if($(this).data("paid") == "0"){
-            window.location.href = "/mobile_coupons/" + $(this).data('order_id') + "/show_order";
+            window.location.href = "/mobile_coupons/" + $(this).data('orderid') + "/show_order";
           }else{
             window.location.href = "/mobile_coupons/" + $(this).data('id') + "/coupon_show";
           }
