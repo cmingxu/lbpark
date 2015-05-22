@@ -27,7 +27,8 @@
 
       .user_coupon_tpl_claim_page_info_section_item
         %span.label 时段
-        %span.value= @order.coupon.time_span
+        %span.value
+          -#= @order.coupon.time_span
         .clearfix
       .user_coupon_tpl_claim_page_info_section_item
         %span.label 数量
