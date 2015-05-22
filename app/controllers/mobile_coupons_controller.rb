@@ -93,6 +93,7 @@ class MobileCouponsController < MobileController
 
   def show_order
     @order = Order.find params[:id]
+    @coupon_tpl = @order.coupon.coupon_tpl
     render :claim, :layout => "mobile_no_tab"
   end
 
