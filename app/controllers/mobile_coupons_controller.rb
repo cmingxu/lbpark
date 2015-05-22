@@ -94,7 +94,7 @@ class MobileCouponsController < MobileController
   def show_order
     @order = Order.find params[:id]
     @coupon_tpl = @order.coupon.coupon_tpl
-    @pay_config[:package] = "prepay_id=#{o.prepay_id}"
+    @pay_config[:package] = "prepay_id=#{@order.prepay_id}"
     @pay_config[:paySign] = WxPay::Sign.generate(@pay_config)
     @no_tabs = true
     render :claim, :layout => "mobile_no_tab"
