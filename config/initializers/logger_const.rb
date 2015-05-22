@@ -9,3 +9,5 @@ LB_WECHAT_LOGGER = Logger.new Rails.root.to_s + "/log/lb_wechat.log"
 
 ACTIVITY_LOGGER = Logger.new Rails.root.to_s + "/log/activity.log"
 BARRIER_LOGGER = Logger.new Rails.root.to_s + "/log/barrier.log"
+WECHAT_PAY_LOGGER = Logger.new Rails.root.to_s + "/log/wechat_pay.log"
+
