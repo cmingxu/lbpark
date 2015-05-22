@@ -119,7 +119,7 @@ class Coupon < ActiveRecord::Base
       :displayable_label => self.coupon_tpl.type_name_in_zh,
       :limitation => self.coupon_tpl.limitation,
       :icon => park.park_pics.first.park_pic.thumb.url,
-      :paid => self.status == "clamied" ? true : false,
+      :paid => self.status == "clamied" ? "1" : "0",
       :order_id => order.try(:id)
     }
   end

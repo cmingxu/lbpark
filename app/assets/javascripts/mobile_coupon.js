@@ -73,7 +73,7 @@ function init() {
           if($(this).hasClass("expired_coupon_item")){ return };
           if($(this).hasClass("used_coupon_item")){ return };
 
-          if($(this).data("paid") == "false"){
+          if($(this).data("paid") == "0"){
             window.location.href = "/mobile_coupons/" + $(this).data('order_id') + "/show_order";
           }else{
             window.location.href = "/mobile_coupons/" + $(this).data('id') + "/coupon_show";
