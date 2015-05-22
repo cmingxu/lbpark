@@ -82,7 +82,7 @@ class MobileCouponsController < MobileController
           end
         rescue Exception => e
           Rails.logger.error e
-          Rails.logger.error e.backtrace
+          Rails.logger.error e.backtrace.join("\n")
           raise ActiveRecord::Rollback
         end
       end
