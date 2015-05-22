@@ -73,7 +73,11 @@ function init() {
           if($(this).hasClass("expired_coupon_item")){ return };
           if($(this).hasClass("used_coupon_item")){ return };
 
-          window.location.href = "/mobile_coupons/" + $(this).data('id') + "/coupon_show";
+          if($(this).data("paid") == "false"){
+            window.location.href = "/mobile_coupons/" + $(this).data('order_id') + "/show_order";
+          }else{
+            window.location.href = "/mobile_coupons/" + $(this).data('id') + "/coupon_show";
+          }
         });
       }else{
         $(".user_coupons_list").append(owned_list_empty);

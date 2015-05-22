@@ -37,6 +37,7 @@ class Coupon < ActiveRecord::Base
   belongs_to :coupon_tpl
   belongs_to :park
   belongs_to :user
+  has_many :order
 
   after_create :generate_qr_code
   scope :display_order, lambda { order("coupon_tpl_type, price ASC, claimed_at DESC") }
@@ -117,7 +118,9 @@ class Coupon < ActiveRecord::Base
       :notice => self.coupon_tpl.notice,
       :displayable_label => self.coupon_tpl.type_name_in_zh,
       :limitation => self.coupon_tpl.limitation,
-      :icon => park.park_pics.first.park_pic.thumb.url
+      :icon => park.park_pics.first.park_pic.thumb.url,
+      :paid => self.status == "clamied" ? true : false,
+      :order_id => order.try(:id)
     }
   end
 
