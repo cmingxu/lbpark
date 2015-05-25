@@ -1,0 +1,33 @@
+.container-fluid
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered.lb_table
+        %thead
+          %th
+          %th
+        %tbody
+          = form_for [:staff, @park, @gate], :role => "form", :class => "form", :multipart => true do |f|
+            = f.hidden_field :version
+            %tr
+              %td 名字位置
+              %td
+                = f.text_field :name
+                %span 例如: 东门入口
+
+            %tr
+              %td 序号
+              %td
+                = f.object.serial_num
+                = f.hidden_field :serial_num
+                %span
+            %tr
+              %td 入口？
+              %td= f.select :is_in, options_for_select([true, false], @gate.is_in?) 
+
+            %tr
+              %td 硬件版本
+              %td= f.text_field :hardware_version
+
+            %tr
+              %td{:colspan => 2}
+                = f.submit "保存", :class => "btn btn-success"

@@ -13,6 +13,8 @@
 #  user_id     :integer
 #  stop        :boolean
 #  send_reason :string(255)
+#  owner_type  :string(255)
+#  owner_id    :integer
 #
 
 require 'test_helper'

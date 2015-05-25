@@ -1,0 +1,2 @@
+module Client::GateEventsHelper
+end

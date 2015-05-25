@@ -1,0 +1,30 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        .form-group
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      = link_to fa_icon("fw plus") + "安装道闸", new_staff_park_gate_path(@park), :class => "btn btn-primary"
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th
+          %th ID
+          %th 名称
+          %th 编号
+          %th 进出
+          %th Last Event Time
+          %th 版本
+
+        %tbody
+          - @gates.each do |gate|
+            %tr
+              %td= link_to gate.id, edit_staff_park_gate_path(@park, gate)
+              %td= link_to gate.name, edit_staff_park_gate_path(@park, gate)
+              %td= gate.serial_num
+              %td= gate.is_in
+              %td= gate.hardware_version
+              %td= gate.last_heartbeat_seen_at
+              %td= gate.version
+

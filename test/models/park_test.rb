@@ -50,6 +50,7 @@
 #  previews                 :text
 #  pinyin                   :string(255)
 #  same_as                  :string(255)
+#  client_id                :integer
 #
 
 require 'test_helper'

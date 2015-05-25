@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: client_memberships
+#
+#  id               :integer          not null, primary key
+#  client_member_id :integer
+#  order_id         :integer
+#  begin_at         :datetime
+#  end_at           :datetime
+#  month_count      :integer
+#  total_price      :integer
+#  created_at       :datetime
+#  updated_at       :datetime
+#  park_space_id    :integer
+#
+
 class ClientMembership < ActiveRecord::Base
   belongs_to :client_member
   belongs_to :order
@@ -15,5 +31,7 @@ class ClientMembership < ActiveRecord::Base
   end
 
   scope :active, -> { where("begin_at < ? AND ? < end_at", Time.now, Time.now) }
+
+  
 
 end

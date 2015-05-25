@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150521011626) do
+ActiveRecord::Schema.define(version: 20150525064837) do
 
   create_table "attachments_park_instructions", force: true do |t|
     t.string   "park_instructions"
@@ -150,6 +150,32 @@ ActiveRecord::Schema.define(version: 20150521011626) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "gate_events", force: true do |t|
+    t.integer  "client_id"
+    t.integer  "park_id"
+    t.integer  "gate_id"
+    t.string   "paizhao"
+    t.integer  "client_member_id"
+    t.boolean  "delay"
+    t.datetime "happen_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_allowed"
+  end
+
+  create_table "gates", force: true do |t|
+    t.string   "serial_num"
+    t.integer  "client_id"
+    t.integer  "park_id"
+    t.boolean  "is_in"
+    t.datetime "last_heartbeat_seen_at"
+    t.string   "version"
+    t.string   "hardware_version"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "imports", force: true do |t|

@@ -24,12 +24,12 @@
     = yield
     - unless defined?(@no_tabs)
       #tabs
-        %a{:href => "/", :onfocus=>"this.blur();"}
-          %span{:class => map_nav_class("map")}
-          .tab_name 附近
         %a{:href => "/mobile_coupons", :onfocus=>"this.blur();"}
           %span{:class => map_nav_class("search")}
           .tab_name 停车券
+        %a{:href => "/", :onfocus=>"this.blur();"}
+          %span{:class => map_nav_class("map")}
+          .tab_name 附近
         %a{:href => "/mobile/setting", :onfocus=>"this.blur();"}
           %span{:class => map_nav_class("mine")}
           .tab_name 我

@@ -1,0 +1,34 @@
+.container-fluid
+  .row-fluid
+    .lb_form.col-md-10.col-md-offset-1.form
+      .form_content
+        .form-group
+
+  .row-fluid
+    .col-md-10.col-md-offset-1.table_wrapper
+      %table.table.table-striped.table-condensed.table-hover.table-bordered
+        %thead
+          %th
+          %th ID
+          %th 停车场
+          %th 名称
+          %th 编号
+          %th 进出
+          %th Last Event Time
+          %th 版本
+          %th
+
+        %tbody
+          - @gates.each do |gate|
+            %tr
+              %td= gate.id
+              %td= gate.park.name
+              %td= gate.name
+              %td= gate.serial_num
+              %td= gate.is_in
+              %td= gate.hardware_version
+              %td= gate.last_heartbeat_seen_at
+              %td= gate.version
+              %td= link_to "Events", client_gate_gate_events_path(gate)
+
+
