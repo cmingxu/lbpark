@@ -17,7 +17,12 @@ class Api::BarriersController < Api::BaseController
       ge.happen_at = Time.now
     end
 
-    render :json => {:res => "FAIL", :msg => "非包月用户" } and return if @client_member.blank?
+    if @client_member.blank?
+      render :json => {:res => "FAIL", :msg => "非包月用户" }
+      ge.is_allowed = false
+      ge.save
+      return
+    end
     if @client_member.membership_valid?
       ge.is_allowed = true
       ge.save

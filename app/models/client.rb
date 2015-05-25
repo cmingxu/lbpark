@@ -16,6 +16,7 @@ class Client < ActiveRecord::Base
   has_many :plugins
   has_many :client_members
   has_many :gates
+  has_many :gate_events
 
   after_create :auto_install_default_plugins
 

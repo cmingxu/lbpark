@@ -8,7 +8,6 @@
     .col-md-10.col-md-offset-1.table_wrapper
       %table.table.table-striped.table-condensed.table-hover.table-bordered
         %thead
-          %th
           %th ID
           %th 停车场
           %th 名称
@@ -24,7 +23,7 @@
               %td= ge.id
               %td= ge.gate.park.name
               %td= ge.gate.name
-              %td= ge.is_in
+              %td= ge.gate.is_in
               %td= ge.is_allowed
               %td= ge.paizhao
               %td
