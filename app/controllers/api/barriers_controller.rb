@@ -1,39 +1,50 @@
 class Api::BarriersController < Api::BaseController
   skip_before_filter :verify_authenticity_token
   before_filter do
-    @gate = Gate.find_by(:serial_num => params[:id])
-    render :json => {} and return if @gate.blank?
+    @gate = Gate.find_by!(:serial_num => params[:id])
     @client = @gate.client
   end
 
   def event
     BARRIER_LOGGER.debug params
     @client_member = @client.client_members.find_by(:paizhao => params[:paizhao])
+
+    ge = @client.gate_events.create do |ge|
+      ge.gate = @gate
+      ge.park_id = @gate.park_id
+      ge.paizhao = params[:paizhao]
+      ge.delay = false
+      ge.happen_at = Time.now
+    end
+
     render :json => {:res => "FAIL", :msg => "非包月用户" } and return if @client_member.blank?
     if @client_member.membership_valid?
+      ge.is_allowed = true
+      ge.save
       render :json => {:res => "OK", :msg => "OPEN" }
     else
+      ge.is_allowed = false
+      ge.save
       render :json => {:res => "FAIL", :msg => "会员过期" }
     end
   end
 
   def heartbeat
     BARRIER_LOGGER.debug params
-    if rand(10) < 3
-      render :json => {
+
+    res = {
         :res => "OK",
-        :msg => "",
-        :msg_type => "",
         :time => Time.now.to_i
-      }
-    else
-      render :json => {
-        :res => "OK",
-        :msg => {"version" => 0001, "latest_infos" => [{"paizhao" => "京A00012", "begin_at" => Time.now.to_i , "end_at" => Time.now.to_i + 1000},
-                                                        {"paizhao" => "京CA00012", "begin_at" => Time.now.to_i + 1000, "end_at" => Time.now.to_i + 20000} ]},
-        :msg_type => "info_sync",
-        :time => Time.now.to_i
-      }
+    }
+
+    @gate.update_column :last_heartbeat_seen_at, Time.now
+
+    client_latest_version = @client.latest_version
+    if params[:version].to_i < client_latest_version.to_i
+      res[:msg_type] = "info_sync"
+      res[:msg] = { :version => client_latest_version, :latest_infos => JSON.parse(@client.latest_client_members) }
     end
+
+    render :json => res
   end
 end

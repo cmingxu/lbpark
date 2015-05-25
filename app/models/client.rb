@@ -25,8 +25,20 @@ class Client < ActiveRecord::Base
     end
   end
 
+  def hash_key
+    "client_#{self.id}_client_members"
+  end
+
+  def latest_version
+    $redis.hget hash_key, "version"
+  end
+
+  def latest_client_members
+    $redis.hget hash_key, "client_members"
+  end
+
   def update_client_member_version
-    $redis.hset "client_#{self.id}_client_members", "version", Time.now.to_i
-    $redis.hset "client_#{self.id}_client_members", "client_members", self.client_members.select{|cm| cm.membership_valid? }.map(&:valid_membership_json).to_json
+    $redis.hset hash_key, "version", Time.now.to_i
+    $redis.hset hash_key, "client_members", self.client_members.select{|cm| cm.membership_valid? }.map(&:valid_membership_json).to_json
   end
 end
