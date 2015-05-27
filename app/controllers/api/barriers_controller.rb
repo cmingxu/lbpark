@@ -44,6 +44,17 @@ class Api::BarriersController < Api::BaseController
 
     @gate.update_column :last_heartbeat_seen_at, Time.now
 
+    if params[:info_sync]
+      params[:info_sync].each do |info|
+        @client.gate_events.create do |ge|
+        ge.gate = @gate
+        ge.park_id = @gate.park_id
+        ge.paizhao = info[:paizhao]
+        ge.delay = true
+        ge.happen_at = info[:time]
+      end
+    end
+
     client_latest_version = @client.latest_version
     if params[:version].to_i < client_latest_version.to_i
       res[:msg_type] = "info_sync"
