@@ -43,6 +43,7 @@ class User < ActiveRecord::Base
 
   mount_uploader :headimg, WechatUserHeaderImgUploader
 
+
   def wechat_user
     @wechat_user ||= WechatUser.where(:openid => self.openid).first
   end
