@@ -38,8 +38,8 @@ class Api::BarriersController < Api::BaseController
     BARRIER_LOGGER.debug params
 
     res = {
-        :res => "OK",
-        :time => Time.now.to_i
+      :res => "OK",
+      :time => Time.now.to_i
     }
 
     @gate.update_column :last_heartbeat_seen_at, Time.now
@@ -47,20 +47,21 @@ class Api::BarriersController < Api::BaseController
     if params[:info_sync]
       params[:info_sync].each do |info|
         @client.gate_events.create do |ge|
-        ge.gate = @gate
-        ge.park_id = @gate.park_id
-        ge.paizhao = info[:paizhao]
-        ge.delay = true
-        ge.happen_at = info[:time]
+          ge.gate = @gate
+          ge.park_id = @gate.park_id
+          ge.paizhao = info[:paizhao]
+          ge.delay = true
+          ge.happen_at = info[:time]
+        end
       end
-    end
 
-    client_latest_version = @client.latest_version
-    if params[:version].to_i < client_latest_version.to_i
-      res[:msg_type] = "info_sync"
-      res[:msg] = { :version => client_latest_version, :latest_infos => JSON.parse(@client.latest_client_members) }
-    end
+      client_latest_version = @client.latest_version
+      if params[:version].to_i < client_latest_version.to_i
+        res[:msg_type] = "info_sync"
+        res[:msg] = { :version => client_latest_version, :latest_infos => JSON.parse(@client.latest_client_members) }
+      end
 
-    render :json => res
+      render :json => res
+    end
   end
 end
