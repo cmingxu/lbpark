@@ -2,7 +2,7 @@
 lock '3.2.1'
 
 set :application, 'lbpark'
-set :repo_url, 'git@github.com:arieso/lbpark.git'
+set :repo_url, 'git@git-arieso:arieso/lbpark.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
